@@ -1,0 +1,18 @@
+PATH
+  remote: .
+  specs:
+    domainic (0.1.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+
+PLATFORMS
+  arm64-darwin-23
+  ruby
+
+DEPENDENCIES
+  domainic!
+
+BUNDLED WITH
+   2.5.17
