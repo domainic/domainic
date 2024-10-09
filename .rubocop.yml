@@ -1,0 +1,9 @@
+require:
+  - rubocop-performance
+
+AllCops:
+  Exclude:
+    - bin/**/*
+    - vendor/**/*
+  NewCops: enable
+  TargetRubyVersion: 3.1
