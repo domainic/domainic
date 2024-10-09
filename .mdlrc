@@ -1,0 +1,1 @@
+style "#{File.expand_path('config/markdown_lint_style.rb')}"
