@@ -1,0 +1,9 @@
+name: Test Ruby
+description: Test ruby code with RSpec
+
+runs:
+  using: composite
+  steps:
+    - name: Run RSpec
+      shell: bash
+      run: bin/dev test
