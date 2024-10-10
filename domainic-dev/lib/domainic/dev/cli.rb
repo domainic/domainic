@@ -18,6 +18,9 @@ module Domainic
       desc 'lint [COMMAND]', 'Run the linters for the Domainic project.'
       subcommand 'lint', Lint
 
+      desc 'version [COMMAND]', 'Manage gem versions through the Domainic Dev CLI.'
+      subcommand 'version', Version
+
       desc 'build [GEM NAMES]', 'Build a Domainic gem.'
       long_desc <<~LONGDESC, wrap: false
         Build a Domainic gem by name. If no gem name is provided, all gems in the Domainic repository will be built instead.
