@@ -2,6 +2,8 @@ PATH
   remote: .
   specs:
     domainic (0.1.0)
+      domainic-type (>= 0.1.0, < 1)
+    domainic-type (0.1.0)
 
 PATH
   remote: domainic-dev

@@ -16,3 +16,21 @@ updates:
     labels:
       - dependabot
       - dependencies
+  - package-ecosystem: bundler
+    directory: /domainic-dev
+    schedule:
+      interval: weekly
+      day: monday
+    labels:
+      - dependabot
+      - dependencies
+      - domainic-dev
+  - package-ecosystem: bundler
+    directory: /domainic-type
+    schedule:
+      interval: weekly
+      day: monday
+    labels:
+      - dependabot
+      - dependencies
+      - domainic-type
