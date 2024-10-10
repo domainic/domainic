@@ -1,8 +1,13 @@
 module Gem
+  class Dependency
+    attr_reader name: String
+  end
+
   class Specification
     def self.load: (String file) -> instance
 
     attr_reader name: String
+    attr_reader dependencies: Array[Dependency]
   end
 end
 
