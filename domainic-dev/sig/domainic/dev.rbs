@@ -1,0 +1,4 @@
+module Domainic
+  module Dev
+  end
+end
