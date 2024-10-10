@@ -1,0 +1,24 @@
+module Domainic
+  module Type
+    module Constraint
+      class ParameterSet
+        @base: (singleton(BaseConstraint) | BaseConstraint)
+        @entries: Hash[Symbol, Parameter]
+
+        def initialize: (singleton(BaseConstraint) | BaseConstraint base) -> void
+
+        def []: (String | Symbol parameter_name) -> (Parameter | nil)
+
+        def add: (Parameter::options parameter_options) -> self
+
+        def dup_with_base: (singleton(BaseConstraint) | BaseConstraint new_base) -> ParameterSet
+
+        private
+
+        def method_missing: (Symbol method, *untyped) ?{ (?) -> untyped } -> Parameter
+
+        def respond_to_missing?: (Symbol method, ?bool include_private) -> bool
+      end
+    end
+  end
+end
