@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'cli/lint'
+require_relative 'cli/version'
 
 module Domainic
   module Dev
