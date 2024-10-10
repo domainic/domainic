@@ -2,6 +2,8 @@
 
 require 'pathname'
 
+require_relative 'dev/gem_manager'
+
 module Domainic
   # Tools and utilities for developing the Domainic framework.
   #
