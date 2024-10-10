@@ -3,6 +3,8 @@ module Domainic
     class CLI < Thor
       def build: (*String gem_names) -> void
 
+      def ci: () -> void
+
       def publish: (*String gem_names) -> void
 
       def test: (*String gem_names) -> void

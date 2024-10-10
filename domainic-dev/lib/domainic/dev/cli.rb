@@ -35,6 +35,16 @@ module Domainic
         gems.each(&:build!)
       end
 
+      desc 'ci', 'Run the entire build pipeline for the Domainic project.'
+      long_desc <<~LONGDESC, wrap: false
+        Run the entire build pipeline for the Domainic project. This includes linting, testing, and building all Domainic gems.
+      LONGDESC
+      def ci
+        invoke(:lint)
+        invoke(:test)
+        invoke(:build)
+      end
+
       desc 'publish [GEM NAMES]', 'publish a Domainic gem to rubygems.org'
       long_desc <<~LONGDESC, wrap: false
         Publish a Domainic gem by name. If no gem name is provided, all gems in the Domainic repository will be published instead.
