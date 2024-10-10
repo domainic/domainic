@@ -1,0 +1,9 @@
+name: Package Ruby Gems
+description: Build ruby gems with Bundler
+
+runs:
+  using: composite
+  steps:
+    - name: Package Gems
+      shell: bash
+      run: bin/dev build
