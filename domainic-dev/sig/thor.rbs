@@ -1,4 +1,6 @@
 class Thor
+  def self.default_command: (Symbol method) -> void
+
   def self.desc: (String usage, String description) -> void
 
   def self.exit_on_failure?: () -> bool
@@ -6,4 +8,6 @@ class Thor
   def self.long_desc: (String long_description, ?wrap: bool) -> void
 
   def self.package_name: (String) -> void
+
+  def invoke: (String | Symbol command, ?Array[untyped] args, ?Hash[Symbol, untyped] options) -> void
 end

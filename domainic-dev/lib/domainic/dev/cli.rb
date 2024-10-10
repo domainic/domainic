@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'cli/lint'
+
 module Domainic
   module Dev
     # The Domainic development command line interface.
