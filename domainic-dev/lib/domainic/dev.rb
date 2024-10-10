@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'pathname'
+
 module Domainic
   # Tools and utilities for developing the Domainic framework.
   #
@@ -7,5 +9,11 @@ module Domainic
   #
   # @since 0.1.0
   module Dev
+    # The root path of the Domainic framework.
+    #
+    # @return [Pathname] the root path.
+    def self.root
+      Pathname.new(File.expand_path('../../../', File.dirname(__FILE__)))
+    end
   end
 end
