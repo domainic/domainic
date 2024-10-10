@@ -14,6 +14,9 @@ module Domainic
         true
       end
 
+      desc 'lint [COMMAND]', 'Run the linters for the Domainic project.'
+      subcommand 'lint', Lint
+
       desc 'build [GEM NAMES]', 'Build a Domainic gem.'
       long_desc <<~LONGDESC, wrap: false
         Build a Domainic gem by name. If no gem name is provided, all gems in the Domainic repository will be built instead.

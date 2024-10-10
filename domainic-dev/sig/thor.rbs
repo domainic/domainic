@@ -9,5 +9,7 @@ class Thor
 
   def self.package_name: (String) -> void
 
+  def self.subcommand: (String command, Class | Module klass) -> void
+
   def invoke: (String | Symbol command, ?Array[untyped] args, ?Hash[Symbol, untyped] options) -> void
 end
