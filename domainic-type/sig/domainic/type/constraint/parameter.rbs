@@ -1,0 +1,61 @@
+module Domainic
+  module Type
+    module Constraint
+      class Parameter
+        type options = {
+          ?callbacks: Array[Proc],
+          ?coercers: Array[bool | Proc | Symbol],
+          ?default: Object,
+          ?description: (String | nil),
+          name: (String | Symbol),
+          ?required: bool,
+          ?validator: (Proc | Symbol)
+        }
+
+        @base: (singleton(BaseConstraint) | BaseConstraint)
+        @callbacks: Array[Proc]
+        @coercers: Array[bool | Proc | Symbol]
+        @default: Object
+        @description: (String | nil)
+        @name: Symbol
+        @required: bool
+        @validator: (Proc | Symbol)
+        @value: (Object | nil)
+
+        attr_reader description: (String | nil)
+        attr_reader name: Symbol
+
+        def initialize: (singleton(BaseConstraint) | BaseConstraint base, options options) -> void
+
+        def default: () -> (Object | nil)
+
+        def default?: () -> bool
+
+        def dup_with_base: ((singleton(BaseConstraint) | BaseConstraint) new_base) -> Parameter
+
+        def required?: () -> bool
+
+        def value: () -> (Object | nil)
+
+        def value=: (Object | nil value) -> void
+
+        private
+
+        attr_reader base: (singleton(BaseConstraint) | BaseConstraint)
+        attr_reader callbacks: Array[Proc]
+        attr_reader coercers: Array[bool | Proc | Symbol]
+        attr_reader validator: (Proc | Symbol)
+
+        def coerce_reduced: (Object | nil result, bool | Proc | Symbol coercer) -> (Object | nil)
+
+        def coerce_value: (Object | nil value) -> (Object | nil)
+
+        def ensure_value_is_valid!: (Object | nil value) -> bool
+
+        def raise_validation_error!: (Object | nil value) -> void
+
+        def validate_value: (Object | nil value) -> bool
+      end
+    end
+  end
+end
