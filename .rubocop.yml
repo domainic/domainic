@@ -11,5 +11,17 @@ AllCops:
   NewCops: enable
   TargetRubyVersion: 3.1
 
+Naming/FileName:
+  Exclude:
+    - '**/domainic-*'
+
 RBS:
   Enabled: true
+
+RSpec/NestedGroups:
+  AllowedGroups:
+    - describe
+
+Style/Documentation:
+  Exclude:
+    - '**/*.rbs'

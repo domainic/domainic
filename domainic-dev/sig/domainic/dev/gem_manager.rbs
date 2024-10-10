@@ -1,0 +1,9 @@
+module Domainic
+  module Dev
+    module GemManager
+      def self.gem: (String gem_name) -> (Gem | nil)
+
+      def self.gems: () -> Array[Gem]
+    end
+  end
+end

@@ -27,6 +27,7 @@ gems:
     ignore: true
   - name: regexp_parser
     ignore: true
+  - name: rubygems
   - name: simplecov
     ignore: true
   - name: tzinfo
