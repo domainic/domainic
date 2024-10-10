@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'pathname'
+require 'semantic'
 
 require_relative 'dev/gem_manager'
 

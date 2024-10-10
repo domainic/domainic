@@ -25,4 +25,6 @@ Gem::Specification.new do |spec|
     'rubygems_mfa_required' => 'true',
     'source_code_uri' => DOMAINIC_DEV_HOME_URL
   }
+
+  spec.add_dependency 'semantic', '>= 1.6', '< 2'
 end

@@ -7,6 +7,7 @@ PATH
   remote: domainic-dev
   specs:
     domainic-dev (0.1.0)
+      semantic (>= 1.6, < 2)
 
 GEM
   remote: https://rubygems.org/
@@ -33,6 +34,7 @@ GEM
     diff-lcs (1.5.1)
     docile (1.4.1)
     drb (2.2.1)
+    ffi (1.17.0)
     ffi (1.17.0-arm64-darwin)
     fileutils (1.7.2)
     github-markup (5.0.1)
@@ -113,6 +115,7 @@ GEM
       yard
     ruby-progressbar (1.13.0)
     securerandom (0.3.1)
+    semantic (1.6.1)
     simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
