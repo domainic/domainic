@@ -1,0 +1,50 @@
+module Gem
+  class Specification
+    def self.load: (String file) -> instance
+
+    attr_reader name: String
+  end
+end
+
+module Domainic
+  module Dev
+    module GemManager
+      class Gem
+        class Paths
+          attr_reader gemspec: Pathname
+          attr_reader lib: Pathname
+          attr_reader root: Pathname
+          attr_reader sig: Pathname
+          attr_reader test: Pathname
+
+          def initialize: (?gemspec: Pathname, ?lib: Pathname, ?root: Pathname, ?sig: Pathname, ?test: Pathname) -> void
+        end
+
+        @dependencies: Array[::Gem::Dependency]
+        @name: String
+        @paths: Paths
+        @version: Version
+
+        attr_reader dependencies: Array[::Gem::Dependency]
+        attr_reader name: String
+        attr_reader paths: Paths
+
+        def initialize: (Pathname root_directory) -> void
+
+        def build!: () -> void
+
+        def constant_name: () -> String
+
+        def sync!: () -> void
+
+        def version: () -> Version
+
+        private
+
+        def build_gemspec: () -> String
+
+        def initialize_paths: (Pathname root_directory) -> void
+      end
+    end
+  end
+end
