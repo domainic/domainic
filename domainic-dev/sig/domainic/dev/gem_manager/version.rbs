@@ -1,0 +1,43 @@
+interface _Version
+  def initialize: (String version_string) -> void
+
+  def build: () -> (String | nil)
+
+  def build=: (String | nil value) -> (String | nil)
+
+  def increment!: (:major | :minor | :patch version_part) -> self
+
+  def major: () -> Integer
+
+  def minor: () -> Integer
+
+  def patch: () -> Integer
+
+  def pre: () -> (String | nil)
+
+  def pre=: (String | nil value) -> (String | nil)
+end
+
+class Semantic
+  class Version
+    include _Version
+
+    def public_send: (String | Symbol method, *untyped? arguments, **untyped? keyword_arguments) ? { (?) -> untyped } -> untyped
+  end
+end
+
+module Domainic
+  module Dev
+    module GemManager
+      class Version
+        include _Version
+
+        @semantic: Semantic::Version
+
+        def to_gem_version: () -> String
+
+        def to_semver: () -> String
+      end
+    end
+  end
+end
