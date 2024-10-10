@@ -233,7 +233,7 @@ RSpec.describe Domainic::Type::Constraint::Parameter do
               value.to_s
             end
           end
-          klass.new
+          klass.new(instance_double(Domainic::Type::BaseType))
         end
 
         let(:coercer) { :coerce_test }
@@ -256,7 +256,7 @@ RSpec.describe Domainic::Type::Constraint::Parameter do
               value.to_s
             end
           end
-          klass.new
+          klass.new(instance_double(Domainic::Type::BaseType))
         end
 
         let(:coercer) { true }
@@ -300,7 +300,7 @@ RSpec.describe Domainic::Type::Constraint::Parameter do
               value.is_a?(Integer)
             end
           end
-          klass.new
+          klass.new(instance_double(Domainic::Type::BaseType))
         end
 
         let(:validator) { :validate_test }
@@ -323,7 +323,7 @@ RSpec.describe Domainic::Type::Constraint::Parameter do
               value.is_a?(String)
             end
           end
-          klass.new
+          klass.new(instance_double(Domainic::Type::BaseType))
         end
 
         let(:validator) { :validate_test }

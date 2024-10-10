@@ -2,6 +2,28 @@ module Domainic
   module Type
     module Constraint
       class BaseConstraint
+        self.@parameters: ParameterSet
+
+        @base: BaseType
+        @description: (String | nil)
+        @name: Symbol
+        @parameters: ParameterSet
+
+        def self.name: () -> String
+
+        def self.parameters: () -> ParameterSet
+
+        attr_reader description: (String | nil)
+        attr_reader name: Symbol
+        attr_reader parameters: ParameterSet
+
+        def initialize: (BaseType base, ?name: (String | Symbol), ?description: (String | nil), **untyped parameters) -> void
+
+        def validate: (Object subject) -> bool
+
+        private
+
+        def parse_name: (String | Symbol name) -> Symbol
       end
     end
   end
