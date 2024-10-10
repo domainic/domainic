@@ -1,0 +1,8 @@
+module Domainic
+  module Type
+    module Constraint
+      class BaseConstraint
+      end
+    end
+  end
+end

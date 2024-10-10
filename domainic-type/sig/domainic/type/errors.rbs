@@ -1,0 +1,9 @@
+module Domainic
+  module Type
+    class Error < StandardError
+    end
+
+    class InvalidParameterError < Error
+    end
+  end
+end
