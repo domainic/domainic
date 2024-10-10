@@ -1,0 +1,9 @@
+name: Lint Markdown
+description: Lint markdown code with mdl
+
+runs:
+  using: composite
+  steps:
+    - name: Run mdl
+      shell: bash
+      run: bundle exec mdl **/*.md

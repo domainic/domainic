@@ -5,4 +5,6 @@ target :domainic_dev do
   signature 'domainic-dev/sig/**/*.rbs'
 
   configure_code_diagnostics(Steep::Diagnostic::Ruby.all_error)
+  library 'fileutils'
+  library 'pathname'
 end
