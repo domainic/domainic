@@ -3,8 +3,10 @@
 require 'fileutils'
 require 'pathname'
 require 'semantic'
+require 'thor'
 
 require_relative 'dev/gem_manager'
+require_relative 'dev/cli'
 
 module Domainic
   # Tools and utilities for developing the Domainic framework.

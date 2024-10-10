@@ -1,0 +1,21 @@
+class Thor
+  def self.at_least_one: () { (self) -> void } -> void
+
+  def self.default_command: (Symbol method) -> void
+
+  def self.desc: (String usage, String description) -> void
+
+  def self.exit_on_failure?: () -> bool
+
+  def self.long_desc: (String long_description, ?wrap: bool) -> void
+
+  def self.option: (Symbol name, Hash[Symbol, untyped] options) -> void
+
+  def self.package_name: (String) -> void
+
+  def self.subcommand: (String command, Class | Module klass) -> void
+
+  def invoke: (String | Symbol command, ?Array[untyped] args, ?Hash[Symbol, untyped] options) -> void
+
+  def options: () -> Hash[Symbol, untyped]
+end

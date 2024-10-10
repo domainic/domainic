@@ -5,7 +5,7 @@ interface _Version
 
   def build=: (String | nil value) -> (String | nil)
 
-  def increment!: (:major | :minor | :patch version_part) -> self
+  def increment!: (Symbol version_part) -> self
 
   def major: () -> Integer
 
