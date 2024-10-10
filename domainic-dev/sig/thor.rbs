@@ -1,0 +1,9 @@
+class Thor
+  def self.desc: (String usage, String description) -> void
+
+  def self.exit_on_failure?: () -> bool
+
+  def self.long_desc: (String long_description, ?wrap: bool) -> void
+
+  def self.package_name: (String) -> void
+end

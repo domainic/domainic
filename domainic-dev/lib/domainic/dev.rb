@@ -3,6 +3,7 @@
 require 'fileutils'
 require 'pathname'
 require 'semantic'
+require 'thor'
 
 require_relative 'dev/gem_manager'
 
