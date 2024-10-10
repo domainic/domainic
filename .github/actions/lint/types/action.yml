@@ -1,0 +1,12 @@
+name: Lint Types
+description: Check types with Steep
+
+runs:
+  using: composite
+  steps:
+    - name: Install Signatures
+      shell: bash
+      run: bundle exec rbs collection install
+    - name: Run Steep
+      shell: bash
+      run: bundle exec steep check --jobs 5
