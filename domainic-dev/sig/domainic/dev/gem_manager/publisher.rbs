@@ -1,0 +1,28 @@
+module Domainic
+  module Dev
+    module GemManager
+      class Publisher
+        @gem: Gem
+        @latest_release: (String | nil)
+
+        def initialize: (Gem gem) -> void
+
+        def publish!: () -> void
+
+        private
+
+        attr_reader gem: Gem
+
+        def generate_tags: () -> void
+
+        def latest_release: () -> (String | nil)
+
+        def prepare_release: () -> void
+
+        def publish_dependencies: () -> void
+
+        def should_publish?: () -> bool
+      end
+    end
+  end
+end

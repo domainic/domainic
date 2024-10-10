@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'gem_manager/version'
+require_relative 'gem_manager/publisher'
 require_relative 'gem_manager/gem'
 
 module Domainic

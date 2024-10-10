@@ -21,6 +21,7 @@ end
 class Semantic
   class Version
     include _Version
+    include Comparable
 
     def public_send: (String | Symbol method, *untyped? arguments, **untyped? keyword_arguments) ? { (?) -> untyped } -> untyped
   end

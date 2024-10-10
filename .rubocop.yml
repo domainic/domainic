@@ -18,6 +18,10 @@ Naming/FileName:
 RBS:
   Enabled: true
 
+RSpec/NestedGroups:
+  AllowedGroups:
+    - describe
+
 Style/Documentation:
   Exclude:
     - '**/*.rbs'
