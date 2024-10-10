@@ -78,6 +78,13 @@ module Domainic
           parts.join('_')
         end
 
+        # Publish the gem to RubyGems.
+        #
+        # @return [void]
+        def publish!
+          Publisher.new(self).publish!
+        end
+
         # Sync the gemspec file with the current {#version}.
         #
         # @return [void]

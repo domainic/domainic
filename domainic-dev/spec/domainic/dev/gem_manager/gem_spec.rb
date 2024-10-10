@@ -82,6 +82,27 @@ RSpec.describe Domainic::Dev::GemManager::Gem do
     end
   end
 
+  describe '#publish!' do
+    subject(:publish!) { gem.publish! }
+
+    before do
+      allow(root_directory).to receive(:glob).with('*.gemspec').and_return([root_directory.join('test.gemspec')])
+      allow(Gem::Specification).to receive(:load).with('fake/root/test/test.gemspec').and_return(mock_specification)
+      allow(Domainic::Dev::GemManager::Publisher).to receive(:new).with(gem).and_return(mock_publisher)
+    end
+
+    let(:mock_publisher) { instance_double(Domainic::Dev::GemManager::Publisher, publish!: true) }
+    let(:root_directory) { Pathname.new('fake/root/test') }
+    let(:mock_specification) { instance_double(Gem::Specification, dependencies: [], name: 'test') }
+    let(:gem) { described_class.new(root_directory) }
+
+    it 'is expected to publish the gem' do
+      publish!
+
+      expect(mock_publisher).to have_received(:publish!)
+    end
+  end
+
   describe '#sync!' do
     subject(:sync!) { gem.sync! }
 

@@ -35,6 +35,8 @@ module Domainic
 
         def constant_name: () -> String
 
+        def publish!: () -> void
+
         def sync!: () -> void
 
         def version: () -> Version
