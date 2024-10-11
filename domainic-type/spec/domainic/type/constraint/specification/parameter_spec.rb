@@ -3,9 +3,9 @@
 require 'spec_helper'
 require 'domainic/type/base_type'
 require 'domainic/type/constraint/base_constraint'
-require 'domainic/type/constraint/parameter'
+require 'domainic/type/constraint/specification/parameter'
 
-RSpec.describe Domainic::Type::Constraint::Parameter do
+RSpec.describe Domainic::Type::Constraint::Specification::Parameter do
   let(:constraint) { instance_double(Domainic::Type::Constraint::BaseConstraint) }
 
   describe '#initialize' do
