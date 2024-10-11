@@ -24,6 +24,13 @@ module Domainic
       #
       # @since 0.1.0
       class BaseConstraint
+        # Valid accessors for the constraint.
+        #
+        # @see #accessor
+        #
+        # @return [Array<Symbol>]
+        VALID_ACCESSORS = %i[begin count end first keys last length self size values].freeze
+
         attr_reader :description, :name, :parameters
 
         class << self
@@ -75,6 +82,27 @@ module Domainic
           def parameter_builder
             @parameter_builder ||= DSL::ParameterBuilder.new(self)
           end
+        end
+
+        # @!method accessor
+        #  The accessor for the constraint. The method used to access the constrained value.
+        #  @return [Symbol]
+        #
+        # @!method accessor=(value)
+        #  Set the accessor for the constraint.
+        #  @see VALID_ACCESSORS
+        #  @param value [Symbol] The accessor for the constraint.
+        #  @return [void]
+        #
+        # @!method accessor_default
+        #  The default accessor for the constraint.
+        #  @return [Symbol] the default accessor is `:self`.
+        parameter :accessor do
+          desc 'The method used to access the constrained value'
+          coercer lambda(&:to_sym)
+          default :self
+          validator ->(value) { VALID_ACCESSORS.include?(value) }
+          required
         end
 
         # Initialize a new instance of BaseConstraint.
