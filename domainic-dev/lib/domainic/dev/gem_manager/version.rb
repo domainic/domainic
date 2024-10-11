@@ -34,12 +34,6 @@ module Domainic
         # @!method pre
         #  The pre-release number of the version.
         #  @return [String, nil] the pre-release version.
-        #
-        # @dynamic build
-        # @dynamic major
-        # @dynamic minor
-        # @dynamic patch
-        # @dynamic pre
         %i[build major minor patch pre].each do |method|
           define_method(method) { @semantic.public_send(method) }
         end
@@ -53,9 +47,6 @@ module Domainic
         #  Set the pre-release version.
         #  @param value [String, nil] The pre-release version.
         #  @return [String, nil] The pre-release version.
-        #
-        # @dynamic build=
-        # @dynamic pre=
         %i[pre build].each do |method|
           define_method(:"#{method}=") { |value| @semantic.public_send(:"#{method}=", value) }
         end

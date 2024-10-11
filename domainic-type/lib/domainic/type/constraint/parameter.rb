@@ -18,7 +18,6 @@ module Domainic
       #
       # @since 0.1.0
       class Parameter
-        # @dynamic description, name
         attr_reader :description, :name
 
         # Initialize a new instance of Parameter.
@@ -110,7 +109,6 @@ module Domainic
 
         private
 
-        # @dynamic base, callbacks, coercers, validator
         attr_reader :base, :callbacks, :coercers, :validator
 
         # Validate the value of the Parameter and raise an error if the value is invalid.
@@ -165,9 +163,7 @@ module Domainic
         # @param value [Object, nil] The value to validate.
         # @return [Boolean] true if the value is valid, otherwise false.
         def validate_value(value)
-          # @type var validator: Proc
           return base.instance_exec(value, &validator) if validator.is_a?(Proc)
-          # @type var validator: Symbol
           return base.send(validator, value) if validator.is_a?(Symbol) && base.respond_to?(validator, true)
 
           true

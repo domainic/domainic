@@ -24,7 +24,6 @@ module Domainic
       #
       # @since 0.1.0
       class BaseConstraint
-        # @dynamic description, name, parameters
         attr_reader :description, :name, :parameters
 
         class << self
