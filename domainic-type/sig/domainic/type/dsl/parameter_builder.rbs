@@ -1,0 +1,50 @@
+module Domainic
+  module Type
+    module DSL
+      class ParameterBuilder
+        @base: singleton(Constraint::BaseConstraint)
+        @data: Hash[Symbol, untyped]
+        @current_parameter: Hash[Symbol, untyped]
+
+        PARAMETER_DEFAULTS: {
+          callbacks: Array[nil],
+          coercers: Array[nil],
+          default: Object,
+          description: Object,
+          required: false,
+          validator: Object
+        }
+
+        def initialize: (singleton(Constraint::BaseConstraint) base) -> void
+
+        def build!: () -> void
+
+        def coercer: (?(Proc | Symbol | true)? proc_symbol_or_true) ?{ (?) -> void } -> self
+        alias coerce coercer
+
+        def default: (Object value) -> self
+
+        def define: (String | Symbol name) ?{ (ParameterBuilder) [self: ParameterBuilder] -> ParameterBuilder } -> self
+
+        def description: (String value) -> self
+        alias desc description
+
+        def dup_with_base: (singleton(Constraint::BaseConstraint) new_base) -> untyped
+
+        def on_change: () { (?) -> void } -> self
+
+        def required: () -> self
+
+        def validator: (?(Proc | Symbol)? proc_or_symbol) { (?) -> void } -> self
+
+        private
+
+        def inject_parameter_methods!: () -> void
+
+        def inject_parameters: () -> void
+
+        def validate_current_parameter!: () -> void
+      end
+    end
+  end
+end

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative '../dsl/parameter_builder'
 require_relative 'parameter_set'
 
 module Domainic
@@ -27,11 +28,53 @@ module Domainic
         attr_reader :description, :name, :parameters
 
         class << self
+          # Define a parameter for the constraint.
+          #
+          # @example Define a parameter for the constraint.
+          #  class MyConstraint < BaseConstraint
+          #    parameter :my_parameter do |parameter|
+          #      desc 'My parameter description.'
+          #      coercer lambda(&:to_s)
+          #      default 'default value'
+          #      required
+          #      validator ->(value) { value.is_a?(String) }
+          #      on_change do
+          #        some_other_parameter = my_parameter
+          #      end
+          #    end
+          #  end
+          #
+          # @param parameter_name [Symbol] The name of the parameter.
+          # @yield [DSL::ParameterBuilder] The block to build the parameter.
+          # @return [void]
+          def parameter(parameter_name, &)
+            parameter_builder.define(parameter_name, &).build!
+          end
+
           # The parameters of the constraint.
           #
           # @return [ParameterSet]
           def parameters
             @parameters ||= ParameterSet.new(self)
+          end
+
+          private
+
+          # Ensure the {.parameters} are properly inherited.
+          #
+          # @param subclass [Class<BaseConstraint>] The subclass inheriting from the constraint.
+          # @return [void]
+          def inherited(subclass)
+            super
+            subclass.instance_variable_set(:@parameter_builder, parameter_builder.dup_with_base(subclass))
+            subclass.send(:parameter_builder).build!
+          end
+
+          # The {DSL::ParameterBuilder} for the constraint.
+          #
+          # @return [DSL::ParameterBuilder]
+          def parameter_builder
+            @parameter_builder ||= DSL::ParameterBuilder.new(self)
           end
         end
 
