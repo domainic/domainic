@@ -7,6 +7,18 @@ require 'domainic/type/constraint/base_constraint'
 RSpec.describe Domainic::Type::Constraint::BaseConstraint do
   let(:type) { instance_double(Domainic::Type::BaseType) }
 
+  describe '.parameter' do
+    subject(:parameter) { constraint_class.parameter(:test) }
+
+    let(:constraint_class) { Class.new(described_class) }
+
+    it {
+      expect { parameter }.to(
+        change { constraint_class.parameters.instance_variable_get(:@entries).count }.by(1)
+      )
+    }
+  end
+
   describe '.parameters' do
     subject(:parameters) { described_class.parameters }
 

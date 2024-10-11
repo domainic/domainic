@@ -3,6 +3,7 @@ module Domainic
     module Constraint
       class BaseConstraint
         self.@parameters: ParameterSet
+        self.@parameter_builder: DSL::ParameterBuilder
 
         @base: BaseType
         @description: (String | nil)
@@ -11,7 +12,17 @@ module Domainic
 
         def self.name: () -> String
 
+        def self.parameter: (String | Symbol parameter_name) ? { (DSL::ParameterBuilder) [self: DSL::ParameterBuilder] -> DSL::ParameterBuilder } -> void
+
         def self.parameters: () -> ParameterSet
+
+        private
+
+        def self.inherited: (singleton(BaseConstraint) subclass) -> void
+
+        def self.parameter_builder: () -> DSL::ParameterBuilder
+
+        public
 
         attr_reader description: (String | nil)
         attr_reader name: Symbol
