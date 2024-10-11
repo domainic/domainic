@@ -2,9 +2,9 @@
 
 require 'spec_helper'
 require 'domainic/type/constraint/base_constraint'
-require 'domainic/type/constraint/parameter_set'
+require 'domainic/type/constraint/specification/parameter_set'
 
-RSpec.describe Domainic::Type::Constraint::ParameterSet do
+RSpec.describe Domainic::Type::Constraint::Specification::ParameterSet do
   let(:base) { instance_double(Domainic::Type::Constraint::BaseConstraint) }
 
   describe '#[]' do
@@ -17,7 +17,7 @@ RSpec.describe Domainic::Type::Constraint::ParameterSet do
       let(:parameter_name) { :test }
 
       it 'is expected to return the parameter' do
-        expect(get_parameter).to be_an_instance_of(Domainic::Type::Constraint::Parameter)
+        expect(get_parameter).to be_an_instance_of(Domainic::Type::Constraint::Specification::Parameter)
           .and(have_attributes(name: parameter_name))
       end
     end

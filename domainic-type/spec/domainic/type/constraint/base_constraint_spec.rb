@@ -22,7 +22,7 @@ RSpec.describe Domainic::Type::Constraint::BaseConstraint do
   describe '.parameters' do
     subject(:parameters) { described_class.parameters }
 
-    it { is_expected.to be_an_instance_of(Domainic::Type::Constraint::ParameterSet) }
+    it { is_expected.to be_an_instance_of(Domainic::Type::Constraint::Specification::ParameterSet) }
   end
 
   describe '#accessor' do
@@ -102,7 +102,7 @@ RSpec.describe Domainic::Type::Constraint::BaseConstraint do
     end
 
     it 'is expected to initialize with parameters' do
-      expect(new_instance.parameters).to be_an_instance_of(Domainic::Type::Constraint::ParameterSet)
+      expect(new_instance.parameters).to be_an_instance_of(Domainic::Type::Constraint::Specification::ParameterSet)
     end
 
     context 'when name and description is provided' do

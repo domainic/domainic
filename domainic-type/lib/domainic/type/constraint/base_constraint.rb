@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../dsl/parameter_builder'
-require_relative 'parameter_set'
+require_relative 'specification/parameter_set'
 
 module Domainic
   module Type
@@ -61,7 +61,7 @@ module Domainic
           #
           # @return [ParameterSet]
           def parameters
-            @parameters ||= ParameterSet.new(self)
+            @parameters ||= Specification::ParameterSet.new(self)
           end
 
           private
