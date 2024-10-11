@@ -42,9 +42,6 @@ module Domainic
         #  @return [Pathname]
         Paths = Struct.new(:gemspec, :lib, :root, :sig, :test, keyword_init: true)
 
-        # @dynamic dependencies
-        # @dynamic name
-        # @dynamic paths
         attr_reader :dependencies, :name, :paths
 
         # Initialize a new instance of Gem.

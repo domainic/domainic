@@ -29,7 +29,6 @@ module Domainic
 
         private
 
-        # @dynamic gem
         attr_reader :gem
 
         # Generates a git tag for the release, prefixed by the gem name.
