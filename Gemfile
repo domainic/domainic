@@ -27,8 +27,3 @@ group :test do
   gem 'rspec', '>= 3.13', '< 4'
   gem 'simplecov', '>= 0.22', '< 1'
 end
-
-group :signatures do
-  gem 'rbs', '>= 3.6', '< 4'
-  gem 'steep', '>= 1.8', '< 2'
-end
