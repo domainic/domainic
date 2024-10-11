@@ -16,7 +16,6 @@ module Domainic
         def all
           invoke(:markdown)
           invoke(:ruby)
-          invoke(:types)
         end
 
         desc 'markdown', 'Run the Markdown linter'
@@ -33,16 +32,6 @@ module Domainic
         LONGDESC
         def ruby(*options)
           system('bundle', 'exec', 'rubocop', *options, exception: true)
-        end
-
-        desc 'types', 'Run the type checker'
-        long_desc <<~LONGDESC, wrap: false
-          Run the type checker for the Domainic Dev project.
-        LONGDESC
-        option :severity_level, type: :string, enum: %w[information hint warning error], default: 'error'
-        def types
-          system('bundle', 'exec', 'steep', 'check', '--jobs', '5', '--severity-level', options[:severity_level],
-                 exception: true)
         end
       end
     end

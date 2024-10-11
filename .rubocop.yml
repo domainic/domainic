@@ -1,5 +1,4 @@
 require:
-  - rubocop-on-rbs
   - rubocop-performance
   - rubocop-rspec
   - rubocop-yard
@@ -14,9 +13,6 @@ AllCops:
 Naming/FileName:
   Exclude:
     - '**/domainic-*'
-
-RBS:
-  Enabled: true
 
 RSpec/NestedGroups:
   AllowedGroups:

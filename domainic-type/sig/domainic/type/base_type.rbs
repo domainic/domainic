@@ -1,6 +1,0 @@
-module Domainic
-  module Type
-    class BaseType
-    end
-  end
-end

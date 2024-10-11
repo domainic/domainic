@@ -1,9 +1,0 @@
-name: Lint Types
-description: Check types with Steep
-
-runs:
-  using: composite
-  steps:
-    - name: Run Steep
-      shell: bash
-      run: bundle exec steep check --jobs 5 --severity-level error
