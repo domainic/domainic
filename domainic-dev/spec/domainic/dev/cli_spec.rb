@@ -89,9 +89,9 @@ RSpec.describe Domainic::Dev::CLI do
       let(:gem_names) { [] }
 
       it 'is expected to test all gems' do
-        expected_paths = [gem_one, gem_two].map { |gem| gem.paths.test }.join(' ')
+        expected_paths = [gem_one, gem_two].map { |gem| gem.paths.test }
         expect_any_instance_of(described_class).to receive(:system) # rubocop:disable RSpec/AnyInstance
-          .with("bundle exec rspec --require ./config/rspec_client #{expected_paths}")
+          .with(*%w[bundle exec rspec --require ./config/rspec_client], *expected_paths.map(&:to_s), exception: true)
 
         test
       end
@@ -101,9 +101,9 @@ RSpec.describe Domainic::Dev::CLI do
       let(:gem_names) { %w[gem_one] }
 
       it 'is expected to test the specified gems' do
-        expected_paths = gem_one.paths.test
+        expected_paths = [gem_one.paths.test]
         expect_any_instance_of(described_class).to receive(:system) # rubocop:disable RSpec/AnyInstance
-          .with("bundle exec rspec --require ./config/rspec_client #{expected_paths}")
+          .with(*%w[bundle exec rspec --require ./config/rspec_client], *expected_paths.map(&:to_s), exception: true)
 
         test
       end

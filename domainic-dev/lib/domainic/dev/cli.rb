@@ -70,8 +70,8 @@ module Domainic
       LONGDESC
       def test(*gem_names)
         gems = gem_names.empty? ? GemManager.gems : gem_names.filter_map { |gem_name| GemManager.gem(gem_name) }
-        paths = gems.filter_map { |gem| gem.paths.test if gem.paths.test.exist? }.join(' ')
-        system "bundle exec rspec --require ./config/rspec_client #{paths}"
+        paths = gems.filter_map { |gem| gem.paths.test if gem.paths.test.exist? }
+        system('bundle', 'exec', 'rspec', '--require', './config/rspec_client', *paths.map(&:to_s), exception: true)
       end
     end
   end
