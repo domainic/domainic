@@ -17,7 +17,7 @@ RSpec.describe Domainic::Type::DSL::ParameterBuilder do
       let(:constraint_class) do
         class_double(Domainic::Type::Constraint::BaseConstraint, parameters:)
       end
-      let(:parameters) { instance_double(Domainic::Type::Constraint::ParameterSet, add: true) }
+      let(:parameters) { instance_double(Domainic::Type::Constraint::Specification::ParameterSet, add: true) }
 
       it 'is expected to add the parameters to the constraint' do
         build!
