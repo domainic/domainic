@@ -25,6 +25,72 @@ RSpec.describe Domainic::Type::Constraint::BaseConstraint do
     it { is_expected.to be_an_instance_of(Domainic::Type::Constraint::ParameterSet) }
   end
 
+  describe '#accessor' do
+    subject(:accessor) { constraint.accessor }
+
+    let(:constraint) { described_class.new(type) }
+
+    it { is_expected.to eq(:self) }
+
+    context 'when set' do
+      before { constraint.accessor = expected_value }
+
+      let(:expected_value) { described_class::VALID_ACCESSORS.reject { |i| i == constraint.accessor_default }.sample }
+
+      it { is_expected.to eq(expected_value) }
+    end
+  end
+
+  describe '#accessor=' do
+    subject(:set_accessor) { constraint.accessor = expected_value }
+
+    let(:constraint) { described_class.new(type) }
+    let(:expected_value) { described_class::VALID_ACCESSORS.reject { |i| i == constraint.accessor_default }.sample }
+
+    it { expect { set_accessor }.to change(constraint, :accessor).to(expected_value) }
+  end
+
+  describe '#accessor_default' do
+    subject(:accessor_default) { constraint.accessor_default }
+
+    let(:constraint) { described_class.new(type) }
+
+    it { is_expected.to eq(:self) }
+  end
+
+  describe '#negated' do
+    subject(:negated) { constraint.negated }
+
+    let(:constraint) { described_class.new(type) }
+
+    it { is_expected.to be false }
+
+    context 'when set' do
+      before { constraint.negated = expected_value }
+
+      let(:expected_value) { true }
+
+      it { is_expected.to eq(expected_value) }
+    end
+  end
+
+  describe '#negated=' do
+    subject(:set_negated) { constraint.negated = expected_value }
+
+    let(:constraint) { described_class.new(type) }
+    let(:expected_value) { true }
+
+    it { expect { set_negated }.to change(constraint, :negated).to(expected_value) }
+  end
+
+  describe '#negated_default' do
+    subject(:negated_default) { constraint.negated_default }
+
+    let(:constraint) { described_class.new(type) }
+
+    it { is_expected.to be false }
+  end
+
   describe '#initialize' do
     subject(:new_instance) { constraint_class.new(type, **options) }
 

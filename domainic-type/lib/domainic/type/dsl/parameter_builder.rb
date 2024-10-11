@@ -144,6 +144,8 @@ module Domainic
         # @return [void]
         def inject_parameter_methods!
           @data.each_key do |parameter_name|
+            next if @base.instance_methods.include?(parameter_name)
+
             @base.define_method(parameter_name) { parameters.public_send(parameter_name).value }
             @base.define_method(:"#{parameter_name}=") { |value| parameters.public_send(parameter_name).value = value }
             @base.define_method(:"#{parameter_name}_default") { parameters.public_send(parameter_name).default }
