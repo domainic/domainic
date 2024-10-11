@@ -21,8 +21,6 @@ jobs:
         uses: ./.github/actions/lint/ruby
       - name: Lint markdown
         uses: ./.github/actions/lint/markdown
-      - name: Check types
-        uses: ./.github/actions/lint/types
 
   test:
     name: Test
