@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'property_constraint'
-require_relative 'with_access_qualification'
+require_relative 'specification/with_access_qualification'
 
 module Domainic
   module Type
@@ -11,7 +11,7 @@ module Domainic
       #
       # @since 0.1.0
       class PresenceConstraint < PropertyConstraint
-        include WithAccessQualification
+        include Specification::WithAccessQualification
 
         conditions :absent, :present
 
