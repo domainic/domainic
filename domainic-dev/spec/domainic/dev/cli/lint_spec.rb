@@ -42,7 +42,8 @@ RSpec.describe Domainic::Dev::CLI::Lint do
     subject(:types) { described_class.new.invoke(:types) }
 
     it 'is expected to run the type checker' do
-      expect_any_instance_of(described_class).to receive(:system).with('bundle exec steep check')
+      expect_any_instance_of(described_class).to receive(:system)
+        .with('bundle', 'exec', 'steep', 'check', '--jobs', '5', '--severity-level', 'error')
       types
     end
   end
