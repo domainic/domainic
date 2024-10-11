@@ -16,7 +16,7 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = '>= 3.1'
 
-  spec.files         = Dir['CHANGELOG.md', 'LICENSE', 'README.md', 'lib/**/*', 'sig/**/*']
+  spec.files         = Dir['CHANGELOG.md', 'LICENSE', 'README.md', 'lib/**/*']
   spec.require_paths = ['lib']
 
   spec.metadata = {

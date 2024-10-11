@@ -1,5 +1,0 @@
-module Domainic
-  module Type
-    UNSPECIFIED: Object
-  end
-end

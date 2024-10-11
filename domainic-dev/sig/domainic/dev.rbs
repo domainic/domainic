@@ -1,5 +1,0 @@
-module Domainic
-  module Dev
-    def self.root: () -> Pathname
-  end
-end
