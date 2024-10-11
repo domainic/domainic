@@ -105,6 +105,25 @@ module Domainic
           required
         end
 
+        # @!method negated
+        #  Indicates whether to negate the constraint.
+        #  @return [Boolean]
+        #
+        # @!method negated=(value)
+        #  Set the constraint to be negated.
+        #  @param value [Boolean] The value to negate the constraint.
+        #  @return [void]
+        #
+        # @!method negated_default
+        #  The default value for the negated constraint.
+        #  @return [false] the default value is `false`.
+        parameter :negated do
+          desc 'Negate the constraint'
+          default false
+          validator ->(value) { true.equal?(value) || false.equal?(value) }
+          required
+        end
+
         # Initialize a new instance of BaseConstraint.
         #
         # @param base [BaseType] The type the constraint is belongs to.
