@@ -12,7 +12,7 @@ RSpec.describe Domainic::Dev::CLI::Lint do
     subject(:all) { described_class.new.all }
 
     it 'is expected to run all the linters' do
-      %i[markdown ruby types].each do |linter|
+      %i[markdown ruby].each do |linter|
         expect_any_instance_of(described_class).to receive(:invoke).with(linter)
       end
 
@@ -35,16 +35,6 @@ RSpec.describe Domainic::Dev::CLI::Lint do
     it 'is expected to run the ruby linter' do
       expect_any_instance_of(described_class).to receive(:system).with('bundle', 'exec', 'rubocop', exception: true)
       ruby
-    end
-  end
-
-  describe '#types' do
-    subject(:types) { described_class.new.invoke(:types) }
-
-    it 'is expected to run the type checker' do
-      expect_any_instance_of(described_class).to receive(:system)
-        .with('bundle', 'exec', 'steep', 'check', '--jobs', '5', '--severity-level', 'error', exception: true)
-      types
     end
   end
 end
