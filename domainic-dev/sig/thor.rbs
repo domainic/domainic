@@ -18,4 +18,11 @@ class Thor
   def invoke: (String | Symbol command, ?Array[untyped] args, ?Hash[Symbol, untyped] options) -> void
 
   def options: () -> Hash[Symbol, untyped]
+
+  # I realize this is probably not where this should go but to be fair this is not a signature I should HAVE to write.
+  # This signature is here to override the default Kernel#system signature which claims `exception` is a not a valid
+  # argument. This is not true, it is a valid argument. This is a hack to get around that. This will likely remain here
+  # until the RBS team fixes the issue.
+  def system: (::String, *::String, ?exception: ::boolish) -> (bool | nil)
+            | (::Hash[::string, (::string | nil)], ::String, *::String, ?exeption: ::boolish) -> (bool | nil)
 end

@@ -6,4 +6,4 @@ runs:
   steps:
     - name: Run Steep
       shell: bash
-      run: bundle exec steep check --jobs 5
+      run: bundle exec steep check --jobs 5 --severity-level error

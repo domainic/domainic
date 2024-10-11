@@ -24,7 +24,7 @@ RSpec.describe Domainic::Dev::CLI::Lint do
     subject(:markdown) { described_class.new.invoke(:markdown) }
 
     it 'is expected to run the markdown linter' do
-      expect_any_instance_of(described_class).to receive(:system).with('bundle exec mdl **/*.md')
+      expect_any_instance_of(described_class).to receive(:system).with('bundle exec mdl **/*.md', exception: true)
       markdown
     end
   end
@@ -33,7 +33,7 @@ RSpec.describe Domainic::Dev::CLI::Lint do
     subject(:ruby) { described_class.new.invoke(:ruby) }
 
     it 'is expected to run the ruby linter' do
-      expect_any_instance_of(described_class).to receive(:system).with('bundle', 'exec', 'rubocop')
+      expect_any_instance_of(described_class).to receive(:system).with('bundle', 'exec', 'rubocop', exception: true)
       ruby
     end
   end
@@ -42,7 +42,8 @@ RSpec.describe Domainic::Dev::CLI::Lint do
     subject(:types) { described_class.new.invoke(:types) }
 
     it 'is expected to run the type checker' do
-      expect_any_instance_of(described_class).to receive(:system).with('bundle exec steep check')
+      expect_any_instance_of(described_class).to receive(:system)
+        .with('bundle', 'exec', 'steep', 'check', '--jobs', '5', '--severity-level', 'error', exception: true)
       types
     end
   end

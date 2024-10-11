@@ -24,7 +24,7 @@ module Domainic
           Run the Markdown linter for the Domainic Dev project.
         LONGDESC
         def markdown
-          system 'bundle exec mdl **/*.md'
+          system 'bundle exec mdl **/*.md', exception: true
         end
 
         desc 'ruby [OPTIONS]', 'Run the Ruby linter'
@@ -32,15 +32,17 @@ module Domainic
           Run the Ruby linter for the Domainic Dev project. For a list of options run `rubocop --help`.
         LONGDESC
         def ruby(*options)
-          system('bundle', 'exec', 'rubocop', *options)
+          system('bundle', 'exec', 'rubocop', *options, exception: true)
         end
 
         desc 'types', 'Run the type checker'
         long_desc <<~LONGDESC, wrap: false
           Run the type checker for the Domainic Dev project.
         LONGDESC
+        option :severity_level, type: :string, enum: %w[information hint warning error], default: 'error'
         def types
-          system 'bundle exec steep check'
+          system('bundle', 'exec', 'steep', 'check', '--jobs', '5', '--severity-level', options[:severity_level],
+                 exception: true)
         end
       end
     end
