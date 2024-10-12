@@ -58,6 +58,22 @@ RSpec.describe Domainic::Type::Constraint::BaseConstraint do
     it { is_expected.to eq(:self) }
   end
 
+  describe '#dup_with_base' do
+    subject(:dup_with_base) { constraint.dup_with_base(new_base) }
+
+    let(:constraint) { described_class.new(type) }
+    let(:new_base) { instance_double(Domainic::Type::BaseType) }
+
+    it 'is expected to duplicate the constraint with the new base' do
+      expect(dup_with_base.instance_variable_get(:@base)).to eq(new_base)
+    end
+
+    it 'is expected to duplicate the constraint with the same parameters' do
+      duped = dup_with_base
+      expect(duped.parameters.instance_variable_get(:@base)).to eq(duped)
+    end
+  end
+
   describe '#negated' do
     subject(:negated) { constraint.negated }
 

@@ -143,6 +143,17 @@ module Domainic
           end
         end
 
+        # Duplicate the constraint with a new base.
+        #
+        # @param new_base [BaseType] The new base for the constraint.
+        # @return [BaseConstraint] the duplicated constraint.
+        def dup_with_base(new_base)
+          dup.tap do |duped|
+            duped.instance_variable_set(:@base, new_base)
+            duped.instance_variable_set(:@parameters, parameters.dup_with_base(duped))
+          end
+        end
+
         # Validate the subject against the constraint.
         #
         # @param subject [Object] The subject to validate.
