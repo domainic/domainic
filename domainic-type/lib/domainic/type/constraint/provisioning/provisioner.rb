@@ -33,6 +33,7 @@ module Domainic
                 :@provisioned,
                 @provisioned.transform_values { |provisioned| provisioned.dup_with_base(new_base) }
               )
+              duped.send(:provision_intrinsic_constraints)
             end
           end
 
@@ -59,15 +60,26 @@ module Domainic
 
           # Stage a constraint that can later be provisioned.
           #
-          # @param type [String, Symbol] the type of the constraint.
-          # @param defaults [Hash{String, Symbol => Object}] the default parameters for the constraint.
-          # @param description [String] the description of the constraint.
-          # @param name [String, Symbol] the name of the constraint.
-          # @param validation_options [Hash{String, Symbol => Object}] the validation options for the constraint.
+          # @param options [Hash{Symbol => Object}] the options for the constraint.
+          # @option options [Hash{Symbol => Object}] :defaults ({ accessor: @accessor_name }) the default options for
+          #  the constraint.
+          # @option options [Boolean] :intrinsic (false) whether the constraint is intrinsic. Intrinsic constraints
+          #  are not automatically provisioned when the type is instantiated.
+          # @option options [String, Symbol] :name the name of the constraint. If this is not provided, it will default
+          #  to the `:type` option.
+          # @option options [String, Symbol] :type the type of the constraint.
+          # @option options [Hash{Symbol => Object}] :validation_options ({}) the options for the validation.
+          #
           # @return [void]
-          def stage(type:, defaults: {}, description: nil, name: nil, validation_options: {})
-            name = (name || type).to_sym
-            @staged[name] = { type:, defaults:, description:, name:, validation_options: }
+          def stage(**options)
+            name = (options[:name] || options.fetch(:type)).to_sym
+            @staged[name] = {
+              defaults: { accessor: @accessor_name }.merge(options.fetch(:defaults, {})),
+              intrinsic: options.fetch(:intrinsic, false),
+              name:,
+              type: options.fetch(:type),
+              validation_options: options.fetch(:validation_options, {})
+            }
           end
 
           # Convert the provisioner to an array of provisioned constraints.
@@ -101,10 +113,18 @@ module Domainic
           def provision_constraint(name, options)
             staged = @staged[name]
             constraint_class = resolve_constraint_class!(staged[:type])
-            constraint_options = staged[:defaults].merge(options)
-                                                  .merge(name: staged[:name], description: staged[:description])
+            constraint_options = staged[:defaults].merge(options).merge(name: staged[:name])
             constraint = constraint_class.new(@base, **constraint_options)
             @provisioned[constraint.name] = ProvisionedConstraint.new(constraint, **staged[:validation_options])
+          end
+
+          # Provision intrinsic constraints.
+          #
+          # @return [void]
+          def provision_intrinsic_constraints
+            return if @base.is_a?(Class)
+
+            @staged.select { |_, staged| staged[:intrinsics] }.each_key { |name| provision(name) }
           end
 
           # Resolve the constraint class by name
