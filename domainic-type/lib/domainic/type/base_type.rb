@@ -20,7 +20,7 @@ module Domainic
         #
         # @return [Constraint::Provisioning::ConstraintSet]
         def constraints
-          @constraints = Constraint::Provisioning::ConstraintSet.new(self)
+          @constraints ||= Constraint::Provisioning::ConstraintSet.new(self)
         end
       end
 
