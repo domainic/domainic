@@ -63,10 +63,6 @@ module Domainic
           # @param options [Hash{Symbol => Object}] the options for the constraint.
           # @option options [Hash{Symbol => Object}] :defaults ({ accessor: @accessor_name }) the default options for
           #  the constraint.
-          # @option options [String, Symbol] :description the description of the constraint. If this is provided, it
-          #  will override the `:desc` option.
-          # @option options [String, Symbol] :desc the description of the constraint. If `:description` is not provided,
-          #  this will be used instead.
           # @option options [Boolean] :intrinsic (false) whether the constraint is intrinsic. Intrinsic constraints
           #  are not automatically provisioned when the type is instantiated.
           # @option options [String, Symbol] :name the name of the constraint. If this is not provided, it will default
@@ -79,7 +75,6 @@ module Domainic
             name = (options[:name] || options.fetch(:type)).to_sym
             @staged[name] = {
               defaults: { accessor: @accessor_name }.merge(options.fetch(:defaults, {})),
-              description: options[:description] || options[:desc],
               intrinsic: options.fetch(:intrinsic, false),
               name:,
               type: options.fetch(:type),
@@ -118,8 +113,7 @@ module Domainic
           def provision_constraint(name, options)
             staged = @staged[name]
             constraint_class = resolve_constraint_class!(staged[:type])
-            constraint_options = staged[:defaults].merge(options)
-                                                  .merge(name: staged[:name], description: staged[:description])
+            constraint_options = staged[:defaults].merge(options).merge(name: staged[:name])
             constraint = constraint_class.new(@base, **constraint_options)
             @provisioned[constraint.name] = ProvisionedConstraint.new(constraint, **staged[:validation_options])
           end

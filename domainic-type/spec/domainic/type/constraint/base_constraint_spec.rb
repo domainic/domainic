@@ -121,10 +121,10 @@ RSpec.describe Domainic::Type::Constraint::BaseConstraint do
       expect(new_instance.parameters).to be_an_instance_of(Domainic::Type::Constraint::Specification::ParameterSet)
     end
 
-    context 'when name and description is provided' do
-      let(:options) { { name: 'test', description: 'A test constraint' } }
+    context 'when name is provided' do
+      let(:options) { { name: 'test' } }
 
-      it { is_expected.to have_attributes(name: options[:name].to_sym, description: options[:description]) }
+      it { is_expected.to have_attributes(name: options[:name].to_sym) }
     end
 
     context 'when name is not provided' do

@@ -10,10 +10,6 @@ module Domainic
       #
       # @abstract Subclass and override {#validate} to implement a new constraint.
       #
-      # @!attribute [r] description
-      #  The description of the constraint.
-      #  @return [String, nil]
-      #
       # @!attribute [r] name
       #  The name of the constraint.
       #  @return [Symbol]
@@ -31,7 +27,7 @@ module Domainic
         # @return [Array<Symbol>]
         VALID_ACCESSORS = %i[begin count end first keys last length self size values].freeze
 
-        attr_reader :description, :name, :parameters
+        attr_reader :name, :parameters
 
         class << self
           # Define a parameter for the constraint.
@@ -127,14 +123,12 @@ module Domainic
         # Initialize a new instance of BaseConstraint.
         #
         # @param base [BaseType] The type the constraint is belongs to.
-        # @param description [String, nil] The {#description} of the constraint.
         # @param name [String, Symbol] The {#name} of the constraint.
         # @param parameters [Hash{Symbol => Object}] The parameters of the constraint.
         #
         # @return [BaseConstraint] the new instance of BaseConstraint.
-        def initialize(base, description: nil, name: '', **parameters)
+        def initialize(base, name: '', **parameters)
           @base = base
-          @description = description
           @name = name.empty? ? parse_name(self.class.name) : name.to_sym
           @parameters = self.class.parameters.dup_with_base(self)
 
