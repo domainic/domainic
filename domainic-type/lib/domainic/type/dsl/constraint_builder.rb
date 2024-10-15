@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require_relative 'constraint_builder/method_injector'
+require_relative 'constraint_builder/signature_builder'
+
 module Domainic
   module Type
     module DSL
@@ -21,15 +24,25 @@ module Domainic
           @data = {}
         end
 
-        # Provision the constraints onto the {BaseType type}.
+        # Stage the constraints and inject methods onto the {BaseType type}.
         #
         # @return [void]
         def build
-          @data.each_pair do |accessor_name, constraints|
-            constraints.each_pair do |constraint_name, constraint_data|
-              @base.constraints.stage(accessor_name, constraint_name, **constraint_data)
-            end
-          end
+          stage_constraints
+          MethodInjector.new(@base, signature_builder.build).inject!
+        end
+
+        # Bind a method to an accessor.
+        #
+        # @param method_name [String, Symbol] the name of the method to bind.
+        # @yield [SignatureBuilder] the block to define the method signature.
+        # @raise [ArgumentError] if no accessor is currently being defined.
+        # @return [self] the ConstraintBuilder.
+        def bind_method(method_name, &)
+          ensure_current_accessor!
+
+          signature_builder.define(@current_accessor_name, method_name, &)
+          self
         end
 
         # Define a constraint.
@@ -99,6 +112,21 @@ module Domainic
           return if @current_accessor
 
           raise ArgumentError, 'No accessor currently being defined.'
+        end
+
+        # Returns the signature builder instance, initializing it if it doesn't already exist.
+        #
+        # @return [SignatureBuilder] the signature builder instance
+        def signature_builder
+          @signature_builder ||= SignatureBuilder.new
+        end
+
+        def stage_constraints
+          @data.each_pair do |accessor_name, constraints|
+            constraints.each_pair do |constraint_name, constraint_data|
+              @base.constraints.stage(accessor_name, constraint_name, **constraint_data)
+            end
+          end
         end
       end
     end
