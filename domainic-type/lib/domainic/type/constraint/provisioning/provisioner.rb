@@ -124,7 +124,7 @@ module Domainic
           def provision_intrinsic_constraints
             return if @base.is_a?(Class)
 
-            @staged.select { |_, staged| staged[:intrinsics] }.each_key { |name| provision(name) }
+            @staged.select { |_, staged| staged[:intrinsic] }.each_key { |name| provision(name) }
           end
 
           # Resolve the constraint class by name
