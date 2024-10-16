@@ -14,6 +14,11 @@ Naming/FileName:
   Exclude:
     - '**/domainic-*'
 
+Metrics/BlockLength:
+  AllowedMethods:
+    - constrain
+    - parameter
+
 RSpec/NestedGroups:
   AllowedGroups:
     - describe
