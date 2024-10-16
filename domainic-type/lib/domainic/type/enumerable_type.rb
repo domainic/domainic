@@ -194,6 +194,7 @@ module Domainic
         bind_method :of do
           desc 'Constrains the type of entries allowed in the Enumerable'
           concerning :entry_type
+          default_for_parameter :access_qualifier, :all
           aliases :having_entries_of, :having_elements_of, :having_members_of, :with_entries_of, :with_elements_of,
                   :with_members_of
 
