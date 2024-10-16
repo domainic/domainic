@@ -64,6 +64,7 @@ module Domainic
               options = signature_data[:definition].call(*arguments, **keyword_arguments)
               options = signature_data.fetch(:defaults, {}).merge(options)
               constraints.public_send(accessor_name).public_send(constraint_name, **options)
+              self
             end
           end
 

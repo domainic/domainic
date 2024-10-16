@@ -28,89 +28,89 @@ module Domainic
       # @!method being_duplicative
       #  Constrains the Enumerable to contain duplicate entries
       #  @!scope class
-      #  @return [void]
+      #  @return [EnumerableType]
       #
       # @!method being_duplicative
       #  Constrains the Enumerable to contain duplicate entries
-      #  @return [void]
+      #  @return [self]
       #
       # @!method being_empty
       #  Constrains the Enumerable to be empty
       #  @!scope class
-      #  @return [void]
+      #  @return [EnumerableType]
       #
       # @!method being_empty
       #  Constrains the Enumerable to be empty
-      #  @return [void]
+      #  @return [self]
       #
       # @!method being_populated
       #  Constrains the Enumerable to be populated
       #  @!scope class
-      #  @return [void]
+      #  @return [EnumerableType]
       #
       # @!method being_populated
       #  Constrains the Enumerable to be populated
-      #  @return [void]
+      #  @return [self]
       #
       # @!method being_ordered
       #  Constrains the Enumerable to be ordered
       #  @!scope class
-      #  @return [void]
+      #  @return [EnumerableType]
       #
       # @!method being_ordered
       #  Constrains the Enumerable to be ordered
-      #  @return [void]
+      #  @return [self]
       #
       # @!method being_unique
       #  Constrains the Enumerable to contain unique entries
       #  @!scope class
-      #  @return [void]
+      #  @return [EnumerableType]
       #
       # @!method being_unique
       #  Constrains the Enumerable to contain unique entries
-      #  @return [void]
+      #  @return [self]
       #
       # @!method being_unordered
       #  Constrains the Enumerable to be unordered
       #  @!scope class
-      #  @return [void]
+      #  @return [EnumerableType]
       #
       # @!method being_unordered
       #  Constrains the Enumerable to be unordered
-      #  @return [void]
+      #  @return [self]
       #
       # @!method containing(*entries)
       #  Constrains the Enumerable to contain certain entries
       #  @!scope class
       #  @param entries [Array] the entries that the Enumerable should contain
-      #  @return [void]
+      #  @return [EnumerableType]
       #
       # @!method containing(*entries)
       #  Constrains the Enumerable to contain certain entries
       #  @param entries [Array] the entries that the Enumerable should contain
-      #  @return [void]
+      #  @return [self]
       #
       # @!method excluding(*entries)
       #  Constrains the Enumerable not to contain certain entries
       #  @!scope class
       #  @param entries [Array] the entries that the Enumerable should not contain
-      #  @return [void]
+      #  @return [EnumerableType]
       #
       # @!method excluding(*entries)
       #  Constrains the Enumerable not to contain certain entries
       #  @param entries [Array] the entries that the Enumerable should not contain
-      #  @return [void]
+      #  @return [self]
       #
       # @!method of(type)
       #  Constrains the type of entries allowed in the Enumerable
       #  @!scope class
       #  @param type [Class] the type of entries allowed in the Enumerable
-      #  @return [void]
+      #  @return [EnumerableType]
       #
       # @!method of(type)
       #  Constrains the type of entries allowed in the Enumerable
       #  @param type [Class] the type of entries allowed in the Enumerable
-      #  @return [void]
+      #  @return [self]
       constrain :self do
         constraint :inclusion, name: :exclusion
         constraint :inclusion
@@ -205,47 +205,47 @@ module Domainic
       #  Constrains the minimum and maximum size of the Enumerable to a single value
       #  @!scope class
       #  @param value [Integer] the size of the Enumerable
-      #  @return [void]
+      #  @return [EnumerableType]
       #
       # @!method having_exact_size(value)
       #  Constrains the minimum and maximum size of the Enumerable to a single value
       #  @param value [Integer] the size of the Enumerable
-      #  @return [void]
+      #  @return [self]
       #
       # @!method having_maximum_size(value)
       #  Constrains the maximum size of the Enumerable
       #  @!scope class
       #  @param value [Integer] the maximum size of the Enumerable
-      #  @return [void]
+      #  @return [EnumerableType]
       #
       # @!method having_maximum_size(value)
       #  Constrains the maximum size of the Enumerable
       #  @param value [Integer] the maximum size of the Enumerable
-      #  @return [void]
+      #  @return [self]
       #
       # @!method having_minimum_size(value)
       #  Constrains the minimum size of the Enumerable
       #  @!scope class
       #  @param value [Integer] the minimum size of the Enumerable
-      #  @return [void]
+      #  @return [EnumerableType]
       #
       # @!method having_minimum_size(value)
       #  Constrains the minimum size of the Enumerable
       #  @param value [Integer] the minimum size of the Enumerable
-      #  @return [void]
+      #  @return [self]
       #
       # @!method having_size_between(minimum, maximum)
       #  Constrains the size of the Enumerable to be within a range
       #  @!scope class
       #  @param minimum [Integer] the minimum size of the Enumerable
       #  @param maximum [Integer] the maximum size of the Enumerable
-      #  @return [void]
+      #  @return [EnumerableType]
       #
       # @!method having_size_between(minimum, maximum)
       #  Constrains the size of the Enumerable to be within a range
       #  @param minimum [Integer] the minimum size of the Enumerable
       #  @param maximum [Integer] the maximum size of the Enumerable
-      #  @return [void]
+      #  @return [self]
       constrain :size do
         constraint :range
 
