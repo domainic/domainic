@@ -31,10 +31,10 @@ module Domainic
           # @return [void]
           def inject!
             @signatures.each_pair do |accessor_name, signatures|
-              signatures.each_pair do |constraint_name, signature_data|
-                inject_singleton_method!(signature_data)
-                inject_instance_method!(accessor_name, constraint_name, signature_data)
-                inject_aliases!(signature_data[:name], signature_data[:aliases])
+              signatures.each_pair do |primary_signature, signature_data|
+                inject_singleton_method!(primary_signature)
+                inject_instance_method!(accessor_name, signature_data[:constraint], primary_signature, signature_data)
+                inject_aliases!(primary_signature, signature_data.fetch(:aliases, []))
               end
             end
           end
@@ -57,11 +57,14 @@ module Domainic
           #
           # @param accessor_name [Symbol] the accessor name.
           # @param constraint_name [Symbol] the constraint name.
+          # @param signature_name [Symbol] the signature name.
           # @param signature_data [Hash{Symbol => Object}] the signature data.
           # @return [void]
-          def inject_instance_method!(accessor_name, constraint_name, signature_data)
-            @base.define_method(signature_data[:name]) do |*arguments, **keyword_arguments|
-              options = signature_data[:definition].call(*arguments, **keyword_arguments)
+          def inject_instance_method!(accessor_name, constraint_name, signature_name, signature_data)
+            return if @base.instance_methods.include?(signature_name)
+
+            @base.define_method(signature_name) do |*arguments, **keyword_arguments|
+              options = instance_exec(*arguments, **keyword_arguments, &signature_data[:definition])
               options = signature_data.fetch(:defaults, {}).merge(options)
               constraints.public_send(accessor_name).public_send(constraint_name, **options)
               self
@@ -70,11 +73,13 @@ module Domainic
 
           # Inject a singleton method onto the {BaseType type}.
           #
-          # @param signature_data [Hash{Symbol => Object}] the signature data.
+          # @param signature_name [Symbol] the signature name.
           # @return [void]
-          def inject_singleton_method!(signature_data)
-            @base.define_singleton_method(signature_data[:name]) do |*arguments, **keyword_arguments|
-              new.public_send(signature_data[:name], *arguments, **keyword_arguments)
+          def inject_singleton_method!(signature_name)
+            return if @base.respond_to?(signature_name)
+
+            @base.define_singleton_method(signature_name) do |*arguments, **keyword_arguments|
+              new.public_send(signature_name, *arguments, **keyword_arguments)
             end
           end
         end

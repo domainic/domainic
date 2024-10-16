@@ -32,14 +32,7 @@ module Domainic
           #
           # @return [Hash{Symbol => Hash{Symbol => Hash{Symbol => Object}}}] the signatures.
           def build
-            @data.each_with_object({}) do |(accessor_name, signatures), result|
-              result[accessor_name] ||= {}
-              signatures.each_pair do |signature_name, signature_data|
-                result[accessor_name][signature_data[:constraint]] = { name: signature_name }.merge(
-                  signature_data.slice(:aliases, :defaults, :definition, :description)
-                )
-              end
-            end
+            @data
           end
 
           # Associate a constraint with the current signature.
@@ -75,7 +68,7 @@ module Domainic
           # @return [self] the SignatureBuilder.
           def define(accessor_name, method_name, &)
             @current_signature_name = method_name.to_sym
-            @data[accessor_name.to_sym] = {}
+            @data[accessor_name.to_sym] ||= {}
             @current_signature = @data[accessor_name.to_sym][@current_signature_name] ||= {}
             instance_exec(&) if block_given?
             self
