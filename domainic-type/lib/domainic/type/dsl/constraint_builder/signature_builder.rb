@@ -20,7 +20,7 @@ module Domainic
           # @param alias_names [Array<String, Symbol>] the aliases to define.
           # @raise [ArgumentError] if no signature is currently being defined.
           # @return [self] the SignatureBuilder.
-          def aliases(alias_names)
+          def aliases(*alias_names)
             ensure_current_signature!
 
             @current_signature[:aliases] ||= [@current_signature_name]
