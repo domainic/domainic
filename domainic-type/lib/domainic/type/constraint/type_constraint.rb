@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'relational_constraint'
+require_relative 'specification/with_access_qualification'
 
 module Domainic
   module Type
@@ -13,6 +14,8 @@ module Domainic
       #
       # @since 0.1.0
       class TypeConstraint < RelationalConstraint
+        include Specification::WithAccessQualification
+
         # Defines the expectation method `:is_type?` for the constraint.
         expectation :is_type?
 
