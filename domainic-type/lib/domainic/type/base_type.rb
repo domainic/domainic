@@ -55,9 +55,30 @@ module Domainic
 
       # Initialize a new instance of BaseType.
       #
+      # @param options [Hash{String, Symbol => Object}] the options to initialize the type with.
       # @return [BaseType] the new instance of BaseType.
-      def initialize
+      def initialize(**options)
         @constraints = self.class.constraints.dup_with_base(self)
+        options.transform_keys(&:to_sym).each_pair do |method, arguments|
+          if arguments.is_a?(Hash)
+            public_send(method, **arguments)
+          else
+            public_send(method, *arguments)
+          end
+        end
+      end
+
+      # Validate the subject against the constraints.
+      #
+      # @param subject [Object] the subject to validate.
+      # @return [Boolean] true if the subject satisfies the constraints, false otherwise.
+      def validate(subject)
+        constraints.to_array.all? do |constraint|
+          valid = constraint.validate(subject)
+          break false if !valid && constraint.validation_options.fail_fast?
+
+          valid
+        end
       end
     end
   end

@@ -96,10 +96,9 @@ module Domainic
 
         # Initialize a new instance of `RelationalConstraint`.
         #
-        # @param base [Class<TypeBase>, TypeBaseType] The base type class.
         # @raise [NotImplementedError] if the subclass does not define an expectation.
         # @return [RelationalConstraint] The new constraint instance.
-        def initialize(base)
+        def initialize(...)
           super
           @expectation = self.class.instance_variable_get(:@expectation)
           raise NotImplementedError, "#{self.class} must define an expectation" if @expectation.nil?
