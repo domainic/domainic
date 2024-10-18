@@ -1,0 +1,8 @@
+# frozen_string_literal: true
+
+require 'spec_helper'
+require 'domainic/type/string_type'
+
+RSpec.describe Domainic::Type::StringType do
+  pending "add some examples to (or delete) #{__FILE__}"
+end
