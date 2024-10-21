@@ -1,0 +1,129 @@
+Anything:
+  constant: Domainic::Type::AnythingType
+  require_path: domainic/type/anything_type
+  aliases:
+    - Any
+    - Anything
+    - any
+    - anything
+  groups:
+    - core
+    - specification
+Array:
+  constant: Domainic::Type::ArrayType
+  require_path: domainic/type/array_type
+  aliases:
+    - Array
+    - List
+    - array
+    - list
+  groups:
+    - core
+    - enumerable
+Boolean:
+  constant: Domainic::Type::BooleanType
+  require_path: domainic/type/boolean_type
+  aliases:
+    - Bool
+    - Boolean
+    - bool
+    - boolean
+  groups:
+    - core
+Duck:
+  constant: Domainic::Type::DuckType
+  require_path: domainic/type/duck_type
+  aliases:
+    - Duck
+    - Interface
+    - duck
+    - interface
+  groups:
+    - core
+    - specification
+Enum:
+  constant: Domainic::Type::EnumType
+  require_path: domainic/type/enum_type
+  aliases:
+    - Enum
+    - Literal
+    - enum
+    - literal
+  groups:
+    - core
+    - specification
+Float:
+  constant: Domainic::Type::FloatType
+  require_path: domainic/type/float_type
+  aliases:
+    - Decimal
+    - Float
+    - decimal
+    - float
+  groups:
+    - core
+    - numeric
+Hash:
+  constant: Domainic::Type::HashType
+  require_path: domainic/type/hash_type
+  aliases:
+    - Hash
+    - Map
+    - hash
+    - map
+  groups:
+    - core
+    - enumerable
+Integer:
+  constant: Domainic::Type::IntegerType
+  require_path: domainic/type/integer_type
+  aliases:
+    - Int
+    - Integer
+    - Number
+    - int
+    - integer
+    - number
+  groups:
+    - core
+    - numeric
+Range:
+  constant: Domainic::Type::RangeType
+  require_path: domainic/type/range_type
+  aliases:
+    - Range
+    - range
+  groups:
+    - core
+    - enumerable
+String:
+  constant: Domainic::Type::StringType
+  require_path: domainic/type/string_type
+  aliases:
+    - String
+    - Text
+    - string
+    - text
+  groups:
+    - core
+    - string
+Union:
+  constant: Domainic::Type::UnionType
+  require_path: domainic/type/union_type
+  aliases:
+    - Either
+    - Union
+    - either
+    - union
+  groups:
+    - core
+    - specification
+Void:
+  constant: Domainic::Type::VoidType
+  require_path: domainic/type/void_type
+  aliases:
+    - Void
+    - void
+  groups:
+    - core
+    - specification
