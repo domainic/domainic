@@ -34,7 +34,15 @@ module Domainic
         # @param type [Class, Module, Domainic::Type::BaseType] The expected type.
         # @return [Boolean] `true` if the subject is of the expected type, `false` otherwise.
         def is_type?(subject, type) # rubocop:disable Naming/PredicateName
+          type = resolve_type(type)
           type.is_a?(Domainic::Type::BaseType) ? type.validate(subject) : subject.is_a?(type)
+        end
+
+        def resolve_type(type)
+          return type if type.is_a?(Domainic::Type::BaseType)
+          return type.new if type.is_a?(Class) && type < Domainic::Type::BaseType
+
+          type
         end
       end
     end

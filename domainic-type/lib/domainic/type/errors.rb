@@ -7,6 +7,8 @@ module Domainic
     # @since 0.1.0
     class Error < StandardError; end
 
+    class InvalidObjectError < Error; end
+
     # Raised when a {Constraint::Parameter} is given an invalid value.
     #
     # @since 0.1.0

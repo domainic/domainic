@@ -11,29 +11,52 @@ module Domainic
       private
 
       def const_missing(symbol)
-        return super unless respond_to?(symbol)
+        super unless respond_to_missing?(symbol)
 
-        public_send(symbol)
+        send(symbol)
       end
 
       def inject_type!(loader)
         loader.load
+        inject_type_constants!(loader)
+        inject_type_methods!(loader)
+      end
 
+      def inject_type_constants!(loader)
         type = Object.const_get(loader.constant)
-        define_method(loader.name) { |*arguments, **keyword_arguments| type.new(*arguments, **keyword_arguments) }
-        loader.aliases.each do |alias_name|
-          next if respond_to?(alias_name)
+        const_set(loader.name, type) unless const_defined?(loader.name) && !loader.in_group?(:ruby_core)
+        loader.aliases.select { |name| name.to_s.match?(/\A[A-Z]/) }.each do |name|
+          next if const_defined?(name)
 
-          alias_method(alias_name, loader.name)
+          const_set(name, type)
+        end
+      end
+
+      def inject_type_methods!(loader)
+        type = Object.const_get(loader.constant)
+
+        unless method_defined?(loader.name)
+          define_method(loader.name) do |*arguments, **keyword_arguments|
+            type.new(*arguments, **keyword_arguments)
+          end
+        end
+
+        loader.aliases.each do |name|
+          next if method_defined?(name)
+
+          alias_method(name, loader.name)
         end
       end
 
       def method_missing(method, ...)
+        return super unless respond_to_missing?(method)
+
         loader = registry.find(method)
-        return super if loader.nil?
+        return super unless loader
 
         inject_type!(loader)
-        public_send(method, ...)
+        type = Object.const_get(loader.constant)
+        type.new(...)
       end
 
       def registry
@@ -43,6 +66,8 @@ module Domainic
       def respond_to_missing?(method, include_private = false)
         registry.find(method) || super
       end
+
+      registry.all.select(&:loaded?).each { |loader| inject_type!(loader) }
     end
   end
 end
