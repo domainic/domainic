@@ -20,6 +20,7 @@ Array:
   groups:
     - core
     - enumerable
+    - ruby_core
 Boolean:
   constant: Domainic::Type::BooleanType
   require_path: domainic/type/boolean_type
@@ -63,6 +64,7 @@ Float:
   groups:
     - core
     - numeric
+    - ruby_core
 Hash:
   constant: Domainic::Type::HashType
   require_path: domainic/type/hash_type
@@ -74,6 +76,7 @@ Hash:
   groups:
     - core
     - enumerable
+    - ruby_core
 Integer:
   constant: Domainic::Type::IntegerType
   require_path: domainic/type/integer_type
@@ -87,6 +90,7 @@ Integer:
   groups:
     - core
     - numeric
+    - ruby_core
 Range:
   constant: Domainic::Type::RangeType
   require_path: domainic/type/range_type
@@ -96,6 +100,7 @@ Range:
   groups:
     - core
     - enumerable
+    - ruby_core
 String:
   constant: Domainic::Type::StringType
   require_path: domainic/type/string_type
@@ -107,6 +112,7 @@ String:
   groups:
     - core
     - string
+    - ruby_core
 Union:
   constant: Domainic::Type::UnionType
   require_path: domainic/type/union_type
