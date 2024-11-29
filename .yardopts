@@ -1,0 +1,9 @@
+**/*.rb
+--title Domainic
+--readme README.md
+--no-private
+--protected
+--markup-provider=redcarpet
+--markup=markdown
+--embed-mixins
+--plugin sitemap
