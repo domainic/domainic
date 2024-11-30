@@ -34,4 +34,6 @@ target :dev do
   signature 'domainic-dev/sig'
   check 'domainic-dev/lib'
   check 'bin'
+
+  library 'pathname'
 end
