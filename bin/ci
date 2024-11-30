@@ -1,0 +1,181 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# Simulate a ci run so that we can ensure our local changes will pass CI before pushing.
+
+require 'bundler/setup'
+require 'domainic-dev'
+require 'open3'
+
+COLOR_CODES = { blue: 34, cyan: 36, green: 32, red: 31, magenta: 35, white: 37, yellow: 33 }.freeze
+CONSOLE_LENGTH = 61
+
+@jobs = []
+
+def embolden(text)
+  "\e[1m#{text}\e[0m"
+end
+
+def clear_console
+  system('clear') || system('cls')
+end
+
+def colorize(text, color)
+  color_code = COLOR_CODES[color.to_sym]
+  raise ArgumentError, "Invalid color: #{color}" unless color_code
+
+  "\e[#{color_code}m#{text}\e[0m"
+end
+
+def completed_steps_count
+  @jobs.flat_map { |j| j[:steps] }.count { |s| s[:status] != :pending }
+end
+
+def failed_steps
+  @jobs.flat_map { |j| j[:steps] }.select { |s| s[:status] == :failure }
+end
+
+def job(name, &)
+  @current_job = { name: name, steps: [] }
+  instance_exec(&)
+  @jobs << @current_job
+  @current_job = nil
+end
+
+def render_console
+  clear_console
+  render_progress_bar
+  render_step_status_report
+  render_status_report
+end
+
+def render_progress_bar
+  percent = (completed_steps_count.to_f / total_steps_count * 100).round(1)
+  bar_length = 40
+  filled_length = (percent / 100 * bar_length).round
+  bar = ('#' * filled_length) + ('-' * (bar_length - filled_length))
+  puts "Progress: [#{bar}] #{percent}%\n\n"
+end
+
+def render_status_report
+  return unless step_statuses.all? { |s| s != :pending }
+
+  status_string = if step_statuses.all?(:success)
+                    colorize('✔ CI Success', :green)
+                  else
+                    colorize('✖ CI Failure', :red)
+                  end
+
+  puts embolden("\n #{status_string}")
+end
+
+def render_step_error_report
+  return if failed_steps.empty?
+
+  failed_steps.each do |s|
+    puts "\n#{embolden("#{colorize('==>', :red)} #{s[:name]}")}"
+    puts "\n#{s[:result][:stdout] + s[:result][:stderr]}"
+  end
+end
+
+def render_step_status_report
+  @jobs.map { |j| j[:steps] }.flatten.each do |s|
+    heading_length = "==> #{s[:heading]}".length
+    status_length = 9 # this is the max length of the available status strings
+    indent_size = CONSOLE_LENGTH - heading_length - status_length
+    puts embolden("#{colorize('==>', :cyan)} #{s[:heading]}#{' ' * indent_size}#{status_string(s)}")
+  end
+end
+
+def run(*commands)
+  result = { stdout: '', stderr: '', success: false }
+  Open3.popen3(*commands) do |stdin, stdout, stderr, wait_thread|
+    stdin.close
+    result[:stdout] = stdout.read
+    result[:stderr] = stderr.read
+    result[:success] = wait_thread.value.success?
+  end
+  result
+end
+
+def status_string(step)
+  case step[:status]
+  when :pending
+    colorize('Pending', :yellow)
+  when :success
+    colorize('✔ Success', :green)
+  when :failure
+    colorize('✖ Failure', :red)
+  end
+end
+
+def step(name, heading, &block)
+  raise ArgumentError, 'No job is being defined' unless @current_job
+
+  @current_job[:steps] << {
+    name: :"#{@current_job[:name]}/#{name}",
+    heading:,
+    status: :pending,
+    proc: block,
+    result: nil
+  }
+end
+
+def step_statuses
+  @jobs.flat_map { |j| j[:steps] }.map { |s| s[:status] }
+end
+
+def total_steps_count
+  @jobs.flat_map { |j| j[:steps] }.count
+end
+
+# Define the CI jobs
+job :setup do
+  step :ruby, 'Setting up ruby environment' do
+    run 'bin/setup'
+  end
+
+  step :generate_signatures, 'Generating signatures' do
+    run 'bin/generate/signatures'
+  end
+end
+
+job :lint do
+  step :ruby, 'Linting ruby files' do
+    run 'bundle', 'exec', 'rubocop'
+  end
+
+  step :markdown, 'Linting markdown files' do
+    run 'bin/lint/markdown'
+  end
+
+  step :types, 'Linting ruby types' do
+    run 'bundle', 'exec', 'steep', 'check'
+  end
+end
+
+job :test do
+  step :ruby, 'Running ruby tests' do
+    run 'bin/test'
+  end
+end
+
+job :package do
+  step :rubygems, 'Packaging gems' do
+    run 'bin/package'
+  end
+end
+
+# Run the CI
+render_console
+@jobs.each do |j|
+  j[:steps].each do |s|
+    result = instance_exec(&s[:proc])
+    s[:result] = result
+    s[:status] = result[:success] == true ? :success : :failure
+    render_console
+  end
+end
+
+# Render the error report
+render_step_error_report
