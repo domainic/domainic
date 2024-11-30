@@ -30,6 +30,11 @@
 #   # library "pathname"              # Standard libraries
 # end
 
+target :attributer do
+  signature 'domainic-attributer/sig'
+  check 'domainic-attributer/lib'
+end
+
 target :dev do
   signature 'domainic-dev/sig'
   check 'domainic-dev/lib'
