@@ -1,0 +1,49 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'bundler/setup'
+require 'domainic-dev'
+require 'fileutils'
+
+gem_names = ARGV
+gems = if gem_names.empty?
+         Domainic::Dev::Gem.all.reject { |gem| gem.name == 'domainic' }
+       else
+         gem_names.map do |gem_name|
+           gem = Domainic::Dev::Gem.find(gem_name)
+           raise ArgumentError, "Unknown gem: #{gem_name}" if gem.nil?
+
+           gem
+         end
+       end
+
+gems.each do |gem|
+  # persist the manifest if one exists
+  manifest_file = gem.paths.signature.join('manifest.yaml')
+  manifest = manifest_file.read if manifest_file.exist?
+
+  # clean the existing signature directory
+  FileUtils.rm_rf(gem.paths.signature.to_s)
+  FileUtils.mkdir_p(gem.paths.signature.to_s)
+
+  # write the manifest file
+  manifest_file.write(manifest) unless manifest.nil?
+
+  # generate the signatures
+  relative_lib = gem.paths.library.relative_path_from(Domainic::Dev.root)
+  relative_sig = gem.paths.signature.relative_path_from(Domainic::Dev.root)
+  system 'bundle', 'exec', 'rbs-inline', relative_lib.to_s, '--opt-out', '--base', relative_lib.to_s,
+         "--output=./#{relative_sig}/"
+
+  # clean up the signature files
+  gem.paths.signature.glob('**/*.rbs').each do |signature_file|
+    new_contents = signature_file.readlines.filter_map do |line|
+      if line.strip.start_with?('# @rbs', '# Generated from')
+        nil
+      else
+        line
+      end
+    end.join.strip
+    signature_file.write("#{new_contents.strip}\n")
+  end
+end

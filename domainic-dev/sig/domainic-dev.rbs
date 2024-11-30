@@ -1,5 +1,3 @@
-# Generated from domainic-dev/lib/domainic-dev.rb with RBS::Inline
-
 module Gem
   class Dependency
     attr_reader name: String

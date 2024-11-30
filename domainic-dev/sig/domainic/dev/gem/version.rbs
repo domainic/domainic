@@ -1,5 +1,3 @@
-# Generated from domainic-dev/lib/domainic/dev/gem/version.rb with RBS::Inline
-
 module Domainic
   module Dev
     class Gem
@@ -59,7 +57,6 @@ module Domainic
         # @param semver_version_string [String] the semantic version string.
         # @raise [ArgumentError] If the provided string does not conform to SemVer.
         # @return [Version] a new instance of Version.
-        # @rbs (String semver_version_string) -> void
         def initialize: (String semver_version_string) -> void
 
         # Defines the spaceship operator for Comparable.
@@ -67,7 +64,6 @@ module Domainic
         # @param other [Version] Another Version instance to compare against.
         #
         # @return [Integer] Returns `1` if self > other, `-1` if self < other, or `0` if equal.
-        # @rbs (untyped other) -> Integer?
         def <=>: (untyped other) -> Integer?
 
         # Compares two pre-release version strings according to Semantic Versioning rules.
@@ -90,7 +86,6 @@ module Domainic
         # @param preb [String, nil] The second pre-release version string.
         #
         # @return [Integer] Returns `1` if `prea` > `preb`, `-1` if `prea` < `preb`, or `0` if equal.
-        # @rbs (String? prea, String? preb) -> Integer?
         def compare_pre: (String? prea, String? preb) -> Integer?
 
         # Checks equality based on hash value.
@@ -98,13 +93,11 @@ module Domainic
         # @param other [Object] The object to compare with.
         #
         # @return [Boolean] `true` if other is a Version with the same attributes, `false` otherwise.
-        # @rbs (untyped other) -> bool
         def eql?: (untyped other) -> bool
 
         # Provides a hash value for the Version instance.
         #
         # @return [Integer] The hash value based on major, minor, patch, pre, and build.
-        # @rbs () -> Integer
         def hash: () -> Integer
 
         # Splits a pre-release or build metadata string into individual identifiers,
@@ -120,13 +113,11 @@ module Domainic
         # @return [Array<String, Integer>] An array of identifiers where:
         #   - Alphanumeric identifiers remain as strings.
         #   - Purely numeric identifiers are converted to integers.
-        # @rbs (String pre) -> Array[String | Integer]
         def identifiers: (String pre) -> Array[String | Integer]
 
         # Converts the Version instance to an Array.
         #
         # @return [Array<Integer, String, nil>] an Array representation of the Version.
-        # @rbs () -> Array[(Integer | String)?]
         def to_array: () -> Array[(Integer | String)?]
 
         alias to_a to_array
@@ -134,13 +125,11 @@ module Domainic
         # Converts the Version instance to a Gem::Version friendly string.
         #
         # @return [String] the Gem::Version friendly string.
-        # @rbs () -> String
         def to_gem_version_string: () -> String
 
         # Converts the Version instance to a Hash.
         #
         # @return [Hash{Symbol => String, Integer, nil}] A Hash representation of the Version.
-        # @rbs () -> Hash[Symbol, (String | Integer)?]
         def to_hash: () -> Hash[Symbol, (String | Integer)?]
 
         alias to_h to_hash
@@ -148,7 +137,6 @@ module Domainic
         # Converts the Version instance to a SemVer friendly string.
         #
         # @return [String] the SemVer friendly string.
-        # @rbs () -> String
         def to_semver_string: () -> String
 
         alias to_s to_semver_string
@@ -169,7 +157,6 @@ module Domainic
         # @param identifiers [Array<String, Integer>] The array of identifiers to map.
         #
         # @return [Array<Array<Integer, String, Integer>>] The mapped array of identifiers.
-        # @rbs (Array[String | Integer]) -> Array[Array[Integer | String]]
         def map_identifiers: (Array[String | Integer]) -> Array[Array[Integer | String]]
       end
     end

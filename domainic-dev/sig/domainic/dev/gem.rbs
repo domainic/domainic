@@ -1,5 +1,3 @@
-# Generated from domainic-dev/lib/domainic/dev/gem.rb with RBS::Inline
-
 module Domainic
   module Dev
     # Manager, build, version, and publish Domainic gems.
@@ -41,14 +39,12 @@ module Domainic
       # Get all gems in the Domainic mono-repo.
       #
       # @return [Array<Gem>] all gems in the Domainic mono-repo.
-      # @rbs () -> Array[Gem]
       def self.all: () -> Array[Gem]
 
       # Find a Domainic gem in the Domainic mono-repo by name.
       #
       # @param gem_name [String] the name of the gem to find.
       # @return [Gem, nil] the gem with the given name, or `nil` if no gem with the given name is found.
-      # @rbs (String gem_name) -> Gem?
       def self.find: (String gem_name) -> Gem?
 
       # Initialize a new instance of Gem.
@@ -56,13 +52,11 @@ module Domainic
       # @param root_directory [Pathname] the root directory of the Gem.
       # @raise [RuntimeError] if the Gem's gemspec is missing a valid SEMVER.
       # @return [Gem] a new instance of Gem.
-      # @rbs (Pathname root_directory) -> void
       def initialize: (Pathname root_directory) -> void
 
       # The {#name} in a constant friendly format.
       #
       # @return [String] the {#name} in a constant friendly format.
-      # @rbs () -> String
       def constant_name: () -> String
 
       private
@@ -70,7 +64,6 @@ module Domainic
       # Initialize dependencies and name from the gemspec file.
       #
       # @return [void]
-      # @rbs () -> void
       def initialize_with_gemspec: () -> void
 
       # Initialize the {Version}.
@@ -78,7 +71,6 @@ module Domainic
       # @return [void]
       # @raise [RuntimeError] if the Gem's gemspec is missing a valid SEMVER.
       # @return [void]
-      # @rbs () -> void
       def initialize_version: () -> void
     end
   end

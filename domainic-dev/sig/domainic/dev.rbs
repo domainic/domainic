@@ -1,5 +1,3 @@
-# Generated from domainic-dev/lib/domainic/dev.rb with RBS::Inline
-
 module Domainic
   # Tools and utilities for developing Domainic.
   #
@@ -8,7 +6,6 @@ module Domainic
     # The root directory of the Domainic monorepo.
     #
     # @return [Pathname] the root directory.
-    # @rbs () -> Pathname
     def self.root: () -> Pathname
   end
 end
