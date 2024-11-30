@@ -1,0 +1,77 @@
+module Domainic
+  module Dev
+    # Manager, build, version, and publish Domainic gems.
+    #
+    # @since 0.1.0
+    class Gem
+      @dependencies: Array[::Gem::Dependency]
+
+      @version: Version
+
+      @paths: PathSet
+
+      @name: String
+
+      # @!attribute [r] dependencies
+      #   The dependencies of the Gem.
+      #
+      #   @return [Array<::Gem::Dependency>] the dependencies of the Gem.
+      attr_reader dependencies: Array[::Gem::Dependency]
+
+      # @!attribute [r] name
+      #   The name of the Gem.
+      #
+      #   @return [String] the name of the Gem.
+      attr_reader name: String
+
+      # @!attribute [r] paths
+      #   The {PathSet paths} belonging to the Gem.
+      #
+      #   @return [PathSet] the {PathSet paths} belonging to the Gem.
+      attr_reader paths: PathSet
+
+      # @!attribute [r] version
+      #   The Gem's {Version}.
+      #
+      #   @return [Version] the Gem's {Version}.
+      attr_reader version: Version
+
+      # Get all gems in the Domainic mono-repo.
+      #
+      # @return [Array<Gem>] all gems in the Domainic mono-repo.
+      def self.all: () -> Array[Gem]
+
+      # Find a Domainic gem in the Domainic mono-repo by name.
+      #
+      # @param gem_name [String] the name of the gem to find.
+      # @return [Gem, nil] the gem with the given name, or `nil` if no gem with the given name is found.
+      def self.find: (String gem_name) -> Gem?
+
+      # Initialize a new instance of Gem.
+      #
+      # @param root_directory [Pathname] the root directory of the Gem.
+      # @raise [RuntimeError] if the Gem's gemspec is missing a valid SEMVER.
+      # @return [Gem] a new instance of Gem.
+      def initialize: (Pathname root_directory) -> void
+
+      # The {#name} in a constant friendly format.
+      #
+      # @return [String] the {#name} in a constant friendly format.
+      def constant_name: () -> String
+
+      private
+
+      # Initialize dependencies and name from the gemspec file.
+      #
+      # @return [void]
+      def initialize_with_gemspec: () -> void
+
+      # Initialize the {Version}.
+      #
+      # @return [void]
+      # @raise [RuntimeError] if the Gem's gemspec is missing a valid SEMVER.
+      # @return [void]
+      def initialize_version: () -> void
+    end
+  end
+end

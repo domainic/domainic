@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'bundler/setup'
+require 'domainic-dev'
+
+gem_names = ARGV
+gems = if gem_names.empty?
+         Domainic::Dev::Gem.all
+       else
+         gem_names.map do |gem_name|
+           gem = Domainic::Dev::Gem.find(gem_name)
+           raise ArgumentError, "Unknown gem: #{gem_name}" if gem.nil?
+
+           gem
+         end
+       end
+
+result = system('bundle', 'exec', 'rspec', *gems.map { |gem| gem.paths.test.to_s })
+exit 1 unless result

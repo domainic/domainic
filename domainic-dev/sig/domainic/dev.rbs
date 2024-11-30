@@ -1,0 +1,11 @@
+module Domainic
+  # Tools and utilities for developing Domainic.
+  #
+  # @since 0.1.0
+  module Dev
+    # The root directory of the Domainic monorepo.
+    #
+    # @return [Pathname] the root directory.
+    def self.root: () -> Pathname
+  end
+end

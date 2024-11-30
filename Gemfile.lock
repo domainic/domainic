@@ -3,6 +3,11 @@ PATH
   specs:
     domainic (0.1.0)
 
+PATH
+  remote: domainic-dev
+  specs:
+    domainic-dev (0.1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -154,6 +159,7 @@ PLATFORMS
 
 DEPENDENCIES
   domainic!
+  domainic-dev!
   github-markup
   mdl
   rbs

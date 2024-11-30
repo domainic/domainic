@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'bundler/setup'
+require 'domainic-dev'
+require 'fileutils'
+
+gem_names = ARGV
+gems = if gem_names.empty?
+         Domainic::Dev::Gem.all
+       else
+         gem_names.map do |gem_name|
+           gem = Domainic::Dev::Gem.find(gem_name)
+           raise ArgumentError, "Unknown gem: #{gem_name}" if gem.nil?
+
+           gem
+         end
+       end
+
+gems.each do |gem|
+  # build the gem
+  system 'gem', 'build', '-V', gem.paths.gemspec.to_s
+
+  # move the gem to the pkg directory
+  FileUtils.mkdir_p('pkg')
+  FileUtils.mv("#{gem.name}-#{gem.version.to_gem_version_string}.gem", 'pkg')
+end
