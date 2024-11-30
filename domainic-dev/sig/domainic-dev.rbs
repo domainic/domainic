@@ -1,1 +1,15 @@
 # Generated from domainic-dev/lib/domainic-dev.rb with RBS::Inline
+
+module Gem
+  class Dependency
+    attr_reader name: String
+  end
+
+  class Specification
+    attr_reader dependencies: Array[Dependency]
+
+    attr_reader name: String
+
+    def self.load: (String gemspec_path) -> instance
+  end
+end
