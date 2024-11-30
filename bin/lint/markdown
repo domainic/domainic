@@ -1,0 +1,46 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'bundler/setup'
+require 'domainic-dev'
+require 'set'
+
+documentation_messages = Set.new
+markdown_files = Domainic::Dev.root
+                              .glob('**/*.md')
+                              .reject { |pathname| pathname.to_s.include?('/vendor/') }
+
+results = markdown_files.map do |file|
+  output = `bundle exec mdl #{file}`
+  success = output.strip.empty?
+  relative_file = file.relative_path_from(Domainic::Dev.root)
+  message = success ? "✅ #{relative_file}" : "❌ #{relative_file}"
+  { success: success, message: message, file: file, output: output }
+end
+
+results.each do |result|
+  puts result[:message]
+  next if result[:success]
+
+  lines = result[:output].gsub("#{result[:file]}:", 'L').lines.map(&:chomp)
+
+  # Find index of the documentation section
+  doc_index = lines.index('Further documentation is available for these failures:')
+  if doc_index
+    error_lines = lines[0...doc_index]
+    doc_lines = lines[(doc_index + 1)..]
+    documentation_messages.merge(doc_lines)
+  else
+    error_lines = lines
+  end
+
+  error_lines.reject!(&:empty?) # Remove empty lines from error_lines
+  puts error_lines.map { |line| "  - #{line}" }.join("\n")
+end
+
+unless documentation_messages.empty?
+  puts "\nFurther documentation is available for these failures:"
+  documentation_messages.each { |message| puts " #{message}" }
+end
+
+exit 1 unless results.all? { |result| result[:success] }
