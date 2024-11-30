@@ -1,0 +1,9 @@
+# Generated from domainic-dev/lib/domainic/dev.rb with RBS::Inline
+
+module Domainic
+  # Tools and utilities for developing Domainic.
+  #
+  # @since 0.1.0
+  module Dev
+  end
+end
