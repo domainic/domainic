@@ -125,7 +125,7 @@ module Domainic
       # @param coercer [Proc, Symbol, true] The coercer to apply
       # @param value [Object] The value to coerce
       # @return [Object] The coerced value
-      def coerce_value: (^(untyped value) -> untyped | Symbol | true coercer, untyped value) -> untyped
+      def coerce_value: (Proc | Symbol | true coercer, untyped value) -> untyped
 
       # Returns a qualified name for error messages.
       #

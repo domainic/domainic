@@ -186,7 +186,7 @@ module Domainic
       # @param coercer [Proc, Symbol, true] The coercer to apply
       # @param value [Object] The value to coerce
       # @return [Object] The coerced value
-      # @rbs (^(untyped value) -> untyped | Symbol | true coercer, untyped value) -> untyped
+      # @rbs (Proc | Symbol | true coercer, untyped value) -> untyped
       def coerce_value(coercer, value)
         case coercer
         when Proc
