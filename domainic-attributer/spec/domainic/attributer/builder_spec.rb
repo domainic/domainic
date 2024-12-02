@@ -120,6 +120,16 @@ RSpec.describe Domainic::Attributer::Builder do
       attribute = definitions[:test].attribute
       expect(attribute.default).to eq('test')
     end
+
+    context 'when the value is falsy' do
+      let(:value) { false }
+
+      it 'is expected to set the value' do
+        default.build!
+        attribute = definitions[:test].attribute
+        expect(attribute.default).to be(false)
+      end
+    end
   end
 
   describe '#description' do

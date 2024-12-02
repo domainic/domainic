@@ -37,8 +37,8 @@ module Domainic
       # @return [Builder] the builder instance for method chaining
       # @rbs (
       #   String | Symbol option_name,
-      #   Class | Module | ^(untyped value) -> bool type_validator,
-      #   **untyped options,
+      #   ?(Class | Module | Proc) type_validator,
+      #   **untyped options
       #   ) ?{ (?) [self: Builder] -> void } -> Builder
       def option(option_name, ...)
         __builder__.define(option_name, ...).build!

@@ -3,6 +3,7 @@
 require 'domainic/attributer/attribute'
 require 'domainic/attributer/attribute_definition'
 require 'domainic/attributer/method_injector'
+require 'domainic/attributer/undefined'
 
 module Domainic
   module Attributer
@@ -47,9 +48,7 @@ module Domainic
       # @param proc_symbol_or_true [Proc, Symbol, true, nil] The coercer to add
       # @yield An optional block to use as the coercer
       # @return [self] the Builder instance
-      # @rbs (
-      #   ^(untyped value) -> untyped | Symbol | true proc_symbol_or_true
-      #   ) ?{ (?) -> void } -> self
+      # @rbs (?(Proc | Symbol | true) proc_symbol_or_true) ?{ (?) -> void } -> self
       def coerce_with(proc_symbol_or_true = nil, &block)
         ensure_current_definition!
         current_definition[:attribute_options][:coercers] << (proc_symbol_or_true || block)
@@ -62,12 +61,10 @@ module Domainic
       # @param value_or_proc [Object, Proc, nil] The default value or a proc to generate it
       # @yield An optional block to generate the default value
       # @return [self] the Builder instance
-      # @rbs (
-      #   ^() -> untyped | untyped value_or_proc,
-      #   ) ?{ (?) -> void } -> self
-      def default(value_or_proc = nil, &block)
+      # @rbs (?(Proc | untyped) value_or_proc) ?{ (?) -> void } -> self
+      def default(value_or_proc = Undefined, &block)
         ensure_current_definition!
-        current_definition[:attribute_options][:default] = (value_or_proc || block)
+        current_definition[:attribute_options][:default] = value_or_proc == Undefined ? block : value_or_proc
         self
       end
 
@@ -80,7 +77,7 @@ module Domainic
       # @return [self] the Builder instance
       # @rbs (
       #   String | Symbol attribute_name,
-      #   Class | Module | ^(untyped value) -> bool type_validator,
+      #   ?(Class | Module | Proc) type_validator,
       #   **untyped options,
       #   ) ?{ (?) [self: Builder] -> void } -> self
       def define(attribute_name, type_validator = nil, **options, &block)
@@ -118,7 +115,7 @@ module Domainic
       # @param proc [Proc, nil] The callback to execute
       # @yield An optional block to use as the callback
       # @return [self] the Builder instance
-      # @rbs (^(untyped value) -> void proc) ?{ (?) -> void } -> self
+      # @rbs (?Proc proc) ?{ (?) -> void } -> self
       def on_change(proc = nil, &block)
         ensure_current_definition!
         current_definition[:attribute_options][:callbacks] << (proc || block)
@@ -140,9 +137,7 @@ module Domainic
       # @param case_equality_or_proc [#===, Proc, nil] The validator to add
       # @yield An optional block to use as the validator
       # @return [self] the Builder instance
-      # @rbs (
-      #   Class | Module | ^(untyped value) -> bool case_equality_or_proc,
-      #   ) ?{ (?) -> void } -> self
+      # @rbs (?(Class | Module | Proc) case_equality_or_proc) ?{ (?) -> void } -> self
       def validate_with(case_equality_or_proc = nil, &block)
         ensure_current_definition!
         current_definition[:attribute_options][:validators] << (case_equality_or_proc || block)
@@ -166,11 +161,7 @@ module Domainic
       # @param type_validator [Class, Module, Proc] Optional type constraint
       # @param options [Hash] Configuration options for the attribute
       # @return [void]
-      # @rbs (
-      #   String | Symbol attribute_name,
-      #   (Class | Module | ^(untyped value) -> bool) type_validator,
-      #   **untyped options
-      #   ) -> void
+      # @rbs (String | Symbol attribute_name, (Class | Module | Proc)? type_validator, **untyped options) -> void
       def build_current_definition(attribute_name, type_validator, **options)
         @current_definition = @data[attribute_name.to_sym] ||= {}
         current_definition.merge!(reader: options.fetch(:reader, :public), writer: options.fetch(:writer, :public))
@@ -187,11 +178,7 @@ module Domainic
       # @param type_validator [Class, Module, Proc] Optional type constraint
       # @param options [Hash] Configuration options for the attribute
       # @return [void]
-      # @rbs (
-      #   String | Symbol attribute_name,
-      #   Class | Module | ^(untyped value) -> bool type_validator,
-      #   **untyped options
-      #   ) -> void
+      # @rbs (String | Symbol attribute_name, (Class | Module | Proc)? type_validator, **untyped options) -> void
       def build_current_definition_attribute_options(attribute_name, type_validator, **options)
         attribute_options = current_definition[:attribute_options] ||=
           Attribute::DEFAULT_OPTIONS.transform_values(&:dup)

@@ -34,7 +34,7 @@ module Domainic
       # @param proc_symbol_or_true [Proc, Symbol, true, nil] The coercer to add
       # @yield An optional block to use as the coercer
       # @return [self] the Builder instance
-      def coerce_with: (^(untyped value) -> untyped | Symbol | true proc_symbol_or_true) ?{ (?) -> void } -> self
+      def coerce_with: (?Proc | Symbol | true proc_symbol_or_true) ?{ (?) -> void } -> self
 
       alias coerce coerce_with
 
@@ -43,7 +43,7 @@ module Domainic
       # @param value_or_proc [Object, Proc, nil] The default value or a proc to generate it
       # @yield An optional block to generate the default value
       # @return [self] the Builder instance
-      def default: (^() -> untyped | untyped value_or_proc) ?{ (?) -> void } -> self
+      def default: (?Proc | untyped value_or_proc) ?{ (?) -> void } -> self
 
       # Begins the definition of a new attribute.
       #
@@ -52,7 +52,7 @@ module Domainic
       # @param options [Hash] Configuration options for the attribute
       # @yield [Builder] An optional block for additional configuration
       # @return [self] the Builder instance
-      def define: (String | Symbol attribute_name, Class | Module | ^(untyped value) -> bool type_validator, **untyped options) ?{ (?) [self: Builder] -> void } -> self
+      def define: (String | Symbol attribute_name, ?Class | Module | Proc type_validator, **untyped options) ?{ (?) [self: Builder] -> void } -> self
 
       # Sets the description for the current attribute.
       #
@@ -73,7 +73,7 @@ module Domainic
       # @param proc [Proc, nil] The callback to execute
       # @yield An optional block to use as the callback
       # @return [self] the Builder instance
-      def on_change: (^(untyped value) -> void proc) ?{ (?) -> void } -> self
+      def on_change: (?Proc proc) ?{ (?) -> void } -> self
 
       # Makes the current attribute required (non-nil).
       #
@@ -85,7 +85,7 @@ module Domainic
       # @param case_equality_or_proc [#===, Proc, nil] The validator to add
       # @yield An optional block to use as the validator
       # @return [self] the Builder instance
-      def validate_with: (Class | Module | ^(untyped value) -> bool case_equality_or_proc) ?{ (?) -> void } -> self
+      def validate_with: (?Class | Module | Proc case_equality_or_proc) ?{ (?) -> void } -> self
 
       alias validates validate_with
 
@@ -102,7 +102,7 @@ module Domainic
       # @param type_validator [Class, Module, Proc] Optional type constraint
       # @param options [Hash] Configuration options for the attribute
       # @return [void]
-      def build_current_definition: (String | Symbol attribute_name, Class | Module | ^(untyped value) -> bool type_validator, **untyped options) -> void
+      def build_current_definition: (String | Symbol attribute_name, (Class | Module | Proc)? type_validator, **untyped options) -> void
 
       # Sets up the options for the current attribute definition.
       #
@@ -110,7 +110,7 @@ module Domainic
       # @param type_validator [Class, Module, Proc] Optional type constraint
       # @param options [Hash] Configuration options for the attribute
       # @return [void]
-      def build_current_definition_attribute_options: (String | Symbol attribute_name, Class | Module | ^(untyped value) -> bool type_validator, **untyped options) -> void
+      def build_current_definition_attribute_options: (String | Symbol attribute_name, (Class | Module | Proc)? type_validator, **untyped options) -> void
 
       # Constructs and injects an attribute from its definition.
       #
