@@ -3,6 +3,7 @@
 require 'domainic/attributer/attribute'
 require 'domainic/attributer/attribute_definition'
 require 'domainic/attributer/method_injector'
+require 'domainic/attributer/undefined'
 
 module Domainic
   module Attributer
@@ -65,9 +66,9 @@ module Domainic
       # @rbs (
       #   ^() -> untyped | untyped value_or_proc,
       #   ) ?{ (?) -> void } -> self
-      def default(value_or_proc = nil, &block)
+      def default(value_or_proc = Undefined, &block)
         ensure_current_definition!
-        current_definition[:attribute_options][:default] = (value_or_proc || block)
+        current_definition[:attribute_options][:default] = value_or_proc == Undefined ? block : value_or_proc
         self
       end
 
