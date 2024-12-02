@@ -1,0 +1,59 @@
+module Domainic
+  module Attributer
+    # Provides class-level functionality for attribute definition and management.
+    # When Attributer is included in a class, these methods become class methods
+    # allowing for attribute definition using the option DSL.
+    #
+    # The module manages a builder instance per class, allowing for inherited
+    # attribute definitions while preventing cross-class contamination.
+    #
+    # @since 0.1.0
+    module ClassMethods
+      @__builder__: Builder
+
+      @__attribute_definitions__: Hash[Symbol, AttributeDefinition]
+
+      # Defines a new attribute with optional type validation.
+      #
+      # @example Simple attribute
+      #   option :name, String
+      #
+      # @example Attribute with configuration
+      #   option :age, Integer do
+      #     validates { |value| value >= 0 }
+      #     default 0
+      #   end
+      #
+      # @example Attribute with custom visibility
+      #   option :secret_key, String, reader: :private do
+      #     required
+      #   end
+      #
+      # @see Builder#define
+      #
+      # @param option_name [String, Symbol] The name of the attribute
+      # @yield Block for additional attribute configuration
+      # @return [Builder] the builder instance for method chaining
+      def option: (String | Symbol option_name, Class | Module | ^(untyped value) -> bool type_validator, **untyped options) ?{ (?) [self: Builder] -> void } -> Builder
+
+      private
+
+      # Handles attribute inheritance when a class is subclassed.
+      # Ensures the subclass gets its own builder and copies of parent's attributes.
+      #
+      # @param subclass [Class] The class inheriting from this one
+      # @return [void]
+      def inherited: (untyped subclass) -> void
+
+      # Gets the attribute definitions hash, creating it if needed.
+      #
+      # @return [Hash{Symbol => AttributeDefinition}] hash of attribute definitions
+      def __attribute_definitions__: () -> Hash[Symbol, AttributeDefinition]
+
+      # Gets the builder instance for this class, creating it if needed.
+      #
+      # @return [Builder] the builder instance for this class
+      def __builder__: () -> Builder
+    end
+  end
+end
