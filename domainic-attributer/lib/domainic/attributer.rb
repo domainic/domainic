@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'domainic/attributer/attribute'
 require 'domainic/attributer/undefined'
 
 module Domainic
