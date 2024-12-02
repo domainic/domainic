@@ -1,0 +1,12 @@
+module Domainic
+  module Attributer
+    # A singleton object representing an undefined value.
+    #
+    # This object is used internally to differentiate between an attribute that has been set to `nil`
+    # and an attribute that has not been set at all (i.e., is undefined).
+    #
+    # @!visibility private
+    # @since 0.1.0
+    Undefined: Object
+  end
+end
