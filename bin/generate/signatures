@@ -17,6 +17,43 @@ gems = if gem_names.empty?
          end
        end
 
+def skip_line?(line, comment_block_to_remove)
+  return true if line.strip.start_with?('# Generated from')
+  return true if comment_block_to_remove && line.start_with?(comment_block_to_remove)
+
+  false
+end
+
+def rbs_comment_start?(line)
+  line.strip.match?(/^\#.*@rbs/)
+end
+
+def update_comment_block(line, comment_block_to_remove)
+  if rbs_comment_start?(line)
+    line.match(/^(\s*#)/)[1]
+  elsif comment_block_to_remove && !line.start_with?(comment_block_to_remove)
+    nil
+  else
+    comment_block_to_remove
+  end
+end
+
+def clean_rbs_comments(content)
+  lines = content.lines
+  cleaned_lines = []
+  comment_block_to_remove = nil
+
+  lines.each do |line|
+    comment_block_to_remove = update_comment_block(line, comment_block_to_remove)
+    cleaned_lines << line unless skip_line?(line, comment_block_to_remove)
+  end
+
+  # Clean up any multiple blank lines
+  content = cleaned_lines.join
+  content.gsub!(/\n{3,}/, "\n\n")
+  "#{content.strip}\n"
+end
+
 gems.each do |gem|
   # persist the manifest if one exists
   manifest_file = gem.paths.signature.join('manifest.yaml')
@@ -37,13 +74,8 @@ gems.each do |gem|
 
   # clean up the signature files
   gem.paths.signature.glob('**/*.rbs').each do |signature_file|
-    new_contents = signature_file.readlines.filter_map do |line|
-      if line.strip.start_with?('# @rbs', '# Generated from')
-        nil
-      else
-        line
-      end
-    end.join.strip
-    signature_file.write("#{new_contents.strip}\n")
+    content = signature_file.read
+    cleaned_content = clean_rbs_comments(content)
+    signature_file.write(cleaned_content)
   end
 end
