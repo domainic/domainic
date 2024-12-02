@@ -2,6 +2,7 @@
 
 require 'domainic/attributer/attribute'
 require 'domainic/attributer/attribute_definition'
+require 'domainic/attributer/method_injector'
 require 'domainic/attributer/undefined'
 
 module Domainic
