@@ -4,6 +4,7 @@ require 'domainic/attributer/attribute'
 require 'domainic/attributer/attribute_definition'
 require 'domainic/attributer/builder'
 require 'domainic/attributer/class_methods'
+require 'domainic/attributer/instance_methods'
 require 'domainic/attributer/method_injector'
 require 'domainic/attributer/undefined'
 
