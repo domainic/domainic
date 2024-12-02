@@ -1,0 +1,61 @@
+module Domainic
+  module Attributer
+    # Handles the injection of attribute accessor methods into a class.
+    # For each AttributeDefinition, it creates reader, writer, and helper methods
+    # with the appropriate visibility (public or private).
+    #
+    # The injector ensures methods are only defined once and handles method
+    # name conflicts safely.
+    #
+    # @since 0.1.0
+    class MethodInjector
+      @base: untyped
+
+      # Creates a new MethodInjector for the given base object.
+      #
+      # @param base [Class, Object] The class or instance to inject methods into
+      # @return [void]
+      def initialize: (untyped base) -> void
+
+      # Creates a copy of this injector for a new base object.
+      #
+      # @param new_base [Class, Object] The new base class or instance
+      # @return [MethodInjector] A new injector instance
+      def dup_with_base: (untyped new_base) -> instance
+
+      # Injects accessor methods for an attribute definition.
+      # Creates reader, writer, and undefined check methods with the specified visibility.
+      #
+      # @param attribute_definition [AttributeDefinition] The attribute to create methods for
+      # @return [void]
+      def inject!: (AttributeDefinition attribute_definition) -> void
+
+      private
+
+      # Safely defines a method if it doesn't already exist.
+      #
+      # @param method_name [Symbol] The name of the method to define
+      # @yield The method body
+      # @return [void]
+      def define_safe_method: (Symbol method_name) { (?) [self: untyped] -> void } -> void
+
+      # Injects the reader method for an attribute.
+      #
+      # @param attribute_definition [AttributeDefinition] The attribute to create the reader for
+      # @return [void]
+      def inject_reader_method!: (AttributeDefinition attribute_definition) -> void
+
+      # Injects the undefined check method for an attribute.
+      #
+      # @param attribute_definition [AttributeDefinition] The attribute to create the check for
+      # @return [void]
+      def inject_undefined_method!: (AttributeDefinition attribute_definition) -> void
+
+      # Injects the writer method for an attribute.
+      #
+      # @param attribute_definition [AttributeDefinition] The attribute to create the writer for
+      # @return [void]
+      def inject_writer_method!: (AttributeDefinition attribute_definition) -> void
+    end
+  end
+end

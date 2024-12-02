@@ -17,3 +17,7 @@ Or install it yourself as:
 ```bash
 gem install domainic
 ```
+
+## Included Gems
+
+* [Domainic::Attributer](./domainic-attributer/README.md)
