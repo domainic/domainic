@@ -1,0 +1,85 @@
+# Generated from domainic-dev/lib/domainic/dev/cli/command/generate_signatures_command.rb with RBS::Inline
+
+module Domainic
+  module Dev
+    class CLI < Thor
+      module Command
+        # A command to generate RBS type signatures for Domainic gems.
+        #
+        # This class extends {BaseCommand} and includes {Mixin::GemNamesArgument} to provide functionality for
+        # generating, cleaning, and managing RBS type signatures for gems. It handles the full signature generation
+        # workflow including cleaning directories, generating signatures, and updating RBS collections.
+        #
+        # @author {https://aaronmallen.me Aaron Allen}
+        # @since 0.1.0
+        class GenerateSignaturesCommand < BaseCommand
+          include Mixin::GemNamesArgument
+
+          # List of gems that should not have signatures generated.
+          #
+          # @return [Array<String>] the list of gem names to skip
+          DISALLOW_SIGNATURES: Array[String]
+
+          # Execute the signature generation command.
+          #
+          # @return [void]
+          # @rbs () -> void
+          def execute: () -> void
+
+          private
+
+          # Clean RBS comments from a content string.
+          #
+          # @param content [String] the content to clean
+          # @return [String] the cleaned content
+          # @rbs (String content) -> String
+          def clean_rbs_comments: (String content) -> String
+
+          # Clean and prepare the signature directory for a gem.
+          #
+          # @param gem [Gem] the gem to clean signatures for
+          # @return [void]
+          # @rbs (Gem gem) -> void
+          def clean_sig_directory_for_gem: (Gem gem) -> void
+
+          # Clean generated signatures for a gem.
+          #
+          # @param gem [Gem] the gem to clean signatures for
+          # @return [void]
+          # @rbs (Gem gem) -> void
+          def clean_signatures_for_gem: (Gem gem) -> void
+
+          # Generate RBS signatures for a gem.
+          #
+          # @param gem [Gem] the gem to generate signatures for
+          # @return [void]
+          # @rbs (Gem gem) -> void
+          def generate_signatures_for_gem: (Gem gem) -> void
+
+          # Check if a line starts an RBS comment block.
+          #
+          # @param line [String] the line to check
+          # @return [Boolean] true if the line starts an RBS comment block
+          # @rbs (String line) -> bool
+          def rbs_comment_start?: (String line) -> bool
+
+          # Check if a line should be skipped during cleaning.
+          #
+          # @param line [String] the line to check
+          # @param comment_block_to_remove [String, nil] the current comment block pattern
+          # @return [Boolean] true if the line should be skipped
+          # @rbs (String line, String? comment_block_to_remove) -> bool
+          def skip_line?: (String line, String? comment_block_to_remove) -> bool
+
+          # Update the current comment block based on a line.
+          #
+          # @param line [String] the line to check
+          # @param comment_block_to_remove [String, nil] the current comment block pattern
+          # @return [String, nil] the updated comment block pattern
+          # @rbs (String line, String? comment_block_to_remove) -> String?
+          def update_comment_block: (String line, String? comment_block_to_remove) -> String?
+        end
+      end
+    end
+  end
+end

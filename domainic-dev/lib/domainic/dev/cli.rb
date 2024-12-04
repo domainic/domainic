@@ -3,6 +3,7 @@
 require 'domainic/dev/cli/command/package_gems_command'
 require 'domainic/dev/cli/command/publish_gems_command'
 require 'domainic/dev/cli/command/run_tests_command'
+require 'domainic/dev/cli/generate_cli'
 require 'domainic/dev/cli/lint_cli'
 require 'thor'
 
@@ -23,6 +24,11 @@ module Domainic
       def self.exit_on_failure? = true
 
       # steep:ignore:start
+      map 'g' => 'generate'
+
+      desc 'generate <COMMAND>', 'Domainic generators'
+      subcommand('generate', GenerateCLI)
+
       desc 'lint [COMMAND]', 'Lint commands'
       subcommand('lint', LintCLI)
 
