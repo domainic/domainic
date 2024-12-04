@@ -1,5 +1,3 @@
-# Generated from domainic-dev/lib/domainic/dev/cli/command/lint_ruby_types_command.rb with RBS::Inline
-
 module Domainic
   module Dev
     class CLI < Thor
@@ -14,7 +12,6 @@ module Domainic
           # Execute the Ruby type checking command.
           #
           # @return [void]
-          # @rbs () -> void
           def execute: () -> void
         end
       end

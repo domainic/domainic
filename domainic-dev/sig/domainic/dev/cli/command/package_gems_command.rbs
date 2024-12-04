@@ -1,5 +1,3 @@
-# Generated from domainic-dev/lib/domainic/dev/cli/command/package_gems_command.rb with RBS::Inline
-
 module Domainic
   module Dev
     class CLI < Thor
@@ -17,7 +15,6 @@ module Domainic
           # Execute the gem packaging command.
           #
           # @return [void]
-          # @rbs () -> void
           def execute: () -> void
 
           private
@@ -26,7 +23,6 @@ module Domainic
           #
           # @param gem [Gem] the gem to package
           # @return [Boolean] true if packaging was successful
-          # @rbs (Gem) -> bool
           def package_gem: (Gem) -> bool
         end
       end

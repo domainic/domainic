@@ -1,5 +1,3 @@
-# Generated from domainic-dev/lib/domainic/dev/gem/path_set.rb with RBS::Inline
-
 module Domainic
   module Dev
     class Gem
@@ -40,7 +38,6 @@ module Domainic
         #
         # @param root_directory [Pathname] the root directory of the {Gem}
         # @return [PathSet] a new instance of PathSet
-        # @rbs (Pathname root_directory) -> void
         def initialize: (Pathname root_directory) -> void
       end
     end

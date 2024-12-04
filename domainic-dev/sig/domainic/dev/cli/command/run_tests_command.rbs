@@ -1,5 +1,3 @@
-# Generated from domainic-dev/lib/domainic/dev/cli/command/run_tests_command.rb with RBS::Inline
-
 module Domainic
   module Dev
     class CLI < Thor
@@ -19,7 +17,6 @@ module Domainic
           # Run RSpec tests for the specified gems.
           #
           # @return [void]
-          # @rbs () -> void
           def execute: () -> void
 
           private
@@ -27,19 +24,16 @@ module Domainic
           # Build the command to run RSpec tests for the specified gems.
           #
           # @return [Array<Hash{String => String}, String>]
-          # @rbs () -> Array[Hash[String, String] | String]
           def build_command: () -> Array[Hash[String, String] | String]
 
           # Build the environment variables for running RSpec tests.
           #
           # @return [Hash{String => String}]
-          # @rbs () -> Hash[String, String]
           def build_env: () -> Hash[String, String]
 
           # The rbs environment variables to use when running tests.
           #
           # @return [Hash{String => String}]
-          # @rbs () -> Hash[String, String]
           def rbs_env: () -> Hash[String, String]
         end
       end

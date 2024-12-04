@@ -1,5 +1,3 @@
-# Generated from domainic-dev/lib/domainic/dev/cli/command/base_command.rb with RBS::Inline
-
 module Domainic
   module Dev
     class CLI < Thor
@@ -17,7 +15,6 @@ module Domainic
           # Whether to exit with a non-zero status on command failure.
           #
           # @return [Boolean] true to exit with non-zero status on failure
-          # @rbs () -> bool
           def self.exit_on_failure?: () -> bool
 
           # Terminal color codes for output formatting.
@@ -36,7 +33,6 @@ module Domainic
           #
           # @param text [String] the long form description text
           # @return [String, nil] the long form description
-          # @rbs (?String text) -> String?
           def self.long_desc: (?String text) -> String?
 
           private
@@ -47,7 +43,6 @@ module Domainic
           # @param color [Symbol] the color to apply
           # @return [String] the colorized text
           # @raise [ArgumentError] if the specified color is invalid
-          # @rbs (String text, Symbol color) -> String
           def colorize: (String text, Symbol color) -> String
 
           # Retrieves the icon for the given name.
@@ -55,7 +50,6 @@ module Domainic
           # @param name [String, Symbol] the name of the icon
           # @param color [Symbol, nil] the color to apply
           # @return [String] the icon
-          # @rbs (String | Symbol name, ?Symbol? color) -> String
           def icon: (String | Symbol name, ?Symbol? color) -> String
         end
       end

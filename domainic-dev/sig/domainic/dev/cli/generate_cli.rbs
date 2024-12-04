@@ -1,5 +1,3 @@
-# Generated from domainic-dev/lib/domainic/dev/cli/generate_cli.rb with RBS::Inline
-
 module Domainic
   module Dev
     class CLI < Thor

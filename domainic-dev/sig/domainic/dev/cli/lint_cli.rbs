@@ -1,5 +1,3 @@
-# Generated from domainic-dev/lib/domainic/dev/cli/lint_cli.rb with RBS::Inline
-
 module Domainic
   module Dev
     class CLI < Thor
@@ -16,7 +14,6 @@ module Domainic
         # Run all available linters.
         #
         # @return [void]
-        # @rbs () -> void
         def all: () -> void
       end
     end

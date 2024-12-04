@@ -1,5 +1,3 @@
-# Generated from domainic-dev/lib/domainic/dev/gem/version.rb with RBS::Inline
-
 module Domainic
   module Dev
     class Gem
@@ -39,14 +37,12 @@ module Domainic
         # @param semver_version_string [String] a semantic version string
         # @return [Version] a new instance of Version
         # @raise [ArgumentError] if the version string is not a valid semantic version
-        # @rbs (String semver_version_string) -> void
         def initialize: (String semver_version_string) -> void
 
         # Compare two version instances for sorting.
         #
         # @param other [Version] the other version to compare with
         # @return [Integer, nil] -1, 0, or 1 based on version precedence, nil if other is not a Version
-        # @rbs (untyped other) -> Integer?
         def <=>: (untyped other) -> Integer?
 
         # Compare two pre-release version strings.
@@ -54,33 +50,28 @@ module Domainic
         # @param prea [String, nil] first pre-release version string
         # @param preb [String, nil] second pre-release version string
         # @return [Integer, nil] -1, 0, or 1 based on pre-release precedence
-        # @rbs (untyped prea, untyped preb) -> Integer?
         def compare_pre: (untyped prea, untyped preb) -> Integer?
 
         # Compare two version instances for equality.
         #
         # @param other [Version] the other version to compare with
         # @return [Boolean] true if versions are equal
-        # @rbs (untyped other) -> bool
         def eql?: (untyped other) -> bool
 
         # Generate a hash value for the version.
         #
         # @return [Integer] the hash value
-        # @rbs () -> Integer
         def hash: () -> Integer
 
         # Split a pre-release version string into its constituent parts.
         #
         # @param pre [String] pre-release version string
         # @return [Array<Integer, String, nil>] array of pre-release identifiers
-        # @rbs (String pre) -> Array[Integer | String | nil]
         def identifiers: (String pre) -> Array[Integer | String | nil]
 
         # Convert the version to an array representation.
         #
         # @return [Array<Integer, String, nil>] array containing version components
-        # @rbs () -> Array[Integer | String | nil]
         def to_array: () -> Array[Integer | String | nil]
 
         alias to_a to_array
@@ -88,13 +79,11 @@ module Domainic
         # Convert the version to a gem version string.
         #
         # @return [String] gem version string representation
-        # @rbs () -> String
         def to_gem_version_string: () -> String
 
         # Convert the version to a hash representation.
         #
         # @return [Array<Symbol, Integer, String, nil>] hash containing version components
-        # @rbs () -> Hash[Symbol, Integer | String | nil]
         def to_hash: () -> Hash[Symbol, Integer | String | nil]
 
         alias to_h to_hash
@@ -102,7 +91,6 @@ module Domainic
         # Convert the version to a semantic version string.
         #
         # @return [String] semantic version string representation
-        # @rbs () -> String
         def to_semver_string: () -> String
 
         alias to_s to_semver_string
@@ -115,7 +103,6 @@ module Domainic
         #
         # @param identifiers [Array<Integer, String, nil>] array of identifiers to map
         # @return [Array<Array<Integer, String, nil>>] mapped identifiers
-        # @rbs (Array[Integer | String | nil] identifiers) -> Array[Array[Integer | String | nil]]
         def map_identifiers: (Array[Integer | String | nil] identifiers) -> Array[Array[Integer | String | nil]]
       end
     end

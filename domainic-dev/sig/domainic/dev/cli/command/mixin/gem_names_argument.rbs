@@ -1,5 +1,3 @@
-# Generated from domainic-dev/lib/domainic/dev/cli/command/mixin/gem_names_argument.rb with RBS::Inline
-
 module Domainic
   module Dev
     class CLI < Thor
@@ -20,7 +18,6 @@ module Domainic
             #
             # @param base [Class] the class including this module
             # @return [void]
-            # @rbs (untyped base) -> void
             private def self.included: (untyped base) -> void
 
             private
@@ -29,7 +26,6 @@ module Domainic
             #
             # @return [Array<Gem>] array of {Gem} instances
             # @raise [ArgumentError] if a provided gem name cannot be found
-            # @rbs () -> Array[Gem]
             def gems: () -> Array[Gem]
           end
         end

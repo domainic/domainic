@@ -1,5 +1,3 @@
-# Generated from domainic-dev/lib/domainic/dev/cli/command/publish_gems_command.rb with RBS::Inline
-
 module Domainic
   module Dev
     class CLI < Thor
@@ -22,7 +20,6 @@ module Domainic
           # Execute the gem publishing command.
           #
           # @return [void]
-          # @rbs () -> void
           def execute: () -> void
 
           private
@@ -31,35 +28,30 @@ module Domainic
           #
           # @param gem [Gem] the gem to generate tags for
           # @return [void]
-          # @rbs (Gem gem) -> void
           def generate_tags_for_gem: (Gem gem) -> void
 
           # Get the latest released version of a gem.
           #
           # @param gem [Gem] the gem to check
           # @return [String, nil] the latest version string or nil if no releases exist
-          # @rbs (Gem gem) -> String?
           def latest_release_for_gem: (Gem gem) -> String?
 
           # Package a gem for publishing.
           #
           # @param gem [Gem] the gem to package
           # @return [void]
-          # @rbs (Gem gem) -> void
           def package_gem: (Gem gem) -> void
 
           # Publish all dependencies for a gem.
           #
           # @param gem [Gem] the gem whose dependencies should be published
           # @return [void]
-          # @rbs (Gem gem) -> void
           def publish_dependencies_for_gem: (Gem gem) -> void
 
           # Publish a gem to RubyGems.org.
           #
           # @param gem [Gem] the gem to publish
           # @return [void]
-          # @rbs (Gem gem) -> void
           def publish_gem: (Gem gem) -> void
         end
       end
