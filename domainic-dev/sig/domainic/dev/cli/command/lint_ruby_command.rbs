@@ -1,0 +1,32 @@
+# Generated from domainic-dev/lib/domainic/dev/cli/command/lint_ruby_command.rb with RBS::Inline
+
+module Domainic
+  module Dev
+    class CLI < Thor
+      module Command
+        # A command to lint Ruby files in the Domainic::Dev project.
+        #
+        # This class extends {BaseCommand} to provide functionality for linting Ruby files using RuboCop.
+        # It includes options for safe and unsafe auto-correction of detected issues.
+        #
+        # @author {https://aaronmallen.me Aaron Allen}
+        # @since 0.1.0
+        class LintRubyCommand < BaseCommand
+          # Execute the Ruby linting command.
+          #
+          # @return [void]
+          # @rbs () -> void
+          def execute: () -> void
+
+          private
+
+          # Get the command-line flags based on options.
+          #
+          # @return [Array<String>] array of command-line flags
+          # @rbs () -> Array[String]
+          def flags: () -> Array[String]
+        end
+      end
+    end
+  end
+end

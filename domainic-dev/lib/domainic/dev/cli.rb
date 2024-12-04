@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'domainic/dev/cli/command/run_tests_command'
+require 'domainic/dev/cli/lint_cli'
 require 'thor'
 
 module Domainic
@@ -20,6 +21,9 @@ module Domainic
       def self.exit_on_failure? = true
 
       # steep:ignore:start
+      desc 'lint [COMMAND]', 'Lint commands'
+      subcommand('lint', LintCLI)
+
       long_desc Command::RunTestsCommand.long_desc, wrap: false
       register(Command::RunTestsCommand, 'test', 'test [GEM_NAMES]', 'Run tests for one or more domainic gems')
       # steep:ignore:end

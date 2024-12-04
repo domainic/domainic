@@ -1,0 +1,24 @@
+# Generated from domainic-dev/lib/domainic/dev/cli/lint_cli.rb with RBS::Inline
+
+module Domainic
+  module Dev
+    class CLI < Thor
+      # A command line interface for running linting tools in the Domainic::Dev project.
+      #
+      # This class extends Thor to provide a unified interface for running various linting tools including:
+      # * Markdown linting with mdl via {Command::LintMarkdownCommand}
+      # * Ruby linting with RuboCop via {Command::LintRubyCommand}
+      # * Ruby type checking with Steep via {Command::LintRubyTypesCommand}
+      #
+      # @author {https://aaronmallen.me Aaron Allen}
+      # @since 0.1.0
+      class LintCLI < Thor
+        # Run all available linters.
+        #
+        # @return [void]
+        # @rbs () -> void
+        def all: () -> void
+      end
+    end
+  end
+end
