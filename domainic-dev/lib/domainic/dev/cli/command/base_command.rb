@@ -72,6 +72,15 @@ module Domainic
             "\e[#{color_code}m#{text}\e[0m"
           end
 
+          # Adds bold formatting to the given text.
+          #
+          # @param text [String] the text to make bold
+          # @return [String] the bolded text
+          # @rbs (String text) -> String
+          def embolden(text)
+            "\e[1m#{text}\e[0m"
+          end
+
           # Retrieves the icon for the given name.
           #
           # @param name [String, Symbol] the name of the icon

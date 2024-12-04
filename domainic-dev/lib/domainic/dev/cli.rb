@@ -2,6 +2,7 @@
 
 require 'domainic/dev/cli/command/package_gems_command'
 require 'domainic/dev/cli/command/publish_gems_command'
+require 'domainic/dev/cli/command/run_ci_command'
 require 'domainic/dev/cli/command/run_tests_command'
 require 'domainic/dev/cli/generate_cli'
 require 'domainic/dev/cli/lint_cli'
@@ -25,6 +26,9 @@ module Domainic
 
       # steep:ignore:start
       map 'g' => 'generate'
+
+      long_desc Command::RunCICommand.long_desc, wrap: false
+      register(Command::RunCICommand, 'ci', 'ci', 'Run the entire CI pipeline for the Domainic monorepo')
 
       desc 'generate <COMMAND>', 'Domainic generators'
       subcommand('generate', GenerateCLI)

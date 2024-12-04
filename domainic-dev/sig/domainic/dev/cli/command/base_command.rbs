@@ -45,6 +45,12 @@ module Domainic
           # @raise [ArgumentError] if the specified color is invalid
           def colorize: (String text, Symbol color) -> String
 
+          # Adds bold formatting to the given text.
+          #
+          # @param text [String] the text to make bold
+          # @return [String] the bolded text
+          def embolden: (String text) -> String
+
           # Retrieves the icon for the given name.
           #
           # @param name [String, Symbol] the name of the icon
