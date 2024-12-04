@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'domainic/dev/cli'
 require 'domainic/dev/gem'
 require 'pathname'
 
