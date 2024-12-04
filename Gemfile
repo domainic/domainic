@@ -3,6 +3,10 @@
 source 'https://rubygems.org'
 gemspec
 
+group :development do
+  gem 'domainic-dev', path: 'domainic-dev'
+end
+
 group :doc do
   gem 'github-markup', require: false
   gem 'redcarpet', require: false

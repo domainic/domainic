@@ -1,3 +1,8 @@
 ---
 path: ".gem_rbs_collection"
+gems:
+- name: domainic-dev
+  version: 0.1.0
+  source:
+    type: rubygems
 gemfile_lock_path: Gemfile.lock

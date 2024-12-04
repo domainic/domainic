@@ -29,3 +29,8 @@
 #
 #   # library "pathname"              # Standard libraries
 # end
+
+target :domainic do
+  check 'bin'
+  check 'domainic-dev/lib'
+end
