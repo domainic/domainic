@@ -1,0 +1,82 @@
+# Generated from domainic-dev/lib/domainic/dev/gem.rb with RBS::Inline
+
+module Domainic
+  module Dev
+    # A class responsible for managing gem information within the Domainic gem.
+    #
+    # This class provides a way to access and manipulate gem metadata including dependencies, paths, and version
+    # information. It uses {PathSet} for file system operations and {Version} for semantic version handling.
+    #
+    # @author {https://aaronmallen.me Aaron Allen}
+    # @since 0.1.0
+    class Gem
+      @dependencies: Array[untyped]
+
+      @version: Version
+
+      @paths: PathSet
+
+      @name: String
+
+      # @return [Array<Object>] the gem's dependencies
+      attr_reader dependencies: Array[untyped]
+
+      # @return [String] the gem's name
+      attr_reader name: String
+
+      # @return [PathSet] the gem's path set
+      attr_reader paths: PathSet
+
+      # @return [Version] the gem's version
+      attr_reader version: Version
+
+      # Get all gems in the project.
+      #
+      # @return [Array<Gem>] array of all gems
+      # @rbs () -> Array[Gem]
+      def self.all: () -> Array[Gem]
+
+      # Find a gem by name.
+      #
+      # @param gem_name [String] name of the gem to find
+      # @return [Gem, nil] the found gem or nil
+      # @rbs (String) -> Gem?
+      def self.find: (String) -> Gem?
+
+      # Initialize a new Gem instance.
+      #
+      # @param root_directory [Pathname] the root directory of the gem
+      # @return [Gem] a new instance of Gem
+      # @raise [RuntimeError] if the gemspec is missing a valid SEMVER
+      # @rbs (Pathname root_directory) -> void
+      def initialize: (Pathname root_directory) -> void
+
+      # Get the constant name for the gem.
+      #
+      # @return [String] the constant name
+      # @rbs () -> String
+      def constant_name: () -> String
+
+      # Get the module name for the gem.
+      #
+      # @return [String] the module name
+      # @rbs () -> String
+      def module_name: () -> String
+
+      private
+
+      # Initialize gem information from gemspec.
+      #
+      # @return [void]
+      # @rbs () -> void
+      def initialize_with_gemspec: () -> void
+
+      # Initialize version information.
+      #
+      # @return [void]
+      # @raise [RuntimeError] if the gemspec is missing a valid SEMVER
+      # @rbs () -> void
+      def initialize_version: () -> void
+    end
+  end
+end

@@ -3,5 +3,9 @@
 require 'spec_helper'
 
 RSpec.describe Domainic::Dev do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe '.root' do
+    subject(:root) { described_class.root }
+
+    it { is_expected.to be_an_instance_of(Pathname) }
+  end
 end
