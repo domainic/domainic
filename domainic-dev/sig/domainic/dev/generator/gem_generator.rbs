@@ -1,0 +1,136 @@
+module Domainic
+  module Dev
+    module Generator
+      # A generator for creating new Domainic gems.
+      #
+      # This class extends {BaseGenerator} to provide functionality for generating new gems in the Domainic monorepo.
+      # It handles creating the gem structure, documentation files, specs, and updating the necessary project files.
+      #
+      # @author {https://aaronmallen.me Aaron Allen}
+      # @since 0.1.0
+      class GemGenerator < BaseGenerator
+        @constant_name: String
+
+        @module_path: String
+
+        @module_name: String
+
+        @directory_name: String
+
+        def name: () -> String
+
+        # Initialize a new GemGenerator instance.
+        #
+        # @param arguments [Array<Object>] the generator arguments
+        # @param options [Array<Object>] additional options
+        # @return [void]
+        def initialize: (Array[untyped], *untyped) -> void
+
+        # Create the gem's gemspec file.
+        #
+        # @return [void]
+        def create_gemspec: () -> void
+
+        # Create the gem's CHANGELOG file.
+        #
+        # @return [void]
+        def create_changelog: () -> void
+
+        # Create the gem's LICENSE file.
+        #
+        # @return [void]
+        def create_license: () -> void
+
+        # Create the gem's README file.
+        #
+        # @return [void]
+        def create_readme: () -> void
+
+        # Create the root library file for gems with dashes in their name.
+        #
+        # @return [void]
+        def create_root_lib_file: () -> void
+
+        # Create the module's main library file.
+        #
+        # @return [void]
+        def create_module_lib_file: () -> void
+
+        # Create the gem's spec_helper file.
+        #
+        # @return [void]
+        def create_spec_helper: () -> void
+
+        # Create the root spec file.
+        #
+        # @return [void]
+        def create_root_spec_file: () -> void
+
+        # Create the signature manifest file
+        #
+        # @return [void]
+        def create_signature_manifest: () -> void
+
+        # Generate RBS signatures for the new gem.
+        #
+        # @return [void]
+        def generate_signatures: () -> void
+
+        # Update the Domainic gemspec with the new gem dependency.
+        #
+        # @return [void]
+        def update_domainic_gemspec: () -> void
+
+        # Update the Steepfile with the new gem's type checking configuration.
+        #
+        # @return [void]
+        def update_steepfile: () -> void
+
+        private
+
+        attr_reader module_name: String
+
+        attr_reader module_path: String
+
+        # Assign module name and path from the gem name.
+        #
+        # @param name [String] the gem name
+        # @return [void]
+        def assign_names!: (String name) -> void
+
+        # Get the constant name for the gem.
+        #
+        # @return [String] the constant name
+        def constant_name: () -> String
+
+        # Get the directory name for the module.
+        #
+        # @return [String] the directory name
+        def directory_name: () -> String
+
+        # Find the insertion index for dependencies in the Domainic gemspec.
+        #
+        # @param lines [Array<String>] the gemspec lines
+        # @return [Integer] the insertion index
+        def domainic_dependencies_insert_index: (Array[String]) -> Integer
+
+        # Get the Domainic gemspec and its dependencies.
+        #
+        # @return [Array<Array(Pathname, Array<String>, Array<String>)>] the gemspec, lines, and dependencies
+        # @raise [RuntimeError] if the Domainic gem cannot be found
+        def domainic_gemspec_and_dependencies: () -> Array[Pathname | Array[String]]
+
+        # Get the file name from the module path.
+        #
+        # @return [String, nil] the file name
+        def file_name: () -> String?
+
+        # Get the Steepfile and its check lines.
+        #
+        # @return [Array<Array(Pathname, Array<String>, Array<String>)>] the steepfile, lines, and check lines
+        # @raise [RuntimeError] if the Steepfile cannot be found
+        def steepfile_and_check_lines: () -> Array[Pathname | Array[String]]
+      end
+    end
+  end
+end

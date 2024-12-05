@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'domainic/dev/cli/command/generate_signatures_command'
+require 'domainic/dev/generator/gem_generator'
 require 'thor'
 
 module Domainic
@@ -23,6 +24,13 @@ module Domainic
           'signatures',
           'signatures [GEM_NAMES]',
           'Generate RBS signatures for Domainic gems'
+        )
+
+        register(
+          Generator::GemGenerator,
+          'gem',
+          'gem NAME',
+          'Generate a new Domainic gem'
         )
         # steep:ignore:end
       end

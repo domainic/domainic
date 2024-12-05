@@ -1,0 +1,36 @@
+# frozen_string_literal: true
+
+<%= constant_name %>_GEM_VERSION = '0.1.0'
+<%= constant_name %>_SEMVER = '0.1.0'
+<%= constant_name %>_REPO_URL = 'https://github.com/domainic/domainic'
+<%= constant_name %>_HOME_URL = "#{<%= constant_name %>_REPO_URL}/tree/<%= name %>-v" \
+                                "#{<%= constant_name %>_SEMVER}/<%= name %>".freeze
+
+Gem::Specification.new do |spec|
+  spec.name        = '<%= name %>'
+  spec.version     = <%= constant_name %>_GEM_VERSION
+  spec.authors     = ['Aaron Allen']
+  spec.email       = ['hello@aaronmallen.me']
+  spec.homepage    = <%= constant_name %>_HOME_URL
+  spec.summary     = '<%= options[:summary] %>'
+  spec.license     = 'MIT'
+
+  spec.required_ruby_version = '>= 3.1'
+
+  spec.files = IO.popen(%w[git ls-files -z], chdir: __dir__, err: IO::NULL) do |ls|
+    ls.readlines("\x0", chomp: true).reject do |f|
+      (f == File.basename(__FILE__)) || f.start_with?(*%w[bin/ test/ spec/ features/ .git appveyor Gemfile])
+    end
+  end
+  spec.require_paths = ['lib']
+
+  spec.metadata = {
+    'bug_tracker_uri' => "#{<%= constant_name %>_REPO_URL}/issues",
+    'changelog_uri' => "#{<%= constant_name %>_REPO_URL}/releases/tag/<%= name %>-v" \
+                       "#{<%= constant_name %>_SEMVER}",
+    'homepage_uri' => <%= constant_name %>_HOME_URL,
+    'rubygems_mfa_required' => 'true',
+    'source_code_uri' => "#{<%= constant_name %>_REPO_URL}/tree/<%= name %>-v" \
+                         "#{<%= constant_name %>_SEMVER}/<%= name %>"
+  }
+end
