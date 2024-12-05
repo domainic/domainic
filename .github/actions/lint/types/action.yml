@@ -1,0 +1,9 @@
+name: Lint ruby types
+description: Lint ruby types with steep
+
+runs:
+  using: composite
+  steps:
+    - name: Run steep check
+      shell: bash
+      run: bin/dev lint types

@@ -1,0 +1,9 @@
+name: Lint markdown
+description: Lint markdown files with mdl
+
+runs:
+  using: composite
+  steps:
+    - name: Run mdl
+      shell: bash
+      run: bin/dev lint markdown
