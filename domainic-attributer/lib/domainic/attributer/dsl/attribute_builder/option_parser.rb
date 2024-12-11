@@ -16,7 +16,7 @@ module Domainic
         class OptionParser
           # @rbs!
           #   type options = {
-          #     ?callbacks: Array[Attribute::Callback::handler],
+          #     ?callbacks: Array[Attribute::Callback::handler] | Attribute::Callback::handler,
           #     ?callback: Array[Attribute::Callback::handler] | Attribute::Callback::handler,
           #     ?coerce: Array[Attribute::Coercer::handler] | Attribute::Coercer::handler,
           #     ?coercers: Array[Attribute::Coercer::handler],
@@ -43,7 +43,7 @@ module Domainic
           #     ?required: bool,
           #     ?validate: Array[Attribute::Validator::handler] | Attribute::Validator::handler,
           #     ?validate_with: Array[Attribute::Validator::handler] | Attribute::Validator::handler,
-          #     ?validators: Array[Attribute::Validator::handler],
+          #     ?validators: Array[Attribute::Validator::handler] | Attribute::Validator::handler,
           #     ?write_access: Attribute::Signature::visibility_symbol,
           #     ?writer: Attribute::Signature::visibility_symbol,
           #   } & Hash[Symbol, untyped]
