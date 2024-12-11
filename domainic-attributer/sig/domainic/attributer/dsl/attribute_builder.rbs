@@ -1,0 +1,156 @@
+module Domainic
+  module Attributer
+    module DSL
+      # A class responsible for configuring attributes through a fluent interface.
+      #
+      # This class provides a rich DSL for configuring attributes with support for
+      # default values, coercion, validation, visibility controls, and change tracking.
+      # It uses method chaining to allow natural, declarative attribute definitions.
+      #
+      # @author {https://aaronmallen.me Aaron Allen}
+      # @since 0.1.0
+      class AttributeBuilder
+        @base: __todo__
+
+        @options: OptionParser::result
+
+        # Initialize a new AttributeBuilder.
+        #
+        # @param base [Class, Module] the class or module to build the attribute in
+        # @param attribute_name [String, Symbol] the name of the attribute
+        # @param attribute_type [String, Symbol] the type of attribute
+        # @param type_validator [Proc, Object, nil] optional type validator
+        # @param options [Hash] additional options for attribute configuration
+        # @yield configuration block for additional attribute settings
+        #
+        # @return [void]
+        def initialize: (__todo__ base, String | Symbol attribute_name, String | Symbol attribute_type, ?Attribute::Validator::handler? type_validator, OptionParser::options options) ?{ (?) [self: AttributeBuilder] -> void } -> void
+
+        # Builds and finalizes the attribute.
+        #
+        # @return [Attribute] the configured attribute
+        def build!: () -> Attribute
+
+        # Configure value coercion.
+        #
+        # @param proc_symbol [Proc, Symbol, nil] optional coercion handler
+        # @yield optional coercion block
+        #
+        # @return [self] the builder for method chaining
+        def coerce_with: (?(Attribute::Coercer::proc | Object)? proc_symbol) ?{ (untyped value) -> untyped } -> self
+
+        alias coerce coerce_with
+
+        # Configure default value.
+        #
+        # @param value_or_proc [Object, Proc, nil] optional default value or generator
+        # @yield optional default value generator block
+        #
+        # @return [self] the builder for method chaining
+        def default: (?untyped? value_or_proc) ?{ (?) -> untyped } -> self
+
+        alias default_generator default
+
+        alias default_value default
+
+        # Set attribute description.
+        #
+        # @param text [String] the description text
+        #
+        # @return [self] the builder for method chaining
+        def description: (String? text) -> self
+
+        alias desc description
+
+        # Mark attribute as non-nilable.
+        #
+        # @return [self] the builder for method chaining
+        def non_nilable: () -> self
+
+        alias non_nil non_nilable
+
+        alias non_null non_nilable
+
+        alias non_nullable non_nilable
+
+        alias not_nil non_nilable
+
+        alias not_nilable non_nilable
+
+        alias not_null non_nilable
+
+        alias not_nullable non_nilable
+
+        # Configure change callback.
+        #
+        # @param proc [Proc, nil] optional callback handler
+        # @yield optional callback block
+        #
+        # @return [self] the builder for method chaining
+        def on_change: (?Attribute::Callback::handler? proc) ?{ (untyped old_value, untyped new_value) -> void } -> self
+
+        # Set private visibility for both read and write.
+        #
+        # @return [self] the builder for method chaining
+        def private: () -> self
+
+        # Set private visibility for read.
+        #
+        # @return [self] the builder for method chaining
+        def private_read: () -> self
+
+        # Set private visibility for write.
+        #
+        # @return [self] the builder for method chaining
+        def private_write: () -> self
+
+        # Set protected visibility for both read and write.
+        #
+        # @return [self] the builder for method chaining
+        def protected: () -> self
+
+        # Set protected visibility for read.
+        #
+        # @return [self] the builder for method chaining
+        def protected_read: () -> self
+
+        # Set protected visibility for write.
+        #
+        # @return [self] the builder for method chaining
+        def protected_write: () -> self
+
+        # Set public visibility for both read and write.
+        #
+        # @return [self] the builder for method chaining
+        def public: () -> self
+
+        # Set public visibility for read.
+        #
+        # @return [self] the builder for method chaining
+        def public_read: () -> self
+
+        # Set public visibility for write.
+        #
+        # @return [self] the builder for method chaining
+        def public_write: () -> self
+
+        # Mark attribute as required.
+        #
+        # @return [self] the builder for method chaining
+        def required: () -> self
+
+        # Configure value validation.
+        #
+        # @param object_or_proc [Object, Proc, nil] optional validation handler
+        # @yield optional validation block
+        #
+        # @return [self] the builder for method chaining
+        def validate_with: (?Attribute::Validator::handler? object_or_proc) ?{ (untyped value) -> boolish } -> self
+
+        alias validate validate_with
+
+        alias validates validate_with
+      end
+    end
+  end
+end

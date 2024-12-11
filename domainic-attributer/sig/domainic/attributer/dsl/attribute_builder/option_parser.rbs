@@ -1,0 +1,130 @@
+module Domainic
+  module Attributer
+    module DSL
+      class AttributeBuilder
+        # A class responsible for parsing and normalizing attribute options.
+        #
+        # This class handles the conversion of flexible DSL options into a normalized
+        # format for attribute creation. It supports multiple ways of specifying common
+        # options (like visibility, nullability, validation) and consolidates them
+        # into a consistent internal representation.
+        #
+        # @author {https://aaronmallen.me Aaron Allen}
+        # @since 0.1.0
+        class OptionParser
+          type options = { ?callbacks: Array[Attribute::Callback::handler], ?callback: Array[Attribute::Callback::handler] | Attribute::Callback::handler, ?coerce: Array[Attribute::Coercer::handler] | Attribute::Coercer::handler, ?coercers: Array[Attribute::Coercer::handler], ?coerce_with: [ Attribute::Coercer::handler ] | Attribute::Coercer::handler, ?default: untyped, ?default_generator: untyped, ?default_value: untyped, ?desc: String?, ?description: String, ?non_nil: bool, ?non_null: bool, ?non_nullable: bool, ?not_nil: bool, ?not_nilable: bool, ?not_null: bool, ?not_nullable: bool, ?null: bool, ?on_change: Array[Attribute::Callback::handler] | Attribute::Callback::handler, ?optional: bool, ?position: Integer?, ?read: Attribute::Signature::visibility_symbol, ?read_access: Attribute::Signature::visibility_symbol, ?reader: Attribute::Signature::visibility_symbol, ?required: bool, ?validate: Array[Attribute::Validator::handler] | Attribute::Validator::handler, ?validate_with: Array[Attribute::Validator::handler] | Attribute::Validator::handler, ?validators: Array[Attribute::Validator::handler], ?write_access: Attribute::Signature::visibility_symbol, ?writer: Attribute::Signature::visibility_symbol } & Hash[Symbol, untyped]
+
+          type result = { callbacks: Array[Attribute::Callback::handler], coercers: Array[Attribute::Coercer::handler], ?default: untyped, ?description: String, name: Symbol, ?nilable: bool, ?position: Integer?, ?required: bool, ?read: Attribute::Signature::visibility_symbol, type: Attribute::Signature::type_symbol, validators: Array[Attribute::Validator::handler], ?write: Attribute::Signature::visibility_symbol }
+
+          # Alternative keys for reader visibility settings
+          ACCESSOR_READER_KEYS: Array[Symbol]
+
+          # Alternative keys for writer visibility settings
+          ACCESSOR_WRITER_KEYS: Array[Symbol]
+
+          # Alternative keys for change callbacks
+          CALLBACK_KEYS: Array[Symbol]
+
+          # Alternative keys for coercion handlers
+          COERCER_KEYS: Array[Symbol]
+
+          # Alternative keys for default value settings
+          DEFAULT_KEYS: Array[Symbol]
+
+          # Alternative keys for description
+          DESCRIPTION_KEYS: Array[Symbol]
+
+          # Pattern for matching nilability-related keys
+          NILABLE_PATTERN: Regexp
+
+          # Keys that indicate non-nilable requirement
+          NON_NILABLE_KEYS: Array[Symbol]
+
+          # Alternative keys for validators
+          VALIDATOR_KEYS: Array[Symbol]
+
+          @result: result
+
+          @options: options
+
+          # Parse attribute options into a normalized format.
+          #
+          # @param attribute_name [String, Symbol] the name of the attribute
+          # @param attribute_type [String, Symbol] the type of attribute
+          # @param options [Hash] the options to parse
+          #
+          # @return [Hash] normalized options suitable for attribute creation
+          def self.parse!: (String | Symbol attribute_name, String | Symbol attribute_type, options options) -> void
+
+          # Initialize a new OptionParser.
+          #
+          # @param attribute_name [String, Symbol] the name of the attribute
+          # @param attribute_type [String, Symbol] the type of attribute
+          # @param options [Hash] the options to parse
+          #
+          # @return [void]
+          def initialize: (String | Symbol attribute_name, String | Symbol attribute_type, options options) -> void
+
+          # Parse the options into a normalized format.
+          #
+          # @return [Hash] normalized options suitable for attribute creation
+          def parse!: () -> result
+
+          private
+
+          # Find the last set value among multiple option keys.
+          #
+          # @param keys [Array<Symbol>] the keys to check
+          #
+          # @return [Object] the last set value or Undefined
+          def find_last_option: (Array[Symbol]) -> untyped
+
+          # Parse accessor (reader/writer) visibility options.
+          #
+          # @return [void]
+          def parse_accessor_options!: () -> void
+
+          # Parse callback handler options.
+          #
+          # @return [void]
+          def parse_callbacks_options!: () -> void
+
+          # Parse coercion handler options.
+          #
+          # @return [void]
+          def parse_coercers_options!: () -> void
+
+          # Parse default value options.
+          #
+          # @return [void]
+          def parse_default_options!: () -> void
+
+          # Parse description options.
+          #
+          # @return [void]
+          def parse_description_options!: () -> void
+
+          # Parse nilability options.
+          #
+          # @return [void]
+          def parse_nilable_options!: () -> void
+
+          # Parse all option types.
+          #
+          # @return [void]
+          def parse_options!: () -> void
+
+          # Parse required/optional options.
+          #
+          # @return [void]
+          def parse_required_options!: () -> void
+
+          # Parse validator options.
+          #
+          # @return [void]
+          def parse_validator_options!: () -> void
+        end
+      end
+    end
+  end
+end

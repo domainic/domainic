@@ -2,6 +2,7 @@
 
 require 'domainic/attributer/attribute'
 require 'domainic/attributer/attribute_set'
+require 'domainic/attributer/dsl'
 require 'domainic/attributer/undefined'
 
 module Domainic

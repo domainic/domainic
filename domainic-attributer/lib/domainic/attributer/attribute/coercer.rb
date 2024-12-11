@@ -15,7 +15,9 @@ module Domainic
       # @since 0.1.0
       class Coercer
         # @rbs!
-        #   type handler = ^(untyped value) -> untyped | Proc | Symbol
+        #   type handler = proc | Proc | Symbol
+        #
+        #   type proc = ^(untyped value) -> untyped
 
         include BelongsToAttribute
 

@@ -10,9 +10,15 @@ module Domainic
       # @author {https://aaronmallen.me Aaron Allen}
       # @since 0.1.0
       class Validator
-        type handler = ^(untyped value) -> bool | Proc | _ValidHandler
+        type handler = proc | Proc | _ValidHandler
+
+        type proc = ^(untyped value) -> bool
 
         interface _ValidHandler
+          def !=: (untyped value) -> bool
+
+          def ==: (untyped value) -> bool
+
           def ===: (untyped value) -> bool
 
           def inspect: () -> untyped
