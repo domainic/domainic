@@ -128,6 +128,14 @@ module Domainic
         @callback.call(instance, old_value, coerced_value)
       end
 
+      # Check if this attribute has a default value.
+      #
+      # @return [Boolean] true if a default value is set
+      # @rbs () -> bool
+      def default?
+        @default != Undefined
+      end
+
       # Create a duplicate instance for a new base class.
       #
       # @param new_base [Class, Module] the new base class

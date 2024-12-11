@@ -80,6 +80,11 @@ module Domainic
       # @return [void]
       def apply!: (untyped instance, untyped value) -> void
 
+      # Check if this attribute has a default value.
+      #
+      # @return [Boolean] true if a default value is set
+      def default?: () -> bool
+
       # Create a duplicate instance for a new base class.
       #
       # @param new_base [Class, Module] the new base class

@@ -151,6 +151,22 @@ RSpec.describe Domainic::Attributer::Attribute do
     end
   end
 
+  describe '#default?' do
+    subject(:default?) { attribute.default? }
+
+    context 'when the attribute has a default value' do
+      let(:attribute) { described_class.new(base, name:, type:, default: 'test') }
+
+      it { is_expected.to be true }
+    end
+
+    context 'when the attribute does not have a default value' do
+      let(:attribute) { described_class.new(base, name:, type:) }
+
+      it { is_expected.to be false }
+    end
+  end
+
   describe '#dup_with_base' do
     let(:new_base) { Class.new }
 
