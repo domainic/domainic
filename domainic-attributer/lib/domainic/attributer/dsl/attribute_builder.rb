@@ -51,20 +51,7 @@ module Domainic
         def build!
           options = @options.compact
                             .reject { |_, value| value == Undefined || (value.respond_to?(:empty?) && value.empty?) }
-          # @type var options: {
-          #   ?callbacks: Array[Attribute::Callback::handler],
-          #   ?coercers: Array[Attribute::Coercer::handler],
-          #   ?default: untyped,
-          #   ?description: String,
-          #   name: Symbol,
-          #   ?nilable: bool,
-          #   ?read: Attribute::Signature::visibility_symbol,
-          #   ?required: bool,
-          #   type: Attribute::Signature::type_symbol,
-          #   ?validators: Array[Attribute::Validator::handler],
-          #   ?write: Attribute::Signature::visibility_symbol,
-          # }
-          Attribute.new(@base, **options)
+          Attribute.new(@base, **options) # steep:ignore InsufficientKeywordArguments
         end
 
         # Configure value coercion.
