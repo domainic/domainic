@@ -32,5 +32,6 @@
 
 target :domainic do
   check 'bin'
+  check 'domainic-attributer/lib'
   check 'domainic-dev/lib'
 end

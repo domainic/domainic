@@ -26,4 +26,6 @@ Gem::Specification.new do |spec|
     'source_code_uri' => "#{DOMAINIC_REPO_URL}/tree/v#{DOMAINIC_SEMVER}",
     'wiki_uri' => "#{DOMAINIC_REPO_URL}/wiki"
   }
+
+  spec.add_dependency 'domainic-attributer', '>= 0.1', '< 0.2'
 end

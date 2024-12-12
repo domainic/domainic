@@ -1,0 +1,91 @@
+module Domainic
+  module Attributer
+    module DSL
+      # A class responsible for handling object initialization with attributes.
+      #
+      # This class manages the process of setting attribute values during object
+      # initialization. It handles both positional arguments and keyword options,
+      # applying them to their corresponding attributes while respecting default
+      # values and required attributes.
+      #
+      # @author {https://aaronmallen.me Aaron Allen}
+      # @since 0.1.0
+      class Initializer
+        @argument_attributes: Array[Attribute]
+
+        @option_attributes: Array[Attribute]
+
+        @base: Object
+
+        @attributes: AttributeSet
+
+        # Initialize a new Initializer.
+        #
+        # @param base [Object] the instance being initialized
+        #
+        # @return [void]
+        def initialize: (Object base) -> void
+
+        # Assign values to attributes.
+        #
+        # Validates and applies both positional arguments and keyword options to
+        # their corresponding attributes. Raises an error if required arguments
+        # are missing.
+        #
+        # @param arguments [Array] positional arguments to assign
+        # @param keyword_arguments [Hash] keyword arguments to assign
+        #
+        # @raise [ArgumentError] if required arguments are missing
+        # @return [void]
+        def assign!: (*untyped arguments, **untyped keyword_arguments) -> void
+
+        private
+
+        # Access to the current attribute set.
+        #
+        # @return [AttributeSet] the attribute set for this instance
+        attr_reader attributes: AttributeSet
+
+        # Apply positional arguments to their attributes.
+        #
+        # @param arguments [Array] the positional arguments to apply
+        #
+        # @return [void]
+        def apply_arguments: (Array[untyped]) -> void
+
+        # Apply keyword arguments to their attributes.
+        #
+        # @param options [Hash] the keyword options to apply
+        #
+        # @return [void]
+        def apply_options!: (Hash[String | Symbol, untyped]) -> void
+
+        # Get all argument attributes.
+        #
+        # @return [Array<Attribute>] the argument attributes
+        def argument_attributes: () -> Array[Attribute]
+
+        # Assign a value to an attribute.
+        #
+        # @param attribute_name [Symbol] the name of the attribute
+        # @param value [Object] the value to assign
+        #
+        # @return [void]
+        def assign_value: (untyped attribute_name, untyped value) -> untyped
+
+        # Get all option attributes.
+        #
+        # @return [Array<Attribute>] the option attributes
+        def option_attributes: () -> Array[Attribute]
+
+        # Validate that all required positional arguments are provided.
+        #
+        # @param arguments [Array] the arguments to validate
+        #
+        # @raise [ArgumentError] if required arguments are missing
+        # @return [void]
+        def validate_positional_arguments!: (Array[untyped]) -> void
+      end
+    end
+  end
+end

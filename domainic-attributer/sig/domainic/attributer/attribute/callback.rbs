@@ -1,0 +1,48 @@
+module Domainic
+  module Attributer
+    class Attribute
+      # A class responsible for managing change callbacks for an attribute.
+      #
+      # This class handles the execution of callbacks that are triggered when an
+      # attribute's value changes. Each callback must be a Proc that accepts two
+      # arguments: the old value and the new value.
+      #
+      # @author {https://aaronmallen.me Aaron Allen}
+      # @since 0.1.0
+      class Callback
+        type handler = ^(untyped old_value, untyped new_value) -> void | Proc
+
+        @handlers: Array[handler]
+
+        include BelongsToAttribute
+
+        # Initialize a new Callback instance.
+        #
+        # @param attribute [Attribute] the attribute this Callback belongs to
+        # @param handlers [Array<Proc>] the handlers to use for processing
+        #
+        # @return [Callback] the new instance of Callback
+        def initialize: (Attribute attribute, Array[handler] | handler handlers) -> void
+
+        # Execute all callbacks for a value change.
+        #
+        # @param instance [Object] the instance on which to execute callbacks
+        # @param old_value [Object] the previous value
+        # @param new_value [Object] the new value
+        #
+        # @return [void]
+        def call: (untyped instance, untyped old_value, untyped new_value) -> void
+
+        private
+
+        # Validate that a callback handler is a valid Proc.
+        #
+        # @param handler [Object] the handler to validate
+        #
+        # @raise [TypeError] if the handler is not a valid Proc
+        # @return [void]
+        def validate_handler!: (handler handler) -> void
+      end
+    end
+  end
+end

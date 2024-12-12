@@ -1,0 +1,134 @@
+module Domainic
+  module Attributer
+    # A class representing an ordered collection of attributes.
+    #
+    # This class manages a set of attributes for a given class or module. It maintains
+    # attributes in a specific order determined by their type (argument vs option),
+    # default values, and position. The collection supports standard operations like
+    # adding, selecting, and merging attributes while maintaining proper ownership
+    # relationships with their base class.
+    #
+    # @author {https://aaronmallen.me Aaron Allen}
+    # @since 0.1.0
+    class AttributeSet
+      extend Forwardable
+
+      @base: __todo__
+
+      @lookup: Hash[Symbol, Attribute]
+
+      # Initialize a new AttributeSet.
+      #
+      # @param base [Class, Module] the class or module this set belongs to
+      # @param attributes [Array<Attribute>] initial attributes to add
+      #
+      # @return [void]
+      def initialize: (__todo__ base, ?Array[Attribute] attributes) -> void
+
+      # Get an attribute by name.
+      #
+      # @param attribute_name [String, Symbol] the name of the attribute
+      #
+      # @return [Attribute, nil] the attribute if found
+      def []: (String | Symbol attribute_name) -> Attribute?
+
+      # Add an attribute to the set.
+      #
+      # If an attribute with the same name exists, the attributes are merged.
+      # If the attribute belongs to a different base class, it is duplicated
+      # with the correct base. After adding, attributes are sorted by type
+      # and position.
+      #
+      # @param attribute [Attribute] the attribute to add
+      #
+      # @raise [ArgumentError] if attribute is invalid
+      # @return [void]
+      def add: (Attribute attribute) -> void
+
+      # Check if an attribute exists in the set.
+      #
+      # @param attribute_name [String, Symbol] the name to check
+      #
+      # @return [Boolean] true if the attribute exists
+      def attribute?: (untyped attribute_name) -> untyped
+
+      # Get all attribute names.
+      #
+      # @return [Array<Symbol>] the attribute names
+      def attribute_names: () -> Array[Symbol]
+
+      # Get all attributes.
+      #
+      # @return [Array<Attribute>] the attributes
+      def attributes: () -> Array[Attribute]
+
+      def count: () ?{ (Symbol, Attribute) -> boolish } -> Integer
+
+      # Create a duplicate set for a new base class.
+      #
+      # @param new_base [Class, Module] the new base class
+      #
+      # @return [AttributeSet] the duplicated set
+      def dup_with_base: (__todo__ base) -> AttributeSet
+
+      # Iterate over attribute name/value pairs.
+      #
+      # @yield [name, attribute] each name/attribute pair
+      # @yieldparam name [Symbol] the attribute name
+      # @yieldparam attribute [Attribute] the attribute
+      #
+      # @return [self]
+      def each: () { ([ Symbol, Attribute ]) -> untyped } -> self
+
+      alias each_pair each
+
+      def empty?: () -> bool
+
+      # Create a new set excluding specified attributes.
+      #
+      # @param attribute_names [Array<String, Symbol>] names to exclude
+      #
+      # @return [AttributeSet] new set without specified attributes
+      def except: (*String | Symbol attribute_names) -> AttributeSet
+
+      def length: () -> Integer
+
+      # Merge another set into this one.
+      #
+      # @param other [AttributeSet] the set to merge
+      #
+      # @return [AttributeSet] new set with merged attributes
+      def merge: (AttributeSet other) -> AttributeSet
+
+      # Create a new set with rejected attributes.
+      #
+      # @yield [name, attribute] each name/attribute pair
+      # @yieldparam name [Symbol] the attribute name
+      # @yieldparam attribute [Attribute] the attribute
+      #
+      # @return [AttributeSet] new set without rejected attributes
+      def reject: () { (Symbol, Attribute) -> boolish } -> AttributeSet
+
+      # Create a new set with selected attributes.
+      #
+      # @yield [name, attribute] each name/attribute pair
+      # @yieldparam name [Symbol] the attribute name
+      # @yieldparam attribute [Attribute] the attribute
+      #
+      # @return [AttributeSet] new set with selected attributes
+      def select: () { (Symbol, Attribute) -> boolish } -> AttributeSet
+
+      def size: () -> Integer
+
+      private
+
+      # Sort attributes by type and position.
+      #
+      # Attributes are sorted first by type (required arguments, defaulted arguments,
+      # then options), and then by their position within those groups.
+      #
+      # @return [void]
+      def sort_lookup: () -> void
+    end
+  end
+end

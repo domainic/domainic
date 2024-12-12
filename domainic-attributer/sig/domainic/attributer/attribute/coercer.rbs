@@ -1,0 +1,59 @@
+module Domainic
+  module Attributer
+    class Attribute
+      # A class responsible for coercing attribute values.
+      #
+      # This class manages the coercion of values assigned to an attribute. Coercion can be
+      # handled by either a Proc that accepts a single value argument, or by referencing an
+      # instance method via Symbol.
+      #
+      # @author {https://aaronmallen.me Aaron Allen}
+      # @since 0.1.0
+      class Coercer
+        type handler = proc | Proc | Symbol
+
+        type proc = ^(untyped value) -> untyped
+
+        include BelongsToAttribute
+
+        @handlers: Array[handler]
+
+        # Initialize a new Coercer instance.
+        #
+        # @param attribute [Attribute] the attribute this Coercer belongs to
+        # @param handlers [Array<Proc, Symbol>] the handlers to use for processing
+        #
+        # @return [Coercer] the new instance of Coercer
+        def initialize: (Attribute attribute, Array[handler] | handler handlers) -> void
+
+        # Process a value through all coercion handlers.
+        #
+        # @param instance [Object] the instance on which to perform coercion
+        # @param value [Object] the value to coerce
+        #
+        # @return [Object] the coerced value
+        def call: (untyped instance, untyped value) -> untyped
+
+        private
+
+        # Process a value through a single coercion handler.
+        #
+        # @param instance [Object] the instance on which to perform coercion
+        # @param handler [Proc, Symbol] the coercion handler
+        # @param value [Object] the value to coerce
+        #
+        # @raise [TypeError] if the handler is invalid
+        # @return [Object] the coerced value
+        def coerce_value: (untyped instance, handler, untyped value) -> untyped
+
+        # Validate that a coercion handler is valid.
+        #
+        # @param handler [Object] the handler to validate
+        #
+        # @raise [TypeError] if the handler is not valid
+        # @return [void]
+        def validate_handler!: (handler handler) -> void
+      end
+    end
+  end
+end

@@ -1,0 +1,150 @@
+module Domainic
+  module Attributer
+    # A class representing a managed attribute in the Domainic::Attributer system.
+    #
+    # This class serves as the core component of the attribute management system.
+    # It coordinates type information, visibility settings, value coercion,
+    # validation, and change notifications for an attribute. Each instance
+    # represents a single attribute definition within a class.
+    #
+    # @author {https://aaronmallen.me Aaron Allen}
+    # @since 0.1.0
+    class Attribute
+      type initialize_options = { ?callbacks: Array[Callback::handler] | Callback::handler, ?coercers: Array[Coercer::handler] | Coercer::handler, ?default: untyped, ?description: String?, name: String | Symbol, ?nilable: bool, ?position: Integer?, ?read: Signature::visibility_symbol, ?required: bool, type: Signature::type_symbol, ?validators: Array[Validator::handler] | Validator::handler, ?write: Signature::visibility_symbol }
+
+      @validator: Validator
+
+      @signature: Signature
+
+      @name: Symbol
+
+      @description: String?
+
+      @default: untyped
+
+      @coercer: Coercer
+
+      @callback: Callback
+
+      @base: __todo__
+
+      # @return [Class, Module] the class or module this attribute belongs to
+      attr_reader base: __todo__
+
+      # @return [String, nil] the description of the attribute
+      attr_reader description: String?
+
+      # @return [Symbol] the name of the attribute
+      attr_reader name: Symbol
+
+      # @return [Signature] the signature configuration for this attribute
+      attr_reader signature: Signature
+
+      # Initialize a new Attribute instance.
+      #
+      # @param base [Class, Module] the class or module this attribute belongs to
+      # @param options [Hash] the options to create the attribute with
+      # @option options [Array<Proc>, Proc] :callbacks callbacks to trigger on value changes
+      # @option options [Array<Proc, Symbol>, Proc, Symbol] :coercers handlers for value coercion
+      # @option options [Object] :default the default value or generator
+      # @option options [String] :description a description of the attribute
+      # @option options [String, Symbol] :name the name of the attribute
+      # @option options [Boolean] :nilable (true) whether the attribute can be nil
+      # @option options [Integer] :position the position for ordered attributes
+      # @option options [Symbol] :read the read visibility
+      # @option options [Boolean] :required (false) whether the attribute is required
+      # @option options [Symbol] :type the type of attribute
+      # @option options [Array<Proc, Object>, Proc, Object] :validators handlers for value validation
+      # @option options [Symbol] :write the write visibility
+      #
+      # @raise [ArgumentError] if the configuration is invalid
+      # @return [void]
+      #
+      def initialize: (__todo__ base, name: String | Symbol, type: Signature::type_symbol, ?callbacks: Array[Callback::handler] | Callback::handler, ?coercers: Array[Coercer::handler] | Coercer::handler, ?default: untyped, ?description: String?, ?nilable: bool, ?position: Integer?, ?read: Signature::visibility_symbol, ?required: bool, ?validators: Array[Validator::handler] | Validator::handler, ?write: Signature::visibility_symbol) -> void
+
+      # Apply a value to the attribute on an instance.
+      #
+      # This method applies all attribute constraints (coercion, validation) to a value
+      # and sets it on the given instance. It manages the complete lifecycle of setting
+      # an attribute value including:
+      # 1. Handling default values
+      # 2. Coercing the value
+      # 3. Validating the result
+      # 4. Setting the value
+      # 5. Triggering callbacks
+      #
+      # @param instance [Object] the instance to set the value on
+      # @param value [Object] the value to set
+      #
+      # @raise [ArgumentError] if the value is invalid
+      # @return [void]
+      def apply!: (untyped instance, untyped value) -> void
+
+      # Check if this attribute has a default value.
+      #
+      # @return [Boolean] true if a default value is set
+      def default?: () -> bool
+
+      # Create a duplicate instance for a new base class.
+      #
+      # @param new_base [Class, Module] the new base class
+      #
+      # @return [Attribute] the duplicated instance
+      def dup_with_base: (__todo__ new_base) -> Attribute
+
+      # Generate the default value for this attribute.
+      #
+      # @param instance [Object] the instance to generate the default for
+      #
+      # @return [Object] the generated default value
+      def generate_default: (untyped instance) -> untyped
+
+      # Merge this attribute's configuration with another.
+      #
+      # @param other [Attribute] the attribute to merge with
+      #
+      # @raise [ArgumentError] if other is not an Attribute
+      # @return [Attribute] a new attribute with merged configuration
+      def merge: (Attribute other) -> Attribute
+
+      private
+
+      # Apply initialization options to create attribute components.
+      #
+      # @param base [Class, Module] the base class
+      # @param options [Hash] the initialization options
+      #
+      # @return [void]
+      def apply_initialize_options!: (__todo__ base, initialize_options options) -> void
+
+      # Initialize a copy of this attribute.
+      #
+      # @param source [Attribute] the source attribute
+      #
+      # @return [Attribute] the initialized copy
+      def initialize_copy: ...
+
+      # Get this attribute's configuration as options.
+      #
+      # @return [Hash] the configuration options
+      def to_options: () -> initialize_options
+
+      # Validate and apply initialization options.
+      #
+      # @param base [Class, Module] the base class
+      # @param options [Hash] the initialization options
+      #
+      # @return [void]
+      def validate_and_apply_initialize_options!: (__todo__ base, initialize_options options) -> void
+
+      # Validate initialization options.
+      #
+      # @param base [Class, Module] the base class
+      # @param options [Hash] the initialization options
+      #
+      # @raise [ArgumentError] if any options are invalid
+      # @return [void]
+      def validate_initialize_options!: (__todo__ base, initialize_options options) -> void
+    end
+  end
+end

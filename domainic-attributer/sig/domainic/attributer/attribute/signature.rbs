@@ -1,0 +1,223 @@
+module Domainic
+  module Attributer
+    class Attribute
+      # A class responsible for managing attribute signature information.
+      #
+      # This class encapsulates the type and visibility configuration for an attribute.
+      # It validates and manages whether an attribute is an argument or option, as well
+      # as controlling read and write visibility (public, protected, or private).
+      #
+      # @author {https://aaronmallen.me Aaron Allen}
+      # @since 0.1.0
+      class Signature
+        type default_options = { nilable: bool, read: visibility_symbol, required: bool, write: visibility_symbol }
+
+        type initialize_options = { ?nilable: bool, ?position: Integer?, ?read: visibility_symbol, ?required: bool, type: type_symbol, ?write: visibility_symbol }
+
+        type type_symbol = :argument | :option
+
+        type visibility_symbol = :private | :protected | :public
+
+        include BelongsToAttribute
+
+        # @return [Hash{Symbol => Object}] Default options for a new Signature instance.
+        DEFAULT_OPTIONS: default_options
+
+        # Constants defining valid attribute types.
+        #
+        # @author {https://aaronmallen.me Aaron Allen}
+        # @since 0.1.0
+        module TYPE
+          # @return [Symbol] argument type designation
+          ARGUMENT: type_symbol
+
+          # @return [Symbol] option type designation
+          OPTION: type_symbol
+
+          # @return [Array<Symbol>] all valid type values
+          ALL: Array[type_symbol]
+        end
+
+        # Constants defining valid visibility levels.
+        #
+        # @author {https://aaronmallen.me Aaron Allen}
+        # @since 0.1.0
+        module VISIBILITY
+          # @return [Symbol] private visibility level
+          PRIVATE: visibility_symbol
+
+          # @return [Symbol] protected visibility level
+          PROTECTED: visibility_symbol
+
+          # @return [Symbol] public visibility level
+          PUBLIC: visibility_symbol
+
+          # @return [Array<Symbol>] all valid visibility levels
+          ALL: Array[visibility_symbol]
+        end
+
+        @write_visibility: visibility_symbol
+
+        @nilable: bool
+
+        @position: Integer?
+
+        @read_visibility: visibility_symbol
+
+        @required: bool
+
+        @type: type_symbol
+
+        # @return [Integer, nil] the position of the attribute
+        attr_reader position: Integer?
+
+        # @return [Symbol] the visibility level for reading the attribute
+        attr_reader read_visibility: visibility_symbol
+
+        # @return [Symbol] the type of the attribute
+        attr_reader type: type_symbol
+
+        # @return [Symbol] the visibility level for writing the attribute
+        attr_reader write_visibility: visibility_symbol
+
+        # Initialize a new Signature instance.
+        #
+        # @param attribute [Attribute] the attribute this signature belongs to
+        # @param options [Hash{Symbol => Object}] the signature options
+        # @option options [Boolean] nilable (true) whether the attribute is allowed to be nil.
+        # @option options [Integer, nil] position (nil) optional position for ordered attributes
+        # @option options [Symbol] read (:public) the read visibility
+        # @option options [Boolean] required (false) whether the attribute is required
+        # @option options [Symbol] type the type of attribute
+        # @option options [Symbol] write (:public) the write visibility
+        #
+        # @return [void]
+        def initialize: (Attribute attribute, type: type_symbol, ?nilable: bool, ?position: Integer?, ?read: visibility_symbol, ?required: bool, ?write: visibility_symbol) -> void
+
+        # Check if this signature is for an argument attribute.
+        #
+        # @return [Boolean] true if this is an argument attribute
+        def argument?: () -> bool
+
+        # Check if the attribute is allowed to be nil.
+        #
+        # @return [Boolean] true if the attribute is allowed to be nil
+        def nilable?: () -> bool
+
+        # Check if this signature is for an option attribute.
+        #
+        # @return [Boolean] true if this is an option attribute
+        def option?: () -> bool
+
+        # Check if this signature is for an optional attribute.
+        #
+        # @return [Boolean] true if this is an optional attribute
+        def optional?: () -> bool
+
+        # Check if both read and write operations are private.
+        #
+        # @return [Boolean] true if both read and write are private
+        def private?: () -> bool
+
+        # Check if read operations are private.
+        #
+        # @return [Boolean] true if read operations are private
+        def private_read?: () -> bool
+
+        # Check if write operations are private.
+        #
+        # @return [Boolean] true if write operations are private
+        def private_write?: () -> bool
+
+        # Check if both read and write operations are protected.
+        #
+        # @return [Boolean] true if both read and write are protected
+        def protected?: () -> bool
+
+        # Check if read operations are protected.
+        #
+        # @return [Boolean] true if read operations are protected
+        def protected_read?: () -> bool
+
+        # Check if write operations are protected.
+        #
+        # @return [Boolean] true if write operations are protected
+        def protected_write?: () -> bool
+
+        # Check if both read and write operations are public.
+        #
+        # @return [Boolean] true if both read and write are public
+        def public?: () -> bool
+
+        # Check if read operations are public.
+        #
+        # @return [Boolean] true if read operations are public
+        def public_read?: () -> bool
+
+        # Check if write operations are public.
+        #
+        # @return [Boolean] true if write operations are public
+        def public_write?: () -> bool
+
+        # Check if the attribute is required.
+        #
+        # @return [Boolean] true if the attribute is required
+        def required?: () -> bool
+
+        private
+
+        # Get signature options as a hash.
+        #
+        # @return [Hash] the signature options
+        def to_options: () -> initialize_options
+
+        # Validate that a value is a Boolean.
+        #
+        # @param name [String, Symbol] the name of the attribute being validated
+        # @param value [Boolean] the value to validate
+        #
+        # @raise [ArgumentError] if the value is invalid
+        # @return [void]
+        def validate_boolean!: (String | Symbol name, bool value) -> void
+
+        # Validate all initialization options.
+        #
+        # @param options [Hash{Symbol => Object}] the options to validate
+        # @option options [Boolean] nilable the nilable flag to validate
+        # @option options [Integer, nil] position the position value to validate
+        # @option options [Symbol] read the read visibility to validate
+        # @option options [Boolean] required the required flag to validate
+        # @option options [Symbol] type the type to validate
+        # @option options [Symbol] write the write visibility to validate
+        #
+        # @return [void]
+        def validate_initialize_options!: (Hash[Symbol, untyped] options) -> void
+
+        # Validate that a position value is valid.
+        #
+        # @param position [Integer, nil] the position to validate
+        #
+        # @raise [ArgumentError] if the position is invalid
+        # @return [void]
+        def validate_position!: (Integer? position) -> void
+
+        # Validate that a type value is valid.
+        #
+        # @param type [Symbol] the type to validate
+        #
+        # @raise [ArgumentError] if the type is invalid
+        # @return [void]
+        def validate_type!: (type_symbol type) -> void
+
+        # Validate that visibility values are valid.
+        #
+        # @param type [Symbol] which visibility setting to validate
+        # @param value [Symbol] the visibility value to validate
+        #
+        # @raise [ArgumentError] if the visibility is invalid
+        # @return [void]
+        def validate_visibility!: (Symbol type, visibility_symbol value) -> void
+      end
+    end
+  end
+end

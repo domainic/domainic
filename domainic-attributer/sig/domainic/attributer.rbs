@@ -1,0 +1,69 @@
+module Domainic
+  # Core functionality for defining and managing Ruby class attributes.
+  #
+  # This module provides a flexible attribute system for Ruby classes that supports
+  # positional arguments and keyword options with features like type validation,
+  # coercion, and visibility control.
+  #
+  # Can be included directly with default method names or customized via {Domainic.Attributer}.
+  #
+  # @example Basic usage with default method names
+  #   class Person
+  #     include Domainic::Attributer
+  #
+  #     argument :name
+  #     option :age
+  #   end
+  #
+  # @example Custom method names
+  #   class Person
+  #     include Domainic.Attributer(argument: :param, option: :opt)
+  #
+  #     param :name
+  #     opt :age
+  #   end
+  #
+  # @author {https://aaronmallen.me Aaron Allen}
+  # @since 0.1.0
+  module Attributer
+    # Create a customized Attributer module.
+    #
+    # @param argument [Symbol, String] custom name for the argument method
+    # @param option [Symbol, String] custom name for the option method
+    # @return [Module] configured Attributer module
+    def self.call: (?argument: (String | Symbol)?, ?option: (String | Symbol)?) -> Module
+
+    # Handle direct module inclusion.
+    #
+    # @param base [Class, Module] the including class/module
+    # @return [void]
+    def self.included: (untyped base) -> void
+
+    # Configure base class with Attributer functionality.
+    #
+    # @param base [Class, Module] the target class/module
+    # @param options [Hash] method name customization options
+    # @return [void]
+    private def self.include_attributer: (untyped base, ?argument: (String | Symbol)?, ?option: (String | Symbol)?) -> void
+
+    # Set up custom method names.
+    #
+    # @param base [Class, Module] the target class/module
+    # @param options [Hash] method name customization options
+    # @return [void]
+    private def self.inject_custom_methods!: (untyped base, ?argument: (String | Symbol)?, ?option: (String | Symbol)?) -> void
+  end
+
+  # Create a customized Attributer module.
+  #
+  # Provides a convenient way to include Attributer with customized method names.
+  #
+  # @example
+  #   class Person
+  #     include Domainic.Attributer(argument: :param, option: :opt)
+  #   end
+  #
+  # @param options [Hash] method name customization options
+  # @return [Module] configured Attributer module
+  def self.Attributer: (?argument: (String | Symbol)?, ?option: (String | Symbol)?) -> Module
+end

@@ -17,3 +17,8 @@ Or install it yourself as:
 ```bash
 gem install domainic
 ```
+
+## Gems
+
+* [domainic-attributer](./domainic-attributer/README.md) A library for defining type safe self documenting class
+  attributes.
