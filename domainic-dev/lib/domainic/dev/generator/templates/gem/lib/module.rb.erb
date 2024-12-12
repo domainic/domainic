@@ -1,4 +1,10 @@
 # frozen_string_literal: true
 <% modules = module_name.split('::') %>
-<%= modules.each_with_index.map { |part, index| "#{'  ' * index}module #{part}" }.join("\n") %>
+<%= modules.each_with_index.map do |part, index|
+  if index == modules.size - 1
+    "#{'  ' * index}# @since 0.1.0\n#{'  ' * index}module #{part}"
+  else
+    "#{'  ' * index}module #{part}"
+  end
+end.join("\n") %>
 <%= modules.each_with_index.map { |_, index| "#{'  ' * (modules.size - index - 1)}end" }.join("\n") %>
