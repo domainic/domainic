@@ -1,0 +1,20 @@
+name: Setup ruby
+description: Setup a ruby environment
+
+inputs:
+  ruby-version:
+    description: 'The version of Ruby to use'
+    required: true
+    default: '3.1'
+
+runs:
+  using: composite
+  steps:
+    - name: Setup ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        bundler-cache: true
+        ruby-version: ${{ inputs.ruby-version }}
+    - name: Setup rbs collection
+      shell: bash
+      run: bundle exec rbs collection install

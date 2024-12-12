@@ -1,0 +1,49 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup project
+        uses: actions/checkout@v4
+      - name: Setup ruby
+        uses: ./.github/actions/setup/ruby
+      - name: Lint ruby code
+        uses: ./.github/actions/lint/ruby
+      - name: Lint markdown
+        uses: ./.github/actions/lint/markdown
+      - name: Lint ruby types
+        uses: ./.github/actions/lint/types
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup project
+        uses: actions/checkout@v4
+      - name: Setup ruby
+        uses: ./.github/actions/setup/ruby
+      - name: Test ruby code
+        uses: ./.github/actions/test/ruby
+      - name: Test ruby types
+        uses: ./.github/actions/test/types
+
+  package:
+    name: Package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup project
+        uses: actions/checkout@v4
+      - name: Setup ruby
+        uses: ./.github/actions/setup/ruby
+      - name: Package ruby gems
+        uses: ./.github/actions/package/ruby

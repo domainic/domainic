@@ -1,0 +1,15 @@
+module Domainic
+  module Dev
+    class CLI < Thor
+      # A command line interface for generation tools in the Domainic::Dev project.
+      #
+      # This class extends Thor to provide a unified interface for various generation tools. Currently supports
+      # RBS signature generation via {Command::GenerateSignaturesCommand}.
+      #
+      # @author {https://aaronmallen.me Aaron Allen}
+      # @since 0.1.0
+      class GenerateCLI < Thor
+      end
+    end
+  end
+end

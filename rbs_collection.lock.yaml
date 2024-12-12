@@ -1,3 +1,24 @@
 ---
 path: ".gem_rbs_collection"
+gems:
+- name: domainic-dev
+  version: 0.1.0
+  source:
+    type: rubygems
+- name: fileutils
+  version: '0'
+  source:
+    type: stdlib
+- name: pathname
+  version: '0'
+  source:
+    type: stdlib
+- name: thor
+  version: '1.2'
+  source:
+    type: git
+    name: ruby/gem_rbs_collection
+    revision: 26cc9f3268b43bdd7b24424ba2a073d43ea6c16a
+    remote: https://github.com/ruby/gem_rbs_collection.git
+    repo_dir: gems
 gemfile_lock_path: Gemfile.lock

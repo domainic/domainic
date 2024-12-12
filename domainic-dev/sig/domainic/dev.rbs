@@ -1,0 +1,18 @@
+module Domainic
+  # Development utilities for the Domainic.
+  #
+  # This module provides access to development tools and configurations used in the development of the Domainic.
+  #
+  # @!visibility private
+  # @author {https://aaronmallen.me Aaron Allen}
+  # @since 0.1.0
+  module Dev
+    # Get the root directory of the Domainic monorepo.
+    #
+    # @example
+    #   Domainic::Dev.root #=> #<Pathname:/path/to/domainic>
+    #
+    # @return [Pathname] the root directory of the Domainic monorepo.
+    def self.root: () -> Pathname
+  end
+end

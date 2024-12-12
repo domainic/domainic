@@ -1,0 +1,42 @@
+module Domainic
+  module Dev
+    class CLI < Thor
+      module Command
+        # A command to run RSpec tests for one or more Domainic gems.
+        #
+        # This command extends {BaseCommand} and includes {Mixin::GemNamesArgument} to provide functionality for running
+        # tests on specified gems. If no gem names are provided, tests will be run for all gems in the project.
+        #
+        # @author {https://aaronmallen.me Aaron Allen}
+        # @since 0.1.0
+        class RunTestsCommand < BaseCommand
+          include Mixin::GemNamesArgument
+
+          @rbs_env: Hash[String, String]?
+
+          # Run RSpec tests for the specified gems.
+          #
+          # @return [void]
+          def execute: () -> void
+
+          private
+
+          # Build the command to run RSpec tests for the specified gems.
+          #
+          # @return [Array<Hash{String => String}, String>]
+          def build_command: () -> Array[Hash[String, String] | String]
+
+          # Build the environment variables for running RSpec tests.
+          #
+          # @return [Hash{String => String}]
+          def build_env: () -> Hash[String, String]
+
+          # The rbs environment variables to use when running tests.
+          #
+          # @return [Hash{String => String}]
+          def rbs_env: () -> Hash[String, String]
+        end
+      end
+    end
+  end
+end

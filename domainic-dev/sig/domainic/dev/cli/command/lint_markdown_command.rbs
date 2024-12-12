@@ -1,0 +1,63 @@
+module Domainic
+  module Dev
+    class CLI < Thor
+      module Command
+        # A command to lint Markdown files in the Domainic::Dev project.
+        #
+        # This class extends {BaseCommand} to provide functionality for linting Markdown files using mdl.
+        # It checks all Markdown files in the project except those in vendor directories and reports
+        # any formatting issues.
+        #
+        # @author {https://aaronmallen.me Aaron Allen}
+        # @since 0.1.0
+        class LintMarkdownCommand < BaseCommand
+          type result = { success: bool, message: String, file: Pathname, output: String }
+
+          @results: Array[result]
+
+          @markdown_files: Array[Pathname]
+
+          @documentation_messages: Set[String]
+
+          # Execute the Markdown linting command.
+          #
+          # @return [void]
+          def execute: () -> void
+
+          # Print additional documentation messages for linting failures.
+          #
+          # @return [void]
+          def print_documentation_messages: () -> void
+
+          # Set the exit status based on linting results.
+          #
+          # @return [void]
+          def exit_status: () -> void
+
+          private
+
+          # Get the set of documentation messages.
+          #
+          # @return [Set<String>] the documentation messages
+          def documentation_messages: () -> Set[String]
+
+          # Extract error lines from a result, capturing any documentation messages.
+          #
+          # @param result [Hash{Symbol => Boolean, Pathname, String}] the lint result
+          # @return [Array<String>] the error lines
+          def extract_error_lines: (result result) -> Array[String]
+
+          # Get all Markdown files in the project.
+          #
+          # @return [Array<Pathname>] array of Markdown file paths
+          def markdown_files: () -> Array[Pathname]
+
+          # Run mdl on all Markdown files and collect results.
+          #
+          # @return [Array<Hash>] array of lint results
+          def results: () -> Array[result]
+        end
+      end
+    end
+  end
+end

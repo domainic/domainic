@@ -1,0 +1,60 @@
+module Domainic
+  module Dev
+    class CLI < Thor
+      module Command
+        # A command to publish Domainic gems to RubyGems.org.
+        #
+        # This class extends {BaseCommand} and includes {Mixin::GemNamesArgument} to provide functionality for
+        # publishing gems. It handles dependency resolution, packaging, git tagging, and publishing to RubyGems.org.
+        #
+        # @author {https://aaronmallen.me Aaron Allen}
+        # @since 0.1.0
+        class PublishGemsCommand < BaseCommand
+          include Mixin::GemNamesArgument
+
+          # List of gems that should not be published.
+          #
+          # @return [Array<String>] the list of gem names that cannot be published
+          DISALLOW_PUBLISH: Array[String]
+
+          # Execute the gem publishing command.
+          #
+          # @return [void]
+          def execute: () -> void
+
+          private
+
+          # Generate git tags for a gem release.
+          #
+          # @param gem [Gem] the gem to generate tags for
+          # @return [void]
+          def generate_tags_for_gem: (Gem gem) -> void
+
+          # Get the latest released version of a gem.
+          #
+          # @param gem [Gem] the gem to check
+          # @return [String, nil] the latest version string or nil if no releases exist
+          def latest_release_for_gem: (Gem gem) -> String?
+
+          # Package a gem for publishing.
+          #
+          # @param gem [Gem] the gem to package
+          # @return [void]
+          def package_gem: (Gem gem) -> void
+
+          # Publish all dependencies for a gem.
+          #
+          # @param gem [Gem] the gem whose dependencies should be published
+          # @return [void]
+          def publish_dependencies_for_gem: (Gem gem) -> void
+
+          # Publish a gem to RubyGems.org.
+          #
+          # @param gem [Gem] the gem to publish
+          # @return [void]
+          def publish_gem: (Gem gem) -> void
+        end
+      end
+    end
+  end
+end

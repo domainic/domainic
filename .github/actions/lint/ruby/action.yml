@@ -1,0 +1,9 @@
+name: Lint ruby
+description: Lint ruby code with rubocop
+
+runs:
+  using: composite
+  steps:
+    - name: Run rubocop
+      shell: bash
+      run: bundle exec rubocop --display-cop-names

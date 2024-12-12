@@ -1,0 +1,64 @@
+module Domainic
+  module Dev
+    class CLI < Thor
+      module Command
+        # Base class for all CLI commands in the Domainic::Dev.
+        #
+        # This class extends Thor::Group to provide common functionality for CLI commands. All command classes should
+        # inherit from this class to ensure consistent behavior and interface. It provides helper methods for terminal
+        # output formatting including colorization and icon display.
+        #
+        # @abstract Subclass and implement CLI command behavior
+        # @author {https://aaronmallen.me Aaron Allen}
+        # @since 0.1.0
+        class BaseCommand < Thor::Group
+          # Whether to exit with a non-zero status on command failure.
+          #
+          # @return [Boolean] true to exit with non-zero status on failure
+          def self.exit_on_failure?: () -> bool
+
+          # Terminal color codes for output formatting.
+          #
+          # @return [Hash{Symbol => Integer}] the color codes
+          COLOR_CODES: Hash[Symbol, Integer]
+
+          # Common icons used in outputs.
+          #
+          # @return [Hash{Symbol => String}] the icons
+          ICONS: Hash[Symbol, String]
+
+          @long_desc: String?
+
+          # Get or set the long form description for the command.
+          #
+          # @param text [String] the long form description text
+          # @return [String, nil] the long form description
+          def self.long_desc: (?String text) -> String?
+
+          private
+
+          # Colorizes the given text with the specified color.
+          #
+          # @param text [String] the text to colorize
+          # @param color [Symbol] the color to apply
+          # @return [String] the colorized text
+          # @raise [ArgumentError] if the specified color is invalid
+          def colorize: (String text, Symbol color) -> String
+
+          # Adds bold formatting to the given text.
+          #
+          # @param text [String] the text to make bold
+          # @return [String] the bolded text
+          def embolden: (String text) -> String
+
+          # Retrieves the icon for the given name.
+          #
+          # @param name [String, Symbol] the name of the icon
+          # @param color [Symbol, nil] the color to apply
+          # @return [String] the icon
+          def icon: (String | Symbol name, ?Symbol? color) -> String
+        end
+      end
+    end
+  end
+end

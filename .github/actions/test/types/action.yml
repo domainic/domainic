@@ -1,0 +1,9 @@
+name: Test ruby with RBS
+description: Test ruby code with rspec with RBS enabled
+
+runs:
+  using: composite
+  steps:
+    - name: Run rspec
+      shell: bash
+      run: bin/dev test --rbs

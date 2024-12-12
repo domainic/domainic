@@ -1,0 +1,35 @@
+module Domainic
+  module Dev
+    class CLI < Thor
+      module Command
+        module Mixin
+          # A mixin to add gem name argument handling to CLI commands.
+          #
+          # This module provides functionality for accepting and validating gem names as command arguments. When
+          # included, it adds a `gem_names` argument to the command and provides methods for resolving those names to
+          # {Gem} instances.
+          #
+          # @author {https://aaronmallen.me Aaron Allen}
+          # @since 0.1.0
+          module GemNamesArgument
+            @gems: Array[Gem]
+
+            # Configure the including class with the gem_names argument.
+            #
+            # @param base [Class] the class including this module
+            # @return [void]
+            private def self.included: (untyped base) -> void
+
+            private
+
+            # Get the {Gem} instances for the provided gem names.
+            #
+            # @return [Array<Gem>] array of {Gem} instances
+            # @raise [ArgumentError] if a provided gem name cannot be found
+            def gems: () -> Array[Gem]
+          end
+        end
+      end
+    end
+  end
+end

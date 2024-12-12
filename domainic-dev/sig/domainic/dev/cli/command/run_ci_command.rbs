@@ -1,0 +1,17 @@
+module Domainic
+  module Dev
+    class CLI < Thor
+      module Command
+        # A command to run the complete CI pipeline for the Domainic monorepo.
+        #
+        # This class extends {BaseTaskRunnerCommand} to define and execute the sequence of tasks that make up
+        # the CI pipeline, including dependency installation, type checking, linting, testing, and packaging.
+        #
+        # @author {https://aaronmallen.me Aaron Allen}
+        # @since 0.1.0
+        class RunCICommand < BaseTaskRunnerCommand
+        end
+      end
+    end
+  end
+end

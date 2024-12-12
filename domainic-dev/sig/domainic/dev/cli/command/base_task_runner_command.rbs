@@ -1,0 +1,155 @@
+module Domainic
+  module Dev
+    class CLI < Thor
+      module Command
+        # Base class for CLI commands that run a series of tasks with progress tracking.
+        #
+        # This class extends {BaseCommand} to provide functionality for running and monitoring multiple tasks in
+        # sequence. It handles task execution, console output formatting, progress tracking, and error reporting.
+        #
+        # @abstract Subclass and define tasks using the {task} method
+        # @author {https://aaronmallen.me Aaron Allen}
+        # @since 0.1.0
+        class BaseTaskRunnerCommand < BaseCommand
+          # The width of the console output in characters.
+          #
+          # @return [Integer] the console width
+          CONSOLE_LENGTH: Integer
+
+          # A struct representing a task to be executed.
+          #
+          # @!attribute banner
+          #   @return [String] the display text for the task
+          # @!attribute commands
+          #   @return [Array<String>] the shell commands to execute
+          # @!attribute executed?
+          #   @return [Boolean] whether the task has been executed
+          # @!attribute name
+          #   @return [String] the task name
+          # @!attribute result
+          #   @return [TaskResult] the execution result
+          class Task < Struct[untyped]
+            attr_accessor banner(): String
+
+            attr_accessor commands(): Array[String]
+
+            attr_accessor executed?(): bool
+
+            attr_accessor name(): String
+
+            attr_accessor result(): TaskResult
+
+            def self.new: (?banner: String, ?commands: Array[String], ?executed?: bool, ?name: String, ?result: TaskResult) -> instance
+                        | ({ ?banner: String, ?commands: Array[String], ?:executed? => bool, ?name: String, ?result: TaskResult }) -> instance
+          end
+
+          # A struct representing the result of a task execution.
+          #
+          # @!attribute stderr
+          #   @return [String] standard error output
+          # @!attribute stdout
+          #   @return [String] standard output
+          # @!attribute success?
+          #   @return [Boolean] whether the task succeeded
+          class TaskResult < Struct[untyped]
+            attr_accessor stderr(): String
+
+            attr_accessor stdout(): String
+
+            attr_accessor success?(): bool
+
+            def self.new: (?stderr: String, ?stdout: String, ?success?: bool) -> instance
+                        | ({ ?stderr: String, ?stdout: String, ?:success? => bool }) -> instance
+          end
+
+          @tasks: Array[Task]
+
+          self.@runner_name: String
+
+          # Get or set the name of the task runner.
+          #
+          # @param name [String, nil] the name to set
+          # @return [String] the runner name
+          def self.runner_name: (?String? name) -> String
+
+          # Define a task for the runner.
+          #
+          # @param name [String] the task name
+          # @param banner [String] the display text for the task
+          # @param commands [Array<String>] the shell commands to execute
+          # @return [void]
+          def self.task: (String name, String banner, *String commands) -> void
+
+          # Get all defined tasks.
+          #
+          # @return [Array<Task>] the defined tasks
+          def self.tasks: () -> Array[Task]
+
+          # Execute all defined tasks in sequence.
+          #
+          # @return [void]
+          def execute: () -> void
+
+          private
+
+          # Clear the console screen.
+          #
+          # @return [void]
+          def clear_console: () -> void
+
+          # Check if all tasks have been executed.
+          #
+          # @return [Boolean] true if all tasks are complete
+          def complete?: () -> bool
+
+          # Get all completed tasks.
+          #
+          # @return [Array<Task>] completed tasks
+          def completed_tasks: () -> Array[Task]
+
+          # Generate a status report string for a task.
+          #
+          # @param task [Task] the task to report on
+          # @return [String] the formatted status report
+          def generate_task_status_report: (Task task) -> String
+
+          # Render the console output.
+          #
+          # @return [void]
+          def render_console: () -> void
+
+          # Render the progress bar.
+          #
+          # @return [void]
+          def render_progress_bar: () -> void
+
+          # Render the overall status report.
+          #
+          # @return [void]
+          def render_status_report: () -> void
+
+          # Render the error report for failed tasks.
+          #
+          # @return [void]
+          def render_task_error_report: () -> void
+
+          # Render the status report for completed tasks.
+          #
+          # @return [void]
+          def render_task_status_report: () -> void
+
+          # Run a single task.
+          #
+          # @param task [Task] the task to run
+          # @return [void]
+          def run_task: (Task task) -> void
+
+          # Get all tasks for this runner instance.
+          #
+          # @return [Array<Task>] the tasks
+          def tasks: () -> Array[Task]
+        end
+      end
+    end
+  end
+end

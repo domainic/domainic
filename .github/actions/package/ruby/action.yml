@@ -1,0 +1,9 @@
+name: Package
+description: Package ruby gems
+
+runs:
+  using: composite
+  steps:
+    - name: Build ruby gems
+      shell: bash
+      run: bin/dev package
