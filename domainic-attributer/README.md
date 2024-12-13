@@ -54,6 +54,42 @@ person.name  # => "Alice"
 person.age   # => 30
 ```
 
+### Attribute Constraints and Lifecycle
+
+One of the key features of Domainic::Attributer is that all attribute constraints (type validation, coercion,
+nullability checks, etc.) are enforced throughout the entire lifecycle of an object - not just during initialization.
+This means your attributes maintain their integrity whether they're being set during object creation or later via setter
+methods:
+
+```ruby
+class User
+  include Domainic::Attributer
+
+  argument :email, String do
+    non_nilable
+    validate_with ->(val) { val.include?('@') }
+  end
+
+  option :age, Integer do
+    validate_with ->(val) { val >= 0 }
+  end
+end
+
+# Constraints are checked during initialization
+user = User.new('invalid')  # Raises ArgumentError (no @ symbol)
+user = User.new(nil)        # Raises ArgumentError (non-nilable)
+
+# The SAME constraints are checked for later assignments
+user = User.new('user@example.com')
+user.email = 'invalid'      # Raises ArgumentError (no @ symbol)
+user.email = nil           # Raises ArgumentError (non-nilable)
+
+# This applies to all types of constraints
+user.age = 25             # Works fine
+user.age = -1            # Raises ArgumentError (must be >= 0)
+user.age = '25'          # Raises ArgumentError (must be Integer)
+```
+
 ### Arguments vs Options
 
 Domainic::Attributer gives you two ways to define attributes:
@@ -178,7 +214,8 @@ user.email = nil # Raises ArgumentError because email is non_nilable
 
 ### Type Validation
 
-Keep your data clean with built-in type validation:
+Keep your data clean with built-in type validation - remember, these validations apply both during initialization and
+for any subsequent value changes:
 
 ```ruby
 class BankAccount
@@ -190,11 +227,18 @@ class BankAccount
   option :status, ->(val) { [:active, :closed].include?(val) }  # Custom validation
 end
 
-# Will raise ArgumentError:
-BankAccount.new(:my_account_name, Time.now)
-BankAccount.new("my_account_name", "not a time")
-BankAccount.new("my_account_name", Time.now, balance: "not an integer")
-BankAccount.new("my_account_name", Time.now, balance: 100, status: :not_included_in_the_allow_list)
+account = BankAccount.new("savings", Time.now)
+
+# These will all raise ArgumentError:
+account.account_name = :invalid_type     # Must be String
+account.opened_at = "not a time"         # Must be Time
+account.balance = "100"                  # Must be Integer
+account.status = :invalid_status         # Must be :active or :closed
+
+# These are all valid:
+account.account_name = "checking"        # Valid String
+account.balance = 1000                   # Valid Integer
+account.status = :active                 # Valid status value
 ```
 
 ### Documentation
@@ -221,24 +265,25 @@ end
 
 ### Value Coercion
 
-Transform input values automatically:
+Transform input values automatically - coercion rules apply to both initial values and subsequent assignments:
 
 ```ruby
 class Temperature
   include Domainic::Attributer
 
-  argument :celsius do |value|
+  argument :celsius do
     coerce_with ->(val) { val.to_f }
     validate_with ->(val) { val.is_a?(Float) }
   end
 
-  option :unit, default: "C" do |value|
+  option :unit, default: "C" do
     validate_with ->(val) { ["C", "F"].include?(val) }
   end
 end
 
-temp = Temperature.new("24.5")  # Automatically converted to Float
-temp.celsius  # => 24.5
+temp = Temperature.new("24.5")           # Automatically converted to Float
+temp.celsius = "25.7"                    # Also converted to Float
+temp.celsius = "invalid"                 # Raises ArgumentError (can't be converted to Float)
 ```
 
 ### Custom Validation
