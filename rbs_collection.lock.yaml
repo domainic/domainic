@@ -2,7 +2,7 @@
 path: ".gem_rbs_collection"
 gems:
 - name: domainic-attributer
-  version: 0.1.0
+  version: 0.2.0
   source:
     type: rubygems
 - name: domainic-dev
