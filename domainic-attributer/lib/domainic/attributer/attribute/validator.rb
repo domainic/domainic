@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require 'domainic/attributer/attribute/mixin/belongs_to_attribute'
+require 'domainic/attributer/errors/error'
+require 'domainic/attributer/errors/validation_execution_error'
 require 'domainic/attributer/undefined'
 
 module Domainic
@@ -36,6 +38,13 @@ module Domainic
 
         include BelongsToAttribute
 
+        # Internal error class used to signal validation failures.
+        # This allows us to differentiate between our intentional validation
+        # failure signals and actual errors that occur during validation.
+        #
+        # @api private
+        class ValidationFailure < Error; end
+
         # @rbs @handlers: Array[handler]
 
         # Initialize a new Validator instance.
@@ -59,14 +68,14 @@ module Domainic
         # @param value [Object] the value to validate
         #
         # @raise [ArgumentError] if the value fails validation
+        # @raise [ValidationExecutionError] if errors occur during validation execution
         # @return [void]
         # @rbs (untyped instance, untyped value) -> void
         def call(instance, value)
           return if value == Undefined && handle_undefined!
           return if value.nil? && handle_nil!
-          return if @handlers.all? { |handler| validate_value!(handler, instance, value) }
 
-          raise ArgumentError, "`#{attribute_method_name}`: has invalid value: #{value.inspect}"
+          run_validations!(instance, value)
         end
 
         private
@@ -91,6 +100,38 @@ module Domainic
           return true if @attribute.signature.optional?
 
           raise ArgumentError, "`#{attribute_method_name}`: is required"
+        end
+
+        # Run all configured validations.
+        #
+        # Note on error handling strategy:
+        # We use a custom ValidationFailure error class internally to distinguish between
+        # two types of failures:
+        # 1. Normal validation failures (when a validator returns false) are converted
+        #    to ArgumentError to maintain the public API contract
+        # 2. All other errors that occur during validation execution (including
+        #    ArgumentError) are collected and wrapped in a ValidationExecutionError
+        #
+        # @param instance [Object] the instance on which to perform validation
+        # @param value [Object] the value to validate
+        #
+        # @raise [ArgumentError] if the value fails validation
+        # @raise [ValidationExecutionError] if errors occur during validation execution
+        # @return [void]
+        # @rbs (untyped instance, untyped value) -> void
+        def run_validations!(instance, value)
+          errors = []
+
+          @handlers.each do |handler|
+            is_valid = validate_value!(handler, instance, value)
+            raise ValidationFailure, "`#{attribute_method_name}`: has invalid value: #{value.inspect}" unless is_valid
+          rescue ValidationFailure => e
+            raise ArgumentError, e.message
+          rescue StandardError => e
+            errors << e
+          end
+
+          raise ValidationExecutionError, errors unless errors.empty?
         end
 
         # Validate that a validation handler is valid.

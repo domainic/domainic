@@ -124,5 +124,29 @@ RSpec.describe Domainic::Attributer::Attribute::Validator do
         expect { call }.not_to raise_error
       end
     end
+
+    context 'when a handler raises an error' do
+      let(:handlers) do
+        [
+          ->(*) { raise 'First error' },
+          ->(*) { raise 'Second error' }
+        ]
+      end
+      let(:value) { 'hello' }
+
+      let(:expected_message) do
+        <<~MESSAGE.chomp
+          The following errors occurred during validation execution:
+            - First error
+            - Second error
+        MESSAGE
+      end
+
+      it { expect { call }.to raise_error(Domainic::Attributer::ValidationExecutionError) }
+
+      it 'is expected to include all error messages' do
+        expect { call }.to raise_error(expected_message)
+      end
+    end
   end
 end
