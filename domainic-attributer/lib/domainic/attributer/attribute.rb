@@ -119,7 +119,7 @@ module Domainic
         old_value = instance.instance_variable_get(:"@#{name}")
 
         coerced_value = value == Undefined ? generate_default(instance) : value
-        coerced_value = @coercer.call(instance, coerced_value) unless coerced_value == Undefined
+        coerced_value = @coercer.call(instance, coerced_value)
 
         @validator.call(instance, coerced_value)
 

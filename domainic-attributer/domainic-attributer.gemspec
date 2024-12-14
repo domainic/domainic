@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-DOMAINIC_ATTRIBUTER_GEM_VERSION = '0.1.0'
-DOMAINIC_ATTRIBUTER_SEMVER = '0.1.0'
+DOMAINIC_ATTRIBUTER_GEM_VERSION = '0.2.0'
+DOMAINIC_ATTRIBUTER_SEMVER = '0.2.0'
 DOMAINIC_ATTRIBUTER_REPO_URL = 'https://github.com/domainic/domainic'
 DOMAINIC_ATTRIBUTER_HOME_URL = "#{DOMAINIC_ATTRIBUTER_REPO_URL}/tree/domainic-attributer-v" \
                                "#{DOMAINIC_ATTRIBUTER_SEMVER}/domainic-attributer".freeze

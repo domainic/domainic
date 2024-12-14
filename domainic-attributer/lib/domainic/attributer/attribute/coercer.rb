@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'domainic/attributer/attribute/mixin/belongs_to_attribute'
+require 'domainic/attributer/undefined'
 
 module Domainic
   module Attributer
@@ -43,9 +44,12 @@ module Domainic
         # @param instance [Object] the instance on which to perform coercion
         # @param value [Object] the value to coerce
         #
-        # @return [Object] the coerced value
-        # @rbs (untyped instance, untyped value) -> untyped
+        # @return [Object, nil] the coerced value
+        # @rbs (untyped instance, untyped? value) -> untyped?
         def call(instance, value)
+          return value if value == Undefined
+          return value if value.nil? && !@attribute.signature.nilable?
+
           @handlers.reduce(value) { |accumulator, handler| coerce_value(instance, handler, accumulator) }
         end
 

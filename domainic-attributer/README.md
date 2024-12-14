@@ -265,24 +265,34 @@ end
 
 ### Value Coercion
 
-Transform input values automatically - coercion rules apply to both initial values and subsequent assignments:
+Transform input values automatically - coercion rules apply to both initial values and subsequent assignments. When
+working with nilable attributes, your coercion handlers must explicitly handle nil values:
 
 ```ruby
 class Temperature
   include Domainic::Attributer
 
   argument :celsius do
-    coerce_with ->(val) { val.to_f }
-    validate_with ->(val) { val.is_a?(Float) }
+    coerce_with ->(val) { val.nil? ? val : val.to_f }  # Explicitly handle nil
+    validate_with ->(val) { val.is_a?(Float) || val.nil? }
   end
 
-  option :unit, default: "C" do
+  option :unit do
+    default "C"
     validate_with ->(val) { ["C", "F"].include?(val) }
+  end
+
+  # For non-nilable attributes, nil values are never coerced
+  argument :altitude do
+    non_nilable
+    coerce_with ->(val) { val.to_i }  # No need to handle nil here
   end
 end
 
 temp = Temperature.new("24.5")           # Automatically converted to Float
 temp.celsius = "25.7"                    # Also converted to Float
+temp.celsius = nil                       # Stays nil (attribute is nilable)
+temp.altitude = nil                      # Raises ArgumentError (non-nilable)
 temp.celsius = "invalid"                 # Raises ArgumentError (can't be converted to Float)
 ```
 
