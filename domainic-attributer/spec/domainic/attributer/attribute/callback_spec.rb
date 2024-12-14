@@ -38,13 +38,18 @@ RSpec.describe Domainic::Attributer::Attribute::Callback do
   end
 
   describe '#call' do
-    subject(:callback) { described_class.new(attribute, handlers) }
+    subject(:call) { callback.call(instance, old_value, new_value) }
 
+    let(:callback) { described_class.new(attribute, handlers) }
     let(:instance) { Class.new.new }
+    let(:new_value) { 'new_test' }
+    let(:old_value) { 'old_test' }
 
     context 'without handlers' do
+      let(:handler) { [] }
+
       it 'is expected not to raise error' do
-        expect { callback.call(instance, 'old', 'new') }.not_to raise_error
+        expect { call }.not_to raise_error
       end
     end
 
@@ -61,8 +66,8 @@ RSpec.describe Domainic::Attributer::Attribute::Callback do
       let(:handlers) { [->(old, new) { capture_values(old, new) }] }
 
       it 'is expected to call the handler' do
-        callback.call(instance, 'old', 'new')
-        expect(received).to contain_exactly(%w[old new])
+        call
+        expect(received).to contain_exactly([old_value, new_value])
       end
     end
 
@@ -84,8 +89,8 @@ RSpec.describe Domainic::Attributer::Attribute::Callback do
       end
 
       it 'is expected to call handlers in order' do
-        callback.call(instance, 'old', 'new')
-        expect(received).to eq([[:first, 'old', 'new'], [:second, 'old', 'new']])
+        call
+        expect(received).to eq([[:first, old_value, new_value], [:second, old_value, new_value]])
       end
     end
 
@@ -106,12 +111,34 @@ RSpec.describe Domainic::Attributer::Attribute::Callback do
         end.new
       end
 
-      it 'is expected to execute handlers in instance context' do
-        handler = ->(old, new) { record_values(old, new) }
-        callback = described_class.new(attribute, handler)
+      let(:handlers) { [->(old, new) { record_values(old, new) }] }
 
-        callback.call(instance, 'old', 'new')
-        expect(instance.recorded_values).to contain_exactly(%w[old new])
+      it 'is expected to execute handlers in instance context' do
+        call
+        expect(instance.recorded_values).to contain_exactly([old_value, new_value])
+      end
+    end
+
+    context 'when a handler raises an error' do
+      let(:handlers) do
+        [
+          ->(*) { raise 'First error' },
+          ->(*) { raise 'Second error' }
+        ]
+      end
+
+      let(:expected_message) do
+        <<~MESSAGE.chomp
+          The following errors occurred during callback execution:
+            - First error
+            - Second error
+        MESSAGE
+      end
+
+      it { expect { call }.to raise_error(Domainic::Attributer::CallbackExecutionError) }
+
+      it 'is expected to include all error messages' do
+        expect { call }.to raise_error(expected_message)
       end
     end
   end

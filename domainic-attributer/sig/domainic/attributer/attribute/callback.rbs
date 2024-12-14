@@ -30,6 +30,7 @@ module Domainic
         # @param old_value [Object] the previous value
         # @param new_value [Object] the new value
         #
+        # @raise [CallbackExecutionError] if any callback handlers raises an error
         # @return [void]
         def call: (untyped instance, untyped old_value, untyped new_value) -> void
 
