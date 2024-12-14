@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'domainic/attributer/attribute/mixin/belongs_to_attribute'
+require 'domainic/attributer/errors/coercion_execution_error'
 require 'domainic/attributer/undefined'
 
 module Domainic
@@ -44,13 +45,21 @@ module Domainic
         # @param instance [Object] the instance on which to perform coercion
         # @param value [Object] the value to coerce
         #
+        # @raise [CoercionExecutionError] if a coercion handler raises an error
         # @return [Object, nil] the coerced value
         # @rbs (untyped instance, untyped? value) -> untyped?
         def call(instance, value)
           return value if value == Undefined
           return value if value.nil? && !@attribute.signature.nilable?
 
-          @handlers.reduce(value) { |accumulator, handler| coerce_value(instance, handler, accumulator) }
+          @handlers.reduce(value) do |accumulator, handler|
+            coerce_value(instance, handler, accumulator)
+          rescue StandardError => e
+            raise CoercionExecutionError.new(
+              "Failed to coerce #{accumulator.inspect} with #{handler.inspect}: #{e.message}",
+              handler
+            )
+          end
         end
 
         private
