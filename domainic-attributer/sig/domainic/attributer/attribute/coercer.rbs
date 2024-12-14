@@ -31,8 +31,8 @@ module Domainic
         # @param instance [Object] the instance on which to perform coercion
         # @param value [Object] the value to coerce
         #
-        # @return [Object] the coerced value
-        def call: (untyped instance, untyped value) -> untyped
+        # @return [Object, nil] the coerced value
+        def call: (untyped instance, untyped? value) -> untyped?
 
         private
 

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'domainic/attributer/attribute/mixin/belongs_to_attribute'
+require 'domainic/attributer/undefined'
 
 module Domainic
   module Attributer
