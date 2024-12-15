@@ -1,0 +1,19 @@
+module Domainic
+  module Type
+    module Behavior
+      # @since 0.1.0
+      module NumericBehavior : Behavior
+        # @todo: We need to grab the default tolerance off the DivisibilityConstraint
+        #   without loading the constraint itself. We should probably move constants into
+        #   a shared module called Domainic::Type::Defaults or something...
+        def being_divisible_by: (Numeric divisor, ?tolerance: Float) -> NumericBehavior
+
+        alias being_multiple_of being_divisible_by
+
+        def being_greater_than: (untyped minimum) -> untyped
+
+        def being_less_than: (untyped maximum) -> untyped
+      end
+    end
+  end
+end

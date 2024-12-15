@@ -13,7 +13,7 @@ module Domainic
 
         # @rbs override
         def description
-          "with elements #{@expected.description}"
+          "all elements to #{@expected.description}"
         end
 
         # @rbs override
@@ -24,7 +24,7 @@ module Domainic
             @expected.failure_description
           end
 
-          "with elements #{failure_descriptions.join(', and ')}"
+          "had elements that #{failure_descriptions.join(', and ')}"
         end
 
         private

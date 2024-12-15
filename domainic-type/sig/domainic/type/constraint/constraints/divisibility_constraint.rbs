@@ -1,0 +1,28 @@
+module Domainic
+  module Type
+    module Constraint
+      # @since 0.1.0
+      class DivisibilityConstraint
+        include Behavior
+
+        DEFAULT_TOLERANCE: Float
+
+        @expected: Numeric
+
+        def description: ...
+
+        def failure_description: ...
+
+        private
+
+        def parse_value: (Numeric value) -> Float?
+
+        def satisfies_constraint?: ...
+
+        def validate_expectation!: ...
+
+        def validate_subject!: ...
+      end
+    end
+  end
+end

@@ -1,0 +1,10 @@
+module Domainic
+  module Type
+    # @since 0.1.0
+    class IntegerType
+      include Behavior
+
+      include NumericBehavior
+    end
+  end
+end
