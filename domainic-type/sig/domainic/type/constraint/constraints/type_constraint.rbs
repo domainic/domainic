@@ -1,0 +1,22 @@
+module Domainic
+  module Type
+    module Constraint
+      # @since 0.1.0
+      class TypeConstraint
+        include Behavior
+
+        @expected: Class | Module | Type::Behavior
+
+        def description: ...
+
+        def failure_description: ...
+
+        private
+
+        def satisfies_constraint?: ...
+
+        def validate_expectation!: ...
+      end
+    end
+  end
+end

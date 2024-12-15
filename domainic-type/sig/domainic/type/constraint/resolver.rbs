@@ -1,0 +1,30 @@
+module Domainic
+  module Type
+    module Constraint
+      # @since 0.1.0
+      class Resolver
+        @constant_name: String
+
+        @file_name: String
+
+        @constraint_name: Symbol
+
+        def self.resolve!: (Symbol constraint_type) -> _Class
+
+        def initialize: (Symbol constraint_type) -> void
+
+        def resolve!: () -> _Class
+
+        private
+
+        def constant_name: () -> String
+
+        def constraint_class: () -> _Class
+
+        def file_name: () -> String
+
+        def load_constraint!: () -> void
+      end
+    end
+  end
+end

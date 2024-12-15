@@ -1,0 +1,28 @@
+module Domainic
+  module Type
+    module Constraint
+      # @since 0.1.0
+      class RangeConstraint
+        include Behavior
+
+        @expected: expected
+
+        def description: ...
+
+        def failure_description: ...
+
+        private
+
+        def satisfies_constraint?: ...
+
+        def validate_minimum_maximum_presence!: (expected expectation) -> void
+
+        def validate_minimum_maximum_type!: (expected expectation) -> void
+
+        def validate_expectation!: ...
+
+        def validate_subject!: ...
+      end
+    end
+  end
+end

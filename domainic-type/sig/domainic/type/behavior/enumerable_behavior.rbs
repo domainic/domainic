@@ -1,0 +1,20 @@
+module Domainic
+  module Type
+    module Behavior
+      # @since 0.1.0
+      module EnumerableBehavior : Behavior
+        def being_duplicative: () -> EnumerableBehavior
+
+        def being_empty: () -> EnumerableBehavior
+
+        def being_populated: () -> EnumerableBehavior
+
+        def having_maximum_count: (Integer count) -> EnumerableBehavior
+
+        def having_minimum_count: (Integer count) -> EnumerableBehavior
+
+        def of: (Class | Module | Behavior type) -> EnumerableBehavior
+      end
+    end
+  end
+end

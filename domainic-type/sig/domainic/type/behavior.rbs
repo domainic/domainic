@@ -1,0 +1,43 @@
+module Domainic
+  module Type
+    # @since 0.1.0
+    module Behavior
+      @constraints: Hash[Symbol, Hash[Symbol, Constraint::Behavior]]
+
+      def self.included: (Class | Module base) -> void
+
+      # @since 0.1.0
+      module ClassMethods : Behavior
+        @intrinsic_constraints: Hash[Symbol, Hash[Symbol, Constraint::Behavior]]
+
+        def validate: (untyped value) -> bool
+
+        alias === validate
+
+        def validate!: (untyped value) -> bool
+
+        private
+
+        def intrinsic: (Symbol constrained, Symbol constraint_name, Symbol constraint_type, ?untyped? expectation, ?abort_on_failure: bool) -> void
+
+        def intrinsic_constraints: () -> Hash[Symbol, Hash[Symbol, Constraint::Behavior]]
+
+        def method_missing: (Symbol method_name, *untyped arguments, **untyped keyword_arguments) -> Behavior
+
+        def respond_to_missing?: ...
+      end
+
+      def initialize: (**untyped options) -> void
+
+      def validate: (untyped value) -> bool
+
+      alias === validate
+
+      def validate!: (untyped value) -> bool
+
+      private
+
+      def add_constraint: (Symbol constrained, Symbol constraint_name, Symbol constraint_type, ?untyped? expectation, ?abort_on_failure: bool) -> self
+    end
+  end
+end

@@ -1,0 +1,22 @@
+module Domainic
+  module Type
+    module Constraint
+      # @since 0.1.0
+      class NotConstraint
+        include Behavior
+
+        @expected: Behavior
+
+        def description: ...
+
+        def failure_description: ...
+
+        private
+
+        def satisfies_constraint?: ...
+
+        def validate_expectation!: ...
+      end
+    end
+  end
+end

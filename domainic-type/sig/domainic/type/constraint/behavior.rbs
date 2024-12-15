@@ -1,0 +1,44 @@
+module Domainic
+  module Type
+    module Constraint
+      # @since 0.1.0
+      module Behavior
+        type options = { abort_on_failure: bool }
+
+        VALID_ACCESSORS: Array[Symbol]
+
+        @options: options
+
+        @accessor: Symbol
+
+        @actual: untyped
+
+        @expected: untyped
+
+        def initialize: (Symbol accessor, ?untyped? expectation, ?abort_on_failure: bool) -> void
+
+        def abort_on_failure?: () -> bool
+
+        def description: () -> String
+
+        def expecting: (untyped expectation) -> self
+
+        def failure_description: () -> String
+
+        def satisfied?: (untyped value) -> bool
+
+        def with_options: (?abort_on_failure: bool) -> self
+
+        private
+
+        def satisfies_constraint?: () -> bool
+
+        def validate_accessor!: (Symbol accessor) -> void
+
+        def validate_expectation!: (untyped expectation) -> void
+
+        def validate_subject!: (untyped value) -> void
+      end
+    end
+  end
+end
