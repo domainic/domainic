@@ -19,30 +19,30 @@ module Domainic
       # @rbs () -> String
       def build
         if @result.type_failure
-          build_type_failure_message
+          # For type failures, we want a simple message since the type check failed immediately
+          "Expected #{@type.type}, got #{value_description}"
         else
-          build_constraint_failure_message
+          # For constraint failures, we want a header plus indented failure details
+          [
+            "Expected #{@type.type}, got #{value_description}:",
+            build_constraint_messages
+          ].join("\n")
         end
       end
 
       private
 
       # @rbs () -> String
-      def build_type_failure_message
+      def build_constraint_messages
         @result.failures.map do |failure|
           "  - Expected #{failure.description}, but got #{failure.failure_description}"
         end.join("\n")
       end
 
       # @rbs () -> String
-      def build_constraint_failure_message
-        lines = ["Expected a #{@type.type}, got a #{@value.class}:"]
-
-        @result.failures.each do |failure|
-          lines << "  - Expected #{failure.description}, but got #{failure.failure_description}"
-        end
-
-        lines.join("\n")
+      def value_description
+        article = @value.class.to_s.match?(/^[AEIOU]/i) ? 'an' : 'a'
+        "#{article} #{@value.class}"
       end
     end
   end

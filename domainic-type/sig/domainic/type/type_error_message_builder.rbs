@@ -10,9 +10,9 @@ module Domainic
 
       private
 
-      def build_type_failure_message: () -> String
+      def build_constraint_messages: () -> String
 
-      def build_constraint_failure_message: () -> String
+      def value_description: () -> String
     end
   end
 end

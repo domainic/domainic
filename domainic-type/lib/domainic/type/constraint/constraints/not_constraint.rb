@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'domainic/type/constraint/behavior'
-
 module Domainic
   module Type
     module Constraint
@@ -13,12 +11,12 @@ module Domainic
 
         # @rbs override
         def description
-          "not #{@expected.description}"
+          "not: #{@expected.description}"
         end
 
         # @rbs override
         def failure_description
-          "not #{@expected.failure_description}"
+          "was: #{@expected.description}"
         end
 
         private

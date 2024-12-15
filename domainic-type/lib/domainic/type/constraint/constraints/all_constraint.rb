@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'domainic/type/constraint/behavior'
-
 module Domainic
   module Type
     module Constraint
@@ -13,18 +11,19 @@ module Domainic
 
         # @rbs override
         def description
-          "all elements to #{@expected.description}"
+          "all elements must be: #{@expected.description}"
         end
 
         # @rbs override
         def failure_description
-          failure_descriptions = @actual.map do |element|
+          # Build a list of failures by index
+          failures = @actual.each_with_index.filter_map do |element, index|
             next if @expected.satisfied?(element)
 
-            @expected.failure_description
+            "#{@expected.failure_description} at index #{index}"
           end
 
-          "had elements that #{failure_descriptions.join(', and ')}"
+          "[#{failures.join(', ')}]"
         end
 
         private
