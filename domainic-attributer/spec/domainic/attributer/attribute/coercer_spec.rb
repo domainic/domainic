@@ -77,5 +77,12 @@ RSpec.describe Domainic::Attributer::Attribute::Coercer do
         expect(call).to eq('42')
       end
     end
+
+    context 'when a handler raises an error' do
+      let(:value) { 42 }
+      let(:handlers) { [->(*) { raise 'Error' }] }
+
+      it { expect { call }.to raise_error(Domainic::Attributer::CoercionExecutionError, /Failed to coerce 42/) }
+    end
   end
 end

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'domainic/attributer/attribute/mixin/belongs_to_attribute'
+require 'domainic/attributer/errors/callback_execution_error'
 
 module Domainic
   module Attributer
@@ -42,10 +43,19 @@ module Domainic
         # @param old_value [Object] the previous value
         # @param new_value [Object] the new value
         #
+        # @raise [CallbackExecutionError] if any callback handlers raises an error
         # @return [void]
         # @rbs (untyped instance, untyped old_value, untyped new_value) -> void
         def call(instance, old_value, new_value)
-          @handlers.each { |handler| instance.instance_exec(old_value, new_value, &handler) }
+          errors = []
+
+          @handlers.each do |handler|
+            instance.instance_exec(old_value, new_value, &handler)
+          rescue StandardError => e
+            errors << e
+          end
+
+          raise CallbackExecutionError, errors unless errors.empty?
         end
 
         private

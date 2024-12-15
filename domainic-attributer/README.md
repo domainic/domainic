@@ -274,7 +274,7 @@ class Temperature
 
   argument :celsius do
     coerce_with ->(val) { val.nil? ? val : val.to_f }  # Explicitly handle nil
-    validate_with ->(val) { val.is_a?(Float) || val.nil? }
+    validate_with ->(val) { val.is_a?(Float) } # Validation already handles nil values
   end
 
   option :unit do
@@ -344,6 +344,65 @@ BankTransfer.new(100, :pending, "123")            # invalid reference number
 
 Validations are run in the order they're defined, after any coercions. This lets you build up complex validation rules
 while keeping them readable and maintainable.
+
+### Error Handling
+
+Domainic::Attributer provides specialized error handling for runtime errors during validation, callback, and coercion
+execution:
+
+```ruby
+class Product
+  include Domainic::Attributer
+
+  argument :price do
+    # If to_f raises a NoMethodError, a CoercionExecutionError is raised
+    coerce_with ->(val) { val.to_f }
+
+    # If a validation handler raises an error (like NoMethodError),
+    # all errors are collected
+    validate_with ->(val) { val.send(:unknown_method) }  # Will raise NoMethodError
+    validate_with ->(val) { val >= 2 }  # Simple validation failure
+  end
+
+  argument :status do
+    validate_with ->(val) { [:active, :inactive].include?(val) }
+
+    # If callbacks raise errors, they are collected
+    on_change ->(old_val, new_val) {
+      raise "Failed to notify"
+    }
+    on_change ->(old_val, new_val) {
+      raise "Inventory update failed"
+    }
+  end
+end
+
+# If coercion raises an error:
+product.price = Object.new  # Object#to_f raises NoMethodError
+# Raises Domainic::Attributer::CoercionExecutionError
+
+# If validation handlers raise errors:
+product.price = "invalid"
+# Raises Domainic::Attributer::ValidationExecutionError containing all runtime errors
+
+# Simple validation failures:
+product.price = 1  # Less than 2
+# Raises ArgumentError: `Product#price`: has invalid value: 1
+
+# If callbacks raise errors:
+product.status = :active
+# Raises Domainic::Attributer::CallbackExecutionError containing all callback errors
+```
+
+When handlers raise runtime errors during execution, Domainic::Attributer provides specialized error types to help with
+debugging:
+
+* Domainic::Attributer::ValidationExecutionError - collects errors raised during validation
+* Domainic::Attributer::CallbackExecutionError - collects errors raised by callbacks
+* Domainic::Attributer::CoercionExecutionError - raised when a coercion raises an error
+
+Note that normal validation failures (returning false) simply raise an ArgumentError with an "invalid value" message.
+Coercion fails fast, raising an error on the first failure.
 
 ### Visibility Control
 

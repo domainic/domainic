@@ -31,6 +31,7 @@ module Domainic
         # @param instance [Object] the instance on which to perform coercion
         # @param value [Object] the value to coerce
         #
+        # @raise [CoercionExecutionError] if a coercion handler raises an error
         # @return [Object, nil] the coerced value
         def call: (untyped instance, untyped? value) -> untyped?
 
