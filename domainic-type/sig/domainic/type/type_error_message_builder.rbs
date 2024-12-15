@@ -1,0 +1,18 @@
+module Domainic
+  module Type
+    # @since 0.1.0
+    class TypeErrorMessageBuilder
+      def self.build: (Behavior type, Behavior::ValidationResult result, untyped value) -> String
+
+      def initialize: (Behavior type, Behavior::ValidationResult result, untyped value) -> void
+
+      def build: () -> String
+
+      private
+
+      def build_type_failure_message: () -> String
+
+      def build_constraint_failure_message: () -> String
+    end
+  end
+end

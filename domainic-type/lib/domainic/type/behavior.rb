@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'domainic/type/constraint/resolver'
+require 'domainic/type/type_error_message_builder'
 
 module Domainic
   module Type
@@ -67,6 +68,12 @@ module Domainic
         end
       end
 
+      ValidationResult = Struct.new(
+        :failures, #: Array[Constraint::Behavior]
+        :type_failure, #: bool
+        keyword_init: true
+      )
+
       # @rbs (**untyped options) -> void
       def initialize(**options)
         @constraints = self.class.send(:intrinsic_constraints).transform_values { |hash| hash.transform_values(&:dup) }
@@ -100,21 +107,10 @@ module Domainic
 
       # @rbs (untyped value) -> bool
       def validate!(value)
-        failures = []
-        type_failure = false
+        result = collect_failures(value, ValidationResult.new(failures: [], type_failure: false))
+        return true if result.failures.empty?
 
-        @constraints.each_value do |accessors|
-          accessors.each_value do |constraint|
-            result = constraint.satisfied?(value)
-            failures << constraint unless result
-            type_failure = constraint.type_failure? unless result
-            break result if !result && constraint.abort_on_failure?
-          end
-        end
-
-        return true if failures.empty?
-
-        raise_type_error!(failures, value, type_failure:) #: bool
+        raise_type_error!(result, value) #: bool
       end
 
       private
@@ -134,17 +130,23 @@ module Domainic
         self
       end
 
-      # @rbs (Array[Constraint::Behavior], untyped value, type_failure: bool) -> void
-      def raise_type_error!(failures, value, type_failure:)
-        message = if type_failure
-                    "Expected #{failures.map(&:description).join(', ')}, " \
-                      "but got #{failures.map(&:failure_description).join(', ')} " \
-                  else
-                    "Expected a #{type} (#{failures.map(&:description).join(', ')}), " \
-                      "but got a #{value.class} (#{failures.map(&:failure_description).join(', ')}) " \
-                  end
+      # @rbs (untyped value, ValidationResult result) -> ValidationResult
+      def collect_failures(value, result)
+        @constraints.each_value do |accessors|
+          accessors.each_value do |constraint|
+            satisfied = constraint.satisfied?(value)
+            result.failures << constraint unless satisfied
+            result.type_failure = constraint.type_failure? unless satisfied
+            break satisfied if !satisfied && constraint.abort_on_failure?
+          end
+        end
 
-        error = TypeError.new(message)
+        result
+      end
+
+      # @rbs (ValidationResult result, untyped value) -> void
+      def raise_type_error!(result, value)
+        error = TypeError.new(TypeErrorMessageBuilder.build(self, result, value))
         error.set_backtrace(caller)
         raise error
       end

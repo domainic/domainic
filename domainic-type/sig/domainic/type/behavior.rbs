@@ -27,9 +27,18 @@ module Domainic
         def respond_to_missing?: ...
       end
 
+      class ValidationResult < Struct[untyped]
+        attr_accessor failures(): Array[Constraint::Behavior]
+
+        attr_accessor type_failure(): bool
+
+        def self.new: (?failures: Array[Constraint::Behavior], ?type_failure: bool) -> instance
+                    | ({ ?failures: Array[Constraint::Behavior], ?type_failure: bool }) -> instance
+      end
+
       def initialize: (**untyped options) -> void
 
-      def type: () -> untyped
+      def type: () -> String
 
       def validate: (untyped value) -> bool
 
@@ -41,7 +50,9 @@ module Domainic
 
       def add_constraint: (Symbol constrained, Symbol constraint_name, Symbol constraint_type, ?untyped? expectation, ?abort_on_failure: bool) -> self
 
-      def raise_type_error!: (Array[Constraint::Behavior], untyped value, type_failure: bool) -> void
+      def collect_failures: (untyped value, ValidationResult result) -> ValidationResult
+
+      def raise_type_error!: (ValidationResult result, untyped value) -> void
     end
   end
 end
