@@ -80,10 +80,15 @@ module Domainic
         end
       end
 
+      # @rbs () -> String
+      def type
+        (self.class.name || '').split('::').last.delete_suffix('Type')
+      end
+
       # @rbs (untyped value) -> bool
       def validate(value)
-        @constraints.all? do |_, constraints|
-          constraints.all? do |_, constraint|
+        @constraints.all? do |_, accessors|
+          accessors.all? do |_, constraint|
             result = constraint.satisfied?(value)
             break result unless result # fail fast to be more performant we aren't returning errors here.
 
@@ -94,9 +99,22 @@ module Domainic
       alias === validate
 
       # @rbs (untyped value) -> bool
-      def validate!(_value)
-        # TODO: Implement this method it should raise a TypeError and construct the error message from the constraints.
-        true
+      def validate!(value)
+        failures = []
+        type_failure = false
+
+        @constraints.each_value do |accessors|
+          accessors.each_value do |constraint|
+            result = constraint.satisfied?(value)
+            failures << constraint unless result
+            type_failure = constraint.type_failure? unless result
+            break result if !result && constraint.abort_on_failure?
+          end
+        end
+
+        return true if failures.empty?
+
+        raise_type_error!(failures, value, type_failure:) #: bool
       end
 
       private
@@ -114,6 +132,21 @@ module Domainic
           Constraint::Resolver.new(constraint_type).resolve!.new(constrained)
         @constraints[constrained][constraint_name].expecting(expectation).with_options(**options)
         self
+      end
+
+      # @rbs (Array[Constraint::Behavior], untyped value, type_failure: bool) -> void
+      def raise_type_error!(failures, value, type_failure:)
+        message = if type_failure
+                    "Expected #{failures.map(&:description).join(', ')}, " \
+                      "but got #{failures.map(&:failure_description).join(', ')} " \
+                  else
+                    "Expected a #{type} (#{failures.map(&:description).join(', ')}), " \
+                      "but got a #{value.class} (#{failures.map(&:failure_description).join(', ')}) " \
+                  end
+
+        error = TypeError.new(message)
+        error.set_backtrace(caller)
+        raise error
       end
     end
   end

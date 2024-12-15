@@ -18,7 +18,7 @@ module Domainic
 
         # @rbs override
         def failure_description
-          'not empty'
+          'empty'
         end
 
         private

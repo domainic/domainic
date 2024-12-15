@@ -29,6 +29,8 @@ module Domainic
 
       def initialize: (**untyped options) -> void
 
+      def type: () -> untyped
+
       def validate: (untyped value) -> bool
 
       alias === validate
@@ -38,6 +40,8 @@ module Domainic
       private
 
       def add_constraint: (Symbol constrained, Symbol constraint_name, Symbol constraint_type, ?untyped? expectation, ?abort_on_failure: bool) -> self
+
+      def raise_type_error!: (Array[Constraint::Behavior], untyped value, type_failure: bool) -> void
     end
   end
 end

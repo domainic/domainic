@@ -18,7 +18,7 @@ module Domainic
 
         # @rbs override
         def failure_description
-          @expected.failure_description
+          "not #{@expected.failure_description}"
         end
 
         private

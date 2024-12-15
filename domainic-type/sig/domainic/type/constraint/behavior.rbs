@@ -3,7 +3,7 @@ module Domainic
     module Constraint
       # @since 0.1.0
       module Behavior
-        type options = { abort_on_failure: bool }
+        type options = { abort_on_failure: bool, is_type_failure: bool }
 
         VALID_ACCESSORS: Array[Symbol]
 
@@ -26,6 +26,8 @@ module Domainic
         def failure_description: () -> String
 
         def satisfied?: (untyped value) -> bool
+
+        def type_failure?: () -> bool
 
         def with_options: (?abort_on_failure: bool) -> self
 

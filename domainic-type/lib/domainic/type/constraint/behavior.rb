@@ -6,7 +6,7 @@ module Domainic
       # @since 0.1.0
       module Behavior
         # @rbs!
-        #   type options = { abort_on_failure: bool }
+        #   type options = { abort_on_failure: bool, is_type_failure: bool }
 
         VALID_ACCESSORS = %i[begin count end first keys last length self size values].freeze #: Array[Symbol]
 
@@ -16,13 +16,13 @@ module Domainic
         # @rbs @options: options
 
         # @rbs (Symbol accessor, ?untyped? expectation, ?abort_on_failure: bool) -> void
-        def initialize(accessor, expectation = nil, abort_on_failure: false)
+        def initialize(accessor, expectation = nil, abort_on_failure: false, is_type_failure: false)
           validate_accessor!(accessor)
           validate_expectation!(expectation) unless expectation.nil?
 
           @accessor = accessor
           @expected = expectation
-          @options = { abort_on_failure: }
+          @options = { abort_on_failure:, is_type_failure: }
         end
 
         # @rbs () -> bool
@@ -60,6 +60,11 @@ module Domainic
           @actual = subject
 
           satisfies_constraint?
+        end
+
+        # @rbs () -> bool
+        def type_failure?
+          @options.fetch(:is_type_failure, false)
         end
 
         # @rbs (?abort_on_failure: bool) -> self

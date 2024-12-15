@@ -13,20 +13,12 @@ module Domainic
 
         # @rbs override
         def description
-          if @expected.to_s.start_with?('A', 'E', 'I', 'O', 'U')
-            "an #{@expected}"
-          else
-            "a #{@expected}"
-          end
+          @expected.to_s.match?(/^[AEIOU]/i) ? "an #{@expected}" : "a #{@expected}"
         end
 
         # @rbs override
         def failure_description
-          if @actual.class.to_s.start_with?('A', 'E', 'I', 'O', 'U')
-            "an #{@actual.class}"
-          else
-            "a #{@actual.class}"
-          end
+          @actual.class.to_s.match?(/^[AEIOU]/i) ? "an #{@actual.class}" : "a #{@actual.class}"
         end
 
         private

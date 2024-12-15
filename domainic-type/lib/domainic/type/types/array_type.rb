@@ -10,7 +10,7 @@ module Domainic
       include Behavior
       include EnumerableBehavior
 
-      intrinsic :self, :type, :type, Array, abort_on_failure: true
+      intrinsic :self, :type, :type, Array, abort_on_failure: true, is_type_failure: true
     end
   end
 end
