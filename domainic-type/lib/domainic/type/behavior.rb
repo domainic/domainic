@@ -37,7 +37,7 @@ module Domainic
         #   Symbol constraint_name,
         #   Symbol constraint_type,
         #   ?untyped? expectation,
-        #   ?abort_on_failure: bool
+        #   **untyped options
         #   ) -> void
         def intrinsic(constrained, constraint_name, constraint_type, expectation = nil, **options)
           intrinsic_constraints[constrained] ||= {}
@@ -120,7 +120,7 @@ module Domainic
       #   Symbol constraint_name,
       #   Symbol constraint_type,
       #   ?untyped? expectation,
-      #   ?abort_on_failure: bool
+      #   **untyped options
       #   ) -> self
       def add_constraint(constrained, constraint_name, constraint_type, expectation = nil, **options)
         @constraints[constrained] ||= {}

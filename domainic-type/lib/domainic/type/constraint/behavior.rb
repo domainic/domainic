@@ -5,24 +5,21 @@ module Domainic
     module Constraint
       # @since 0.1.0
       module Behavior
-        # @rbs!
-        #   type options = { abort_on_failure: bool, is_type_failure: bool }
-
         VALID_ACCESSORS = %i[begin count end first keys last length self size values].freeze #: Array[Symbol]
 
         # @rbs @accessor: Symbol
         # @rbs @actual: untyped
         # @rbs @expected: untyped
-        # @rbs @options: options
+        # @rbs @options: Hash[Symbol, untyped]
 
-        # @rbs (Symbol accessor, ?untyped? expectation, ?abort_on_failure: bool) -> void
-        def initialize(accessor, expectation = nil, abort_on_failure: false, is_type_failure: false)
+        # @rbs (Symbol accessor, ?untyped? expectation, **untyped) -> void
+        def initialize(accessor, expectation = nil, **options)
           validate_accessor!(accessor)
           validate_expectation!(expectation) unless expectation.nil?
 
           @accessor = accessor
           @expected = expectation
-          @options = { abort_on_failure:, is_type_failure: }
+          @options = options.transform_keys(&:to_sym)
         end
 
         # @rbs () -> bool
@@ -67,9 +64,9 @@ module Domainic
           @options.fetch(:is_type_failure, false)
         end
 
-        # @rbs (?abort_on_failure: bool) -> self
-        def with_options(abort_on_failure: false)
-          @options[:abort_on_failure] = abort_on_failure
+        # @rbs (**untyped options) -> self
+        def with_options(**options)
+          @options.merge!(options.transform_keys(&:to_sym))
           self
         end
 

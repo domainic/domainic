@@ -18,7 +18,7 @@ module Domainic
 
         private
 
-        def intrinsic: (Symbol constrained, Symbol constraint_name, Symbol constraint_type, ?untyped? expectation, ?abort_on_failure: bool) -> void
+        def intrinsic: (Symbol constrained, Symbol constraint_name, Symbol constraint_type, ?untyped? expectation, **untyped options) -> void
 
         def intrinsic_constraints: () -> Hash[Symbol, Hash[Symbol, Constraint::Behavior]]
 
@@ -48,7 +48,7 @@ module Domainic
 
       private
 
-      def add_constraint: (Symbol constrained, Symbol constraint_name, Symbol constraint_type, ?untyped? expectation, ?abort_on_failure: bool) -> self
+      def add_constraint: (Symbol constrained, Symbol constraint_name, Symbol constraint_type, ?untyped? expectation, **untyped options) -> self
 
       def collect_failures: (untyped value, ValidationResult result) -> ValidationResult
 

@@ -3,11 +3,9 @@ module Domainic
     module Constraint
       # @since 0.1.0
       module Behavior
-        type options = { abort_on_failure: bool, is_type_failure: bool }
-
         VALID_ACCESSORS: Array[Symbol]
 
-        @options: options
+        @options: Hash[Symbol, untyped]
 
         @accessor: Symbol
 
@@ -15,7 +13,7 @@ module Domainic
 
         @expected: untyped
 
-        def initialize: (Symbol accessor, ?untyped? expectation, ?abort_on_failure: bool) -> void
+        def initialize: (Symbol accessor, ?untyped? expectation, **untyped) -> void
 
         def abort_on_failure?: () -> bool
 
@@ -29,7 +27,7 @@ module Domainic
 
         def type_failure?: () -> bool
 
-        def with_options: (?abort_on_failure: bool) -> self
+        def with_options: (**untyped options) -> self
 
         private
 
