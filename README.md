@@ -11,7 +11,8 @@ A suite of Ruby libraries crafted to arm engineers with the magic of domain-driv
 Domainic is an ecosystem of Ruby gems designed to provide a comprehensive toolkit for domain-driven design. The v0.1.0
 release will include:
 
-* [domainic-attributer](https://github.com/domainic/domainic-attributer) - Type-safe, self-documenting class attributes
+* [domainic-attributer](https://github.com/domainic/domainic/tree/main/domainic-attributer) - Type-safe,
+  self-documenting class attributes
 * domainic-boundary - Clean interfaces between domain boundaries
 * domainic-command - First-class command objects for business operations
 * domainic-type - Sophisticated type constraints and validation
