@@ -3,7 +3,9 @@ PATH
   specs:
     domainic (0.1.0)
       domainic-attributer (>= 0.2, < 0.3)
+      domainic-type (>= 0.1, < 0.2)
     domainic-attributer (0.2.0)
+    domainic-type (0.1.0)
 
 PATH
   remote: domainic-dev

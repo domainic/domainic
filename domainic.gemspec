@@ -28,4 +28,5 @@ Gem::Specification.new do |spec|
   }
 
   spec.add_dependency 'domainic-attributer', '>= 0.2', '< 0.3'
+  spec.add_dependency 'domainic-type', '>= 0.1', '< 0.2'
 end
