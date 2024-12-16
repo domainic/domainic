@@ -208,7 +208,7 @@ module Domainic
           gemspec = gem.paths.gemspec
           lines = gemspec.readlines
           dependencies = lines.grep(/^\s*spec\.add_dependency\s+/)
-                              .push("  spec.add_dependency '#{name}', '>= 0.1', '< 0.2'\n")
+                              .push("  spec.add_dependency '#{name}', '>= 0.1'\n")
                               .uniq
                               .sort
           [gemspec, lines, dependencies]
