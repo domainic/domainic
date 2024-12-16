@@ -27,6 +27,6 @@ Gem::Specification.new do |spec|
     'wiki_uri' => "#{DOMAINIC_REPO_URL}/wiki"
   }
 
-  spec.add_dependency 'domainic-attributer', '>= 0.2', '< 0.3'
-  spec.add_dependency 'domainic-type', '>= 0.1', '< 0.2'
+  spec.add_dependency 'domainic-attributer', '>= 0.1'
+  spec.add_dependency 'domainic-type', '>= 0.1'
 end
