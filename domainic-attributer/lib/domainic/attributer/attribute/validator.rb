@@ -38,13 +38,6 @@ module Domainic
 
         include BelongsToAttribute
 
-        # Internal error class used to signal validation failures.
-        # This allows us to differentiate between our intentional validation
-        # failure signals and actual errors that occur during validation.
-        #
-        # @api private
-        class ValidationFailure < Error; end
-
         # @rbs @handlers: Array[handler]
 
         # Initialize a new Validator instance.
@@ -104,14 +97,6 @@ module Domainic
 
         # Run all configured validations.
         #
-        # Note on error handling strategy:
-        # We use a custom ValidationFailure error class internally to distinguish between
-        # two types of failures:
-        # 1. Normal validation failures (when a validator returns false) are converted
-        #    to ArgumentError to maintain the public API contract
-        # 2. All other errors that occur during validation execution (including
-        #    ArgumentError) are collected and wrapped in a ValidationExecutionError
-        #
         # @param instance [Object] the instance on which to perform validation
         # @param value [Object] the value to validate
         #
@@ -121,17 +106,16 @@ module Domainic
         # @rbs (untyped instance, untyped value) -> void
         def run_validations!(instance, value)
           errors = []
+          is_valid = true
 
           @handlers.each do |handler|
             is_valid = validate_value!(handler, instance, value)
-            raise ValidationFailure, "`#{attribute_method_name}`: has invalid value: #{value.inspect}" unless is_valid
-          rescue ValidationFailure => e
-            raise ArgumentError, e.message
           rescue StandardError => e
             errors << e
           end
 
           raise ValidationExecutionError, errors unless errors.empty?
+          raise ArgumentError, "`#{attribute_method_name}`: has invalid value: #{value.inspect}" unless is_valid
         end
 
         # Validate that a validation handler is valid.
