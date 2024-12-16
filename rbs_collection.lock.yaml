@@ -9,6 +9,10 @@ gems:
   version: 0.1.0
   source:
     type: rubygems
+- name: domainic-type
+  version: 0.1.0
+  source:
+    type: rubygems
 - name: fileutils
   version: '0'
   source:
