@@ -54,6 +54,172 @@ person.name  # => "Alice"
 person.age   # => 30
 ```
 
+### Defining Attributes: Options and Aliases
+
+Domainic::Attributer offers two ways to configure attributes:
+
+1. Block syntax (covered throughout this documentation)
+2. Option hash syntax (useful for simpler configurations)
+
+See the feature-specific sections below (Type Validation, Value Coercion, etc.) for detailed examples of how to use
+these options effectively.
+
+Both styles are equivalent - choose the one that makes your code clearer:
+
+```ruby
+class User
+  include Domainic::Attributer
+
+  # Block syntax
+  argument :email do
+    non_nilable
+    validate_with ->(val) { val.include?('@') }
+  end
+
+  # Option hash syntax
+  argument :email,
+    non_nilable: true,
+    validate_with: ->(val) { val.include?('@') }
+end
+```
+
+#### Available Options
+
+When using the option hash syntax, the following options are available:
+
+<details>
+<summary>Available Options</summary>
+
+**Validation & Type Safety:**
+
+* `validate`, `validate_with`, `validators`: Add validation rules
+* `non_nilable`, `non_nil`, `non_null`, `non_nullable`: Prevent nil values
+* `not_nil`, `not_nilable`, `not_null`, `not_nullable`: Aliases for non_nilable
+* `null`: Set to false to make non-nilable
+* `required`, `optional`: Control if the attribute must be provided
+
+**Value Processing:**
+
+* `coerce`, `coerce_with`, `coercers`: Transform input values
+* `default`, `default_generator`, `default_value`: Set default values
+* `on_change`, `callback`, `callbacks`: React to value changes
+
+**Visibility:**
+
+* `read`, `read_access`, `reader`: Control read visibility
+* `write_access`, `writer`: Control write visibility
+
+**Documentation:**
+
+* `desc`, `description`: Document the attribute's purpose
+
+**Advanced:**
+
+* `position`: Control argument ordering (rarely needed)
+
+All options that involve handlers (like `validate_with`, `coerce_with`, etc.) can accept:
+
+* A single handler
+* An array of handlers
+* A mix of Procs, Symbols (method names), and appropriate objects
+
+```ruby
+class User
+  include Domainic::Attributer
+
+  # Example using various options
+  argument :email,
+    description: "User's email address",
+    non_nilable: true,
+    coerce_with: ->(val) { val.to_s.downcase },
+    validate_with: [
+      String,
+      ->(val) { val.include?('@') }
+    ],
+    on_change: ->(old_val, new_val) {
+      puts "Email changed from #{old_val} to #{new_val}"
+    }
+end
+```
+
+</details>
+
+#### Block Methods & Aliases
+
+When using the block syntax, the following methods are available:
+
+<details>
+<summary>Available Methods</summary>
+
+**Coercion:**
+
+* `coerce_with(handler)`, `coerce(handler)`: Transform input values
+
+  ```ruby
+  coerce_with ->(val) { val.to_s }
+  coerce :to_string_method
+  ```
+
+**Defaults:**
+
+* `default(value)`, `default_generator(value)`, `default_value(value)`: Set default values
+
+  ```ruby
+  default 'pending'           # Static value
+  default { Time.now }        # Dynamic value
+  ```
+
+**Documentation:**
+
+* `description(text)`, `desc(text)`: Document the attribute's purpose
+
+  ```ruby
+  description 'The user's email address'
+  ```
+
+**Nilability:**
+
+* `non_nilable`: Prevent nil values
+* Aliases: `non_nil`, `non_null`, `non_nullable`, `not_nil`, `not_nilable`, `not_null`, `not_nullable`
+
+**Validation:**
+
+* `validate_with(handler)`, `validate(handler)`, `validates(handler)`: Add validation rules
+
+  ```ruby
+  validate_with String
+  validate_with ->(val) { val.length > 3 }
+  ```
+
+**Change Tracking:**
+
+* `on_change(handler)`: React to value changes
+
+  ```ruby
+  on_change ->(old_val, new_val) { puts "Changed!" }
+  ```
+
+**Visibility:**
+
+* `private`: Make both reader and writer private
+* `private_read`: Make only the reader private
+* `private_write`: Make only the writer private
+* `protected`: Make both reader and writer protected
+* `protected_read`: Make only the reader protected
+* `protected_write`: Make only the writer protected
+* `public`: Make both reader and writer public
+* `public_read`: Make only the reader public
+* `public_write`: Make only the writer public
+
+**Required/Optional:**
+
+* `required`: Mark the attribute as required during initialization
+
+Choose the method names that best match your team's conventions and domain language. All aliases provide identical
+functionality.
+
+</details>
+
 ### Attribute Constraints and Lifecycle
 
 One of the key features of Domainic::Attributer is that all attribute constraints (type validation, coercion,
@@ -161,7 +327,7 @@ class User
   include Domainic::Attributer
 
   argument :email do
-    non_nilable  # or not_null, non_null, etc.
+    non_nilable  # Also available as not_null, non_null, etc.
   end
 
   option :nickname do
