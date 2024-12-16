@@ -32,7 +32,7 @@ Install components individually:
 
 ```ruby
 # Gemfile
-gem 'domainic-attributer'  # Only component currently available
+gem 'domainic-attributer' # Only component currently available
 ```
 
 ### Future v0.1.0 Usage
@@ -41,7 +41,7 @@ Once v0.1.0 is released, you'll be able to install everything at once:
 
 ```ruby
 # Gemfile
-gem 'domainic'  # Will include all components
+gem 'domainic' # Will include all components
 ```
 
 ## Available Components

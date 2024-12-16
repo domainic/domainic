@@ -49,7 +49,7 @@ class Person
   option :age, default: nil
 end
 
-person = Person.new("Alice", age: 30)
+person = Person.new('Alice', age: 30)
 person.name  # => "Alice"
 person.age   # => 30
 ```
@@ -81,11 +81,11 @@ user = User.new(nil)        # Raises ArgumentError (non-nilable)
 
 # The SAME constraints are checked for later assignments
 user = User.new('user@example.com')
-user.email = 'invalid'      # Raises ArgumentError (no @ symbol)
-user.email = nil           # Raises ArgumentError (non-nilable)
+user.email = 'invalid' # Raises ArgumentError (no @ symbol)
+user.email = nil # Raises ArgumentError (non-nilable)
 
 # This applies to all types of constraints
-user.age = 25             # Works fine
+user.age = 25 # Works fine
 user.age = -1            # Raises ArgumentError (must be >= 0)
 user.age = '25'          # Raises ArgumentError (must be Integer)
 ```
@@ -101,16 +101,16 @@ Domainic::Attributer gives you two ways to define attributes:
 class Hero
   include Domainic::Attributer
 
-  argument :name        # Required, must be first
+  argument :name # Required, must be first
   argument :power      # Required, must be second
   option :catchphrase  # Optional, can be provided by name
   option :sidekick     # Optional, can be provided by name
 end
 
 # All valid ways to create a hero:
-Hero.new("Spider-Man", "Web-slinging", catchphrase: "With great power...")
-Hero.new("Batman", "Being rich", sidekick: "Robin")
-Hero.new("Wonder Woman", "Super strength")
+Hero.new('Spider-Man', 'Web-slinging', catchphrase: 'With great power...')
+Hero.new('Batman', 'Being rich', sidekick: 'Robin')
+Hero.new('Wonder Woman', 'Super strength')
 ```
 
 #### Argument Ordering and Default Values
@@ -140,11 +140,11 @@ end
 
 # Arguments must be provided in their sorted order,
 # with required arguments first:
-EmailMessage.new("user@example.com", "Welcome!", :high)
+EmailMessage.new('user@example.com', 'Welcome!', :high)
 # => #<EmailMessage:0x00007f9b1b8b3b10 @to="user@example.com", @priority=:high, @subject="Welcome!">
 
 # If you try to provide the arguments in their declaration order, you'll get undesired results:
-EmailMessage.new("user@example.com", :high, "Welcome!")
+EmailMessage.new('user@example.com', :high, 'Welcome!')
 # => #<EmailMessage:0x00007f9b1b8b3b10 @to="user@example.com", @priority="Welcome!", @subject=:high>
 ```
 
@@ -180,7 +180,7 @@ class Order
   option :status, Symbol
 end
 
-Order.new(option: ['item1', 'item2']) # OK
+Order.new(option: %w[item1 item2]) # OK
 Order.new(status: :pending) # Raises ArgumentError
 ```
 
@@ -222,21 +222,21 @@ class BankAccount
   include Domainic::Attributer
 
   argument :account_name, String                                # Direct class validation
-  argument :opened_at, Time                                     # Another direct class example  
+  argument :opened_at, Time                                     # Another direct class example
   option :balance, Integer, default: 0                          # Combining class validation with defaults
-  option :status, ->(val) { [:active, :closed].include?(val) }  # Custom validation
+  option :status, ->(val) { %i[active closed].include?(val) } # Custom validation
 end
 
-account = BankAccount.new("savings", Time.now)
+account = BankAccount.new('savings', Time.now)
 
 # These will all raise ArgumentError:
 account.account_name = :invalid_type     # Must be String
-account.opened_at = "not a time"         # Must be Time
-account.balance = "100"                  # Must be Integer
+account.opened_at = 'not a time'         # Must be Time
+account.balance = '100'                  # Must be Integer
 account.status = :invalid_status         # Must be :active or :closed
 
 # These are all valid:
-account.account_name = "checking"        # Valid String
+account.account_name = 'checking'        # Valid String
 account.balance = 1000                   # Valid Integer
 account.status = :active                 # Valid status value
 ```
@@ -250,15 +250,15 @@ class Car
   include Domainic::Attributer
 
   argument :make, String do
-    desc "The make of the car"
+    desc 'The make of the car'
   end
 
   argument :model, String do
-    description "The model of the car"
+    description 'The model of the car'
   end
 
   argument :year, ->(value) { value.is_a?(Integer) && value >= 1900 && value <= Time.now.year } do
-    description "The year the car was made"
+    description 'The year the car was made'
   end
 end
 ```
@@ -273,27 +273,27 @@ class Temperature
   include Domainic::Attributer
 
   argument :celsius do
-    coerce_with ->(val) { val.nil? ? val : val.to_f }  # Explicitly handle nil
+    coerce_with ->(val) { val.nil? ? val : val.to_f } # Explicitly handle nil
     validate_with ->(val) { val.is_a?(Float) } # Validation already handles nil values
   end
 
   option :unit do
-    default "C"
-    validate_with ->(val) { ["C", "F"].include?(val) }
+    default 'C'
+    validate_with ->(val) { %w[C F].include?(val) }
   end
 
   # For non-nilable attributes, nil values are never coerced
   argument :altitude do
     non_nilable
-    coerce_with ->(val) { val.to_i }  # No need to handle nil here
+    coerce_with lambda(&:to_i) # No need to handle nil here
   end
 end
 
-temp = Temperature.new("24.5")           # Automatically converted to Float
-temp.celsius = "25.7"                    # Also converted to Float
+temp = Temperature.new('24.5')           # Automatically converted to Float
+temp.celsius = '25.7'                    # Also converted to Float
 temp.celsius = nil                       # Stays nil (attribute is nilable)
 temp.altitude = nil                      # Raises ArgumentError (non-nilable)
-temp.celsius = "invalid"                 # Raises ArgumentError (can't be converted to Float)
+temp.celsius = 'invalid'                 # Raises ArgumentError (can't be converted to Float)
 ```
 
 ### Custom Validation
@@ -312,34 +312,35 @@ class BankTransfer
 
   # Combine coercion and multiple validations
   argument :amount do
-    coerce_with ->(val) { val.to_f }             # First coerce to float
-    validate_with Float                          # Then validate it's a float
-    validate_with ->(val) { val.positive? }      # And validate it's positive
+    coerce_with lambda(&:to_f) # First coerce to float
+    validate_with Float # Then validate it's a float
+    validate_with lambda(&:positive?) # And validate it's positive
   end
 
   # Different validation styles
   argument :status do
-    validate_with Symbol                         # Must be a Symbol
-    validate_with ->(val) { [:pending, :completed, :failed].include?(val) }  # Must be one of these values
+    validate_with Symbol # Must be a Symbol
+    validate_with ->(val) { %i[pending completed failed].include?(val) } # Must be one of these values
   end
 
   # Validation with custom error handling
   argument :reference_number do
-    validate_with ->(val) {
-      raise ArgumentError, "Reference must be 8 characters" unless val.length == 8
+    validate_with lambda { |val|
+      raise ArgumentError, 'Reference must be 8 characters' unless val.length == 8
+
       true
     }
   end
 end
 
 # These will work:
-BankTransfer.new("50.0", :pending, "12345678")    # amount coerced to 50.0
-BankTransfer.new(75.25, :completed, "ABCD1234")   # amount already a float
+BankTransfer.new('50.0', :pending, '12345678')    # amount coerced to 50.0
+BankTransfer.new(75.25, :completed, 'ABCD1234')   # amount already a float
 
 # These will raise ArgumentError:
-BankTransfer.new(-10, :pending, "12345678")       # amount must be positive
-BankTransfer.new(100, :invalid, "12345678")       # invalid status
-BankTransfer.new(100, :pending, "123")            # invalid reference number
+BankTransfer.new(-10, :pending, '12345678')       # amount must be positive
+BankTransfer.new(100, :invalid, '12345678')       # invalid status
+BankTransfer.new(100, :pending, '123')            # invalid reference number
 ```
 
 Validations are run in the order they're defined, after any coercions. This lets you build up complex validation rules
@@ -356,37 +357,37 @@ class Product
 
   argument :price do
     # If to_f raises a NoMethodError, a CoercionExecutionError is raised
-    coerce_with ->(val) { val.to_f }
+    coerce_with lambda(&:to_f)
 
     # If a validation handler raises an error (like NoMethodError),
     # all errors are collected
-    validate_with ->(val) { val.send(:unknown_method) }  # Will raise NoMethodError
-    validate_with ->(val) { val >= 2 }  # Simple validation failure
+    validate_with ->(val) { val.send(:unknown_method) } # Will raise NoMethodError
+    validate_with ->(val) { val >= 2 } # Simple validation failure
   end
 
   argument :status do
-    validate_with ->(val) { [:active, :inactive].include?(val) }
+    validate_with ->(val) { %i[active inactive].include?(val) }
 
     # If callbacks raise errors, they are collected
-    on_change ->(old_val, new_val) {
-      raise "Failed to notify"
+    on_change lambda { |old_val, new_val|
+      raise 'Failed to notify'
     }
-    on_change ->(old_val, new_val) {
-      raise "Inventory update failed"
+    on_change lambda { |old_val, new_val|
+      raise 'Inventory update failed'
     }
   end
 end
 
 # If coercion raises an error:
-product.price = Object.new  # Object#to_f raises NoMethodError
+product.price = Object.new # Object#to_f raises NoMethodError
 # Raises Domainic::Attributer::CoercionExecutionError
 
 # If validation handlers raise errors:
-product.price = "invalid"
+product.price = 'invalid'
 # Raises Domainic::Attributer::ValidationExecutionError containing all runtime errors
 
 # Simple validation failures:
-product.price = 1  # Less than 2
+product.price = 1 # Less than 2
 # Raises ArgumentError: `Product#price`: has invalid value: 1
 
 # If callbacks raise errors:
@@ -418,7 +419,7 @@ class SecretAgent
     private_write  # Can't write real_name from outside
   end
   option :mission do
-    protected  # Both read and write are protected
+    protected # Both read and write are protected
   end
 end
 ```
@@ -433,7 +434,7 @@ class Thermostat
 
   option :temperature do
     default 20
-    on_change ->(old_val, new_val) {
+    on_change lambda { |old_val, new_val|
       puts "Temperature changing from #{old_val}°C to #{new_val}°C"
     }
   end
@@ -453,7 +454,7 @@ class Order
     default { Time.now }  # Dynamic default
   end
   option :status do
-    default "pending"     # Static default
+    default 'pending'     # Static default
   end
 end
 ```
@@ -491,14 +492,14 @@ class Product
 
   argument :name
   argument :price
-  option :description, default: ""
+  option :description, default: ''
   option :internal_id do
-    private  # Won't be included in to_h output
+    private # Won't be included in to_h output
   end
 end
 
-product = Product.new("Widget", 9.99, description: "A fantastic widget")
-product.to_h  # => { name: "Widget", price: 9.99, description: "A fantastic widget" }
+product = Product.new('Widget', 9.99, description: 'A fantastic widget')
+product.to_h # => { name: "Widget", price: 9.99, description: "A fantastic widget" }
 ```
 
 ## Contributing
