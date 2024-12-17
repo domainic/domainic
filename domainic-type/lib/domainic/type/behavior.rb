@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'domainic/type/constraint/set'
-require 'domainic/type/validation_error'
 
 module Domainic
   module Type
@@ -68,6 +67,16 @@ module Domainic
       module ClassMethods
         # @rbs @intrinsic_constraints: Constraint::Set
 
+        # Convert the type to a String representation.
+        #
+        # @return [String] The type as a String
+        # @rbs () -> String
+        def to_s
+          # @type self: Class & Behavior
+          (name || '').split('::').last&.delete_suffix('Type') #: String
+        end
+        alias inspect to_s
+
         # Validate a value against this type.
         #
         # @param value [Object] The value to validate
@@ -96,18 +105,18 @@ module Domainic
 
         # Add an intrinsic constraint to this type.
         #
-        # @overload constraint(accessor, constraint_name, constraint_type, expectation, **options)
+        # @overload constraint(accessor, constraint_type, quantifier_description, expectation, **options)
         #   @param accessor [String, Symbol] The accessor for the constraint
-        #   @param constraint_name [String, Symbol] The name for this constraint
         #   @param constraint_type [String, Symbol] The type of constraint
+        #   @param quantifier_description [String, Symbol] The quantifier description of the constraint.
         #   @param expectation [Object] The expected value
         #   @param options [Hash] Additional constraint options
         #
         # @return [void]
         # @rbs (
-        #   String | Constraint::Behavior::accessor_symbol accessor,
-        #   String | Symbol constraint_name,
+        #   String | Type::accessor accessor,
         #   String | Symbol constraint_type,
+        #   String | Symbol quantifier_description,
         #   untyped expectation,
         #   **untyped options
         #   ) -> void
@@ -165,6 +174,19 @@ module Domainic
         end
       end
 
+      # Convert the type to a String representation.
+      #
+      # @return [String] The type as a String
+      # @rbs () -> String
+      def to_s
+        if @constraints.description.empty?
+          self.class.to_s
+        else
+          "#{self.class}(#{@constraints.description})"
+        end
+      end
+      alias inspect to_s
+
       # Validate a value against this type's constraints.
       #
       # @param value [Object] The value to validate
@@ -188,34 +210,37 @@ module Domainic
       # @return [Boolean] true if the value satisfies all constraints
       # @rbs (untyped value) -> bool
       def validate!(value)
-        failures = @constraints.filter_map do |constraint|
-          result = constraint.satisfied?(value)
-          break constraint if !result && constraint.abort_on_failure?
-
-          constraint unless result
+        @constraints.each do |constraint|
+          break if !constraint.satisfied?(value) && constraint.abort_on_failure?
         end
 
-        return true if failures.empty?
+        return true unless @constraints.failures?
 
-        raise TypeError, ValidationError.details_for(self, failures, value)
+        message = if @constraints.violation_description.empty?
+                    "Expected #{self}, but got #{value.class}"
+                  else
+                    "Expected #{self}, but got #{value.class}(#{@constraints.violation_description})"
+                  end
+
+        raise TypeError, message
       end
 
       private
 
       # Add a constraint to this type instance.
       #
-      # @overload constraint(accessor, constraint_name, constraint_type, expectation, **options)
+      # @overload constraint(accessor, constraint_type, quantifier_description, expectation, **options)
       #   @param accessor [String, Symbol] The accessor for the constraint
-      #   @param constraint_name [String, Symbol] The name for this constraint
       #   @param constraint_type [String, Symbol] The type of constraint
+      #   @param quantifier_description [String, Symbol] The quantifier description of the constraint.
       #   @param expectation [Object] The expected value
       #   @param options [Hash] Additional constraint options
       #
-      # @return [self] self for method chaining
+      # @return [self]
       # @rbs (
-      #   String | Constraint::Behavior::accessor_symbol accessor,
-      #   String | Symbol constraint_name,
+      #   String | Type::accessor accessor,
       #   String | Symbol constraint_type,
+      #   String | Symbol quantifier_description,
       #   untyped expectation,
       #   **untyped options
       #   ) -> self
