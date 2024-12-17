@@ -42,7 +42,7 @@ RSpec.describe Domainic::Type::Constraint::Set do
 
   describe '#add' do
     subject(:add_constraint) do
-      set.add(:self, :test_constraint, :test, 'test value', abort_on_failure: true)
+      set.add(:self, :test, :test_constraint, 'test value', abort_on_failure: true)
     end
 
     it 'is expected to create a new constraint' do
@@ -65,12 +65,12 @@ RSpec.describe Domainic::Type::Constraint::Set do
 
     context 'when using string identifiers', rbs: :skip do
       subject(:add_constraint) do
-        set.add('self', 'test_constraint', 'test', 'test value')
+        set.add('self', 'test', 'test constraint', 'test value')
       end
 
       it 'is expected to convert them to symbols' do
         add_constraint
-        expect(set.find(:self, :test_constraint)).to be_a(constraint_class)
+        expect(set.find(:self, 'test constraint')).to be_a(constraint_class)
       end
     end
   end
@@ -84,8 +84,8 @@ RSpec.describe Domainic::Type::Constraint::Set do
 
     context 'when constraints exist' do
       before do
-        set.add(:self, :test_constraint1, :test)
-        set.add(:length, :test_constraint2, :test)
+        set.add(:self, :test, :test_constraint1)
+        set.add(:length, :test, :test_constraint2)
       end
 
       it 'is expected to return all constraints' do
@@ -105,23 +105,49 @@ RSpec.describe Domainic::Type::Constraint::Set do
 
     context 'when constraints exist' do
       before do
-        set.add(:self, :test_constraint1, :test)
-        set.add(:length, :test_constraint2, :test)
+        set.add(:self, :test, :test_constraint2)
+        set.add(:length, :test, :test_constraint2)
       end
 
       it { is_expected.to eq(2) }
     end
   end
 
+  describe '#description' do
+    subject(:description) { set.description }
+
+    context 'when no constraints exist' do
+      it { is_expected.to be_empty }
+    end
+
+    context 'when constraints exist' do
+      before do
+        set.add(:self, :test, 'being a', 'test value')
+        set.add(:length, :test, 'having length', 'test value')
+      end
+
+      it { is_expected.to eq('being a test value, having length test value') }
+    end
+
+    context 'when constraints should not be described' do
+      before do
+        set.add(:self, :test, 'being a not_described', 'test value')
+        set.add(:length, :test, 'having length', 'test value')
+      end
+
+      it { is_expected.to eq('having length test value') }
+    end
+  end
+
   describe '#exist?' do
-    subject(:exist) { set.exist?(accessor, constraint_name) }
+    subject(:exist) { set.exist?(accessor, quantifier_description) }
 
     let(:accessor) { :self }
-    let(:constraint_name) { :test_constraint }
+    let(:quantifier_description) { :test_constraint }
 
     context 'when the constraint exists' do
       before do
-        set.add(:self, :test_constraint, :test)
+        set.add(accessor, :test, quantifier_description)
       end
 
       it { is_expected.to be true }
@@ -133,10 +159,45 @@ RSpec.describe Domainic::Type::Constraint::Set do
 
     context 'when using string identifiers', rbs: :skip do
       let(:accessor) { 'self' }
-      let(:constraint_name) { 'test_constraint' }
+      let(:quantifier_description) { 'test_constraint' }
 
       before do
-        set.add(:self, :test_constraint, :test)
+        set.add(accessor, :test, quantifier_description)
+      end
+
+      it { is_expected.to be true }
+    end
+  end
+
+  describe '#failures?' do
+    subject(:failures?) { set.failures? }
+
+    context 'when no constraints exist' do
+      it { is_expected.to be false }
+    end
+
+    context 'when no constraints have failed' do
+      before do
+        set.add(:self, :test, 'being a', 'test value')
+      end
+
+      it { is_expected.to be false }
+    end
+
+    context 'when constraints have failed' do
+      let(:constraint_class) do
+        Class.new do
+          include Domainic::Type::Constraint::Behavior
+
+          protected
+
+          def satisfies_constraint? = false
+        end
+      end
+
+      before do
+        set.add(:self, :test, 'being a', 'test value')
+        set.all.each { |constraint| constraint.satisfied?('test') }
       end
 
       it { is_expected.to be true }
@@ -144,14 +205,14 @@ RSpec.describe Domainic::Type::Constraint::Set do
   end
 
   describe '#find' do
-    subject(:find) { set.find(accessor, constraint_name) }
+    subject(:find) { set.find(accessor, quantifier_description) }
 
     let(:accessor) { :self }
-    let(:constraint_name) { :test_constraint }
+    let(:quantifier_description) { :test_constraint }
 
     context 'when the constraint exists' do
       before do
-        set.add(:self, :test_constraint, :test)
+        set.add(accessor, :test, quantifier_description)
       end
 
       it 'is expected to return the constraint' do
@@ -165,15 +226,46 @@ RSpec.describe Domainic::Type::Constraint::Set do
 
     context 'when using string identifiers', rbs: :skip do
       let(:accessor) { 'self' }
-      let(:constraint_name) { 'test_constraint' }
+      let(:quantifier_description) { 'test_constraint' }
 
       before do
-        set.add(:self, :test_constraint, :test)
+        set.add(accessor, :test, quantifier_description)
       end
 
       it 'is expected to convert them to symbols' do
         expect(find).to be_a(constraint_class)
       end
+    end
+  end
+
+  describe '#violation_description' do
+    subject(:violation_description) { set.violation_description }
+
+    let(:constraint_class) do
+      Class.new do
+        include Domainic::Type::Constraint::Behavior
+
+        def description = @expected.to_s
+        def violation_description = @actual.to_s
+
+        protected
+
+        def satisfies_constraint? = false
+      end
+    end
+
+    context 'when no constraints exist' do
+      it { is_expected.to be_empty }
+    end
+
+    context 'when constraints exist' do
+      before do
+        set.add(:self, :test, 'being a', 'test value')
+        constraint = set.find(:self, 'being a')
+        constraint.satisfied?('actual value')
+      end
+
+      it { is_expected.to eq('being a actual value') }
     end
   end
 end

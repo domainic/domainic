@@ -98,6 +98,8 @@ module Domainic
         # @return [Boolean] `true` if the constraint is a failure, `false` otherwise.
         def failure?: () -> bool
 
+        alias failed? failure?
+
         # Whether the constraint is satisfied.
         #
         # This method orchestrates the constraint validation process by:
@@ -115,6 +117,8 @@ module Domainic
         #
         # @return [Boolean] `true` if the constraint is a success, `false` otherwise.
         def successful?: () -> bool
+
+        alias success? successful?
 
         # The description of the violations that caused the constraint to be unsatisfied.
         #

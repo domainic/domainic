@@ -95,18 +95,18 @@ module Domainic
 
         # Add an intrinsic constraint to this type.
         #
-        # @overload constraint(accessor, constraint_name, constraint_type, expectation, **options)
+        # @overload constraint(accessor, constraint_type, quantifier_description, expectation, **options)
         #   @param accessor [String, Symbol] The accessor for the constraint
-        #   @param constraint_name [String, Symbol] The name for this constraint
         #   @param constraint_type [String, Symbol] The type of constraint
+        #   @param quantifier_description [String, Symbol] The quantifier description of the constraint.
         #   @param expectation [Object] The expected value
         #   @param options [Hash] Additional constraint options
         #
         # @return [void]
         # @rbs (
         #   String | Type::accessor accessor,
-        #   String | Symbol constraint_name,
         #   String | Symbol constraint_type,
+        #   String | Symbol quantifier_description,
         #   untyped expectation,
         #   **untyped options
         #   ) -> void
@@ -203,18 +203,18 @@ module Domainic
 
       # Add a constraint to this type instance.
       #
-      # @overload constraint(accessor, constraint_name, constraint_type, expectation, **options)
+      # @overload constraint(accessor, constraint_type, quantifier_description, expectation, **options)
       #   @param accessor [String, Symbol] The accessor for the constraint
-      #   @param constraint_name [String, Symbol] The name for this constraint
       #   @param constraint_type [String, Symbol] The type of constraint
+      #   @param quantifier_description [String, Symbol] The quantifier description of the constraint.
       #   @param expectation [Object] The expected value
       #   @param options [Hash] Additional constraint options
       #
-      # @return [self] self for method chaining
+      # @return [self]
       # @rbs (
       #   String | Type::accessor accessor,
-      #   String | Symbol constraint_name,
       #   String | Symbol constraint_type,
+      #   String | Symbol quantifier_description,
       #   untyped expectation,
       #   **untyped options
       #   ) -> self
