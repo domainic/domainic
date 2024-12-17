@@ -43,29 +43,15 @@ module Domainic
       # @author {https://aaronmallen.me Aaron Allen}
       # @since 0.1.0
       module Behavior[Expected < Object, Actual < Object, Options < Hash[Symbol, untyped]]
-        type accessor_symbol = :begin | :count | :end | :first | :keys | :last | :length | :self | :size | :value
-
         type options = { ?abort_on_failure: bool, ?is_type_failure: bool }
-
-        # A list of valid accessor methods that can be used to retrieve values for constraint validation.
-        # These methods represent common Ruby interfaces for accessing collection sizes, ranges, and values.
-        #
-        # - :begin, :end - For Range-like objects
-        # - :count, :length, :size - For measuring collections
-        # - :first, :last - For accessing sequence endpoints
-        # - :keys, :values - For Hash-like objects
-        # - :self - For operating directly on the value
-        #
-        # @return [Array<Symbol>] The valid accessors that can be used to retrieve the value being constrained.
-        VALID_ACCESSORS: Array[accessor_symbol]
 
         @options: options
 
-        @accessor: accessor_symbol
+        @expected: Expected
 
         @actual: Actual
 
-        @expected: Expected
+        @accessor: Type::accessor
 
         # Initialize a new constraint instance.
         #
@@ -77,7 +63,7 @@ module Domainic
         #
         # @raise [ArgumentError] if the accessor is not included in {VALID_ACCESSORS}
         # @return [Behavior] A new instance of the constraint.
-        def initialize: (accessor_symbol accessor, ?Expected expectation, ?options & Options options) -> void
+        def initialize: (Type::accessor accessor, ?Expected expectation, ?options & Options options) -> void
 
         # Whether to abort further validation on an unsatisfied constraint.
         #
@@ -225,7 +211,7 @@ module Domainic
         #
         # @raise [ArgumentError] if the accessor is not included in {VALID_ACCESSORS}.
         # @return [void]
-        def validate_accessor!: (accessor_symbol accessor) -> void
+        def validate_accessor!: (Type::accessor accessor) -> void
       end
     end
   end

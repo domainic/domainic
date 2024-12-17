@@ -105,7 +105,7 @@ module Domainic
         #
         # @return [void]
         # @rbs (
-        #   String | Constraint::Behavior::accessor_symbol accessor,
+        #   String | Type::accessor accessor,
         #   String | Symbol constraint_name,
         #   String | Symbol constraint_type,
         #   untyped expectation,
@@ -213,7 +213,7 @@ module Domainic
       #
       # @return [self] self for method chaining
       # @rbs (
-      #   String | Constraint::Behavior::accessor_symbol accessor,
+      #   String | Type::accessor accessor,
       #   String | Symbol constraint_name,
       #   String | Symbol constraint_type,
       #   untyped expectation,

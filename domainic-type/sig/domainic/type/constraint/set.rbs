@@ -30,7 +30,7 @@ module Domainic
       class Set
         extend Forwardable
 
-        @lookup: Hash[Behavior::accessor_symbol, Hash[Symbol, Behavior]]
+        @lookup: Hash[Type::accessor, Hash[Symbol, Behavior]]
 
         # Initialize a new empty constraint set.
         #
@@ -52,7 +52,7 @@ module Domainic
         # @option options [Boolean] :is_type_failure Whether this is a type check
         #
         # @return [void]
-        def add: (String | Behavior::accessor_symbol accessor, String | Symbol constraint_name, String | Symbol constraint_type, ?untyped expectation, **__todo__ options) -> void
+        def add: (String | Type::accessor accessor, String | Symbol constraint_name, String | Symbol constraint_type, ?untyped expectation, **__todo__ options) -> void
 
         # Get all constraints in the set.
         #
@@ -84,7 +84,7 @@ module Domainic
         # @param constraint_name [String, Symbol] The name of the constraint
         #
         # @return [Boolean] true if the constraint exists
-        def exist?: (Behavior::accessor_symbol accessor, Symbol constraint_name) -> bool
+        def exist?: (Type::accessor accessor, Symbol constraint_name) -> bool
 
         alias has_constraint? exist?
 
@@ -98,7 +98,7 @@ module Domainic
         # @param constraint_name [String, Symbol] The name of the constraint
         #
         # @return [Behavior, nil] The constraint if found, nil otherwise
-        def find: (Behavior::accessor_symbol accessor, Symbol constraint_name) -> Behavior?
+        def find: (Type::accessor accessor, Symbol constraint_name) -> Behavior?
 
         private
 

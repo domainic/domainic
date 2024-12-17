@@ -5,7 +5,7 @@ module Domainic
     module Constraint
       # @rbs!
       #  interface _ConstraintClass
-      #    def new: (Behavior::accessor_symbol accessor, ?untyped expectation, **untyped options) -> Behavior
+      #    def new: (Type::accessor accessor, ?untyped expectation, **untyped options) -> Behavior
       #  end
 
       # A factory class responsible for dynamically loading and resolving constraint types.

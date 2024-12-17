@@ -36,16 +36,11 @@ RSpec.describe Domainic::Type::Constraint::Behavior do
     context 'when given an invalid accessor', rbs: :skip do
       let(:accessor) { :invalid }
 
-      it 'is expected to raise ArgumentError' do
-        expect { initializer }.to raise_error(
-          ArgumentError,
-          'Invalid accessor: invalid must be one of begin, count, end, first, keys, last, length, self, size, values'
-        )
-      end
+      it { expect { initializer }.to raise_error(ArgumentError, /Invalid accessor: invalid must be one of /) }
     end
 
     context 'when given a valid accessor', rbs: :skip do
-      described_class::VALID_ACCESSORS.each do |valid_accessor|
+      Domainic::Type::ACCESSORS.each do |valid_accessor|
         context "with #{valid_accessor}" do
           let(:accessor) { valid_accessor }
 

@@ -35,7 +35,7 @@ module Domainic
       class Set
         extend Forwardable
 
-        # @rbs @lookup: Hash[Behavior::accessor_symbol, Hash[Symbol, Behavior]]
+        # @rbs @lookup: Hash[Type::accessor, Hash[Symbol, Behavior]]
 
         # Initialize a new empty constraint set.
         #
@@ -61,7 +61,7 @@ module Domainic
         #
         # @return [void]
         # @rbs (
-        #   String | Behavior::accessor_symbol accessor,
+        #   String | Type::accessor accessor,
         #   String | Symbol constraint_name,
         #   String | Symbol constraint_type,
         #   ?untyped expectation,
@@ -69,7 +69,7 @@ module Domainic
         #   ) -> void
         def add(accessor, constraint_name, constraint_type, expectation = nil, **options)
           accessor, constraint_name, constraint_type = [accessor, constraint_name, constraint_type].map(&:to_sym)
-          # @type var accessor: Behavior::accessor_symbol
+          # @type var accessor: Type::accessor
           # @type var constraint_name: Symbol
           # @type var constraint_type: Symbol
           @lookup[accessor] ||= {}
@@ -131,10 +131,10 @@ module Domainic
         # @param constraint_name [String, Symbol] The name of the constraint
         #
         # @return [Boolean] true if the constraint exists
-        # @rbs (Behavior::accessor_symbol accessor, Symbol constraint_name) -> bool
+        # @rbs (Type::accessor accessor, Symbol constraint_name) -> bool
         def exist?(accessor, constraint_name)
           accessor, constraint_name = [accessor, constraint_name].map(&:to_sym)
-          # @type var accessor: Behavior::accessor_symbol
+          # @type var accessor: Type::accessor
           # @type var constraint_name: Symbol
           @lookup.key?(accessor) && @lookup[accessor].key?(constraint_name)
         end
@@ -160,9 +160,9 @@ module Domainic
         # @param constraint_name [String, Symbol] The name of the constraint
         #
         # @return [Behavior, nil] The constraint if found, nil otherwise
-        # @rbs (Behavior::accessor_symbol accessor, Symbol constraint_name) -> Behavior?
+        # @rbs (Type::accessor accessor, Symbol constraint_name) -> Behavior?
         def find(accessor, constraint_name)
-          # @type var accessor: Behavior::accessor_symbol
+          # @type var accessor: Type::accessor
           # @type var constraint_name: String | Symbol
           @lookup.dig(accessor.to_sym, constraint_name.to_sym)
         end

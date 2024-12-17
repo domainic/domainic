@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'domainic/type/accessors'
+
 module Domainic
   module Type
     module Constraint
@@ -49,23 +51,9 @@ module Domainic
       # @rbs generic Options < Hash[Symbol, untyped] -- The type of @options
       module Behavior
         # @rbs!
-        #   type accessor_symbol = :begin | :count | :end | :first | :keys | :last | :length | :self | :size | :value
-        #
         #   type options = { ?abort_on_failure: bool, ?is_type_failure: bool }
 
-        # A list of valid accessor methods that can be used to retrieve values for constraint validation.
-        # These methods represent common Ruby interfaces for accessing collection sizes, ranges, and values.
-        #
-        # - :begin, :end - For Range-like objects
-        # - :count, :length, :size - For measuring collections
-        # - :first, :last - For accessing sequence endpoints
-        # - :keys, :values - For Hash-like objects
-        # - :self - For operating directly on the value
-        #
-        # @return [Array<Symbol>] The valid accessors that can be used to retrieve the value being constrained.
-        VALID_ACCESSORS = %i[begin count end first keys last length self size values].freeze #: Array[accessor_symbol]
-
-        # @rbs @accessor: accessor_symbol
+        # @rbs @accessor: Type::accessor
         # @rbs @actual: Actual
         # @rbs @expected: Expected
         # @rbs @options: options
@@ -81,7 +69,7 @@ module Domainic
         # @raise [ArgumentError] if the accessor is not included in {VALID_ACCESSORS}
         # @return [Behavior] A new instance of the constraint.
         # @rbs (
-        #   accessor_symbol accessor,
+        #   Type::accessor accessor,
         #   ?Expected expectation,
         #   ?(options & Options) options
         #   ) -> void
@@ -281,11 +269,11 @@ module Domainic
         #
         # @raise [ArgumentError] if the accessor is not included in {VALID_ACCESSORS}.
         # @return [void]
-        # @rbs (accessor_symbol accessor) -> void
+        # @rbs (Type::accessor accessor) -> void
         def validate_accessor!(accessor)
-          return if VALID_ACCESSORS.include?(accessor)
+          return if Type::ACCESSORS.include?(accessor)
 
-          raise ArgumentError, "Invalid accessor: #{accessor} must be one of #{VALID_ACCESSORS.join(', ')}"
+          raise ArgumentError, "Invalid accessor: #{accessor} must be one of #{Type::ACCESSORS.sort.join(', ')}"
         end
       end
     end

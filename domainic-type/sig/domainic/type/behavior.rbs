@@ -88,7 +88,7 @@ module Domainic
         #   @param options [Hash] Additional constraint options
         #
         # @return [void]
-        def intrinsic: (String | Constraint::Behavior::accessor_symbol accessor, String | Symbol constraint_name, String | Symbol constraint_type, untyped expectation, **untyped options) -> void
+        def intrinsic: (String | Type::accessor accessor, String | Symbol constraint_name, String | Symbol constraint_type, untyped expectation, **untyped options) -> void
 
         # Get the set of intrinsic constraints for this type.
         #
@@ -145,7 +145,7 @@ module Domainic
       #   @param options [Hash] Additional constraint options
       #
       # @return [self] self for method chaining
-      def constrain: (String | Constraint::Behavior::accessor_symbol accessor, String | Symbol constraint_name, String | Symbol constraint_type, untyped expectation, **untyped options) -> self
+      def constrain: (String | Type::accessor accessor, String | Symbol constraint_name, String | Symbol constraint_type, untyped expectation, **untyped options) -> self
     end
   end
 end
