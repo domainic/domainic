@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'domainic/type/constraint/set'
+require 'domainic/type/validation_error'
 
 module Domainic
   module Type
@@ -196,7 +197,7 @@ module Domainic
 
         return true if failures.empty?
 
-        raise TypeError # TODO: parse constraint errors into a more useful message
+        raise TypeError, ValidationError.details_for(self, failures, value)
       end
 
       private
