@@ -59,6 +59,13 @@ module Domainic
       module ClassMethods
         @intrinsic_constraints: Constraint::Set
 
+        # Convert the type to a String representation.
+        #
+        # @return [String] The type as a String
+        def to_s: () -> String
+
+        alias inspect to_s
+
         # Validate a value against this type.
         #
         # @param value [Object] The value to validate
@@ -115,6 +122,13 @@ module Domainic
       #
       # @return [void]
       def initialize: (**untyped) -> void
+
+      # Convert the type to a String representation.
+      #
+      # @return [String] The type as a String
+      def to_s: () -> String
+
+      alias inspect to_s
 
       # Validate a value against this type's constraints.
       #

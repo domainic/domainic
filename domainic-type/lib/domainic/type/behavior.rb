@@ -67,6 +67,16 @@ module Domainic
       module ClassMethods
         # @rbs @intrinsic_constraints: Constraint::Set
 
+        # Convert the type to a String representation.
+        #
+        # @return [String] The type as a String
+        # @rbs () -> String
+        def to_s
+          # @type self: Class & Behavior
+          (name || '').split('::').last&.delete_suffix('Type') #: String
+        end
+        alias inspect to_s
+
         # Validate a value against this type.
         #
         # @param value [Object] The value to validate
@@ -164,6 +174,19 @@ module Domainic
         end
       end
 
+      # Convert the type to a String representation.
+      #
+      # @return [String] The type as a String
+      # @rbs () -> String
+      def to_s
+        if @constraints.description.empty?
+          self.class.to_s
+        else
+          "#{self.class}(#{@constraints.description})"
+        end
+      end
+      alias inspect to_s
+
       # Validate a value against this type's constraints.
       #
       # @param value [Object] The value to validate
@@ -187,16 +210,19 @@ module Domainic
       # @return [Boolean] true if the value satisfies all constraints
       # @rbs (untyped value) -> bool
       def validate!(value)
-        failures = @constraints.filter_map do |constraint|
-          result = constraint.satisfied?(value)
-          break constraint if !result && constraint.abort_on_failure?
-
-          constraint unless result
+        @constraints.each do |constraint|
+          break if !constraint.satisfied?(value) && constraint.abort_on_failure?
         end
 
-        return true if failures.empty?
+        return true unless @constraints.failures?
 
-        raise TypeError # TODO: Add detailed error message here...
+        message = if @constraints.violation_description.empty?
+                    "Expected #{self}, but got #{value.class}"
+                  else
+                    "Expected #{self}, but got #{value.class}(#{@constraints.violation_description})"
+                  end
+
+        raise TypeError, message
       end
 
       private

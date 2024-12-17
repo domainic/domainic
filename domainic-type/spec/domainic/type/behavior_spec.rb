@@ -33,15 +33,14 @@ RSpec.describe Domainic::Type::Behavior do
     Class.new do
       include Domainic::Type::Behavior
 
-      def test_method(*args, **kwargs)
-        kwargs.empty? ? args.first : kwargs
+      intrinsic :self, :test, :test, 'test value'
+
+      def self.name
+        'TestType'
       end
 
-      private
-
-      def initialize(**options)
-        super
-        constrain(:self, :test, :test, 'test value')
+      def test_method(*args, **kwargs)
+        kwargs.empty? ? args.first : kwargs
       end
     end
   end
