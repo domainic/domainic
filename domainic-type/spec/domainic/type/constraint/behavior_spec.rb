@@ -12,7 +12,7 @@ RSpec.describe Domainic::Type::Constraint::Behavior do
         'test constraint'
       end
 
-      def failure_description
+      def violation_description
         'test failure'
       end
 
@@ -180,27 +180,29 @@ RSpec.describe Domainic::Type::Constraint::Behavior do
     end
   end
 
-  describe '#failure_description' do
-    subject(:failure_description) { constraint.failure_description }
+  describe '#failure?' do
+    subject(:failure?) { constraint.failure? }
 
-    context 'when the implementing class does not override failure_description' do
-      let(:dummy_class) do
-        Class.new do
-          include Domainic::Type::Constraint::Behavior
+    context 'when the #satisfied? has been called and the constraint is satisfied' do
+      before { constraint.satisfied?('test') }
 
-          protected
+      let(:constraint) { dummy_class.new(:self, 'test') }
 
-          def satisfies_constraint?
-            true
-          end
-        end
-      end
-
-      it { is_expected.to eq('') }
+      it { is_expected.to be false }
     end
 
-    context 'when the implementing class overrides failure_description' do
-      it { is_expected.to eq('test failure') }
+    context 'when the #satisfied? has been called and the constraint is not satisfied' do
+      before { constraint.satisfied?('test') }
+
+      let(:constraint) { dummy_class.new(:self, 'not test') }
+
+      it { is_expected.to be true }
+    end
+
+    context 'when the #satisfied? has not been called' do
+      let(:constraint) { dummy_class.new(:self, 'not test') }
+
+      it { is_expected.to be false }
     end
   end
 
@@ -210,26 +212,34 @@ RSpec.describe Domainic::Type::Constraint::Behavior do
     let(:value) { 'test' }
 
     context 'when using the :self accessor' do
-      let(:constraint) { dummy_class.new(:self, 'test') }
+      let(:constraint) { dummy_class.new(:self) }
 
-      it 'is expected to be satisfied when the value equals the expectation' do
-        expect(satisfied).to be true
+      context 'with a valid value' do
+        before { constraint.expecting(value) }
+
+        it { is_expected.to be true }
       end
 
-      it 'is expected to not be satisfied when the value does not equal the expectation' do
-        expect(constraint.satisfied?('other')).to be false
+      context 'with a invalid value' do
+        before { constraint.expecting('not test') }
+
+        it { is_expected.to be false }
       end
     end
 
     context 'when using a different accessor' do
-      let(:constraint) { dummy_class.new(:length, 4) }
+      let(:constraint) { dummy_class.new(:length) }
 
-      it 'is expected to be satisfied when the accessed value equals the expectation' do
-        expect(satisfied).to be true
+      context 'with a valid value' do
+        before { constraint.expecting(value.length) }
+
+        it { is_expected.to be true }
       end
 
-      it 'is expected to not be satisfied when the accessed value does not equal the expectation' do
-        expect(constraint.satisfied?('other value')).to be false
+      context 'with an invalid value' do
+        before { constraint.expecting(5) }
+
+        it { is_expected.to be false }
       end
     end
 
@@ -253,9 +263,7 @@ RSpec.describe Domainic::Type::Constraint::Behavior do
       let(:constraint) { dummy_class.new(:self, '1') }
       let(:value) { 1 }
 
-      it 'is expected to coerce the actual value' do
-        expect(satisfied).to be true
-      end
+      it { is_expected.to be true }
     end
 
     context 'when satisfies_constraint? raises an error' do
@@ -271,23 +279,57 @@ RSpec.describe Domainic::Type::Constraint::Behavior do
         end
       end
 
-      it 'is expected to return false' do
-        expect(satisfied).to be false
-      end
+      it { is_expected.to be false }
     end
   end
 
-  describe '#type_failure?' do
-    subject(:type_failure) { constraint.type_failure? }
+  describe '#successful?' do
+    subject(:successful?) { constraint.successful? }
 
-    context 'when initialized with is_type_failure: true' do
-      let(:constraint) { dummy_class.new(:self, nil, is_type_failure: true) }
+    context 'when the #satisfied? has been called and the constraint is satisfied' do
+      before { constraint.satisfied?('test') }
+
+      let(:constraint) { dummy_class.new(:self, 'test') }
 
       it { is_expected.to be true }
     end
 
-    context 'when initialized without is_type_failure option' do
+    context 'when the #satisfied? has been called and the constraint is not satisfied' do
+      before { constraint.satisfied?('test') }
+
+      let(:constraint) { dummy_class.new(:self, 'not test') }
+
       it { is_expected.to be false }
+    end
+
+    context 'when the #satisfied? has not been called' do
+      let(:constraint) { dummy_class.new(:self, 'not test') }
+
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#violation_description' do
+    subject(:violation_description) { constraint.violation_description }
+
+    context 'when the implementing class does not override violation_description' do
+      let(:dummy_class) do
+        Class.new do
+          include Domainic::Type::Constraint::Behavior
+
+          protected
+
+          def satisfies_constraint?
+            true
+          end
+        end
+      end
+
+      it { is_expected.to eq('') }
+    end
+
+    context 'when the implementing class overrides violation_description' do
+      it { is_expected.to eq('test failure') }
     end
   end
 
@@ -297,9 +339,7 @@ RSpec.describe Domainic::Type::Constraint::Behavior do
     let(:options) { { abort_on_failure: true, is_type_failure: true } }
 
     it 'is expected to update the options' do
-      expect { with_options }
-        .to change(constraint, :abort_on_failure?).from(false).to(true)
-                                                  .and change(constraint, :type_failure?).from(false).to(true)
+      expect { with_options }.to change(constraint, :abort_on_failure?).from(false).to(true)
     end
 
     it 'is expected to return self' do

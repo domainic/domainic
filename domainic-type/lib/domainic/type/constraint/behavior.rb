@@ -29,8 +29,8 @@ module Domainic
       #       "greater than #{@expected}"
       #     end
       #
-      #     def failure_description
-      #       "not greater than #{@expected}"
+      #     def violation_description
+      #       @actual.to_s
       #     end
       #
       #     protected
@@ -51,12 +51,13 @@ module Domainic
       # @rbs generic Options < Hash[Symbol, untyped] -- The type of @options
       module Behavior
         # @rbs!
-        #   type options = { ?abort_on_failure: bool, ?is_type_failure: bool }
+        #   type options = { ?abort_on_failure: bool }
 
         # @rbs @accessor: Type::accessor
         # @rbs @actual: Actual
         # @rbs @expected: Expected
         # @rbs @options: options
+        # @rbs @result: bool?
 
         # Initialize a new constraint instance.
         #
@@ -96,14 +97,14 @@ module Domainic
 
         # The description of the constraint.
         #
-        # This is used to help compose a failure message when the constraint is not satisfied.
+        # This is used to help compose a error message when the constraint is not satisfied.
         # Implementing classes should override this to provide meaningful descriptions of their
         # constraint behavior.
         #
         # @return [String] The description of the constraint.
         # @rbs () -> String
         def description
-          ''
+          @expected.to_s
         end
 
         # Set the expected value to compare against.
@@ -121,16 +122,14 @@ module Domainic
           self
         end
 
-        # The description of the constraint when it fails.
+        # Whether the constraint is a failure.
         #
-        # This is used to help compose a failure message when the constraint is not satisfied.
-        # Implementing classes can override this to provide more specific failure messages.
-        #
-        # @return [String] The description of the constraint when it fails.
-        # @rbs () -> String
-        def failure_description
-          ''
+        # @return [Boolean] `true` if the constraint is a failure, `false` otherwise.
+        # @rbs () -> bool
+        def failure?
+          @result == false
         end
+        alias failed? failure?
 
         # Whether the constraint is satisfied.
         #
@@ -145,22 +144,31 @@ module Domainic
         # @return [Boolean] Whether the constraint is satisfied.
         # @rbs (Actual value) -> bool
         def satisfied?(value)
+          @result = nil
           @actual = coerce_actual(@accessor == :self ? value : value.public_send(@accessor))
-          satisfies_constraint?
+          @result = satisfies_constraint? #: bool
         rescue StandardError
-          false
+          @result = false #: bool
         end
 
-        # Whether the constraint is considered a type failure.
+        # Whether the constraint is a success.
         #
-        # This flag indicates if the constraint represents a fundamental type check.
-        # When true, failure messages will not include additional type information since
-        # the constraint itself is already expressing type requirements.
-        #
-        # @return [Boolean] Whether the constraint is a type failure.
+        # @return [Boolean] `true` if the constraint is a success, `false` otherwise.
         # @rbs () -> bool
-        def type_failure?
-          @options.fetch(:is_type_failure, false)
+        def successful?
+          @result == true
+        end
+        alias success? successful?
+
+        # The description of the violations that caused the constraint to be unsatisfied.
+        #
+        # This is used to help compose a error message when the constraint is not satisfied.
+        # Implementing classes can override this to provide more specific failure messages.
+        #
+        # @return [String] The description of the constraint when it fails.
+        # @rbs () -> String
+        def violation_description
+          @actual.to_s
         end
 
         # Merge additional options into the constraint.

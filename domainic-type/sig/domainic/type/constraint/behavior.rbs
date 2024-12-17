@@ -25,8 +25,8 @@ module Domainic
       #       "greater than #{@expected}"
       #     end
       #
-      #     def failure_description
-      #       "not greater than #{@expected}"
+      #     def violation_description
+      #       @actual.to_s
       #     end
       #
       #     protected
@@ -43,7 +43,9 @@ module Domainic
       # @author {https://aaronmallen.me Aaron Allen}
       # @since 0.1.0
       module Behavior[Expected < Object, Actual < Object, Options < Hash[Symbol, untyped]]
-        type options = { ?abort_on_failure: bool, ?is_type_failure: bool }
+        type options = { ?abort_on_failure: bool }
+
+        @result: bool?
 
         @options: options
 
@@ -76,7 +78,7 @@ module Domainic
 
         # The description of the constraint.
         #
-        # This is used to help compose a failure message when the constraint is not satisfied.
+        # This is used to help compose a error message when the constraint is not satisfied.
         # Implementing classes should override this to provide meaningful descriptions of their
         # constraint behavior.
         #
@@ -91,13 +93,10 @@ module Domainic
         # @return [self] The constraint instance.
         def expecting: (Expected expectation) -> self
 
-        # The description of the constraint when it fails.
+        # Whether the constraint is a failure.
         #
-        # This is used to help compose a failure message when the constraint is not satisfied.
-        # Implementing classes can override this to provide more specific failure messages.
-        #
-        # @return [String] The description of the constraint when it fails.
-        def failure_description: () -> String
+        # @return [Boolean] `true` if the constraint is a failure, `false` otherwise.
+        def failure?: () -> bool
 
         # Whether the constraint is satisfied.
         #
@@ -112,14 +111,18 @@ module Domainic
         # @return [Boolean] Whether the constraint is satisfied.
         def satisfied?: (Actual value) -> bool
 
-        # Whether the constraint is considered a type failure.
+        # Whether the constraint is a success.
         #
-        # This flag indicates if the constraint represents a fundamental type check.
-        # When true, failure messages will not include additional type information since
-        # the constraint itself is already expressing type requirements.
+        # @return [Boolean] `true` if the constraint is a success, `false` otherwise.
+        def successful?: () -> bool
+
+        # The description of the violations that caused the constraint to be unsatisfied.
         #
-        # @return [Boolean] Whether the constraint is a type failure.
-        def type_failure?: () -> bool
+        # This is used to help compose a error message when the constraint is not satisfied.
+        # Implementing classes can override this to provide more specific failure messages.
+        #
+        # @return [String] The description of the constraint when it fails.
+        def violation_description: () -> String
 
         # Merge additional options into the constraint.
         #
