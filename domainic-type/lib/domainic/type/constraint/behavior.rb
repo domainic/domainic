@@ -292,7 +292,7 @@ module Domainic
         # @return [String] The full description.
         # @rbs (String description) -> String?
         def full_description_for(description)
-          return if quantifier_description.nil? || quantifier_description.to_s.include?('not_described')
+          return if quantifier_description.to_s.include?('not_described')
 
           if quantifier_description.is_a?(Symbol)
             "#{quantifier_description.to_s.split('_').join(' ')} #{description}"

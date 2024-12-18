@@ -5,23 +5,37 @@ require 'domainic/type/constraint/behavior'
 module Domainic
   module Type
     module Constraint
-      # A constraint for validating that a collection includes a specific value.
+      # A constraint for validating that a collection includes one or more values.
       #
-      # This constraint verifies that a collection contains an expected value by using
+      # This constraint verifies that a collection contains expected values by using
       # the collection's #include? method. It works with any object that responds to
-      # #include?, such as Arrays, Sets, Strings, and Ranges.
+      # #include?, such as Arrays, Sets, Strings, and Ranges. The constraint can be
+      # configured to check for a single value or multiple values, and supports
+      # incremental addition of values to check.
       #
-      # @example Array inclusion validation
+      # @example Single value inclusion
       #   constraint = InclusionConstraint.new(:self, 2)
       #   constraint.satisfied?([1, 2, 3])  # => true
       #   constraint.satisfied?([1, 3, 4])  # => false
       #
-      # @example String inclusion validation
+      # @example Multiple value inclusion
+      #   constraint = InclusionConstraint.new(:self)
+      #   constraint.expecting([1, 2])
+      #   constraint.satisfied?([1, 2, 3])  # => true
+      #   constraint.satisfied?([1, 3])     # => false
+      #
+      # @example Incremental value addition
+      #   constraint = InclusionConstraint.new(:self)
+      #   constraint.expecting(1).expecting(2)
+      #   constraint.satisfied?([1, 2, 3])  # => true
+      #   constraint.satisfied?([1, 3])     # => false
+      #
+      # @example String inclusion
       #   constraint = InclusionConstraint.new(:self, 'b')
       #   constraint.satisfied?('abc')  # => true
       #   constraint.satisfied?('ac')   # => false
       #
-      # @example Range inclusion validation
+      # @example Range inclusion
       #   constraint = InclusionConstraint.new(:self, 5)
       #   constraint.satisfied?(1..10)  # => true
       #   constraint.satisfied?(11..20) # => false
@@ -30,44 +44,87 @@ module Domainic
       # @author {https://aaronmallen.me Aaron Allen}
       # @since 0.1.0
       class InclusionConstraint
-        include Behavior #[untyped, untyped, {}]
+        include Behavior #[Array[untyped], untyped, {}]
 
         # Get a human-readable description of the inclusion requirement.
         #
-        # @example
-        #   constraint = InclusionConstraint.new(:self, 42)
-        #   constraint.description # => "including 42"
+        # When checking for a single value, returns "including <value>". When checking
+        # for multiple values, returns a comma-separated list with "and" before the
+        # final value.
         #
-        # @return [String] A description of the inclusion requirement
+        # @example Single value
+        #   constraint = InclusionConstraint.new(:self, 42)
+        #   constraint.short_description # => "including 42"
+        #
+        # @example Multiple values
+        #   constraint = InclusionConstraint.new(:self)
+        #   constraint.expecting([1, 2, 3])
+        #   constraint.short_description # => "including 1, 2 and 3"
+        #
+        # @return [String] A description of the inclusion requirements
         # @rbs override
         def short_description
-          "including #{@expected.inspect}"
+          values = Array(@expected).map(&:inspect)
+          return "including #{values.first}" if values.size == 1
+
+          *first, last = values
+          "including #{first.join(', ')} and #{last}"
         end
 
         # Get a human-readable description of why inclusion validation failed.
         #
-        # @example
-        #   constraint = InclusionConstraint.new(:self, 42)
-        #   constraint.satisfied?([1, 2, 3])
-        #   constraint.short_violation_description # => "excluding 42"
+        # Returns a description listing only the values that were missing from
+        # the collection. If multiple values were missing, they are joined with
+        # commas and "and".
         #
-        # @return [String] A description of the inclusion failure
+        # @example Single missing value
+        #   constraint = InclusionConstraint.new(:self)
+        #   constraint.expecting(['a', 'b', 'c'])
+        #   constraint.satisfied?(['a', 'b'])
+        #   constraint.short_violation_description # => 'excluding "c"'
+        #
+        # @example Multiple missing values
+        #   constraint = InclusionConstraint.new(:self)
+        #   constraint.expecting(['a', 'b', 'c'])
+        #   constraint.satisfied?(['a'])
+        #   constraint.short_violation_description # => 'excluding "b" and "c"'
+        #
+        # @return [String] A description of which values were missing
         # @rbs override
         def short_violation_description
-          "excluding #{@expected.inspect}"
+          missing = @expected.reject { |element| @actual.include?(element) }
+          return "excluding #{missing.first.inspect}" if missing.size == 1
+
+          *first, last = missing.map(&:inspect)
+          "excluding #{first.join(', ')} and #{last}"
         end
 
         protected
 
-        # Check if the collection includes the expected value.
+        # Coerce the expectation into a collection of values to check.
         #
-        # Uses the collection's #include? method to verify that the expected
-        # value is present.
+        # This method handles both single values and collections of values:
+        # - Single values are appended to the existing collection
+        # - Enumerable values are concatenated with the existing collection
+        # This allows for both single-value checking and multiple-value checking,
+        # as well as incremental addition of values through multiple expecting() calls.
         #
-        # @return [Boolean] true if the collection includes the value
+        # @param expectation [Object, Enumerable] The value(s) to check for
+        # @return [Array] The collection of values to check for
+        # @rbs override
+        def coerce_expectation(expectation)
+          expectation.is_a?(Array) ? (@expected || []).concat(expectation) : (@expected || []) << expectation
+        end
+
+        # Check if the collection includes all expected values.
+        #
+        # Uses the collection's #include? method to verify that all expected
+        # values are present in the collection being validated.
+        #
+        # @return [Boolean] true if the collection includes all expected values
         # @rbs override
         def satisfies_constraint?
-          @actual.include?(@expected)
+          @expected.all? { |element| @actual.include?(element) }
         end
       end
     end

@@ -138,11 +138,7 @@ module Domainic
         # @return [EnumerableBehavior] self for method chaining
         # @rbs (*untyped entries) -> EnumerableBehavior
         def containing(*entries)
-          entries.each do |entry|
-            includes = @constraints.prepare :self, :inclusion, nil, entry
-            constrain :self, :and, includes, concerning: :inclusion, description: ''
-          end
-          self
+          constrain :self, :inclusion, entries
         end
 
         # Validate that the enumerable's size is at most a given value.
