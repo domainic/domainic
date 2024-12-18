@@ -1,0 +1,72 @@
+module Domainic
+  module Type
+    module Constraint
+      # A constraint that combines multiple constraints with logical AND behavior.
+      #
+      # The AndConstraint validates that a value satisfies all of its provided constraints,
+      # implementing logical AND behavior. This enables validation rules like "must be both
+      # a string and non-empty" or "must be numeric and positive".
+      #
+      # Key features:
+      # - Combines multiple constraints with AND logic
+      # - Short-circuits on first failing constraint
+      # - Provides clear error messages for failing validations
+      # - Supports incremental constraint addition
+      #
+      # @example Validating a value is both a String and non-empty
+      #   string_constraint = StringConstraint.new(:self)
+      #   non_empty = LengthConstraint.new(:length, minimum: 1)
+      #   string_and_non_empty = AndConstraint.new(:self, [string_constraint, non_empty])
+      #
+      #   string_and_non_empty.satisfied?("test")  # => true
+      #   string_and_non_empty.satisfied?("")      # => false
+      #   string_and_non_empty.satisfied?(123)     # => false
+      #
+      # @author {https://aaronmallen.me Aaron Allen}
+      # @since 0.1.0
+      class AndConstraint
+        include Behavior[Array[Behavior[untyped, untyped, untyped]], untyped, { }]
+
+        # Get a description of what the constraint expects.
+        #
+        # @return [String] a description combining all constraint descriptions with 'and'
+        def description: ...
+
+        def expecting: (Behavior[untyped, untyped, untyped]) -> self
+
+        # The description of the violations that caused the constraint to be unsatisfied.
+        #
+        # This method provides detailed feedback about which constraints failed,
+        # listing all violations that prevented validation from succeeding.
+        #
+        # @return [String] The combined violation descriptions from all constraints
+        def violation_description: ...
+
+        # Coerce the expectation into an array and append new constraints.
+        #
+        # This enables both initializing with an array of constraints and adding
+        # new constraints incrementally via expecting().
+        #
+        # @param expectation [Behavior] the constraint to add
+        #
+        # @return [Array<Behavior>] the updated array of constraints
+        def coerce_expectation: (Behavior[untyped, untyped, untyped] expectation) -> Array[Behavior[untyped, untyped, untyped]]
+
+        # Check if the value satisfies all expected constraints.
+        #
+        # Short-circuits on the first failing constraint for efficiency.
+        #
+        # @return [Boolean] whether all constraints are satisfied
+        def satisfies_constraint?: ...
+
+        # Validate that the expectation is an array of valid constraints.
+        #
+        # @param expectation [Object] the expectation to validate
+        #
+        # @raise [ArgumentError] if the expectation is not valid
+        # @return [void]
+        def validate_expectation!: ...
+      end
+    end
+  end
+end
