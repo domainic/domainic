@@ -35,8 +35,8 @@ module Domainic
         #
         # @return [String] a description combining all constraint descriptions with 'and'
         # @rbs override
-        def description
-          @expected.map(&:description).join(' and ')
+        def short_description
+          @expected.map(&:short_description).join(' and ')
         end
 
         # @rbs! def expecting: (Behavior[untyped, untyped, untyped]) -> self
@@ -48,8 +48,8 @@ module Domainic
         #
         # @return [String] The combined violation descriptions from all constraints
         # @rbs override
-        def violation_description
-          @expected.map(&:violation_description).join(' and ')
+        def short_violation_description
+          @expected.map(&:short_violation_description).join(' and ')
         end
 
         protected

@@ -36,17 +36,17 @@ module Domainic
         #   constraint.description # => "ordered"
         #
         # @return [String] A description of the ordering requirement
-        def description: ...
+        def short_description: ...
 
         # Get a human-readable description of why ordering validation failed.
         #
         # @example
         #   constraint = OrderingConstraint.new(:self)
         #   constraint.satisfied?([3, 1, 2])
-        #   constraint.violation_description # => "not ordered"
+        #   constraint.short_violation_description # => "not ordered"
         #
         # @return [String] A description of the ordering failure
-        def violation_description: ...
+        def short_violation_description: ...
 
         # Check if the collection elements are in sorted order.
         #

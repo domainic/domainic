@@ -55,7 +55,7 @@ module Domainic
         #
         # @return [String] A description of the expected type
         # @rbs override
-        def description
+        def short_description
           @expected.to_s
         end
 
@@ -66,7 +66,7 @@ module Domainic
         #
         # @return [String] The description of the constraint when it fails.
         # @rbs override
-        def violation_description
+        def short_violation_description
           @actual.class.to_s
         end
 

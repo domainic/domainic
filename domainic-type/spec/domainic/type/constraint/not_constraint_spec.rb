@@ -9,9 +9,9 @@ RSpec.describe Domainic::Type::Constraint::NotConstraint do
     Class.new do
       include Domainic::Type::Constraint::Behavior
 
-      def description = 'be a string'
+      def short_description = 'be a string'
 
-      def violation_description = 'was a string'
+      def short_violation_description = 'was a string'
 
       def satisfied?(_value) = true
     end.new(:self)
@@ -35,16 +35,6 @@ RSpec.describe Domainic::Type::Constraint::NotConstraint do
     subject(:constraint) { described_class.new(:self, expectation) }
 
     include_examples 'validates inner constraint'
-  end
-
-  describe '#description' do
-    subject(:description) { constraint.description }
-
-    let(:constraint) { described_class.new(:self, inner_constraint) }
-
-    it 'negates the inner constraint description' do
-      expect(description).to eq('not be a string')
-    end
   end
 
   describe '#expecting' do
@@ -89,16 +79,26 @@ RSpec.describe Domainic::Type::Constraint::NotConstraint do
     end
   end
 
-  describe '#violation_description' do
-    subject(:violation_description) { constraint.violation_description }
+  describe '#short_description' do
+    subject(:short_description) { constraint.short_description }
+
+    let(:constraint) { described_class.new(:self, inner_constraint) }
+
+    it 'negates the inner constraint short_description' do
+      expect(short_description).to eq('not be a string')
+    end
+  end
+
+  describe '#short_violation_description' do
+    subject(:short_violation_description) { constraint.short_violation_description }
 
     let(:constraint) { described_class.new(:self, inner_constraint) }
     let(:value) { 'test' }
 
     before { constraint.satisfied?(value) }
 
-    it 'negates the inner constraint failure description' do
-      expect(violation_description).to eq('not be a string')
+    it 'negates the inner constraint failure short_description' do
+      expect(short_violation_description).to eq('not be a string')
     end
   end
 end

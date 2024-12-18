@@ -36,7 +36,7 @@ module Domainic
         #
         # @return [String] A description of the uniqueness requirement
         # @rbs override
-        def description
+        def short_description
           'unique'
         end
 
@@ -47,7 +47,7 @@ module Domainic
         #
         # @return [String] The description of the constraint when it fails.
         # @rbs override
-        def violation_description
+        def short_violation_description
           'not unique'
         end
 

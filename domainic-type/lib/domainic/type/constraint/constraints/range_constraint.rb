@@ -52,7 +52,7 @@ module Domainic
         #
         # @return [String] A description of the range bounds
         # @rbs override
-        def description
+        def short_description
           min, max = @expected.values_at(:minimum, :maximum)
           min_description = "greater than or equal to #{min}"
           max_description = "less than or equal to #{max}"
@@ -70,7 +70,7 @@ module Domainic
         #
         # @return [String] The description of the constraint when it fails.
         # @rbs override
-        def violation_description
+        def short_violation_description
           @actual.inspect
         end
 

@@ -11,14 +11,6 @@ RSpec.describe Domainic::Type::Constraint::UniquenessConstraint do
     it { expect { constraint }.not_to raise_error }
   end
 
-  describe '#description' do
-    subject(:description) { constraint.description }
-
-    let(:constraint) { described_class.new(:self) }
-
-    it { is_expected.to eq('unique') }
-  end
-
   describe '#satisfied?' do
     subject(:satisfied?) { constraint.satisfied?(actual_value) }
 
@@ -61,8 +53,16 @@ RSpec.describe Domainic::Type::Constraint::UniquenessConstraint do
     end
   end
 
-  describe '#violation_description' do
-    subject(:violation_description) { constraint.violation_description }
+  describe '#short_description' do
+    subject(:short_description) { constraint.short_description }
+
+    let(:constraint) { described_class.new(:self) }
+
+    it { is_expected.to eq('unique') }
+  end
+
+  describe '#short_violation_description' do
+    subject(:short_violation_description) { constraint.short_violation_description }
 
     let(:constraint) { described_class.new(:self) }
 

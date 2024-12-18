@@ -35,7 +35,7 @@ module Domainic
         #
         # @return [String] A description of the emptiness requirement
         # @rbs override
-        def description
+        def short_description
           'empty'
         end
 
@@ -44,11 +44,11 @@ module Domainic
         # @example
         #   constraint = EmptinessConstraint.new(:self)
         #   constraint.satisfied?([1, 2, 3])
-        #   constraint.violation_description # => "not empty"
+        #   constraint.short_violation_description # => "not empty"
         #
         # @return [String] A description of the emptiness failure
         # @rbs override
-        def violation_description
+        def short_violation_description
           'not empty'
         end
 

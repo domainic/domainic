@@ -34,8 +34,8 @@ module Domainic
         #
         # @return [String] a description combining all constraint descriptions
         # @rbs override
-        def description
-          @expected.description
+        def short_description
+          @expected.short_description
         end
 
         # The description of the violations that caused the constraint to be unsatisfied.
@@ -45,13 +45,13 @@ module Domainic
         #
         # @return [String] The combined violation descriptions from all constraints
         # @rbs override
-        def violation_description
+        def short_violation_description
           return 'not Enumerable' unless @actual.is_a?(Enumerable) # steep:ignore NoMethod
 
           @actual.filter_map do |element|
             next if @expected.satisfied?(element)
 
-            @expected.violation_description
+            @expected.short_violation_description
           end.uniq.join(', ')
         end
 

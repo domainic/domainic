@@ -46,7 +46,7 @@ module Domainic
         #   constraint.description # => "less than or equal to 100"
         #
         # @return [String] A description of the range bounds
-        def description: ...
+        def short_description: ...
 
         # The description of the violations that caused the constraint to be unsatisfied.
         #
@@ -54,7 +54,7 @@ module Domainic
         # Implementing classes can override this to provide more specific failure messages.
         #
         # @return [String] The description of the constraint when it fails.
-        def violation_description: ...
+        def short_violation_description: ...
 
         def coerce_expectation: ...
 

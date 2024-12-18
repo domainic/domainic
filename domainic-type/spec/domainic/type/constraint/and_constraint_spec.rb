@@ -9,8 +9,8 @@ RSpec.describe Domainic::Type::Constraint::AndConstraint do
     Class.new do
       include Domainic::Type::Constraint::Behavior
 
-      def description = 'be a string'
-      def violation_description = 'was not a string'
+      def short_description = 'be a string'
+      def short_violation_description = 'was not a string'
       def satisfied?(value) = value.is_a?(String)
     end.new(:self)
   end
@@ -19,8 +19,8 @@ RSpec.describe Domainic::Type::Constraint::AndConstraint do
     Class.new do
       include Domainic::Type::Constraint::Behavior
 
-      def description = 'be non-empty'
-      def violation_description = 'was empty'
+      def short_description = 'be non-empty'
+      def short_violation_description = 'was empty'
       def satisfied?(value) = !value.empty?
     end.new(:self)
   end
@@ -45,16 +45,6 @@ RSpec.describe Domainic::Type::Constraint::AndConstraint do
     include_examples 'validates constraints array'
   end
 
-  describe '#description' do
-    subject(:description) { constraint.description }
-
-    let(:constraint) { described_class.new(:self, [string_constraint, non_empty_constraint]) }
-
-    it 'joins constraint descriptions with and' do
-      expect(description).to eq('be a string and be non-empty')
-    end
-  end
-
   describe '#expecting' do
     subject(:expecting) { constraint.expecting(expectation) }
 
@@ -65,7 +55,7 @@ RSpec.describe Domainic::Type::Constraint::AndConstraint do
 
       it 'adds the constraint to the list' do
         expecting
-        expect(constraint.description).to eq('be a string and be non-empty')
+        expect(constraint.short_description).to eq('be a string and be non-empty')
       end
     end
 
@@ -106,8 +96,18 @@ RSpec.describe Domainic::Type::Constraint::AndConstraint do
     end
   end
 
-  describe '#violation_description' do
-    subject(:violation_description) { constraint.violation_description }
+  describe '#short_description' do
+    subject(:short_description) { constraint.short_description }
+
+    let(:constraint) { described_class.new(:self, [string_constraint, non_empty_constraint]) }
+
+    it 'joins constraint short_descriptions with and' do
+      expect(short_description).to eq('be a string and be non-empty')
+    end
+  end
+
+  describe '#short_violation_description' do
+    subject(:short_violation_description) { constraint.short_violation_description }
 
     let(:constraint) { described_class.new(:self, [string_constraint, non_empty_constraint]) }
 
@@ -116,8 +116,8 @@ RSpec.describe Domainic::Type::Constraint::AndConstraint do
     context 'when no constraints are satisfied' do
       let(:actual_value) { 123 }
 
-      it 'joins violation descriptions with and' do
-        expect(violation_description).to eq('was not a string and was empty')
+      it 'joins violation short_descriptions with and' do
+        expect(short_violation_description).to eq('was not a string and was empty')
       end
     end
   end

@@ -31,7 +31,7 @@ module Domainic
         #   constraint.description # => "unique"
         #
         # @return [String] A description of the uniqueness requirement
-        def description: ...
+        def short_description: ...
 
         # The description of the violations that caused the constraint to be unsatisfied.
         #
@@ -39,7 +39,7 @@ module Domainic
         # Implementing classes can override this to provide more specific failure messages.
         #
         # @return [String] The description of the constraint when it fails.
-        def violation_description: ...
+        def short_violation_description: ...
 
         # Check if all elements in the collection are unique.
         #

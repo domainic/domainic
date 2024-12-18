@@ -8,11 +8,11 @@ RSpec.describe Domainic::Type::Constraint::Behavior do
     Class.new do
       include Domainic::Type::Constraint::Behavior
 
-      def description
+      def short_description
         'test constraint'
       end
 
-      def violation_description
+      def short_violation_description
         'test failure'
       end
 
@@ -91,30 +91,6 @@ RSpec.describe Domainic::Type::Constraint::Behavior do
 
     context 'when initialized without abort_on_failure option' do
       it { is_expected.to be false }
-    end
-  end
-
-  describe '#description' do
-    subject(:description) { constraint.description }
-
-    context 'when the implementing class does not override description' do
-      let(:dummy_class) do
-        Class.new do
-          include Domainic::Type::Constraint::Behavior
-
-          protected
-
-          def satisfies_constraint?
-            true
-          end
-        end
-      end
-
-      it { is_expected.to eq('') }
-    end
-
-    context 'when the implementing class overrides description' do
-      it { is_expected.to eq('test constraint') }
     end
   end
 
@@ -283,6 +259,30 @@ RSpec.describe Domainic::Type::Constraint::Behavior do
     end
   end
 
+  describe '#short_description' do
+    subject(:short_description) { constraint.short_description }
+
+    context 'when the implementing class does not override short_description' do
+      let(:dummy_class) do
+        Class.new do
+          include Domainic::Type::Constraint::Behavior
+
+          protected
+
+          def satisfies_constraint?
+            true
+          end
+        end
+      end
+
+      it { is_expected.to eq('') }
+    end
+
+    context 'when the implementing class overrides short_description' do
+      it { is_expected.to eq('test constraint') }
+    end
+  end
+
   describe '#successful?' do
     subject(:successful?) { constraint.successful? }
 
@@ -309,10 +309,10 @@ RSpec.describe Domainic::Type::Constraint::Behavior do
     end
   end
 
-  describe '#violation_description' do
-    subject(:violation_description) { constraint.violation_description }
+  describe '#short_violation_description' do
+    subject(:short_violation_description) { constraint.short_violation_description }
 
-    context 'when the implementing class does not override violation_description' do
+    context 'when the implementing class does not override short_violation_description' do
       let(:dummy_class) do
         Class.new do
           include Domainic::Type::Constraint::Behavior
@@ -328,7 +328,7 @@ RSpec.describe Domainic::Type::Constraint::Behavior do
       it { is_expected.to eq('') }
     end
 
-    context 'when the implementing class overrides violation_description' do
+    context 'when the implementing class overrides short_violation_description' do
       it { is_expected.to eq('test failure') }
     end
   end

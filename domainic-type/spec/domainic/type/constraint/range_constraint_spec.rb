@@ -55,30 +55,6 @@ RSpec.describe Domainic::Type::Constraint::RangeConstraint do
     include_examples 'coerces and validates expectation'
   end
 
-  describe '#description' do
-    subject(:description) { constraint.description }
-
-    let(:constraint) { described_class.new(:self, expectation) }
-
-    context 'when given a minimum and a maximum' do
-      let(:expectation) { { minimum: 1, maximum: 10 } }
-
-      it { is_expected.to eq('greater than or equal to 1 and less than or equal to 10') }
-    end
-
-    context 'when given only a minimum' do
-      let(:expectation) { { minimum: 0 } }
-
-      it { is_expected.to eq('greater than or equal to 0') }
-    end
-
-    context 'when given only a maximum' do
-      let(:expectation) { { maximum: 100 } }
-
-      it { is_expected.to eq('less than or equal to 100') }
-    end
-  end
-
   describe '#expecting' do
     subject(:expecting) { constraint.expecting(expectation) }
 
@@ -111,8 +87,32 @@ RSpec.describe Domainic::Type::Constraint::RangeConstraint do
     end
   end
 
-  describe '#violation_description' do
-    subject(:violation_description) { constraint.violation_description }
+  describe '#short_description' do
+    subject(:short_description) { constraint.short_description }
+
+    let(:constraint) { described_class.new(:self, expectation) }
+
+    context 'when given a minimum and a maximum' do
+      let(:expectation) { { minimum: 1, maximum: 10 } }
+
+      it { is_expected.to eq('greater than or equal to 1 and less than or equal to 10') }
+    end
+
+    context 'when given only a minimum' do
+      let(:expectation) { { minimum: 0 } }
+
+      it { is_expected.to eq('greater than or equal to 0') }
+    end
+
+    context 'when given only a maximum' do
+      let(:expectation) { { maximum: 100 } }
+
+      it { is_expected.to eq('less than or equal to 100') }
+    end
+  end
+
+  describe '#short_violation_description' do
+    subject(:short_violation_description) { constraint.short_violation_description }
 
     before { constraint.satisfied?(11) }
 

@@ -12,15 +12,6 @@ RSpec.describe Domainic::Type::Constraint::EqualityConstraint do
     it { expect { constraint }.not_to raise_error }
   end
 
-  describe '#description' do
-    subject(:description) { constraint.description }
-
-    let(:constraint) { described_class.new(:self, expected_value) }
-    let(:expected_value) { 42 }
-
-    it { is_expected.to eq('equal to 42') }
-  end
-
   describe '#expecting' do
     subject(:expecting) { constraint.expecting(new_value) }
 
@@ -104,8 +95,17 @@ RSpec.describe Domainic::Type::Constraint::EqualityConstraint do
     end
   end
 
-  describe '#violation_description' do
-    subject(:violation_description) { constraint.violation_description }
+  describe '#short_description' do
+    subject(:short_description) { constraint.short_description }
+
+    let(:constraint) { described_class.new(:self, expected_value) }
+    let(:expected_value) { 42 }
+
+    it { is_expected.to eq('equal to 42') }
+  end
+
+  describe '#short_violation_description' do
+    subject(:short_violation_description) { constraint.short_violation_description }
 
     let(:constraint) { described_class.new(:self, expected_value) }
     let(:expected_value) { 42 }

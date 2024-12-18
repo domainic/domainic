@@ -33,8 +33,8 @@ module Domainic
         #
         # @return [String] the negated constraint description
         # @rbs override
-        def description
-          "not #{@expected.description}"
+        def short_description
+          "not #{@expected.short_description}"
         end
 
         # The description of the violations that caused the constraint to be unsatisfied.
@@ -44,8 +44,8 @@ module Domainic
         #
         # @return [String] The description of the constraint when it fails.
         # @rbs override
-        def violation_description
-          "not #{@expected.description}"
+        def short_violation_description
+          "not #{@expected.short_description}"
         end
 
         protected

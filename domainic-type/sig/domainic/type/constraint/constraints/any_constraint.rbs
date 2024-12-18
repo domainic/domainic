@@ -29,7 +29,7 @@ module Domainic
         # Get a description of what the constraint expects.
         #
         # @return [String] a description combining all constraint descriptions
-        def description: ...
+        def short_description: ...
 
         # The description of the violations that caused the constraint to be unsatisfied.
         #
@@ -37,7 +37,7 @@ module Domainic
         # listing all the ways in which the value failed validation.
         #
         # @return [String] The combined violation descriptions from all constraints
-        def violation_description: ...
+        def short_violation_description: ...
 
         # Check if the value satisfies any of the expected constraints.
         #

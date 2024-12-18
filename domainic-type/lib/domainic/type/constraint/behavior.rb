@@ -25,11 +25,11 @@ module Domainic
       #   class GreaterThanConstraint
       #     include Domainic::Type::Constraint::Behavior
       #
-      #     def description
+      #     def short_description
       #       "greater than #{@expected}"
       #     end
       #
-      #     def violation_description
+      #     def short_violation_description
       #       @actual.to_s
       #     end
       #
@@ -65,7 +65,6 @@ module Domainic
         # @param expectation [Object] The expected value to compare against
         # @param options [Hash{String, Symbol => Object}] Additional options
         # @option options [Boolean] :abort_on_failure (false) Whether to {#abort_on_failure?}
-        # @option options [Boolean] :is_type_failure (false) Whether to consider as {#type_failure?}
         #
         # @raise [ArgumentError] if the accessor is not included in {VALID_ACCESSORS}
         # @return [Behavior] A new instance of the constraint.
@@ -93,18 +92,6 @@ module Domainic
         # @rbs () -> bool
         def abort_on_failure?
           @options.fetch(:abort_on_failure, false)
-        end
-
-        # The description of the constraint.
-        #
-        # This is used to help compose a error message when the constraint is not satisfied.
-        # Implementing classes should override this to provide meaningful descriptions of their
-        # constraint behavior.
-        #
-        # @return [String] The description of the constraint.
-        # @rbs () -> String
-        def description
-          @expected.to_s
         end
 
         # Set the expected value to compare against.
@@ -151,6 +138,29 @@ module Domainic
           @result = false #: bool
         end
 
+        # The short description of the constraint.
+        #
+        # This is used to help compose a error message when the constraint is not satisfied.
+        # Implementing classes should override this to provide meaningful descriptions of their
+        # constraint behavior.
+        #
+        # @return [String] The description of the constraint.
+        # @rbs () -> String
+        def short_description
+          @expected.to_s
+        end
+
+        # The short description of the violations that caused the constraint to be unsatisfied.
+        #
+        # This is used to help compose a error message when the constraint is not satisfied.
+        # Implementing classes can override this to provide more specific failure messages.
+        #
+        # @return [String] The description of the constraint when it fails.
+        # @rbs () -> String
+        def short_violation_description
+          @actual.to_s
+        end
+
         # Whether the constraint is a success.
         #
         # @return [Boolean] `true` if the constraint is a success, `false` otherwise.
@@ -160,22 +170,10 @@ module Domainic
         end
         alias success? successful?
 
-        # The description of the violations that caused the constraint to be unsatisfied.
-        #
-        # This is used to help compose a error message when the constraint is not satisfied.
-        # Implementing classes can override this to provide more specific failure messages.
-        #
-        # @return [String] The description of the constraint when it fails.
-        # @rbs () -> String
-        def violation_description
-          @actual.to_s
-        end
-
         # Merge additional options into the constraint.
         #
         # @param options [Hash{String, Symbol => Object}] Additional options
         # @option options [Boolean] :abort_on_failure (false) Whether to {#abort_on_failure?}
-        # @option options [Boolean] :is_type_failure (false) Whether to consider as {#type_failure?}
         #
         # @return [self] The constraint instance.
         # @rbs (?(options & Options) options) -> self

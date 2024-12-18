@@ -245,8 +245,8 @@ RSpec.describe Domainic::Type::Constraint::Set do
       Class.new do
         include Domainic::Type::Constraint::Behavior
 
-        def description = @expected.to_s
-        def violation_description = @actual.to_s
+        def short_description = @expected.to_s
+        def short_violation_description = @actual.to_s
 
         protected
 

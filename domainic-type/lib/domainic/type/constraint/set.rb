@@ -121,7 +121,7 @@ module Domainic
         def description
           Type::ACCESSORS.flat_map do |accessor|
             described_accessor_constraints(accessor).map do |quantifier_description, constraint|
-              constraint_description(quantifier_description, constraint.description)
+              constraint_description(quantifier_description, constraint.short_description)
             end
           end.join(', ').strip
         end
@@ -195,7 +195,7 @@ module Domainic
         def violation_description
           Type::ACCESSORS.flat_map do |accessor|
             described_accessor_constraints(accessor).map do |quantifier_description, constraint|
-              constraint_description(quantifier_description, constraint.violation_description)
+              constraint_description(quantifier_description, constraint.short_violation_description)
             end
           end.join(', ').strip
         end

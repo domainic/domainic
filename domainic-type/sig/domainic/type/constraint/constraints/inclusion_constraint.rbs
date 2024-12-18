@@ -35,17 +35,17 @@ module Domainic
         #   constraint.description # => "including 42"
         #
         # @return [String] A description of the inclusion requirement
-        def description: ...
+        def short_description: ...
 
         # Get a human-readable description of why inclusion validation failed.
         #
         # @example
         #   constraint = InclusionConstraint.new(:self, 42)
         #   constraint.satisfied?([1, 2, 3])
-        #   constraint.violation_description # => "excluding 42"
+        #   constraint.short_violation_description # => "excluding 42"
         #
         # @return [String] A description of the inclusion failure
-        def violation_description: ...
+        def short_violation_description: ...
 
         # Check if the collection includes the expected value.
         #

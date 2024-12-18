@@ -40,7 +40,7 @@ module Domainic
         #
         # @return [String] A description of the inclusion requirement
         # @rbs override
-        def description
+        def short_description
           "including #{@expected.inspect}"
         end
 
@@ -49,11 +49,11 @@ module Domainic
         # @example
         #   constraint = InclusionConstraint.new(:self, 42)
         #   constraint.satisfied?([1, 2, 3])
-        #   constraint.violation_description # => "excluding 42"
+        #   constraint.short_violation_description # => "excluding 42"
         #
         # @return [String] A description of the inclusion failure
         # @rbs override
-        def violation_description
+        def short_violation_description
           "excluding #{@expected.inspect}"
         end
 

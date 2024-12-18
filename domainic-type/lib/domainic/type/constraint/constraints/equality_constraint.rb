@@ -41,7 +41,7 @@ module Domainic
         #
         # @return [String] A description of the expected value
         # @rbs override
-        def description
+        def short_description
           "equal to #{@expected.inspect}"
         end
 
@@ -50,11 +50,11 @@ module Domainic
         # @example
         #   constraint = EqualityConstraint.new(:self, 42)
         #   constraint.satisfied?(41)
-        #   constraint.violation_description # => "not equal to 42"
+        #   constraint.short_violation_description # => "not equal to 42"
         #
         # @return [String] A description of the equality failure
         # @rbs override
-        def violation_description
+        def short_violation_description
           "not equal to #{@expected.inspect}"
         end
 

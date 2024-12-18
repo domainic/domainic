@@ -41,7 +41,7 @@ module Domainic
         #
         # @return [String] A description of the ordering requirement
         # @rbs override
-        def description
+        def short_description
           'ordered'
         end
 
@@ -50,11 +50,11 @@ module Domainic
         # @example
         #   constraint = OrderingConstraint.new(:self)
         #   constraint.satisfied?([3, 1, 2])
-        #   constraint.violation_description # => "not ordered"
+        #   constraint.short_violation_description # => "not ordered"
         #
         # @return [String] A description of the ordering failure
         # @rbs override
-        def violation_description
+        def short_violation_description
           'not ordered'
         end
 

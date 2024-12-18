@@ -11,22 +11,6 @@ RSpec.describe Domainic::Type::Constraint::EmptinessConstraint do
     it { expect { constraint }.not_to raise_error }
   end
 
-  describe '#description' do
-    subject(:description) { constraint.description }
-
-    let(:constraint) { described_class.new(:self) }
-
-    it { is_expected.to eq('empty') }
-  end
-
-  describe '#violation_description' do
-    subject(:violation_description) { constraint.violation_description }
-
-    let(:constraint) { described_class.new(:self) }
-
-    it { is_expected.to eq('not empty') }
-  end
-
   describe '#satisfied?' do
     subject(:satisfied?) { constraint.satisfied?(actual_value) }
 
@@ -73,5 +57,21 @@ RSpec.describe Domainic::Type::Constraint::EmptinessConstraint do
         it { is_expected.to be false }
       end
     end
+  end
+
+  describe '#short_description' do
+    subject(:short_description) { constraint.short_description }
+
+    let(:constraint) { described_class.new(:self) }
+
+    it { is_expected.to eq('empty') }
+  end
+
+  describe '#short_violation_description' do
+    subject(:short_violation_description) { constraint.short_violation_description }
+
+    let(:constraint) { described_class.new(:self) }
+
+    it { is_expected.to eq('not empty') }
   end
 end

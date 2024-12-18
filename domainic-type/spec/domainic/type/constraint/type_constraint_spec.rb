@@ -30,15 +30,6 @@ RSpec.describe Domainic::Type::Constraint::TypeConstraint do
     include_examples 'coerces and validates expectation'
   end
 
-  describe '#description' do
-    subject(:description) { constraint.description }
-
-    let(:constraint) { described_class.new(:self, expected_type) }
-    let(:expected_type) { Array }
-
-    it { is_expected.to eq('Array') }
-  end
-
   describe '#expecting' do
     subject(:expecting) { constraint.expecting(expected_type) }
 
@@ -67,8 +58,17 @@ RSpec.describe Domainic::Type::Constraint::TypeConstraint do
     end
   end
 
-  describe '#violation_description' do
-    subject(:violation_description) { constraint.violation_description }
+  describe '#short_description' do
+    subject(:short_description) { constraint.short_description }
+
+    let(:constraint) { described_class.new(:self, expected_type) }
+    let(:expected_type) { Array }
+
+    it { is_expected.to eq('Array') }
+  end
+
+  describe '#short_violation_description' do
+    subject(:short_violation_description) { constraint.short_violation_description }
 
     before do
       constraint.satisfied?(actual_value)
