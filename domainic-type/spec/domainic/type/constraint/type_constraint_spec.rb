@@ -24,12 +24,6 @@ RSpec.describe Domainic::Type::Constraint::TypeConstraint do
     end
   end
 
-  describe '.new' do
-    subject(:constraint) { described_class.new(:self, expected_type) }
-
-    include_examples 'coerces and validates expectation'
-  end
-
   describe '#expecting' do
     subject(:expecting) { constraint.expecting(expected_type) }
 
@@ -41,7 +35,7 @@ RSpec.describe Domainic::Type::Constraint::TypeConstraint do
   describe '#satisfied?' do
     subject(:satisfied?) { constraint.satisfied?(actual_value) }
 
-    let(:constraint) { described_class.new(:self, expected_type) }
+    let(:constraint) { described_class.new(:self).expecting(expected_type) }
 
     context 'when the actual value is an instance of the expected type' do
       let(:expected_type) { Integer }
@@ -61,7 +55,7 @@ RSpec.describe Domainic::Type::Constraint::TypeConstraint do
   describe '#short_description' do
     subject(:short_description) { constraint.short_description }
 
-    let(:constraint) { described_class.new(:self, expected_type) }
+    let(:constraint) { described_class.new(:self).expecting(expected_type) }
     let(:expected_type) { Array }
 
     it { is_expected.to eq('Array') }
@@ -74,7 +68,7 @@ RSpec.describe Domainic::Type::Constraint::TypeConstraint do
       constraint.satisfied?(actual_value)
     end
 
-    let(:constraint) { described_class.new(:self, expected_type) }
+    let(:constraint) { described_class.new(:self).expecting(expected_type) }
     let(:actual_value) { [] }
     let(:expected_type) { Integer }
 

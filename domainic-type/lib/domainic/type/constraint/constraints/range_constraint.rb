@@ -114,7 +114,7 @@ module Domainic
         #
         # @raise [ArgumentError] if the values are invalid
         # @return [void]
-        # @rbs (expected expectation) -> void
+        # @rbs (untyped expectation) -> void
         def validate_minimum_and_maximum!(expectation)
           expectation.each_pair do |property, value|
             raise ArgumentError, ":#{property} must be a Numeric" unless value.nil? || value.is_a?(Numeric)

@@ -37,22 +37,16 @@ RSpec.describe Domainic::Type::Constraint::RangeConstraint do
 
     context 'when given a Hash and a previous expectation exists' do
       it 'is expected not to raise an error' do
-        constraint = described_class.new(:self, { minimum: 1 })
+        constraint = described_class.new(:self).expecting({ minimum: 1 })
         expect { constraint.expecting({ maximum: 2 }) }.not_to raise_error
       end
 
       it 'is expected to merge the expectation with the existing expectation' do
-        constraint = described_class.new(:self, { minimum: 1 })
+        constraint = described_class.new(:self).expecting({ minimum: 1 })
         constraint.expecting({ maximum: 2 })
         expect(constraint).to(be_satisfied(1).and(be_satisfied(2)))
       end
     end
-  end
-
-  describe '.new' do
-    subject(:constraint) { described_class.new(:self, expectation) }
-
-    include_examples 'coerces and validates expectation'
   end
 
   describe '#expecting' do
@@ -69,19 +63,19 @@ RSpec.describe Domainic::Type::Constraint::RangeConstraint do
     let(:actual_value) { 1 }
 
     context 'when the value is within the range' do
-      let(:constraint) { described_class.new(:self, { minimum: 1, maximum: 2 }) }
+      let(:constraint) { described_class.new(:self).expecting({ minimum: 1, maximum: 2 }) }
 
       it { is_expected.to be true }
     end
 
     context 'when the value is less than the minimum' do
-      let(:constraint) { described_class.new(:self, { minimum: 2 }) }
+      let(:constraint) { described_class.new(:self).expecting({ minimum: 2 }) }
 
       it { is_expected.to be false }
     end
 
     context 'when the value is greater than the maximum' do
-      let(:constraint) { described_class.new(:self, { maximum: 0 }) }
+      let(:constraint) { described_class.new(:self).expecting({ maximum: 0 }) }
 
       it { is_expected.to be false }
     end
@@ -90,7 +84,7 @@ RSpec.describe Domainic::Type::Constraint::RangeConstraint do
   describe '#short_description' do
     subject(:short_description) { constraint.short_description }
 
-    let(:constraint) { described_class.new(:self, expectation) }
+    let(:constraint) { described_class.new(:self).expecting(expectation) }
 
     context 'when given a minimum and a maximum' do
       let(:expectation) { { minimum: 1, maximum: 10 } }
@@ -116,7 +110,7 @@ RSpec.describe Domainic::Type::Constraint::RangeConstraint do
 
     before { constraint.satisfied?(11) }
 
-    let(:constraint) { described_class.new(:self, { minimum: 1, maximum: 10 }) }
+    let(:constraint) { described_class.new(:self).expecting({ minimum: 1, maximum: 10 }) }
 
     it { is_expected.to eq('11') }
   end

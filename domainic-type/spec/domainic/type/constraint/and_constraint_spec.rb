@@ -27,7 +27,7 @@ RSpec.describe Domainic::Type::Constraint::AndConstraint do
 
   shared_examples 'validates constraints array' do
     context 'when given valid constraints' do
-      let(:expectation) { [string_constraint] }
+      let(:expectation) { string_constraint }
 
       it { expect { subject }.not_to raise_error }
     end
@@ -39,16 +39,10 @@ RSpec.describe Domainic::Type::Constraint::AndConstraint do
     end
   end
 
-  describe '.new' do
-    subject(:constraint) { described_class.new(:self, expectation) }
-
-    include_examples 'validates constraints array'
-  end
-
   describe '#expecting' do
     subject(:expecting) { constraint.expecting(expectation) }
 
-    let(:constraint) { described_class.new(:self, [string_constraint]) }
+    let(:constraint) { described_class.new(:self).expecting(string_constraint) }
 
     context 'when adding a valid constraint' do
       let(:expectation) { non_empty_constraint }
@@ -69,7 +63,7 @@ RSpec.describe Domainic::Type::Constraint::AndConstraint do
   describe '#satisfied?' do
     subject(:satisfied?) { constraint.satisfied?(actual_value) }
 
-    let(:constraint) { described_class.new(:self, [string_constraint, non_empty_constraint]) }
+    let(:constraint) { described_class.new(:self).expecting(string_constraint).expecting(non_empty_constraint) }
 
     context 'when all constraints are satisfied' do
       let(:actual_value) { 'test' }
@@ -99,7 +93,7 @@ RSpec.describe Domainic::Type::Constraint::AndConstraint do
   describe '#short_description' do
     subject(:short_description) { constraint.short_description }
 
-    let(:constraint) { described_class.new(:self, [string_constraint, non_empty_constraint]) }
+    let(:constraint) { described_class.new(:self).expecting(string_constraint).expecting(non_empty_constraint) }
 
     it 'joins constraint short_descriptions with and' do
       expect(short_description).to eq('be a string and be non-empty')
@@ -109,7 +103,7 @@ RSpec.describe Domainic::Type::Constraint::AndConstraint do
   describe '#short_violation_description' do
     subject(:short_violation_description) { constraint.short_violation_description }
 
-    let(:constraint) { described_class.new(:self, [string_constraint, non_empty_constraint]) }
+    let(:constraint) { described_class.new(:self).expecting(string_constraint).expecting(non_empty_constraint) }
 
     before { constraint.satisfied?(actual_value) }
 

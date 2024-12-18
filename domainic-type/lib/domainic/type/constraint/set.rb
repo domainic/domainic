@@ -76,7 +76,8 @@ module Domainic
           # @type var accessor: Type::accessor
           # @type var constraint_type: Symbol
           @lookup[accessor] ||= {}
-          @lookup[accessor][quantifier_description] ||= Resolver.resolve!(constraint_type).new(accessor)
+          @lookup[accessor][quantifier_description] ||=
+            Resolver.resolve!(constraint_type).new(accessor, quantifier_description)
           @lookup[accessor][quantifier_description].expecting(expectation).with_options(**options) # steep:ignore
         end
 

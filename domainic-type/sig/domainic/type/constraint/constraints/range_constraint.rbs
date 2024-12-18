@@ -80,7 +80,7 @@ module Domainic
         #
         # @raise [ArgumentError] if the values are invalid
         # @return [void]
-        def validate_minimum_and_maximum!: (expected expectation) -> void
+        def validate_minimum_and_maximum!: (untyped expectation) -> void
       end
     end
   end

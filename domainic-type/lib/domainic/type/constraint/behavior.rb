@@ -57,29 +57,28 @@ module Domainic
         # @rbs @actual: Actual
         # @rbs @expected: Expected
         # @rbs @options: options
+        # @rbs @quantifier_description: (String | Symbol)?
         # @rbs @result: bool?
+
+        attr_reader :quantifier_description #: (String | Symbol)?
 
         # Initialize a new constraint instance.
         #
         # @param accessor [Symbol] The accessor to use to retrieve the value being constrained
-        # @param expectation [Object] The expected value to compare against
-        # @param options [Hash{String, Symbol => Object}] Additional options
-        # @option options [Boolean] :abort_on_failure (false) Whether to {#abort_on_failure?}
+        # @param quantifier_description [String, Symbol, nil] The description of how the constraint applies
+        #   to elements, such as "all", "any", or "none" for collection constraints, or a specific type name
+        #   for type constraints. Used to form natural language descriptions like "having elements of String"
+        #   or "containing any of [1, 2, 3]"
         #
         # @raise [ArgumentError] if the accessor is not included in {VALID_ACCESSORS}
         # @return [Behavior] A new instance of the constraint.
-        # @rbs (
-        #   Type::accessor accessor,
-        #   ?Expected expectation,
-        #   ?(options & Options) options
-        #   ) -> void
-        def initialize(accessor, expectation = nil, options = {})
+        # @rbs (Type::accessor accessor, ?(String | Symbol)? quantifier_description) -> void
+        def initialize(accessor, quantifier_description = nil)
           validate_accessor!(accessor)
-          validate_expectation!(expectation) unless expectation.nil?
 
           @accessor = accessor.to_sym
-          @expected = expectation
-          @options = options.transform_keys(&:to_sym)
+          @options = {}
+          @quantifier_description = quantifier_description
         end
 
         # Whether to abort further validation on an unsatisfied constraint.
@@ -100,11 +99,12 @@ module Domainic
         #
         # @raise [ArgumentError] if the expectation is invalid according to {#validate_expectation!}
         # @return [self] The constraint instance.
-        # @rbs (Expected expectation) -> self
+        # @rbs (untyped expectation) -> self
         def expecting(expectation)
           expectation = coerce_expectation(expectation)
           validate_expectation!(expectation)
 
+          # @type var expectation: Expected
           @expected = expectation
           self
         end
@@ -221,7 +221,7 @@ module Domainic
         # @param expectation [Object] The expected value to coerce.
         #
         # @return [Object] The coerced value.
-        # @rbs (Expected expectation) -> Expected
+        # @rbs (untyped expectation) -> Expected
         def coerce_expectation(expectation)
           expectation
         end
@@ -264,7 +264,7 @@ module Domainic
         # @param expectation [Object] The expected value to validate.
         #
         # @return [void]
-        # @rbs (Expected expectation) -> void
+        # @rbs (untyped expectation) -> void
         def validate_expectation!(expectation); end
 
         private

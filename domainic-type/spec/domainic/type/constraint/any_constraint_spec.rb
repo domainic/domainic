@@ -31,12 +31,6 @@ RSpec.describe Domainic::Type::Constraint::AnyConstraint do
     end
   end
 
-  describe '.new' do
-    subject(:constraint) { described_class.new(:self, expectation) }
-
-    include_examples 'validates inner constraint'
-  end
-
   describe '#expecting' do
     subject(:expecting) { constraint.expecting(expectation) }
 
@@ -48,7 +42,7 @@ RSpec.describe Domainic::Type::Constraint::AnyConstraint do
   describe '#satisfied?' do
     subject(:satisfied?) { constraint.satisfied?(actual_value) }
 
-    let(:constraint) { described_class.new(:self, inner_constraint) }
+    let(:constraint) { described_class.new(:self).expecting(inner_constraint) }
 
     context 'when any element satisfies the constraint' do
       let(:actual_value) { ['a', 1, 'c'] }
@@ -90,7 +84,7 @@ RSpec.describe Domainic::Type::Constraint::AnyConstraint do
   describe '#short_description' do
     subject(:short_description) { constraint.short_description }
 
-    let(:constraint) { described_class.new(:self, inner_constraint) }
+    let(:constraint) { described_class.new(:self).expecting(inner_constraint) }
 
     it 'returns the inner constraint short_description' do
       expect(short_description).to eq('be a string')
@@ -100,7 +94,7 @@ RSpec.describe Domainic::Type::Constraint::AnyConstraint do
   describe '#short_violation_description' do
     subject(:short_violation_description) { constraint.short_violation_description }
 
-    let(:constraint) { described_class.new(:self, inner_constraint) }
+    let(:constraint) { described_class.new(:self).expecting(inner_constraint) }
 
     before { constraint.satisfied?(actual_value) }
 

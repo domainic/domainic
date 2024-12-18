@@ -10,10 +10,9 @@ RSpec.describe Domainic::Type::Constraint::Set do
     Class.new do
       include Domainic::Type::Constraint::Behavior
 
-      def initialize(accessor)
+      def initialize(accessor, quantifier_description)
         super
         @expected = nil
-        @options = {}
       end
 
       def expecting(expectation)

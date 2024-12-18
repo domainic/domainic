@@ -39,16 +39,10 @@ RSpec.describe Domainic::Type::Constraint::OrConstraint do
     end
   end
 
-  describe '.new' do
-    subject(:constraint) { described_class.new(:self, expectation) }
-
-    include_examples 'validates constraints array'
-  end
-
   describe '#expecting' do
     subject(:expecting) { constraint.expecting(expectation) }
 
-    let(:constraint) { described_class.new(:self, [string_constraint]) }
+    let(:constraint) { described_class.new(:self).expecting(string_constraint) }
 
     context 'when adding a valid constraint' do
       let(:expectation) { symbol_constraint }
@@ -69,7 +63,7 @@ RSpec.describe Domainic::Type::Constraint::OrConstraint do
   describe '#satisfied?' do
     subject(:satisfied?) { constraint.satisfied?(actual_value) }
 
-    let(:constraint) { described_class.new(:self, [string_constraint, symbol_constraint]) }
+    let(:constraint) { described_class.new(:self).expecting(string_constraint).expecting(symbol_constraint) }
 
     context 'when value satisfies no constraints' do
       let(:actual_value) { 123 }
@@ -93,7 +87,7 @@ RSpec.describe Domainic::Type::Constraint::OrConstraint do
   describe '#short_description' do
     subject(:short_description) { constraint.short_description }
 
-    let(:constraint) { described_class.new(:self, [string_constraint, symbol_constraint]) }
+    let(:constraint) { described_class.new(:self).expecting(string_constraint).expecting(symbol_constraint) }
 
     it 'joins constraint short_descriptions with or' do
       expect(short_description).to eq('be a string or be a symbol')
@@ -103,7 +97,7 @@ RSpec.describe Domainic::Type::Constraint::OrConstraint do
   describe '#short_violation_description' do
     subject(:short_violation_description) { constraint.short_violation_description }
 
-    let(:constraint) { described_class.new(:self, [string_constraint, symbol_constraint]) }
+    let(:constraint) { described_class.new(:self).expecting(string_constraint).expecting(symbol_constraint) }
 
     before { constraint.satisfied?(actual_value) }
 
