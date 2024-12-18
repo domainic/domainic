@@ -1,6 +1,9 @@
 # Domainic
 
-[![Domainic Version](https://badge.fury.io/rb/domainic.svg)](https://rubygems.org/gems/domainic)
+[![Domainic Build](https://img.shields.io/github/actions/workflow/status/domainic/domainic/build.yml?branch=main&style=for-the-badge&logo=githubactions&logoColor=white&logoSize=auto)](https://github.com/domainic/domainic/actions/workflows/build.yml)
+[![Domainic Version](https://img.shields.io/badge/not%20released-orange?label=gem%20version&logo=rubygems&logoSize=auto&style=for-the-badge)](https://rubygems.org/gems/domainic)
+[![Domainic License](https://img.shields.io/github/license/domainic/domainic?logo=opensourceinitiative&logoColor=white&logoSize=auto&style=for-the-badge)](./LICENSE)
+[![Domainic Open Issues](https://img.shields.io/github/issues-search/domainic/domainic?label=open%20issues&logo=github&logoSize=auto&query=is%3Aopen&color=red&style=for-the-badge)](https://github.com/domainic/domainic/issues?q=state%3Aopen)
 
 A suite of Ruby libraries crafted to arm engineers with the magic of domain-driven design.
 
