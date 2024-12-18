@@ -95,6 +95,16 @@ module Domainic
 
         alias failed? failure?
 
+        # The full description of the constraint.
+        #
+        # @return [String, nil] The full description of the constraint.
+        def full_description: () -> String?
+
+        # The full description of the violations that caused the constraint to be unsatisfied.
+        #
+        # @return [String, nil] The full description of the constraint when it fails.
+        def full_violation_description: () -> String?
+
         # Whether the constraint is satisfied.
         #
         # This method orchestrates the constraint validation process by:
@@ -214,6 +224,13 @@ module Domainic
         def validate_expectation!: (untyped expectation) -> void
 
         private
+
+        # Generate the full description for the corresponding short description.
+        #
+        # @param description [String] The short description to expand.
+        #
+        # @return [String] The full description.
+        def full_description_for: (String description) -> String?
 
         # Validate the accessor.
         #

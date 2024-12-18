@@ -116,23 +116,6 @@ module Domainic
         # @return [String] The description of all constraints
         def violation_description: () -> String
 
-        private
-
-        # Generate a description for a specific constraint.
-        #
-        # @param quantifier_description [String, Symbol] The quantifier description of the constraint
-        # @param constraint_description [String] The description of the constraint
-        #
-        # @return [String] The description of the constraint
-        def constraint_description: (String | Symbol quantifier_description, String constraint_description) -> String
-
-        # The described constraints for a specific accessor.
-        #
-        # @param accessor [Symbol] The accessor method for the constraint
-        #
-        # @return [Hash{String, Symbol => Behavior}] The constraints for the accessor
-        def described_accessor_constraints: (Type::accessor accessor) -> Hash[String | Symbol, Behavior]
-
         # Ensure that the lookup hash is deep copied when duplicating.
         #
         # @param source [Set] The source object to copy

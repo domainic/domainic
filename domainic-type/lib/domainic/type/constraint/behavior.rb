@@ -118,6 +118,22 @@ module Domainic
         end
         alias failed? failure?
 
+        # The full description of the constraint.
+        #
+        # @return [String, nil] The full description of the constraint.
+        # @rbs () -> String?
+        def full_description
+          full_description_for(short_description)
+        end
+
+        # The full description of the violations that caused the constraint to be unsatisfied.
+        #
+        # @return [String, nil] The full description of the constraint when it fails.
+        # @rbs () -> String?
+        def full_violation_description
+          full_description_for(short_violation_description)
+        end
+
         # Whether the constraint is satisfied.
         #
         # This method orchestrates the constraint validation process by:
@@ -268,6 +284,22 @@ module Domainic
         def validate_expectation!(expectation); end
 
         private
+
+        # Generate the full description for the corresponding short description.
+        #
+        # @param description [String] The short description to expand.
+        #
+        # @return [String] The full description.
+        # @rbs (String description) -> String?
+        def full_description_for(description)
+          return if quantifier_description.nil? || quantifier_description.to_s.include?('not_described')
+
+          if quantifier_description.is_a?(Symbol)
+            "#{quantifier_description.to_s.split('_').join(' ')} #{description}"
+          else
+            "#{quantifier_description} #{description}"
+          end.strip
+        end
 
         # Validate the accessor.
         #

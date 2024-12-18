@@ -121,9 +121,7 @@ module Domainic
         # @rbs () -> String
         def description
           Type::ACCESSORS.flat_map do |accessor|
-            described_accessor_constraints(accessor).map do |quantifier_description, constraint|
-              constraint_description(quantifier_description, constraint.short_description)
-            end
+            @lookup[accessor].values.filter_map(&:full_description)
           end.join(', ').strip
         end
 
@@ -195,39 +193,8 @@ module Domainic
         # @rbs () -> String
         def violation_description
           Type::ACCESSORS.flat_map do |accessor|
-            described_accessor_constraints(accessor).map do |quantifier_description, constraint|
-              constraint_description(quantifier_description, constraint.short_violation_description)
-            end
+            @lookup[accessor].values.filter_map(&:full_violation_description)
           end.join(', ').strip
-        end
-
-        private
-
-        # Generate a description for a specific constraint.
-        #
-        # @param quantifier_description [String, Symbol] The quantifier description of the constraint
-        # @param constraint_description [String] The description of the constraint
-        #
-        # @return [String] The description of the constraint
-        # @rbs (String | Symbol quantifier_description, String constraint_description) -> String
-        def constraint_description(quantifier_description, constraint_description)
-          if quantifier_description.is_a?(Symbol)
-            "#{quantifier_description.to_s.split('_').join(' ')} #{constraint_description}"
-          else
-            "#{quantifier_description} #{constraint_description}"
-          end.strip
-        end
-
-        # The described constraints for a specific accessor.
-        #
-        # @param accessor [Symbol] The accessor method for the constraint
-        #
-        # @return [Hash{String, Symbol => Behavior}] The constraints for the accessor
-        # @rbs (Type::accessor accessor) -> Hash[String | Symbol, Behavior]
-        def described_accessor_constraints(accessor)
-          @lookup[accessor].reject do |quantifier_description, _|
-            quantifier_description.to_s.end_with?('not_described')
-          end
         end
 
         # Ensure that the lookup hash is deep copied when duplicating.
