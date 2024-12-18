@@ -5,164 +5,227 @@ require 'domainic/type/behavior'
 require 'domainic/type/constraint/behavior'
 
 RSpec.describe Domainic::Type::Behavior do
-  let(:passing_constraint) do
-    Class.new do
-      include Domainic::Type::Constraint::Behavior
-
-      protected
-
-      def satisfies_constraint?
-        true
-      end
-    end
-  end
-
-  let(:failing_constraint) do
-    Class.new do
-      include Domainic::Type::Constraint::Behavior
-
-      protected
-
-      def satisfies_constraint?
-        false
-      end
-    end
-  end
-
   let(:type_class) do
     Class.new do
       include Domainic::Type::Behavior
 
-      intrinsic :self, :test, :test, 'test value'
+      private
 
-      def self.name
-        'TestType'
-      end
-
-      def test_method(*args, **kwargs)
-        kwargs.empty? ? args.first : kwargs
+      def initialize(**options)
+        super
+        constrain(:self, :test)
       end
     end
   end
 
-  let(:type_instance) { type_class.new }
-  let(:constraint_class) { passing_constraint }
+  let(:constraint_class) do
+    Class.new do
+      include Domainic::Type::Constraint::Behavior
+
+      def initialize(accessor, description = nil)
+        super
+        @expected = nil
+        @actual = nil
+        @result = nil
+      end
+
+      protected
+
+      def satisfies_constraint?
+        @result = !@actual.nil?
+      end
+    end
+  end
 
   before do
-    stub_const('Domainic::Type::Constraint::TestConstraint', constraint_class)
-    allow(Domainic::Type::Constraint::Resolver).to receive(:resolve!)
-      .with(:test).and_return(constraint_class)
+    stub_const('TestType', type_class)
+    stub_const('TestConstraint', constraint_class)
+    allow(Domainic::Type::Constraint::Resolver).to receive(:resolve!).with(:test).and_return(TestConstraint)
   end
 
-  describe '.validate' do
-    subject(:validate) { type_class.validate(value) }
+  describe '.included' do
+    subject(:include_behavior) { Class.new { include Domainic::Type::Behavior } }
 
-    before do
-      allow(type_class).to receive(:new).and_return(type_instance)
-      allow(type_instance).to receive(:validate).and_call_original
-    end
-
-    let(:value) { 'test value' }
-
-    it 'is expected to delegate to a new instance' do
-      validate
-      expect(type_instance).to have_received(:validate).with(value)
+    it 'is expected to extend ClassMethods' do
+      expect(include_behavior.singleton_class.included_modules).to include(described_class::ClassMethods)
     end
   end
 
-  describe '.validate!' do
-    subject(:validate!) { type_class.validate!(value) }
+  describe 'ClassMethods' do
+    describe '.to_s' do
+      subject(:to_string) { TestType.to_s }
 
-    before do
-      allow(type_class).to receive(:new).and_return(type_instance)
-      allow(type_instance).to receive(:validate!).and_call_original
+      it 'is expected to return the class name without the Type suffix' do
+        expect(to_string).to eq('Test')
+      end
     end
 
-    let(:value) { 'test value' }
+    describe '.validate' do
+      subject(:validate) { TestType.validate(value) }
 
-    it 'is expected to delegate to a new instance' do
-      validate!
-      expect(type_instance).to have_received(:validate!).with(value)
+      context 'when given a valid value' do
+        let(:value) { 'valid' }
+
+        it { is_expected.to be true }
+      end
+
+      context 'when given an invalid value' do
+        let(:value) { nil }
+
+        it { is_expected.to be false }
+      end
+    end
+
+    describe '.validate!' do
+      subject(:validate!) { TestType.validate!(value) }
+
+      context 'when given a valid value' do
+        let(:value) { 'valid' }
+
+        it { is_expected.to be true }
+      end
+
+      context 'when given an invalid value' do
+        let(:value) { nil }
+
+        it 'is expected to raise TypeError' do
+          expect { validate! }.to raise_error(TypeError)
+        end
+      end
+    end
+
+    describe '.method_missing' do
+      subject(:call_missing) { TestType.public_send(method_name) }
+
+      context 'when method exists on instance' do
+        let(:method_name) { :to_s }
+
+        it 'is expected to delegate to a new instance' do
+          expect(call_missing).to eq('Test')
+        end
+      end
+
+      context 'when method does not exist on instance' do
+        let(:method_name) { :nonexistent_method }
+
+        it 'is expected to raise NoMethodError' do
+          expect { call_missing }.to raise_error(NoMethodError)
+        end
+      end
+    end
+  end
+
+  describe '#initialize' do
+    subject(:initialize_type) { TestType.new(**options) }
+
+    let(:options) { {} }
+
+    it 'is expected to create a new type instance' do
+      expect(initialize_type).to be_a(TestType)
+    end
+
+    context 'when given options' do
+      let(:type_with_options) do
+        Class.new do
+          include Domainic::Type::Behavior
+
+          attr_reader :option_value
+
+          def something(value)
+            @option_value = value
+          end
+        end
+      end
+
+      let(:options) { { something: 'test' } }
+
+      before do
+        stub_const('TypeWithOptions', type_with_options)
+      end
+
+      it 'is expected to call methods with given options' do
+        instance = TypeWithOptions.new(**options)
+        expect(instance.option_value).to eq('test')
+      end
+    end
+  end
+
+  describe '#to_s' do
+    subject(:to_string) { type.to_s }
+
+    let(:type) { TestType.new }
+
+    it 'is expected to return the type name' do
+      expect(to_string).to eq('Test')
+    end
+
+    context 'when constraints have descriptions' do
+      before { type.send(:constrain, :self, :test, nil, description: 'test description') }
+
+      it 'is expected to include constraint descriptions' do
+        expect(to_string).to eq('Test')
+      end
     end
   end
 
   describe '#validate' do
-    subject(:validate) { type_instance.validate(value) }
+    subject(:validate) { type.validate(value) }
 
-    let(:value) { 'test value' }
-    let(:constraints) { Domainic::Type::Constraint::Set.new }
+    let(:type) { TestType.new }
 
-    before do
-      type_instance.instance_variable_set(:@constraints, constraints)
-      constraints.add(:self, :test, :test)
-    end
-
-    context 'when all constraints are satisfied' do
-      let(:constraint_class) { passing_constraint }
+    context 'when given a valid value' do
+      let(:value) { 'valid' }
 
       it { is_expected.to be true }
     end
 
-    context 'when any constraint is not satisfied' do
-      let(:constraint_class) { failing_constraint }
+    context 'when given an invalid value' do
+      let(:value) { nil }
 
       it { is_expected.to be false }
     end
   end
 
   describe '#validate!' do
-    subject(:validate!) { type_instance.validate!(value) }
+    subject(:validate!) { type.validate!(value) }
 
-    let(:value) { 'test value' }
-    let(:constraints) { Domainic::Type::Constraint::Set.new }
+    let(:type) { TestType.new }
 
-    before do
-      type_instance.instance_variable_set(:@constraints, constraints)
-      constraints.add(:self, :test, :test)
-    end
-
-    context 'when all constraints are satisfied' do
-      let(:constraint_class) { passing_constraint }
+    context 'when given a valid value' do
+      let(:value) { 'valid' }
 
       it { is_expected.to be true }
     end
 
-    context 'when any constraint is not satisfied' do
-      let(:constraint_class) { failing_constraint }
+    context 'when given an invalid value' do
+      let(:value) { nil }
 
       it 'is expected to raise TypeError' do
+        expect { validate! }.to raise_error(TypeError, /Expected Test, but got NilClass/)
+      end
+    end
+
+    context 'when a constraint is configured to abort on failure' do
+      before do
+        type.send(:constrain, :self, :test, nil, abort_on_failure: true)
+      end
+
+      let(:value) { nil }
+
+      it 'is expected to stop validation on first failure' do
         expect { validate! }.to raise_error(TypeError)
       end
     end
-  end
 
-  describe 'initialization with options' do
-    subject(:test_instance) { test_class.new(**method_options) }
-
-    let(:test_class) do
-      Class.new do
-        include Domainic::Type::Behavior
-        attr_reader :test_method_args
-
-        def test_method(*args, **kwargs)
-          @test_method_args = kwargs.empty? ? args.first : kwargs
-        end
+    context 'when constraints have descriptions' do
+      before do
+        type.send(:constrain, :self, :test, nil, description: 'test description')
       end
-    end
 
-    context 'when given hash arguments' do
-      let(:method_options) { { test_method: { key: 'value' } } }
+      let(:value) { nil }
 
-      it 'calls the method with keyword arguments' do
-        expect(test_instance.test_method_args).to eq(key: 'value')
-      end
-    end
-
-    context 'when given array arguments' do
-      let(:method_options) { { test_method: ['value'] } }
-
-      it 'calls the method with array arguments' do
-        expect(test_instance.test_method_args).to eq('value')
+      it 'is expected to include descriptions in error message' do
+        expect { validate! }.to raise_error(TypeError, 'Expected Test, but got NilClass')
       end
     end
   end
