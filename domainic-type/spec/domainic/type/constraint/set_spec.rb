@@ -5,72 +5,79 @@ require 'domainic/type/constraint/behavior'
 require 'domainic/type/constraint/set'
 
 RSpec.describe Domainic::Type::Constraint::Set do
-  let(:set) { described_class.new }
   let(:constraint_class) do
     Class.new do
       include Domainic::Type::Constraint::Behavior
 
-      def initialize(accessor)
+      def initialize(accessor, description = nil)
         super
         @expected = nil
-        @options = {}
+        @actual = nil
+        @result = nil
       end
 
-      def expecting(expectation)
-        @expected = expectation
-        self
-      end
-
-      def with_options(**options)
-        @options = options
-        self
+      def short_description
+        'test constraint'
       end
 
       protected
 
       def satisfies_constraint?
-        true
+        @result = true
       end
     end
   end
 
   before do
-    stub_const('Domainic::Type::Constraint::TestConstraint', constraint_class)
-    allow(Domainic::Type::Constraint::Resolver).to receive(:resolve!)
-      .with(:test).and_return(constraint_class)
+    stub_const('TestConstraint', constraint_class)
+    allow(Domainic::Type::Constraint::Resolver).to receive(:resolve!).with(:test).and_return(TestConstraint)
+  end
+
+  describe '.new' do
+    subject(:set) { described_class.new }
+
+    it 'is expected to initialize an empty set' do
+      expect(set.count).to eq(0)
+    end
   end
 
   describe '#add' do
-    subject(:add_constraint) do
-      set.add(:self, :test, :test_constraint, 'test value', abort_on_failure: true)
+    subject(:add_constraint) { set.add(accessor, :test, expectation, **options) }
+
+    let(:set) { described_class.new }
+    let(:accessor) { :self }
+    let(:expectation) { nil }
+    let(:options) { {} }
+
+    it 'is expected to add a constraint to the set' do
+      expect { add_constraint }.to change(set, :count).by(1)
     end
 
-    it 'is expected to create a new constraint' do
-      add_constraint
-      constraint = set.find(:self, :test_constraint)
-      expect(constraint).to be_a(constraint_class)
-    end
+    context 'when given a description option' do
+      let(:options) { { description: 'test description' } }
 
-    it 'is expected to set the expectation' do
-      add_constraint
-      constraint = set.find(:self, :test_constraint)
-      expect(constraint.instance_variable_get(:@expected)).to eq('test value')
-    end
-
-    it 'is expected to set the options' do
-      add_constraint
-      constraint = set.find(:self, :test_constraint)
-      expect(constraint.instance_variable_get(:@options)).to eq(abort_on_failure: true)
-    end
-
-    context 'when using string identifiers', rbs: :skip do
-      subject(:add_constraint) do
-        set.add('self', 'test', 'test constraint', 'test value')
-      end
-
-      it 'is expected to convert them to symbols' do
+      it 'is expected to set the description on the constraint' do
         add_constraint
-        expect(set.find(:self, 'test constraint')).to be_a(constraint_class)
+        expect(set.description).to include('test description')
+      end
+    end
+
+    context 'when given additional options' do
+      let(:options) { { abort_on_failure: true } }
+
+      it 'is expected to apply options to the constraint' do
+        add_constraint
+        expect(set.find(accessor, :test)).to be_abort_on_failure
+      end
+    end
+
+    context 'when a constraint with the same accessor and concerning already exists' do
+      before { set.add(accessor, :test, nil, concerning: :test) }
+
+      let(:options) { { concerning: :test } }
+
+      it 'is expected to update the existing constraint' do
+        expect { add_constraint }.not_to(change(set, :count))
       end
     end
   end
@@ -78,194 +85,138 @@ RSpec.describe Domainic::Type::Constraint::Set do
   describe '#all' do
     subject(:all_constraints) { set.all }
 
-    context 'when no constraints exist' do
-      it { is_expected.to be_empty }
+    let(:set) { described_class.new }
+
+    before do
+      set.add(:self, :test)
+      set.add(:length, :test)
     end
 
-    context 'when constraints exist' do
-      before do
-        set.add(:self, :test, :test_constraint1)
-        set.add(:length, :test, :test_constraint2)
-      end
-
-      it 'is expected to return all constraints' do
-        expect(all_constraints).to all(be_a(constraint_class))
-      end
-
-      it { is_expected.to have_attributes(size: 2) }
+    it 'is expected to return all constraints' do
+      expect(all_constraints.count).to eq(2)
     end
   end
 
   describe '#count' do
     subject(:count) { set.count }
 
-    context 'when no constraints exist' do
-      it { is_expected.to eq(0) }
+    let(:set) { described_class.new }
+
+    before do
+      set.add(:self, :test)
+      set.add(:length, :test)
     end
 
-    context 'when constraints exist' do
-      before do
-        set.add(:self, :test, :test_constraint2)
-        set.add(:length, :test, :test_constraint2)
-      end
-
-      it { is_expected.to eq(2) }
+    it 'is expected to return the total number of constraints' do
+      expect(count).to eq(2)
     end
   end
 
   describe '#description' do
     subject(:description) { set.description }
 
-    context 'when no constraints exist' do
-      it { is_expected.to be_empty }
+    let(:set) { described_class.new }
+
+    before do
+      set.add(:self, :test, nil, description: 'first test')
+      set.add(:length, :test, nil, description: 'second test')
     end
 
-    context 'when constraints exist' do
-      before do
-        set.add(:self, :test, 'being a', 'test value')
-        set.add(:length, :test, 'having length', 'test value')
-      end
-
-      it { is_expected.to eq('being a test value, having length test value') }
-    end
-
-    context 'when constraints should not be described' do
-      before do
-        set.add(:self, :test, 'being a not_described', 'test value')
-        set.add(:length, :test, 'having length', 'test value')
-      end
-
-      it { is_expected.to eq('having length test value') }
+    it 'is expected to return a combined description of all constraints' do
+      expect(description).to eq('first test test constraint, second test test constraint')
     end
   end
 
   describe '#exist?' do
-    subject(:exist) { set.exist?(accessor, quantifier_description) }
+    subject(:exist?) { set.exist?(accessor, concerning) }
 
+    let(:set) { described_class.new }
     let(:accessor) { :self }
-    let(:quantifier_description) { :test_constraint }
+    let(:concerning) { :test }
 
     context 'when the constraint exists' do
-      before do
-        set.add(accessor, :test, quantifier_description)
-      end
+      before { set.add(accessor, :test, concerning: concerning) }
 
       it { is_expected.to be true }
     end
 
     context 'when the constraint does not exist' do
       it { is_expected.to be false }
-    end
-
-    context 'when using string identifiers', rbs: :skip do
-      let(:accessor) { 'self' }
-      let(:quantifier_description) { 'test_constraint' }
-
-      before do
-        set.add(accessor, :test, quantifier_description)
-      end
-
-      it { is_expected.to be true }
     end
   end
 
   describe '#failures?' do
     subject(:failures?) { set.failures? }
 
-    context 'when no constraints exist' do
-      it { is_expected.to be false }
+    let(:set) { described_class.new }
+    let(:constraint) { instance_double(TestConstraint, failure?: has_failures) }
+
+    before do
+      allow(TestConstraint).to receive(:new).and_return(constraint)
+      allow(constraint).to receive_messages(expecting: constraint, with_options: constraint)
+      set.add(:self, :test)
     end
 
-    context 'when no constraints have failed' do
-      before do
-        set.add(:self, :test, 'being a', 'test value')
-      end
-
-      it { is_expected.to be false }
-    end
-
-    context 'when constraints have failed' do
-      let(:constraint_class) do
-        Class.new do
-          include Domainic::Type::Constraint::Behavior
-
-          protected
-
-          def satisfies_constraint? = false
-        end
-      end
-
-      before do
-        set.add(:self, :test, 'being a', 'test value')
-        set.all.each { |constraint| constraint.satisfied?('test') }
-      end
+    context 'when there are failures' do
+      let(:has_failures) { true }
 
       it { is_expected.to be true }
+    end
+
+    context 'when there are no failures' do
+      let(:has_failures) { false }
+
+      it { is_expected.to be false }
     end
   end
 
   describe '#find' do
-    subject(:find) { set.find(accessor, quantifier_description) }
+    subject(:find_constraint) { set.find(accessor, concerning) }
 
+    let(:set) { described_class.new }
     let(:accessor) { :self }
-    let(:quantifier_description) { :test_constraint }
+    let(:concerning) { :test }
 
     context 'when the constraint exists' do
-      before do
-        set.add(accessor, :test, quantifier_description)
-      end
+      before { set.add(accessor, :test, concerning: concerning) }
 
-      it 'is expected to return the constraint' do
-        expect(find).to be_a(constraint_class)
-      end
+      it { is_expected.to be_a(TestConstraint) }
     end
 
     context 'when the constraint does not exist' do
       it { is_expected.to be_nil }
     end
+  end
 
-    context 'when using string identifiers', rbs: :skip do
-      let(:accessor) { 'self' }
-      let(:quantifier_description) { 'test_constraint' }
+  describe '#prepare' do
+    subject(:prepare_constraint) { set.prepare(accessor, :test, expectation, **options) }
 
-      before do
-        set.add(accessor, :test, quantifier_description)
-      end
+    let(:set) { described_class.new }
+    let(:accessor) { :self }
+    let(:expectation) { nil }
+    let(:options) { { description: 'test description', abort_on_failure: true } }
 
-      it 'is expected to convert them to symbols' do
-        expect(find).to be_a(constraint_class)
-      end
+    it 'is expected to return a configured constraint' do
+      expect(prepare_constraint).to be_a(TestConstraint).and(be_abort_on_failure)
+    end
+
+    it 'is expected not to add the constraint to the set' do
+      expect { prepare_constraint }.not_to(change(set, :count))
     end
   end
 
   describe '#violation_description' do
     subject(:violation_description) { set.violation_description }
 
-    let(:constraint_class) do
-      Class.new do
-        include Domainic::Type::Constraint::Behavior
+    let(:set) { described_class.new }
 
-        def description = @expected.to_s
-        def violation_description = @actual.to_s
-
-        protected
-
-        def satisfies_constraint? = false
-      end
+    before do
+      set.add(:self, :test, nil, description: 'first test')
+      set.add(:length, :test, nil, description: 'second test')
     end
 
-    context 'when no constraints exist' do
-      it { is_expected.to be_empty }
-    end
-
-    context 'when constraints exist' do
-      before do
-        set.add(:self, :test, 'being a', 'test value')
-        constraint = set.find(:self, 'being a')
-        constraint.satisfied?('actual value')
-      end
-
-      it { is_expected.to eq('being a actual value') }
+    it 'is expected to return a combined violation description of all constraints' do
+      expect(violation_description).to eq('first test, second test')
     end
   end
 end

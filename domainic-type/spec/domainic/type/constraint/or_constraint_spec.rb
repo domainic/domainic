@@ -9,8 +9,8 @@ RSpec.describe Domainic::Type::Constraint::OrConstraint do
     Class.new do
       include Domainic::Type::Constraint::Behavior
 
-      def description = 'be a string'
-      def violation_description = 'was not a string'
+      def short_description = 'be a string'
+      def short_violation_description = 'was not a string'
       def satisfied?(value) = value.is_a?(String)
     end.new(:self)
   end
@@ -19,8 +19,8 @@ RSpec.describe Domainic::Type::Constraint::OrConstraint do
     Class.new do
       include Domainic::Type::Constraint::Behavior
 
-      def description = 'be a symbol'
-      def violation_description = 'was not a symbol'
+      def short_description = 'be a symbol'
+      def short_violation_description = 'was not a symbol'
       def satisfied?(value) = value.is_a?(Symbol)
     end.new(:self)
   end
@@ -39,33 +39,17 @@ RSpec.describe Domainic::Type::Constraint::OrConstraint do
     end
   end
 
-  describe '.new' do
-    subject(:constraint) { described_class.new(:self, expectation) }
-
-    include_examples 'validates constraints array'
-  end
-
-  describe '#description' do
-    subject(:description) { constraint.description }
-
-    let(:constraint) { described_class.new(:self, [string_constraint, symbol_constraint]) }
-
-    it 'joins constraint descriptions with or' do
-      expect(description).to eq('be a string or be a symbol')
-    end
-  end
-
   describe '#expecting' do
     subject(:expecting) { constraint.expecting(expectation) }
 
-    let(:constraint) { described_class.new(:self, [string_constraint]) }
+    let(:constraint) { described_class.new(:self).expecting(string_constraint) }
 
     context 'when adding a valid constraint' do
       let(:expectation) { symbol_constraint }
 
       it 'adds the constraint to the list' do
         expecting
-        expect(constraint.description).to eq('be a string or be a symbol')
+        expect(constraint.short_description).to eq('be a string or be a symbol')
       end
     end
 
@@ -79,7 +63,7 @@ RSpec.describe Domainic::Type::Constraint::OrConstraint do
   describe '#satisfied?' do
     subject(:satisfied?) { constraint.satisfied?(actual_value) }
 
-    let(:constraint) { described_class.new(:self, [string_constraint, symbol_constraint]) }
+    let(:constraint) { described_class.new(:self).expecting(string_constraint).expecting(symbol_constraint) }
 
     context 'when value satisfies no constraints' do
       let(:actual_value) { 123 }
@@ -100,18 +84,28 @@ RSpec.describe Domainic::Type::Constraint::OrConstraint do
     end
   end
 
-  describe '#violation_description' do
-    subject(:violation_description) { constraint.violation_description }
+  describe '#short_description' do
+    subject(:short_description) { constraint.short_description }
 
-    let(:constraint) { described_class.new(:self, [string_constraint, symbol_constraint]) }
+    let(:constraint) { described_class.new(:self).expecting(string_constraint).expecting(symbol_constraint) }
+
+    it 'joins constraint short_descriptions with or' do
+      expect(short_description).to eq('be a string or be a symbol')
+    end
+  end
+
+  describe '#short_violation_description' do
+    subject(:short_violation_description) { constraint.short_violation_description }
+
+    let(:constraint) { described_class.new(:self).expecting(string_constraint).expecting(symbol_constraint) }
 
     before { constraint.satisfied?(actual_value) }
 
     context 'when no constraints are satisfied' do
       let(:actual_value) { 123 }
 
-      it 'joins violation descriptions with and' do
-        expect(violation_description).to eq('was not a string and was not a symbol')
+      it 'joins violation short_descriptions with and' do
+        expect(short_violation_description).to eq('was not a string and was not a symbol')
       end
     end
   end

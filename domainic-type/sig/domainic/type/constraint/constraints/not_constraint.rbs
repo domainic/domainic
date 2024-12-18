@@ -28,7 +28,7 @@ module Domainic
         # Get a description of what the constraint expects.
         #
         # @return [String] the negated constraint description
-        def description: ...
+        def short_description: ...
 
         # The description of the violations that caused the constraint to be unsatisfied.
         #
@@ -36,7 +36,7 @@ module Domainic
         # Implementing classes can override this to provide more specific failure messages.
         #
         # @return [String] The description of the constraint when it fails.
-        def violation_description: ...
+        def short_violation_description: ...
 
         # Check if the value does not satisfy the expected constraint.
         #

@@ -25,11 +25,11 @@ module Domainic
       #   class GreaterThanConstraint
       #     include Domainic::Type::Constraint::Behavior
       #
-      #     def description
+      #     def short_description
       #       "greater than #{@expected}"
       #     end
       #
-      #     def violation_description
+      #     def short_violation_description
       #       @actual.to_s
       #     end
       #
@@ -57,30 +57,28 @@ module Domainic
         # @rbs @actual: Actual
         # @rbs @expected: Expected
         # @rbs @options: options
+        # @rbs @quantifier_description: (String | Symbol)?
         # @rbs @result: bool?
+
+        attr_reader :quantifier_description #: (String | Symbol)?
 
         # Initialize a new constraint instance.
         #
         # @param accessor [Symbol] The accessor to use to retrieve the value being constrained
-        # @param expectation [Object] The expected value to compare against
-        # @param options [Hash{String, Symbol => Object}] Additional options
-        # @option options [Boolean] :abort_on_failure (false) Whether to {#abort_on_failure?}
-        # @option options [Boolean] :is_type_failure (false) Whether to consider as {#type_failure?}
+        # @param quantifier_description [String, Symbol, nil] The description of how the constraint applies
+        #   to elements, such as "all", "any", or "none" for collection constraints, or a specific type name
+        #   for type constraints. Used to form natural language descriptions like "having elements of String"
+        #   or "containing any of [1, 2, 3]"
         #
         # @raise [ArgumentError] if the accessor is not included in {VALID_ACCESSORS}
         # @return [Behavior] A new instance of the constraint.
-        # @rbs (
-        #   Type::accessor accessor,
-        #   ?Expected expectation,
-        #   ?(options & Options) options
-        #   ) -> void
-        def initialize(accessor, expectation = nil, options = {})
+        # @rbs (Type::accessor accessor, ?(String | Symbol)? quantifier_description) -> void
+        def initialize(accessor, quantifier_description = nil)
           validate_accessor!(accessor)
-          validate_expectation!(expectation) unless expectation.nil?
 
           @accessor = accessor.to_sym
-          @expected = expectation
-          @options = options.transform_keys(&:to_sym)
+          @options = {}
+          @quantifier_description = quantifier_description
         end
 
         # Whether to abort further validation on an unsatisfied constraint.
@@ -95,29 +93,18 @@ module Domainic
           @options.fetch(:abort_on_failure, false)
         end
 
-        # The description of the constraint.
-        #
-        # This is used to help compose a error message when the constraint is not satisfied.
-        # Implementing classes should override this to provide meaningful descriptions of their
-        # constraint behavior.
-        #
-        # @return [String] The description of the constraint.
-        # @rbs () -> String
-        def description
-          @expected.to_s
-        end
-
         # Set the expected value to compare against.
         #
         # @param expectation [Object] The expected value to compare against.
         #
         # @raise [ArgumentError] if the expectation is invalid according to {#validate_expectation!}
         # @return [self] The constraint instance.
-        # @rbs (Expected expectation) -> self
+        # @rbs (untyped expectation) -> self
         def expecting(expectation)
           expectation = coerce_expectation(expectation)
           validate_expectation!(expectation)
 
+          # @type var expectation: Expected
           @expected = expectation
           self
         end
@@ -130,6 +117,22 @@ module Domainic
           @result == false
         end
         alias failed? failure?
+
+        # The full description of the constraint.
+        #
+        # @return [String, nil] The full description of the constraint.
+        # @rbs () -> String?
+        def full_description
+          full_description_for(short_description)
+        end
+
+        # The full description of the violations that caused the constraint to be unsatisfied.
+        #
+        # @return [String, nil] The full description of the constraint when it fails.
+        # @rbs () -> String?
+        def full_violation_description
+          full_description_for(short_violation_description)
+        end
 
         # Whether the constraint is satisfied.
         #
@@ -151,6 +154,29 @@ module Domainic
           @result = false #: bool
         end
 
+        # The short description of the constraint.
+        #
+        # This is used to help compose a error message when the constraint is not satisfied.
+        # Implementing classes should override this to provide meaningful descriptions of their
+        # constraint behavior.
+        #
+        # @return [String] The description of the constraint.
+        # @rbs () -> String
+        def short_description
+          @expected.to_s
+        end
+
+        # The short description of the violations that caused the constraint to be unsatisfied.
+        #
+        # This is used to help compose a error message when the constraint is not satisfied.
+        # Implementing classes can override this to provide more specific failure messages.
+        #
+        # @return [String] The description of the constraint when it fails.
+        # @rbs () -> String
+        def short_violation_description
+          @actual.to_s
+        end
+
         # Whether the constraint is a success.
         #
         # @return [Boolean] `true` if the constraint is a success, `false` otherwise.
@@ -160,22 +186,10 @@ module Domainic
         end
         alias success? successful?
 
-        # The description of the violations that caused the constraint to be unsatisfied.
-        #
-        # This is used to help compose a error message when the constraint is not satisfied.
-        # Implementing classes can override this to provide more specific failure messages.
-        #
-        # @return [String] The description of the constraint when it fails.
-        # @rbs () -> String
-        def violation_description
-          @actual.to_s
-        end
-
         # Merge additional options into the constraint.
         #
         # @param options [Hash{String, Symbol => Object}] Additional options
         # @option options [Boolean] :abort_on_failure (false) Whether to {#abort_on_failure?}
-        # @option options [Boolean] :is_type_failure (false) Whether to consider as {#type_failure?}
         #
         # @return [self] The constraint instance.
         # @rbs (?(options & Options) options) -> self
@@ -223,7 +237,7 @@ module Domainic
         # @param expectation [Object] The expected value to coerce.
         #
         # @return [Object] The coerced value.
-        # @rbs (Expected expectation) -> Expected
+        # @rbs (untyped expectation) -> Expected
         def coerce_expectation(expectation)
           expectation
         end
@@ -266,10 +280,26 @@ module Domainic
         # @param expectation [Object] The expected value to validate.
         #
         # @return [void]
-        # @rbs (Expected expectation) -> void
+        # @rbs (untyped expectation) -> void
         def validate_expectation!(expectation); end
 
         private
+
+        # Generate the full description for the corresponding short description.
+        #
+        # @param description [String] The short description to expand.
+        #
+        # @return [String] The full description.
+        # @rbs (String description) -> String?
+        def full_description_for(description)
+          return if quantifier_description.nil? || quantifier_description.to_s.include?('not_described')
+
+          if quantifier_description.is_a?(Symbol)
+            "#{quantifier_description.to_s.split('_').join(' ')} #{description}"
+          else
+            "#{quantifier_description} #{description}"
+          end.strip
+        end
 
         # Validate the accessor.
         #

@@ -1,0 +1,61 @@
+module Domainic
+  module Type
+    module Constraint
+      # A constraint for validating that values are equal to an expected value.
+      #
+      # This constraint uses Ruby's standard equality operator (==) to compare values,
+      # allowing for type-specific equality definitions while maintaining consistent
+      # behavior across different value types.
+      #
+      # @example Basic equality validation
+      #   constraint = EqualityConstraint.new(:self, 42)
+      #   constraint.satisfied?(42)    # => true
+      #   constraint.satisfied?(41)    # => false
+      #
+      # @example Complex object comparison
+      #   point = Struct.new(:x, :y).new(1, 2)
+      #   constraint = EqualityConstraint.new(:self, point)
+      #   constraint.satisfied?(Struct.new(:x, :y).new(1, 2)) # => true
+      #   constraint.satisfied?(Struct.new(:x, :y).new(2, 1)) # => false
+      #
+      # @example Array comparison
+      #   constraint = EqualityConstraint.new(:self, [1, 2, 3])
+      #   constraint.satisfied?([1, 2, 3]) # => true
+      #   constraint.satisfied?([3, 2, 1]) # => false
+      #
+      # @api private
+      # @author {https://aaronmallen.me Aaron Allen}
+      # @since 0.1.0
+      class EqualityConstraint
+        include Behavior[untyped, untyped, { }]
+
+        # Get a human-readable description of the equality requirement.
+        #
+        # @example
+        #   constraint = EqualityConstraint.new(:self, 42)
+        #   constraint.description # => "equal to 42"
+        #
+        # @return [String] A description of the expected value
+        def short_description: ...
+
+        # Get a human-readable description of why equality validation failed.
+        #
+        # @example
+        #   constraint = EqualityConstraint.new(:self, 42)
+        #   constraint.satisfied?(41)
+        #   constraint.short_violation_description # => "not equal to 42"
+        #
+        # @return [String] A description of the equality failure
+        def short_violation_description: ...
+
+        # Check if the actual value equals the expected value.
+        #
+        # Uses Ruby's standard equality operator (==) for comparison, allowing
+        # objects to define their own equality behavior.
+        #
+        # @return [Boolean] true if the values are equal
+        def satisfies_constraint?: ...
+      end
+    end
+  end
+end

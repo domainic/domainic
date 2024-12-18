@@ -105,20 +105,16 @@ module Domainic
 
         # Add an intrinsic constraint to this type.
         #
-        # @overload constraint(accessor, constraint_type, quantifier_description, expectation, **options)
-        #   @param accessor [String, Symbol] The accessor for the constraint
-        #   @param constraint_type [String, Symbol] The type of constraint
-        #   @param quantifier_description [String, Symbol] The quantifier description of the constraint.
-        #   @param expectation [Object] The expected value
-        #   @param options [Hash] Additional constraint options
+        # @see Constraint::Set#add
         #
         # @return [void]
         # @rbs (
-        #   String | Type::accessor accessor,
+        #   Type::accessor accessor,
         #   String | Symbol constraint_type,
-        #   String | Symbol quantifier_description,
-        #   untyped expectation,
-        #   **untyped options
+        #   ?untyped expectation,
+        #   ?abort_on_failure: bool,
+        #   ?concerning: String | Symbol,
+        #   ?description: String | Symbol
         #   ) -> void
         def intrinsic(...)
           intrinsic_constraints.add(...)
@@ -229,20 +225,16 @@ module Domainic
 
       # Add a constraint to this type instance.
       #
-      # @overload constraint(accessor, constraint_type, quantifier_description, expectation, **options)
-      #   @param accessor [String, Symbol] The accessor for the constraint
-      #   @param constraint_type [String, Symbol] The type of constraint
-      #   @param quantifier_description [String, Symbol] The quantifier description of the constraint.
-      #   @param expectation [Object] The expected value
-      #   @param options [Hash] Additional constraint options
+      # @see Constraint::Set#add
       #
       # @return [self]
       # @rbs (
-      #   String | Type::accessor accessor,
+      #   Type::accessor accessor,
       #   String | Symbol constraint_type,
-      #   String | Symbol quantifier_description,
-      #   untyped expectation,
-      #   **untyped options
+      #   ?untyped expectation,
+      #   ?abort_on_failure: bool,
+      #   ?concerning: String | Symbol,
+      #   ?description: String | Symbol
       #   ) -> self
       def constrain(...)
         @constraints.add(...)

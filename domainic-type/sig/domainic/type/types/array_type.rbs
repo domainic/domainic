@@ -1,0 +1,12 @@
+module Domainic
+  module Type
+    # @since 0.1.0
+    class ArrayType
+      extend Behavior::ClassMethods
+
+      include Behavior
+
+      include Behavior::EnumerableBehavior
+    end
+  end
+end

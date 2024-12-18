@@ -1,0 +1,55 @@
+module Domainic
+  module Type
+    module Constraint
+      # A constraint for validating that all elements in a collection are unique.
+      #
+      # This constraint ensures that an enumerable collection contains no duplicate
+      # elements by comparing the collection's size before and after removing duplicates.
+      # It works with any object that includes the Enumerable module and responds
+      # to #uniq and #count.
+      #
+      # @example Basic uniqueness validation
+      #   constraint = UniquenessConstraint.new(:self)
+      #   constraint.satisfied?([1, 2, 3])     # => true
+      #   constraint.satisfied?([1, 2, 2, 3])  # => false
+      #
+      # @example With different collection types
+      #   constraint = UniquenessConstraint.new(:self)
+      #   constraint.satisfied?(Set[1, 2, 3])        # => true
+      #   constraint.satisfied?(['a', 'b', 'b'])     # => false
+      #
+      # @api private
+      # @author {https://aaronmallen.me Aaron Allen}
+      # @since 0.1.0
+      class UniquenessConstraint
+        include Behavior[nil, Enumerable, { }]
+
+        # Get a human-readable description of the uniqueness requirement.
+        #
+        # @example
+        #   constraint = UniquenessConstraint.new(:self)
+        #   constraint.description # => "unique"
+        #
+        # @return [String] A description of the uniqueness requirement
+        def short_description: ...
+
+        # The description of the violations that caused the constraint to be unsatisfied.
+        #
+        # This is used to help compose a error message when the constraint is not satisfied.
+        # Implementing classes can override this to provide more specific failure messages.
+        #
+        # @return [String] The description of the constraint when it fails.
+        def short_violation_description: ...
+
+        # Check if all elements in the collection are unique.
+        #
+        # Compares the size of the collection before and after removing duplicates.
+        # If the sizes are equal, all elements are unique. If they differ, duplicates
+        # were present.
+        #
+        # @return [Boolean] true if all elements are unique
+        def satisfies_constraint?: ...
+      end
+    end
+  end
+end

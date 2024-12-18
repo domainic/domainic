@@ -9,9 +9,9 @@ RSpec.describe Domainic::Type::Constraint::AllConstraint do
     Class.new do
       include Domainic::Type::Constraint::Behavior
 
-      def description = 'be a string'
+      def short_description = 'be a string'
 
-      def violation_description = 'was not a string'
+      def short_violation_description = 'was not a string'
 
       def satisfied?(_value) = true
     end.new(:self)
@@ -31,22 +31,6 @@ RSpec.describe Domainic::Type::Constraint::AllConstraint do
     end
   end
 
-  describe '.new' do
-    subject(:constraint) { described_class.new(:self, expectation) }
-
-    include_examples 'validates inner constraint'
-  end
-
-  describe '#description' do
-    subject(:description) { constraint.description }
-
-    let(:constraint) { described_class.new(:self, inner_constraint) }
-
-    it 'includes the inner constraint description' do
-      expect(description).to eq('be a string')
-    end
-  end
-
   describe '#expecting' do
     subject(:expecting) { constraint.expecting(expectation) }
 
@@ -58,7 +42,7 @@ RSpec.describe Domainic::Type::Constraint::AllConstraint do
   describe '#satisfied?' do
     subject(:satisfied?) { constraint.satisfied?(actual_value) }
 
-    let(:constraint) { described_class.new(:self, inner_constraint) }
+    let(:constraint) { described_class.new(:self).expecting(inner_constraint) }
 
     context 'when all elements satisfy the constraint' do
       let(:actual_value) { %w[a b c] }
@@ -71,6 +55,16 @@ RSpec.describe Domainic::Type::Constraint::AllConstraint do
       end
 
       it { is_expected.to be true }
+    end
+
+    describe '#short_description' do
+      subject(:short_description) { constraint.short_description }
+
+      let(:constraint) { described_class.new(:self).expecting(inner_constraint) }
+
+      it 'includes the inner constraint short_description' do
+        expect(short_description).to eq('be a string')
+      end
     end
 
     context 'when some elements fail the constraint' do
@@ -93,10 +87,10 @@ RSpec.describe Domainic::Type::Constraint::AllConstraint do
     end
   end
 
-  describe '#violation_description' do
-    subject(:violation_description) { constraint.violation_description }
+  describe '#short_violation_description' do
+    subject(:short_violation_description) { constraint.short_violation_description }
 
-    let(:constraint) { described_class.new(:self, inner_constraint) }
+    let(:constraint) { described_class.new(:self).expecting(inner_constraint) }
 
     before { constraint.satisfied?(actual_value) }
 
@@ -112,7 +106,7 @@ RSpec.describe Domainic::Type::Constraint::AllConstraint do
         Class.new do
           include Domainic::Type::Constraint::Behavior
 
-          def violation_description = 'was not a string'
+          def short_violation_description = 'was not a string'
 
           def satisfied?(_value) = false
         end.new(:self)

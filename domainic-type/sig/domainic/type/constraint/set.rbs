@@ -30,7 +30,7 @@ module Domainic
       class Set
         extend Forwardable
 
-        @lookup: Hash[Type::accessor, Hash[String | Symbol, Behavior]]
+        @lookup: Hash[Type::accessor, Hash[Symbol, Behavior]]
 
         # Initialize a new empty constraint set.
         #
@@ -45,15 +45,17 @@ module Domainic
         #
         # @param accessor [String, Symbol] The accessor method for the constraint
         # @param constraint_type [String, Symbol] The type of constraint to create
-        # @param quantifier_description [String, Symbol] The quantifier description of the constraint when given a
-        #   string that ends with "not_described" it will not be included in the constraint set description.
         # @param expectation [Object, nil] The expected value for the constraint
-        # @param options [Hash] Additional options for the constraint
+        # @param options [Hash{Symbol, String => Object}] Additional options for the constraint
+        #
+        # @option options [String, Symbol] concerning The subject of the constraint.  This is used to namespace
+        #   constraints that may have compatibility issues with other constraints (i,e, min/max size constraints).
+        # @option options [String, Symbol, nil] description The quantifier description of the constraint when given
+        #   a string that ends with "not_described" it will not be included in the constraint set description.
         # @option options [Boolean] :abort_on_failure Whether to stop on failure
-        # @option options [Boolean] :is_type_failure Whether this is a type check
         #
         # @return [void]
-        def add: (String | Type::accessor accessor, String | Symbol constraint_type, String | Symbol quantifier_description, ?untyped expectation, **__todo__ options) -> void
+        def add: (Type::accessor accessor, String | Symbol constraint_type, ?untyped expectation, **untyped options) -> void
 
         # Get all constraints in the set.
         #
@@ -87,10 +89,10 @@ module Domainic
         # Check if a specific constraint exists.
         #
         # @param accessor [Symbol] The accessor method for the constraint
-        # @param quantifier_description [String, Symbol] The quantifier description of the constraint
+        # @param concerning [String, Symbol] The subject of the constraint.
         #
         # @return [Boolean] true if the constraint exists
-        def exist?: (Type::accessor accessor, Symbol | String quantifier_description) -> bool
+        def exist?: (Type::accessor accessor, Symbol | String concerning) -> bool
 
         alias has_constraint? exist?
 
@@ -106,10 +108,26 @@ module Domainic
         # Get a specific constraint by its accessor and name.
         #
         # @param accessor [Symbol] The accessor method for the constraint
-        # @param quantifier_description [String, Symbol] The quantifier description of the constraint.
+        # @param concerning [String, Symbol] The subject of the constraint.
         #
         # @return [Behavior, nil] The constraint if found, nil otherwise
-        def find: (Type::accessor accessor, String | Symbol quantifier_description) -> Behavior?
+        def find: (Type::accessor accessor, String | Symbol concerning) -> Behavior?
+
+        # Prepare a new constraint.
+        #
+        # This is useful for preparing a constraint to use as a sub-constraint for a more complex constraint.
+        #
+        # @param accessor [String, Symbol] The accessor method for the constraint
+        # @param constraint_type [String, Symbol] The type of constraint to create
+        # @param expectation [Object, nil] The expected value for the constraint
+        # @param options [Hash{Symbol, String => Object}] Additional options for the constraint
+        #
+        # @option options [String, Symbol, nil] description The quantifier description of the constraint when given
+        #   a string that ends with "not_described" it will not be included in the constraint set description.
+        # @option options [Boolean] :abort_on_failure Whether to stop on failure
+        #
+        # @return [Behavior] The new constraint instance
+        def prepare: (Type::accessor accessor, String | Symbol constraint_type, ?untyped expectation, **untyped options) -> Behavior
 
         # The aggregate violation description of all constraints in the set.
         #
@@ -118,20 +136,14 @@ module Domainic
 
         private
 
-        # Generate a description for a specific constraint.
+        # Build a new constraint instance for the given type.
         #
+        # @param constraint_type [String, Symbol] The type of constraint to create
+        # @param accessor [String, Symbol] The accessor method for the constraint
         # @param quantifier_description [String, Symbol] The quantifier description of the constraint
-        # @param constraint_description [String] The description of the constraint
         #
-        # @return [String] The description of the constraint
-        def constraint_description: (String | Symbol quantifier_description, String constraint_description) -> String
-
-        # The described constraints for a specific accessor.
-        #
-        # @param accessor [Symbol] The accessor method for the constraint
-        #
-        # @return [Hash{String, Symbol => Behavior}] The constraints for the accessor
-        def described_accessor_constraints: (Type::accessor accessor) -> Hash[String | Symbol, Behavior]
+        # @return [Behavior] The new constraint instance
+        def build_constraint: (String | Symbol constraint_type, Type::accessor accessor, (String | Symbol)?) -> Behavior
 
         # Ensure that the lookup hash is deep copied when duplicating.
         #

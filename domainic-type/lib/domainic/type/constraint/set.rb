@@ -36,7 +36,7 @@ module Domainic
       class Set
         extend Forwardable
 
-        # @rbs @lookup: Hash[Type::accessor, Hash[String | Symbol, Behavior]]
+        # @rbs @lookup: Hash[Type::accessor, Hash[Symbol, Behavior]]
 
         # Initialize a new empty constraint set.
         #
@@ -56,28 +56,33 @@ module Domainic
         #
         # @param accessor [String, Symbol] The accessor method for the constraint
         # @param constraint_type [String, Symbol] The type of constraint to create
-        # @param quantifier_description [String, Symbol] The quantifier description of the constraint when given a
-        #   string that ends with "not_described" it will not be included in the constraint set description.
         # @param expectation [Object, nil] The expected value for the constraint
-        # @param options [Hash] Additional options for the constraint
+        # @param options [Hash{Symbol, String => Object}] Additional options for the constraint
+        #
+        # @option options [String, Symbol] concerning The subject of the constraint.  This is used to namespace
+        #   constraints that may have compatibility issues with other constraints (i,e, min/max size constraints).
+        # @option options [String, Symbol, nil] description The quantifier description of the constraint when given
+        #   a string that ends with "not_described" it will not be included in the constraint set description.
         # @option options [Boolean] :abort_on_failure Whether to stop on failure
-        # @option options [Boolean] :is_type_failure Whether this is a type check
         #
         # @return [void]
         # @rbs (
-        #   String | Type::accessor accessor,
+        #   Type::accessor accessor,
         #   String | Symbol constraint_type,
-        #   String | Symbol quantifier_description,
         #   ?untyped expectation,
-        #   **__todo__ options
+        #   **untyped options
         #   ) -> void
-        def add(accessor, constraint_type, quantifier_description, expectation = nil, **options)
-          accessor, constraint_type = [accessor, constraint_type].map(&:to_sym)
+        def add(accessor, constraint_type, expectation = nil, **options)
+          accessor, type = [accessor, constraint_type].map(&:to_sym)
+          namespace = options[:concerning]&.to_sym || constraint_type
+
           # @type var accessor: Type::accessor
-          # @type var constraint_type: Symbol
-          @lookup[accessor] ||= {}
-          @lookup[accessor][quantifier_description] ||= Resolver.resolve!(constraint_type).new(accessor)
-          @lookup[accessor][quantifier_description].expecting(expectation).with_options(**options) # steep:ignore
+          # @type var type: Symbol
+          # @type var namespace: Symbol
+
+          @lookup[accessor][namespace] ||= build_constraint(type, accessor, options[:description])
+          @lookup[accessor][namespace].expecting(expectation)
+                                      .with_options(options.except(:concerning, :description)) # steep:ignore
         end
 
         # Get all constraints in the set.
@@ -120,9 +125,7 @@ module Domainic
         # @rbs () -> String
         def description
           Type::ACCESSORS.flat_map do |accessor|
-            described_accessor_constraints(accessor).map do |quantifier_description, constraint|
-              constraint_description(quantifier_description, constraint.description)
-            end
+            @lookup[accessor].values.filter_map(&:full_description)
           end.join(', ').strip
         end
 
@@ -143,14 +146,14 @@ module Domainic
         # Check if a specific constraint exists.
         #
         # @param accessor [Symbol] The accessor method for the constraint
-        # @param quantifier_description [String, Symbol] The quantifier description of the constraint
+        # @param concerning [String, Symbol] The subject of the constraint.
         #
         # @return [Boolean] true if the constraint exists
-        # @rbs (Type::accessor accessor, Symbol | String quantifier_description) -> bool
-        def exist?(accessor, quantifier_description)
+        # @rbs (Type::accessor accessor, Symbol | String concerning) -> bool
+        def exist?(accessor, concerning)
           accessor = accessor.to_sym
           # @type var accessor: Type::accessor
-          @lookup.key?(accessor) && @lookup[accessor].key?(quantifier_description)
+          @lookup.key?(accessor) && @lookup[accessor].key?(concerning.to_sym)
         end
         alias has_constraint? exist?
 
@@ -179,13 +182,39 @@ module Domainic
         # Get a specific constraint by its accessor and name.
         #
         # @param accessor [Symbol] The accessor method for the constraint
-        # @param quantifier_description [String, Symbol] The quantifier description of the constraint.
+        # @param concerning [String, Symbol] The subject of the constraint.
         #
         # @return [Behavior, nil] The constraint if found, nil otherwise
-        # @rbs (Type::accessor accessor, String | Symbol quantifier_description) -> Behavior?
-        def find(accessor, quantifier_description)
+        # @rbs (Type::accessor accessor, String | Symbol concerning) -> Behavior?
+        def find(accessor, concerning)
           # @type var accessor: Type::accessor
-          @lookup.dig(accessor.to_sym, quantifier_description)
+          @lookup.dig(accessor.to_sym, concerning.to_sym)
+        end
+
+        # Prepare a new constraint.
+        #
+        # This is useful for preparing a constraint to use as a sub-constraint for a more complex constraint.
+        #
+        # @param accessor [String, Symbol] The accessor method for the constraint
+        # @param constraint_type [String, Symbol] The type of constraint to create
+        # @param expectation [Object, nil] The expected value for the constraint
+        # @param options [Hash{Symbol, String => Object}] Additional options for the constraint
+        #
+        # @option options [String, Symbol, nil] description The quantifier description of the constraint when given
+        #   a string that ends with "not_described" it will not be included in the constraint set description.
+        # @option options [Boolean] :abort_on_failure Whether to stop on failure
+        #
+        # @return [Behavior] The new constraint instance
+        # @rbs (
+        #   Type::accessor accessor,
+        #   String | Symbol constraint_type,
+        #   ?untyped expectation,
+        #   **untyped options
+        #   ) -> Behavior
+        def prepare(accessor, constraint_type, expectation = nil, **options)
+          build_constraint(constraint_type, accessor, options[:description])
+            .expecting(expectation)
+            .with_options(options.except(:description)) # steep:ignore ArgumentTypeMismatch
         end
 
         # The aggregate violation description of all constraints in the set.
@@ -194,39 +223,27 @@ module Domainic
         # @rbs () -> String
         def violation_description
           Type::ACCESSORS.flat_map do |accessor|
-            described_accessor_constraints(accessor).map do |quantifier_description, constraint|
-              constraint_description(quantifier_description, constraint.violation_description)
-            end
+            @lookup[accessor].values.filter_map(&:full_violation_description)
           end.join(', ').strip
         end
 
         private
 
-        # Generate a description for a specific constraint.
+        # Build a new constraint instance for the given type.
         #
+        # @param constraint_type [String, Symbol] The type of constraint to create
+        # @param accessor [String, Symbol] The accessor method for the constraint
         # @param quantifier_description [String, Symbol] The quantifier description of the constraint
-        # @param constraint_description [String] The description of the constraint
         #
-        # @return [String] The description of the constraint
-        # @rbs (String | Symbol quantifier_description, String constraint_description) -> String
-        def constraint_description(quantifier_description, constraint_description)
-          if quantifier_description.is_a?(Symbol)
-            "#{quantifier_description.to_s.split('_').join(' ')} #{constraint_description}"
-          else
-            "#{quantifier_description} #{constraint_description}"
-          end.strip
-        end
-
-        # The described constraints for a specific accessor.
-        #
-        # @param accessor [Symbol] The accessor method for the constraint
-        #
-        # @return [Hash{String, Symbol => Behavior}] The constraints for the accessor
-        # @rbs (Type::accessor accessor) -> Hash[String | Symbol, Behavior]
-        def described_accessor_constraints(accessor)
-          @lookup[accessor].reject do |quantifier_description, _|
-            quantifier_description.to_s.end_with?('not_described')
-          end
+        # @return [Behavior] The new constraint instance
+        # @rbs (
+        #   String | Symbol constraint_type,
+        #   Type::accessor accessor,
+        #   (String | Symbol)?,
+        #   ) -> Behavior
+        def build_constraint(constraint_type, accessor, quantifier_description)
+          Resolver.resolve!(constraint_type.to_sym)
+                  .new(accessor.to_sym, quantifier_description)
         end
 
         # Ensure that the lookup hash is deep copied when duplicating.
