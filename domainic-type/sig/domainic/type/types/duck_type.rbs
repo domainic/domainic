@@ -1,0 +1,41 @@
+module Domainic
+  module Type
+    # A type that validates objects based on their method interface
+    #
+    # This type implements duck typing validation by checking whether objects respond
+    # to specific methods. It supports both positive validation (must respond to methods)
+    # and negative validation (must not respond to methods).
+    #
+    # @example Validating a simple interface
+    #   type = DuckType.responding_to(:to_s).not_responding_to(:to_h)
+    #   type.validate("string")  # => true
+    #   type.validate(Object.new)  # => true
+    #   type.validate({})  # => false (responds to :to_h)
+    #
+    # @author {https://aaronmallen.me Aaron Allen}
+    # @since 0.1.0
+    class DuckType
+      include Behavior
+
+      # Add method presence constraints to the type
+      #
+      # @example
+      #   type = DuckType.new.responding_to(:foo, :bar)
+      #
+      # @param methods [Array<String, Symbol>] the methods that must be present
+      #
+      # @return [self] the type for method chaining
+      def responding_to: (*String | Symbol methods) -> self
+
+      # Add method exclusion constraints to the type
+      #
+      # @example
+      #   type = DuckType.new.not_responding_to(:foo, :bar)
+      #
+      # @param methods [Array<String, Symbol>] the methods that must not be present
+      #
+      # @return [self] the type for method chaining
+      def not_responding_to: (*String | Symbol methods) -> self
+    end
+  end
+end

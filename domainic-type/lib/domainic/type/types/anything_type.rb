@@ -8,6 +8,7 @@ module Domainic
     class AnythingType
       include Behavior
 
+      # @rbs (*untyped types) -> self
       def but(*types)
         not_types = types.map do |type|
           @constraints.prepare(:self, :not, @constraints.prepare(:self, :type, type))

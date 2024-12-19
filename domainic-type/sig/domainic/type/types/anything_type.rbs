@@ -4,7 +4,7 @@ module Domainic
     class AnythingType
       include Behavior
 
-      def but: (*untyped types) -> untyped
+      def but: (*untyped types) -> self
 
       alias except but
 
