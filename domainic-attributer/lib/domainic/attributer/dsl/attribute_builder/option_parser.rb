@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'domainic/attributer/undefined'
+
 module Domainic
   module Attributer
     module DSL
