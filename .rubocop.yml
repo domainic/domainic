@@ -1,5 +1,6 @@
 require:
   - rubocop-on-rbs
+  - rubocop-ordered_methods
   - rubocop-performance
   - rubocop-rspec
   - rubocop-yard

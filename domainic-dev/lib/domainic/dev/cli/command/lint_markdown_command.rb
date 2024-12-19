@@ -43,6 +43,16 @@ module Domainic
             end
           end
 
+          # Set the exit status based on linting results.
+          #
+          # @return [void]
+          # @rbs () -> void
+          def exit_status
+            return if results.all? { |result| result[:success] }
+
+            exit 1
+          end
+
           # Print additional documentation messages for linting failures.
           #
           # @return [void]
@@ -52,16 +62,6 @@ module Domainic
 
             puts "\nFurther documentation is available for these failures:"
             documentation_messages.each { |message| puts " #{message}" }
-          end
-
-          # Set the exit status based on linting results.
-          #
-          # @return [void]
-          # @rbs () -> void
-          def exit_status
-            return if results.all? { |result| result[:success] }
-
-            exit 1
           end
 
           private

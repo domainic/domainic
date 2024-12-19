@@ -9,9 +9,9 @@ RSpec.describe Domainic::Type::Constraint::AndConstraint do
     Class.new do
       include Domainic::Type::Constraint::Behavior
 
+      def satisfied?(value) = value.is_a?(String)
       def short_description = 'be a string'
       def short_violation_description = 'was not a string'
-      def satisfied?(value) = value.is_a?(String)
     end.new(:self)
   end
 
@@ -19,9 +19,9 @@ RSpec.describe Domainic::Type::Constraint::AndConstraint do
     Class.new do
       include Domainic::Type::Constraint::Behavior
 
+      def satisfied?(value) = !value.empty?
       def short_description = 'be non-empty'
       def short_violation_description = 'was empty'
-      def satisfied?(value) = !value.empty?
     end.new(:self)
   end
 

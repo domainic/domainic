@@ -19,6 +19,7 @@ group :lint do
   gem 'mdl', require: false
   gem 'rubocop', require: false
   gem 'rubocop-on-rbs', require: false
+  gem 'rubocop-ordered_methods', require: false
   gem 'rubocop-performance', require: false
   gem 'rubocop-rspec', require: false
   gem 'rubocop-yard', require: false

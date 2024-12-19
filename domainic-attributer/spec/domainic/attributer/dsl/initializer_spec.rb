@@ -108,12 +108,12 @@ RSpec.describe Domainic::Attributer::DSL::Initializer do
         @arg_attribute ||= build_attribute(:required_arg, arg_signature)
       end
 
-      def opt_attribute
-        @opt_attribute ||= build_attribute(:optional, opt_signature)
-      end
-
       def arg_selection
         @arg_selection ||= instance_double(Domainic::Attributer::AttributeSet, attributes: [arg_attribute])
+      end
+
+      def opt_attribute
+        @opt_attribute ||= build_attribute(:optional, opt_signature)
       end
 
       def opt_selection
@@ -134,20 +134,20 @@ RSpec.describe Domainic::Attributer::DSL::Initializer do
 
   private
 
-  def build_signature(argument: false, option: false)
-    instance_double(
-      Domainic::Attributer::Attribute::Signature,
-      argument?: argument,
-      option?: option
-    )
-  end
-
   def build_attribute(name, signature)
     instance_double(
       Domainic::Attributer::Attribute,
       default?: !signature.argument?,
       name: name,
       signature: signature
+    )
+  end
+
+  def build_signature(argument: false, option: false)
+    instance_double(
+      Domainic::Attributer::Attribute::Signature,
+      argument?: argument,
+      option?: option
     )
   end
 end

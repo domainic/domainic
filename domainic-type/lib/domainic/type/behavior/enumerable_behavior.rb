@@ -74,6 +74,22 @@ module Domainic
           constrain :self, :emptiness, description: 'being'
         end
 
+        # Validate that the enumerable elements are in sorted order.
+        #
+        # Creates a constraint that ensures the collection's elements are
+        # in ascending order based on their natural comparison methods.
+        #
+        # @example
+        #   type.being_ordered
+        #   type.validate([1, 2, 3])   # => true
+        #   type.validate([3, 1, 2])   # => false
+        #
+        # @return [EnumerableBehavior] self for method chaining
+        # @rbs () -> EnumerableBehavior
+        def being_ordered
+          constrain :self, :ordering, description: 'being'
+        end
+
         # Validate that the enumerable contains elements.
         #
         # Creates an inverse emptiness constraint that ensures the collection
@@ -89,22 +105,6 @@ module Domainic
         def being_populated
           empty = @constraints.prepare :self, :emptiness
           constrain :self, :not, empty, concerning: :emptiness, description: 'being'
-        end
-
-        # Validate that the enumerable elements are in sorted order.
-        #
-        # Creates a constraint that ensures the collection's elements are
-        # in ascending order based on their natural comparison methods.
-        #
-        # @example
-        #   type.being_ordered
-        #   type.validate([1, 2, 3])   # => true
-        #   type.validate([3, 1, 2])   # => false
-        #
-        # @return [EnumerableBehavior] self for method chaining
-        # @rbs () -> EnumerableBehavior
-        def being_ordered
-          constrain :self, :ordering, description: 'being'
         end
 
         # Validate that the enumerable elements are not in sorted order.

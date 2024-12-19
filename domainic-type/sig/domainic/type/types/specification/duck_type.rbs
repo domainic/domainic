@@ -17,16 +17,6 @@ module Domainic
     class DuckType
       include Behavior
 
-      # Add method presence constraints to the type
-      #
-      # @example
-      #   type = DuckType.new.responding_to(:foo, :bar)
-      #
-      # @param methods [Array<String, Symbol>] the methods that must be present
-      #
-      # @return [self] the type for method chaining
-      def responding_to: (*String | Symbol methods) -> self
-
       # Add method exclusion constraints to the type
       #
       # @example
@@ -36,6 +26,16 @@ module Domainic
       #
       # @return [self] the type for method chaining
       def not_responding_to: (*String | Symbol methods) -> self
+
+      # Add method presence constraints to the type
+      #
+      # @example
+      #   type = DuckType.new.responding_to(:foo, :bar)
+      #
+      # @param methods [Array<String, Symbol>] the methods that must be present
+      #
+      # @return [self] the type for method chaining
+      def responding_to: (*String | Symbol methods) -> self
     end
   end
 end

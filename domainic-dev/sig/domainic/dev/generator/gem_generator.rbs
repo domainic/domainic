@@ -26,20 +26,25 @@ module Domainic
         # @return [void]
         def initialize: (Array[untyped], *untyped) -> void
 
-        # Create the gem's gemspec file.
-        #
-        # @return [void]
-        def create_gemspec: () -> void
-
         # Create the gem's CHANGELOG file.
         #
         # @return [void]
         def create_changelog: () -> void
 
+        # Create the gem's gemspec file.
+        #
+        # @return [void]
+        def create_gemspec: () -> void
+
         # Create the gem's LICENSE file.
         #
         # @return [void]
         def create_license: () -> void
+
+        # Create the module's main library file.
+        #
+        # @return [void]
+        def create_module_lib_file: () -> void
 
         # Create the gem's README file.
         #
@@ -51,16 +56,6 @@ module Domainic
         # @return [void]
         def create_root_lib_file: () -> void
 
-        # Create the module's main library file.
-        #
-        # @return [void]
-        def create_module_lib_file: () -> void
-
-        # Create the gem's spec_helper file.
-        #
-        # @return [void]
-        def create_spec_helper: () -> void
-
         # Create the root spec file.
         #
         # @return [void]
@@ -70,6 +65,11 @@ module Domainic
         #
         # @return [void]
         def create_signature_manifest: () -> void
+
+        # Create the gem's spec_helper file.
+        #
+        # @return [void]
+        def create_spec_helper: () -> void
 
         # Generate RBS signatures for the new gem.
         #

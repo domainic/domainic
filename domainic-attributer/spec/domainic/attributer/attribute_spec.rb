@@ -11,13 +11,13 @@ RSpec.describe Domainic::Attributer::Attribute do
         @test = nil
       end
 
-      def generate_value
-        'generated'
-      end
-
       def coerce_value(value)
         @coerced << value
         "coerced: #{value}"
+      end
+
+      def generate_value
+        'generated'
       end
 
       def record_change(old_value, new_value)

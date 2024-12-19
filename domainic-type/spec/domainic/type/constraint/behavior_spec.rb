@@ -106,12 +106,12 @@ RSpec.describe Domainic::Type::Constraint::Behavior do
 
           protected
 
-          def satisfies_constraint?
-            true
-          end
-
           def coerce_expectation(expectation)
             expectation.to_s
+          end
+
+          def satisfies_constraint?
+            true
           end
         end
       end
@@ -194,12 +194,12 @@ RSpec.describe Domainic::Type::Constraint::Behavior do
 
           protected
 
-          def satisfies_constraint?
-            @actual == @expected
-          end
-
           def coerce_actual(actual)
             actual.to_s
+          end
+
+          def satisfies_constraint?
+            @actual == @expected
           end
         end
       end
@@ -217,12 +217,12 @@ RSpec.describe Domainic::Type::Constraint::Behavior do
 
           protected
 
-          def satisfies_constraint?
-            @actual == @expected
-          end
-
           def coerce_actual(actual)
             actual.upcase
+          end
+
+          def satisfies_constraint?
+            @actual == @expected
           end
         end
       end

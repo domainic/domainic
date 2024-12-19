@@ -45,20 +45,6 @@ module Domainic
         # @rbs @file_name: String
 
         class << self
-          # Resolve a constraint type to its corresponding class.
-          #
-          # This is a convenience method that creates a new Resolver instance and
-          # immediately resolves the constraint class.
-          #
-          # @param constraint_type [Symbol] The type of constraint to resolve
-          #
-          # @raise [ArgumentError] if the constraint type is unknown
-          # @return [Class] The resolved constraint class
-          # @rbs (Symbol constraint_type) -> _ConstraintClass
-          def resolve!(constraint_type)
-            new(constraint_type).resolve!
-          end
-
           # Register a new constraint with the resolver.
           #
           # @param lookup_key [String, Symbol] The lookup key for the constraint. This is how types should reference
@@ -73,6 +59,20 @@ module Domainic
             raise ArgumentError, "Constraint already registered: #{lookup_key}" if registry.key?(lookup_key.to_sym)
 
             registry[lookup_key.to_sym] = { constant: constant_name, require_path: require_path }
+          end
+
+          # Resolve a constraint type to its corresponding class.
+          #
+          # This is a convenience method that creates a new Resolver instance and
+          # immediately resolves the constraint class.
+          #
+          # @param constraint_type [Symbol] The type of constraint to resolve
+          #
+          # @raise [ArgumentError] if the constraint type is unknown
+          # @return [Class] The resolved constraint class
+          # @rbs (Symbol constraint_type) -> _ConstraintClass
+          def resolve!(constraint_type)
+            new(constraint_type).resolve!
           end
 
           private
