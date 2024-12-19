@@ -14,6 +14,11 @@ RSpec.describe Domainic::Type::Constraint::Resolver do
     allow(instance).to receive(:require)
   end
 
+  after do
+    # Explicitly reset the registry to isolate tests
+    described_class.instance_variable_set(:@registry, nil)
+  end
+
   describe '.resolve!' do
     subject(:resolve) { described_class.resolve!(constraint_type) }
 
@@ -36,56 +41,58 @@ RSpec.describe Domainic::Type::Constraint::Resolver do
     end
   end
 
+  describe '.register_constraint' do
+    let(:lookup_key) { :new_constraint }
+    let(:constant_name) { 'Domainic::Type::Constraint::NewConstraint' }
+    let(:require_path) { 'domainic/type/constraint/constraints/new_constraint' }
+
+    it 'is expected to register a new constraint' do
+      expect do
+        described_class.register_constraint(lookup_key, constant_name, require_path)
+      end.to change { described_class.send(:registry).key?(lookup_key) }.from(false).to(true)
+    end
+
+    it 'is expected to raise an error if the constraint is already registered' do
+      described_class.register_constraint(lookup_key, constant_name, require_path)
+      expect do
+        described_class.register_constraint(lookup_key, constant_name, require_path)
+      end.to raise_error(ArgumentError, "Constraint already registered: #{lookup_key}")
+    end
+  end
+
   describe '#resolve!' do
-    it 'is expected to load and return the constraint class' do
-      expect(resolver).to eq(Domainic::Type::Constraint::TestConstraint)
+    context 'when the constraint is registered' do
+      before do
+        described_class.register_constraint(
+          :test,
+          'Domainic::Type::Constraint::TestConstraint',
+          'domainic/type/constraint/constraints/test_constraint'
+        )
+      end
+
+      it 'is expected to load and return the constraint class' do
+        expect(resolver).to eq(Domainic::Type::Constraint::TestConstraint)
+      end
+    end
+
+    context 'when the constraint is not registered' do
+      it 'is expected to raise ArgumentError' do
+        expect { resolver }.to raise_error(ArgumentError, 'Unknown constraint: test')
+      end
     end
 
     context 'when the constraint file cannot be loaded' do
       before do
+        described_class.register_constraint(
+          :test,
+          'Domainic::Type::Constraint::TestConstraint',
+          'domainic/type/constraint/constraints/nonexistent_constraint'
+        )
         allow(instance).to receive(:require).and_raise(LoadError)
       end
 
       it 'is expected to raise ArgumentError' do
-        expect { resolver }.to raise_error(
-          ArgumentError,
-          'Unknown constraint: test'
-        )
-      end
-    end
-
-    context 'when the constraint constant cannot be found' do
-      before do
-        allow(Domainic::Type::Constraint).to receive(:const_get)
-          .with('TestConstraint')
-          .and_raise(NameError)
-      end
-
-      it 'is expected to raise ArgumentError' do
-        expect { resolver }.to raise_error(
-          ArgumentError,
-          'Unknown constraint: test'
-        )
-      end
-    end
-
-    context 'with constraint type containing boolean suffix' do
-      let(:constraint_type) { :test? }
-
-      it 'is expected to strip the suffix when loading' do
-        resolver
-        expect(instance).to have_received(:require)
-          .with('domainic/type/constraint/constraints/test_constraint')
-      end
-    end
-
-    context 'with constraint type containing bang suffix' do
-      let(:constraint_type) { :test! }
-
-      it 'is expected to strip the suffix when loading' do
-        resolver
-        expect(instance).to have_received(:require)
-          .with('domainic/type/constraint/constraints/test_constraint')
+        expect { resolver }.to raise_error(ArgumentError, "Constraint require path doesn't exist: test")
       end
     end
   end

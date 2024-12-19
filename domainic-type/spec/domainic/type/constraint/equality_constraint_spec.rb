@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'domainic/type/constraint/constraints/equality_constraint'
+require 'domainic/type/constraint/constraints/comparison/equality_constraint'
 
 RSpec.describe Domainic::Type::Constraint::EqualityConstraint do
   describe '#expecting' do

@@ -1,0 +1,40 @@
+constraints:
+  all:
+    constant: Domainic::Type::Constraint::AllConstraint
+    require_path: domainic/type/constraint/constraints/logical/all_constraint
+  and:
+    constant: Domainic::Type::Constraint::AndConstraint
+    require_path: domainic/type/constraint/constraints/logical/and_constraint
+  any:
+    constant: Domainic::Type::Constraint::AnyConstraint
+    require_path: domainic/type/constraint/constraints/logical/any_constraint
+  emptiness:
+    constant: Domainic::Type::Constraint::EmptinessConstraint
+    require_path: domainic/type/constraint/constraints/structural/emptiness_constraint
+  equality:
+    constant: Domainic::Type::Constraint::EqualityConstraint
+    require_path: domainic/type/constraint/constraints/comparison/equality_constraint
+  inclusion:
+    constant: Domainic::Type::Constraint::InclusionConstraint
+    require_path: domainic/type/constraint/constraints/comparison/inclusion_constraint
+  method_presence:
+    constant: Domainic::Type::Constraint::MethodPresenceConstraint
+    require_path: domainic/type/constraint/constraints/structural/method_presence_constraint
+  not:
+    constant: Domainic::Type::Constraint::NotConstraint
+    require_path: domainic/type/constraint/constraints/logical/not_constraint
+  or:
+    constant: Domainic::Type::Constraint::OrConstraint
+    require_path: domainic/type/constraint/constraints/logical/or_constraint
+  ordering:
+    constant: Domainic::Type::Constraint::OrderingConstraint
+    require_path: domainic/type/constraint/constraints/structural/ordering_constraint
+  range:
+    constant: Domainic::Type::Constraint::RangeConstraint
+    require_path: domainic/type/constraint/constraints/structural/range_constraint
+  type:
+    constant: Domainic::Type::Constraint::TypeConstraint
+    require_path: domainic/type/constraint/constraints/structural/type_constraint
+  uniqueness:
+    constant: Domainic::Type::Constraint::UniquenessConstraint
+    require_path: domainic/type/constraint/constraints/comparison/uniqueness_constraint
