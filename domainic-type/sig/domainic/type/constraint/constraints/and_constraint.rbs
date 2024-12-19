@@ -50,7 +50,7 @@ module Domainic
         # @param expectation [Behavior] the constraint to add
         #
         # @return [Array<Behavior>] the updated array of constraints
-        def coerce_expectation: (Behavior[untyped, untyped, untyped] expectation) -> Array[Behavior[untyped, untyped, untyped]]
+        def coerce_expectation: (untyped expectation) -> Array[Behavior[untyped, untyped, untyped]]
 
         # Check if the value satisfies all expected constraints.
         #

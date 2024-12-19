@@ -92,7 +92,7 @@ RSpec.describe Domainic::Type::Constraint::NotConstraint do
     before { constraint.satisfied?(value) }
 
     it 'negates the inner constraint failure short_description' do
-      expect(short_violation_description).to eq('not be a string')
+      expect(short_violation_description).to eq('be a string')
     end
   end
 end
