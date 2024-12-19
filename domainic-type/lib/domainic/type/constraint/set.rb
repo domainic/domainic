@@ -64,6 +64,8 @@ module Domainic
         # @option options [String, Symbol, nil] description The quantifier description of the constraint when given
         #   a string that ends with "not_described" it will not be included in the constraint set description.
         # @option options [Boolean] :abort_on_failure Whether to stop on failure
+        # @option options [Array<Proc>, Proc] :coerce_with Coercers to run on the value before validating the
+        #   constraint.
         #
         # @return [void]
         # @rbs (
@@ -203,6 +205,8 @@ module Domainic
         # @option options [String, Symbol, nil] description The quantifier description of the constraint when given
         #   a string that ends with "not_described" it will not be included in the constraint set description.
         # @option options [Boolean] :abort_on_failure Whether to stop on failure
+        # @option options [Array<Proc>, Proc] :coerce_with Coercers to run on the value before validating the
+        #   constraint.
         #
         # @return [Behavior] The new constraint instance
         # @rbs (

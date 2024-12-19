@@ -210,6 +210,53 @@ RSpec.describe Domainic::Type::Constraint::Behavior do
       it { is_expected.to be true }
     end
 
+    context 'when given a type coercion proc' do
+      let(:dummy_class) do
+        Class.new do
+          include Domainic::Type::Constraint::Behavior
+
+          protected
+
+          def satisfies_constraint?
+            @actual == @expected
+          end
+
+          def coerce_actual(actual)
+            actual.upcase
+          end
+        end
+      end
+
+      let(:type_coercer) { lambda(&:to_s) }
+      let(:constraint) { dummy_class.new(:self).with_options(coerce_with: type_coercer) }
+
+      before { constraint.expecting('123') }
+
+      context 'with a value that needs both coercions' do
+        let(:value) { 123 }
+
+        it { is_expected.to be true }
+
+        it 'is expected to apply both coercions in the correct order' do
+          satisfied
+          expect(constraint.instance_variable_get(:@actual)).to eq('123')
+        end
+      end
+
+      context 'with a nil value' do
+        let(:value) { nil }
+
+        it { is_expected.to be false }
+      end
+
+      context 'when type coercion fails' do
+        let(:type_coercer) { ->(_val) { raise StandardError } }
+        let(:value) { 123 }
+
+        it { is_expected.to be false }
+      end
+    end
+
     context 'when satisfies_constraint? raises an error' do
       let(:dummy_class) do
         Class.new do

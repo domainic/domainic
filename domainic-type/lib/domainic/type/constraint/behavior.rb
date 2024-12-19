@@ -51,7 +51,7 @@ module Domainic
       # @rbs generic Options < Hash[Symbol, untyped] -- The type of @options
       module Behavior
         # @rbs!
-        #   type options = { ?abort_on_failure: bool }
+        #   type options = { ?abort_on_failure: bool, ?coerce_with: Array[Proc] | Proc }
 
         # @rbs @accessor: Type::accessor
         # @rbs @actual: Actual
@@ -148,7 +148,8 @@ module Domainic
         # @rbs (Actual value) -> bool
         def satisfied?(value)
           @result = nil
-          @actual = coerce_actual(@accessor == :self ? value : value.public_send(@accessor))
+          constrained = @accessor == :self ? value : value.public_send(@accessor)
+          @actual = coerce_actual(coerce_actual_for_type(constrained))
           @result = satisfies_constraint? #: bool
         rescue StandardError
           @result = false #: bool
@@ -190,6 +191,8 @@ module Domainic
         #
         # @param options [Hash{String, Symbol => Object}] Additional options
         # @option options [Boolean] :abort_on_failure (false) Whether to {#abort_on_failure?}
+        # @option options [Array<Proc>, Proc] :coerce_with Coercers to run on the value before validating the
+        #   constraint.
         #
         # @return [self] The constraint instance.
         # @rbs (?(options & Options) options) -> self
@@ -214,9 +217,29 @@ module Domainic
         # @param actual [Object] The actual value to coerce.
         #
         # @return [Object] The coerced value.
-        # @rbs (Actual actual) -> Actual
+        # @rbs (untyped actual) -> Actual
         def coerce_actual(actual)
           actual
+        end
+
+        # Coerce actual values using type-provided coercion procs
+        #
+        # This method processes the actual value through any type-level coercion procs
+        # that were provided via options. This runs after the constraint's own coercion
+        # but before validation.
+        #
+        # @param actual [Object] The actual value to coerce
+        #
+        # @return [Object] The coerced value
+        # @rbs (untyped actual) -> untyped
+        def coerce_actual_for_type(actual)
+          coercers = @options[:coerce_with]
+          return actual if coercers.nil?
+
+          Array(coercers).reduce(actual) do |accumulator, proc|
+            # @type var proc: Proc
+            proc.call(accumulator)
+          end
         end
 
         # Coerce the expected value into the expected type.

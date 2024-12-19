@@ -43,7 +43,7 @@ module Domainic
       # @author {https://aaronmallen.me Aaron Allen}
       # @since 0.1.0
       module Behavior[Expected < Object, Actual < Object, Options < Hash[Symbol, untyped]]
-        type options = { ?abort_on_failure: bool }
+        type options = { ?abort_on_failure: bool, ?coerce_with: Array[Proc] | Proc }
 
         @result: bool?
 
@@ -146,6 +146,8 @@ module Domainic
         #
         # @param options [Hash{String, Symbol => Object}] Additional options
         # @option options [Boolean] :abort_on_failure (false) Whether to {#abort_on_failure?}
+        # @option options [Array<Proc>, Proc] :coerce_with Coercers to run on the value before validating the
+        #   constraint.
         #
         # @return [self] The constraint instance.
         def with_options: (?options & Options options) -> self
@@ -164,7 +166,18 @@ module Domainic
         # @param actual [Object] The actual value to coerce.
         #
         # @return [Object] The coerced value.
-        def coerce_actual: (Actual actual) -> Actual
+        def coerce_actual: (untyped actual) -> Actual
+
+        # Coerce actual values using type-provided coercion procs
+        #
+        # This method processes the actual value through any type-level coercion procs
+        # that were provided via options. This runs after the constraint's own coercion
+        # but before validation.
+        #
+        # @param actual [Object] The actual value to coerce
+        #
+        # @return [Object] The coerced value
+        def coerce_actual_for_type: (untyped actual) -> untyped
 
         # Coerce the expected value into the expected type.
         #

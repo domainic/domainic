@@ -113,6 +113,7 @@ module Domainic
         #   String | Symbol constraint_type,
         #   ?untyped expectation,
         #   ?abort_on_failure: bool,
+        #   ?coerce_with: Array[Proc] | Proc,
         #   ?concerning: String | Symbol,
         #   ?description: String | Symbol
         #   ) -> void
@@ -233,6 +234,7 @@ module Domainic
       #   String | Symbol constraint_type,
       #   ?untyped expectation,
       #   ?abort_on_failure: bool,
+      #   ?coerce_with: Array[Proc] | Proc,
       #   ?concerning: String | Symbol,
       #   ?description: String | Symbol
       #   ) -> self
