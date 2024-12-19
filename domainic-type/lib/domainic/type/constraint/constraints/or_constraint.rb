@@ -36,7 +36,11 @@ module Domainic
         # @return [String] a description combining all constraint descriptions with 'or'
         # @rbs override
         def short_description
-          @expected.map(&:short_description).join(' or ')
+          descriptions = @expected.map(&:short_description)
+          return descriptions.first if descriptions.size == 1
+
+          *first, last = descriptions
+          "#{first.join(', ')} or #{last}"
         end
 
         # @rbs! def expecting: (Behavior[untyped, untyped, untyped]) -> self
@@ -51,7 +55,12 @@ module Domainic
         # @return [String] The combined violation descriptions from all constraints
         # @rbs override
         def short_violation_description
-          @expected.map(&:short_violation_description).join(' and ')
+          violations = @expected.reject { |constraint| constraint.satisfied?(@actual) }
+          descriptions = violations.map(&:short_violation_description)
+          return descriptions.first if descriptions.size == 1
+
+          *first, last = descriptions
+          "#{first.join(', ')} and #{last}"
         end
 
         protected
@@ -64,9 +73,9 @@ module Domainic
         # @param expectation [Behavior] the constraint to add
         #
         # @return [Array<Behavior>] the updated array of constraints
-        # @rbs (Behavior[untyped, untyped, untyped] expectation) -> Array[Behavior[untyped, untyped, untyped]]
+        # @rbs (untyped expectation) -> Array[Behavior[untyped, untyped, untyped]]
         def coerce_expectation(expectation)
-          @expected.is_a?(Array) ? @expected.push(expectation) : [expectation]
+          expectation.is_a?(Array) ? (@expected || []).concat(expectation) : (@expected || []) << expectation
         end
 
         # Check if the value satisfies any of the expected constraints.
