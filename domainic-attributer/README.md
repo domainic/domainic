@@ -65,7 +65,14 @@ For detailed usage instructions and examples, see [USAGE.md](./docs/USAGE.md).
 
 ## Contributing
 
-Bug reports and pull requests are welcome on [GitHub](https://github.com/domainic/domainic).
+We welcome contributions! Please see our [Contributing Guidelines](./../docs/CONTRIBUTING.md) for:
+
+* Development setup and workflow
+* Code style and documentation standards
+* Testing requirements
+* Pull request process
+
+Before contributing, please review our [Code of Conduct](./../docs/CODE_OF_CONDUCT.md).
 
 ## License
 

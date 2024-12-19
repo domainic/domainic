@@ -52,3 +52,48 @@ gem 'domainic' # Will include all components
 
 * [domainic-attributer](./domainic-attributer/README.md) - A library for defining type-safe self-documenting class
   attributes
+
+## Development
+
+### Quick Start
+
+1. Clone the repository
+2. Run `bundle install`
+3. Run `bin/dev ci` to ensure everything is set up correctly
+
+### Development CLI
+
+Domainic uses a development CLI to manage the monorepo and ensure consistent development practices. View available
+commands with `bin/dev help`.
+
+Key commands:
+
+```bash
+bin/dev ci      # Run the full CI pipeline - REQUIRED before submitting PRs
+bin/dev test    # Run tests for specific gems
+bin/dev lint    # Run linters
+```
+
+### Project Structure
+
+Domainic is organized as a monorepo containing multiple gems:
+
+* `domainic-attributer/` - Type-safe class attributes
+* `domainic-boundary/` - Clean domain boundaries
+* `domainic-command/` - Command objects
+* `domainic-type/` - Type constraints and validation
+
+## Contributing
+
+We welcome contributions! Please see our [Contributing Guidelines](./docs/CONTRIBUTING.md) for:
+
+* Development setup and workflow
+* Code style and documentation standards
+* Testing requirements
+* Pull request process
+
+Before contributing, please review our [Code of Conduct](./docs/CODE_OF_CONDUCT.md).
+
+## License
+
+The gem is available as open source under the terms of the [MIT License](LICENSE).
