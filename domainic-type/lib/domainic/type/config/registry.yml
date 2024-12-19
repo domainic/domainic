@@ -48,6 +48,9 @@ types:
   duck:
     constant: Domainic::Type::DuckType
     require_path: domainic/type/types/specification/duck_type
+  enum:
+    constant: Domainic::Type::EnumType
+    require_path: domainic/type/types/specification/enum_type
   union:
     constant: Domainic::Type::UnionType
     require_path: domainic/type/types/specification/union_type
