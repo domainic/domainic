@@ -75,6 +75,11 @@ module Domainic
 
       private
 
+      # Get the attribute set for this class
+      #
+      # @return [AttributeSet] the set of attributes defined for this class
+      def __attributes__: () -> AttributeSet
+
       # Handle class inheritance for attributes
       #
       # Ensures that subclasses inherit a copy of their parent's attributes while
@@ -83,11 +88,6 @@ module Domainic
       # @param subclass [Class] the inheriting class
       # @return [void]
       def inherited: (Class | Module subclass) -> void
-
-      # Get the attribute set for this class
-      #
-      # @return [AttributeSet] the set of attributes defined for this class
-      def __attributes__: () -> AttributeSet
     end
   end
 end

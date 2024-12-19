@@ -63,19 +63,6 @@ module Domainic
         # @return [EnumerableBehavior] self for method chaining
         def being_empty: () -> EnumerableBehavior
 
-        # Validate that the enumerable contains elements.
-        #
-        # Creates an inverse emptiness constraint that ensures the collection
-        # has at least one element.
-        #
-        # @example
-        #   type.being_populated
-        #   type.validate([1])    # => true
-        #   type.validate([])     # => false
-        #
-        # @return [EnumerableBehavior] self for method chaining
-        def being_populated: () -> EnumerableBehavior
-
         # Validate that the enumerable elements are in sorted order.
         #
         # Creates a constraint that ensures the collection's elements are
@@ -88,6 +75,19 @@ module Domainic
         #
         # @return [EnumerableBehavior] self for method chaining
         def being_ordered: () -> EnumerableBehavior
+
+        # Validate that the enumerable contains elements.
+        #
+        # Creates an inverse emptiness constraint that ensures the collection
+        # has at least one element.
+        #
+        # @example
+        #   type.being_populated
+        #   type.validate([1])    # => true
+        #   type.validate([])     # => false
+        #
+        # @return [EnumerableBehavior] self for method chaining
+        def being_populated: () -> EnumerableBehavior
 
         # Validate that the enumerable elements are not in sorted order.
         #

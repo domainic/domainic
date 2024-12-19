@@ -37,14 +37,6 @@ module Domainic
           assign_names!(name)
         end
 
-        # Create the gem's gemspec file.
-        #
-        # @return [void]
-        # @rbs () -> void
-        def create_gemspec
-          template('gemspec.erb', "#{name}/#{name}.gemspec") # steep:ignore NoMethod
-        end
-
         # Create the gem's CHANGELOG file.
         #
         # @return [void]
@@ -53,12 +45,29 @@ module Domainic
           template('CHANGELOG.md.erb', "#{name}/CHANGELOG.md") # steep:ignore NoMethod
         end
 
+        # Create the gem's gemspec file.
+        #
+        # @return [void]
+        # @rbs () -> void
+        def create_gemspec
+          template('gemspec.erb', "#{name}/#{name}.gemspec") # steep:ignore NoMethod
+        end
+
         # Create the gem's LICENSE file.
         #
         # @return [void]
         # @rbs () -> void
         def create_license
           template('LICENSE', "#{name}/LICENSE") # steep:ignore NoMethod
+        end
+
+        # Create the module's main library file.
+        #
+        # @return [void]
+        # @rbs () -> void
+        def create_module_lib_file
+          dest = [name, 'lib', directory_name, "#{file_name}.rb"].join('/')
+          template('lib/module.rb.erb', dest) # steep:ignore NoMethod
         end
 
         # Create the gem's README file.
@@ -79,23 +88,6 @@ module Domainic
           template('lib/root.rb.erb', "#{name}/lib/#{name}.rb") # steep:ignore NoMethod
         end
 
-        # Create the module's main library file.
-        #
-        # @return [void]
-        # @rbs () -> void
-        def create_module_lib_file
-          dest = [name, 'lib', directory_name, "#{file_name}.rb"].join('/')
-          template('lib/module.rb.erb', dest) # steep:ignore NoMethod
-        end
-
-        # Create the gem's spec_helper file.
-        #
-        # @return [void]
-        # @rbs () -> void
-        def create_spec_helper
-          template('spec/spec_helper.rb.erb', "#{name}/spec/spec_helper.rb") # steep:ignore NoMethod
-        end
-
         # Create the root spec file.
         #
         # @return [void]
@@ -112,6 +104,14 @@ module Domainic
         def create_signature_manifest
           dest = [name, 'sig', 'manifest.yaml'].join('/')
           template('sig/manifest.yaml.erb', dest) # steep:ignore NoMethod
+        end
+
+        # Create the gem's spec_helper file.
+        #
+        # @return [void]
+        # @rbs () -> void
+        def create_spec_helper
+          template('spec/spec_helper.rb.erb', "#{name}/spec/spec_helper.rb") # steep:ignore NoMethod
         end
 
         # Generate RBS signatures for the new gem.

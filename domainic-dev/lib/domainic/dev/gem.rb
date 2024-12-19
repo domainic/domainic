@@ -82,16 +82,6 @@ module Domainic
 
       private
 
-      # Initialize gem information from gemspec.
-      #
-      # @return [void]
-      # @rbs () -> void
-      def initialize_with_gemspec
-        spec = ::Gem::Specification.load(paths.gemspec.to_s) # steep:ignore
-        @dependencies = spec.dependencies
-        @name = spec.name
-      end
-
       # Initialize version information.
       #
       # @return [void]
@@ -102,6 +92,16 @@ module Domainic
         raise "#{name} gemspec is missing a valid SEMVER" unless semver
 
         @version = Version.new(semver)
+      end
+
+      # Initialize gem information from gemspec.
+      #
+      # @return [void]
+      # @rbs () -> void
+      def initialize_with_gemspec
+        spec = ::Gem::Specification.load(paths.gemspec.to_s) # steep:ignore
+        @dependencies = spec.dependencies
+        @name = spec.name
       end
     end
   end
