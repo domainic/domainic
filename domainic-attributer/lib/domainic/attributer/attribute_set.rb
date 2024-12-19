@@ -5,14 +5,16 @@ require 'forwardable'
 
 module Domainic
   module Attributer
-    # A class representing an ordered collection of attributes.
+    # A class responsible for managing an ordered collection of attributes
     #
     # This class manages a set of attributes for a given class or module. It maintains
     # attributes in a specific order determined by their type (argument vs option),
     # default values, and position. The collection supports standard operations like
     # adding, selecting, and merging attributes while maintaining proper ownership
-    # relationships with their base class.
+    # relationships with their base class
     #
+    # @api private
+    # @!visibility private
     # @author {https://aaronmallen.me Aaron Allen}
     # @since 0.1.0
     class AttributeSet
@@ -21,12 +23,12 @@ module Domainic
       # @rbs @base: __todo__
       # @rbs @lookup: Hash[Symbol, Attribute]
 
-      # Initialize a new AttributeSet.
+      # Initialize a new AttributeSet
       #
       # @param base [Class, Module] the class or module this set belongs to
       # @param attributes [Array<Attribute>] initial attributes to add
       #
-      # @return [void]
+      # @return [AttributeSet] the new AttributeSet instance
       # @rbs (__todo__ base, ?Array[Attribute] attributes) -> void
       def initialize(base, attributes = [])
         @base = base
@@ -34,7 +36,7 @@ module Domainic
         attributes.each { |attribute| add(attribute) }
       end
 
-      # Get an attribute by name.
+      # Get an attribute by name
       #
       # @param attribute_name [String, Symbol] the name of the attribute
       #
@@ -44,16 +46,16 @@ module Domainic
         @lookup[attribute_name.to_sym]
       end
 
-      # Add an attribute to the set.
+      # Add an attribute to the set
       #
       # If an attribute with the same name exists, the attributes are merged.
       # If the attribute belongs to a different base class, it is duplicated
       # with the correct base. After adding, attributes are sorted by type
-      # and position.
+      # and position
       #
       # @param attribute [Attribute] the attribute to add
       #
-      # @raise [ArgumentError] if attribute is invalid
+      # @raise [ArgumentError] if attribute is not a valid {Attribute}
       # @return [void]
       # @rbs (Attribute attribute) -> void
       def add(attribute)
@@ -71,7 +73,7 @@ module Domainic
         nil
       end
 
-      # Check if an attribute exists in the set.
+      # Check if an attribute exists in the set
       #
       # @param attribute_name [String, Symbol] the name to check
       #
@@ -80,7 +82,7 @@ module Domainic
         @lookup.key?(attribute_name.to_sym)
       end
 
-      # Get all attribute names.
+      # Get all attribute names
       #
       # @return [Array<Symbol>] the attribute names
       # @rbs () -> Array[Symbol]
@@ -88,7 +90,7 @@ module Domainic
         @lookup.keys
       end
 
-      # Get all attributes.
+      # Get all attributes
       #
       # @return [Array<Attribute>] the attributes
       # @rbs () -> Array[Attribute]
@@ -99,7 +101,7 @@ module Domainic
       # @rbs! def count: () ?{ (Symbol, Attribute) -> boolish } -> Integer
       def_delegators :@lookup, :count
 
-      # Create a duplicate set for a new base class.
+      # Create a duplicate set for a new base class
       #
       # @param new_base [Class, Module] the new base class
       #
@@ -115,7 +117,7 @@ module Domainic
         end
       end
 
-      # Iterate over attribute name/value pairs.
+      # Iterate over attribute name/value pairs
       #
       # @yield [name, attribute] each name/attribute pair
       # @yieldparam name [Symbol] the attribute name
@@ -132,7 +134,7 @@ module Domainic
       # @rbs! def empty?: () -> bool
       def_delegators :@lookup, :empty?
 
-      # Create a new set excluding specified attributes.
+      # Create a new set excluding specified attributes
       #
       # @param attribute_names [Array<String, Symbol>] names to exclude
       #
@@ -145,7 +147,7 @@ module Domainic
       # @rbs! def length: () -> Integer
       def_delegators :@lookup, :length
 
-      # Merge another set into this one.
+      # Merge another set into this one
       #
       # @param other [AttributeSet] the set to merge
       #
@@ -155,7 +157,7 @@ module Domainic
         self.class.new(other.instance_variable_get(:@base), attributes + other.attributes)
       end
 
-      # Create a new set with rejected attributes.
+      # Create a new set with rejected attributes
       #
       # @yield [name, attribute] each name/attribute pair
       # @yieldparam name [Symbol] the attribute name
@@ -167,7 +169,7 @@ module Domainic
         self.class.new(@base, @lookup.reject(...).values)
       end
 
-      # Create a new set with selected attributes.
+      # Create a new set with selected attributes
       #
       # @yield [name, attribute] each name/attribute pair
       # @yieldparam name [Symbol] the attribute name
@@ -184,10 +186,10 @@ module Domainic
 
       private
 
-      # Sort attributes by type and position.
+      # Sort attributes by type and position
       #
       # Attributes are sorted first by type (required arguments, defaulted arguments,
-      # then options), and then by their position within those groups.
+      # then options), and then by their position within those groups
       #
       # @return [void]
       # @rbs () -> void

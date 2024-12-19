@@ -5,6 +5,10 @@ module Domainic
       include Behavior
 
       def but: (*untyped types) -> untyped
+
+      alias except but
+
+      alias excluding but
     end
   end
 end

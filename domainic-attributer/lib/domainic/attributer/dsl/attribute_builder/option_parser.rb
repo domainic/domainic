@@ -4,12 +4,12 @@ module Domainic
   module Attributer
     module DSL
       class AttributeBuilder
-        # A class responsible for parsing and normalizing attribute options.
+        # A class responsible for parsing and normalizing attribute options
         #
         # This class handles the conversion of flexible DSL options into a normalized
         # format for attribute creation. It supports multiple ways of specifying common
         # options (like visibility, nullability, validation) and consolidates them
-        # into a consistent internal representation.
+        # into a consistent internal representation
         #
         # @author {https://aaronmallen.me Aaron Allen}
         # @since 0.1.0
@@ -105,25 +105,62 @@ module Domainic
           # @rbs @options: options
           # @rbs @result: result
 
-          # Parse attribute options into a normalized format.
+          # Parse attribute options into a normalized format
           #
           # @param attribute_name [String, Symbol] the name of the attribute
           # @param attribute_type [String, Symbol] the type of attribute
-          # @param options [Hash] the options to parse
+          # @param options [Hash{String, Symbol => Object}] the options to parse. See {#initialize} for details.
           #
-          # @return [Hash] normalized options suitable for attribute creation
+          # @return [Hash{Symbol => Object}] normalized options suitable for attribute creation
           # @rbs (String | Symbol attribute_name, String | Symbol attribute_type, options options) -> void
           def self.parse!(attribute_name, attribute_type, options)
             new(attribute_name, attribute_type, options).parse!
           end
 
-          # Initialize a new OptionParser.
+          # Initialize a new OptionParser instance
           #
           # @param attribute_name [String, Symbol] the name of the attribute
           # @param attribute_type [String, Symbol] the type of attribute
-          # @param options [Hash] the options to parse
+          # @param options [Hash{String, Symbol => Object}] the options to parse
           #
-          # @return [void]
+          # @option options [Array<Proc>, Proc] :callbacks handlers for attribute change events (priority over
+          #   :callback, :on_change)
+          # @option options [Array<Proc>, Proc] :callback alias for :callbacks
+          # @option options [Array<Proc, Symbol>, Proc, Symbol] :coerce handlers for value coercion (priority over
+          #   :coercers, :coerce_with)
+          # @option options [Array<Proc, Symbol>, Proc, Symbol] :coercers alias for :coerce
+          # @option options [Array<Proc, Symbol>, Proc, Symbol] :coerce_with alias for :coerce
+          # @option options [Object] :default the default value (priority over :default_generator, :default_value)
+          # @option options [Object] :default_generator alias for :default
+          # @option options [Object] :default_value alias for :default
+          # @option options [String] :desc short description (overridden by :description)
+          # @option options [String] :description description text
+          # @option options [Boolean] :non_nil require non-nil values (priority over :non_null, :non_nullable, :not_nil,
+          #   :not_nilable, :not_null, :not_nullable)
+          # @option options [Boolean] :non_null alias for :non_nil
+          # @option options [Boolean] :non_nullable alias for :non_nil
+          # @option options [Boolean] :not_nil alias for :non_nil
+          # @option options [Boolean] :not_nilable alias for :non_nil
+          # @option options [Boolean] :not_null alias for :non_nil
+          # @option options [Boolean] :not_nullable alias for :non_nil
+          # @option options [Boolean] :null inverse of :non_nil
+          # @option options [Array<Proc>, Proc] :on_change alias for :callbacks
+          # @option options [Boolean] :optional whether attribute is optional (overridden by :required)
+          # @option options [Integer] :position specify order position
+          # @option options [Symbol] :read read visibility (:public, :protected, :private) (priority over :read_access,
+          #   :reader)
+          # @option options [Symbol] :read_access alias for :read
+          # @option options [Symbol] :reader alias for :read
+          # @option options [Boolean] :required whether attribute is required
+          # @option options [Array<Object>, Object] :validate validators for the attribute (priority over
+          #   :validate_with, :validators)
+          # @option options [Array<Object>, Object] :validate_with alias for :validate
+          # @option options [Array<Object>, Object] :validators alias for :validate
+          # @option options [Symbol] :write_access write visibility (:public, :protected, :private) (priority over
+          #   :writer)
+          # @option options [Symbol] :writer alias for :write_access
+          #
+          # @return [OptionParser] the new OptionParser instance
           # @rbs (String | Symbol attribute_name, String | Symbol attribute_type, options options) -> void
           def initialize(attribute_name, attribute_type, options)
             @options = options.transform_keys(&:to_sym)
@@ -133,10 +170,10 @@ module Domainic
             @result[:position] = @options[:position] if @options.key?(:position)
           end
 
-          # Parse the options into a normalized format.
+          # Parse the options into a normalized format
           #
-          # @return [Hash] normalized options suitable for attribute creation
-          # @rbs () ->  result
+          # @return [Hash{Symbol => Object}] normalized options suitable for attribute creation
+          # @rbs () -> result
           def parse!
             parse_options!
             @result
@@ -144,11 +181,11 @@ module Domainic
 
           private
 
-          # Find the last set value among multiple option keys.
+          # Find the last set value among multiple option keys
           #
           # @param keys [Array<Symbol>] the keys to check
           #
-          # @return [Object] the last set value or Undefined
+          # @return [Object] the last set value or {Undefined}
           # @rbs (Array[Symbol]) -> untyped
           def find_last_option(keys)
             keys.reverse_each do |key|
@@ -158,7 +195,7 @@ module Domainic
             Undefined
           end
 
-          # Parse accessor (reader/writer) visibility options.
+          # Parse accessor (reader/writer) visibility options
           #
           # @return [void]
           # @rbs () -> void
@@ -167,7 +204,7 @@ module Domainic
             @result[:write] = find_last_option(ACCESSOR_WRITER_KEYS)
           end
 
-          # Parse callback handler options.
+          # Parse callback handler options
           #
           # @return [void]
           # @rbs () -> void
@@ -177,7 +214,7 @@ module Domainic
             end
           end
 
-          # Parse coercion handler options.
+          # Parse coercion handler options
           #
           # @return [void]
           # @rbs () -> void
@@ -187,7 +224,7 @@ module Domainic
             end
           end
 
-          # Parse default value options.
+          # Parse default value options
           #
           # @return [void]
           # @rbs () -> void
@@ -195,7 +232,7 @@ module Domainic
             @result[:default] = find_last_option(DEFAULT_KEYS)
           end
 
-          # Parse description options.
+          # Parse description options
           #
           # @return [void]
           # @rbs () -> void
@@ -203,7 +240,7 @@ module Domainic
             @result[:description] = find_last_option(DESCRIPTION_KEYS)
           end
 
-          # Parse nilability options.
+          # Parse nilability options
           #
           # @return [void]
           # @rbs () -> void
@@ -213,7 +250,7 @@ module Domainic
             @result[:nilable] = !(NON_NILABLE_KEYS.any? { |k| @options[k] == true } || @options[:null] == false)
           end
 
-          # Parse all option types.
+          # Parse all option types
           #
           # @return [void]
           # @rbs () -> void
@@ -221,7 +258,7 @@ module Domainic
             private_methods.grep(/\Aparse_.*_options!\z/).each { |method| send(method) }
           end
 
-          # Parse required/optional options.
+          # Parse required/optional options
           #
           # @return [void]
           # @rbs () -> void
@@ -231,7 +268,7 @@ module Domainic
             @result[:required] = @options[:optional] == false || @options[:required] == true
           end
 
-          # Parse validator options.
+          # Parse validator options
           #
           # @return [void]
           # @rbs () -> void

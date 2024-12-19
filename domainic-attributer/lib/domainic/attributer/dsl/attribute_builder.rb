@@ -7,11 +7,11 @@ require 'domainic/attributer/undefined'
 module Domainic
   module Attributer
     module DSL
-      # A class responsible for configuring attributes through a fluent interface.
+      # A class responsible for configuring attributes through a fluent interface
       #
       # This class provides a rich DSL for configuring attributes with support for
       # default values, coercion, validation, visibility controls, and change tracking.
-      # It uses method chaining to allow natural, declarative attribute definitions.
+      # It uses method chaining to allow natural, declarative attribute definitions
       #
       # @author {https://aaronmallen.me Aaron Allen}
       # @since 0.1.0
@@ -19,16 +19,16 @@ module Domainic
         # @rbs @base: __todo__
         # @rbs @options: OptionParser::result
 
-        # Initialize a new AttributeBuilder.
+        # Initialize a new AttributeBuilder
         #
         # @param base [Class, Module] the class or module to build the attribute in
         # @param attribute_name [String, Symbol] the name of the attribute
         # @param attribute_type [String, Symbol] the type of attribute
         # @param type_validator [Proc, Object, nil] optional type validator
-        # @param options [Hash] additional options for attribute configuration
-        # @yield configuration block for additional attribute settings
+        # @param options [Hash{Symbol => Object}] additional options for attribute configuration. See
+        #   {OptionParser#initialize} for details
         #
-        # @return [void]
+        # @return [AttributeBuilder] the new AttributeBuilder instance
         # @rbs (
         #   __todo__ base,
         #   String | Symbol attribute_name,
@@ -44,7 +44,7 @@ module Domainic
           instance_exec(&block) if block
         end
 
-        # Builds and finalizes the attribute.
+        # Build and finalize the {Attribute}
         #
         # @return [Attribute] the configured attribute
         # @rbs () -> Attribute
@@ -54,7 +54,7 @@ module Domainic
           Attribute.new(@base, **options) # steep:ignore InsufficientKeywordArguments
         end
 
-        # Configure value coercion.
+        # Configure value coercion
         #
         # @param proc_symbol [Proc, Symbol, nil] optional coercion handler
         # @yield optional coercion block
@@ -68,7 +68,7 @@ module Domainic
         end
         alias coerce coerce_with
 
-        # Configure default value.
+        # Configure default value
         #
         # @param value_or_proc [Object, Proc, nil] optional default value or generator
         # @yield optional default value generator block
@@ -82,7 +82,7 @@ module Domainic
         alias default_generator default
         alias default_value default
 
-        # Set attribute description.
+        # Set attribute description
         #
         # @param text [String] the description text
         #
@@ -94,7 +94,7 @@ module Domainic
         end
         alias desc description
 
-        # Mark attribute as non-nilable.
+        # Mark attribute as non-nilable
         #
         # @return [self] the builder for method chaining
         # @rbs () -> self
@@ -110,7 +110,7 @@ module Domainic
         alias not_null non_nilable
         alias not_nullable non_nilable
 
-        # Configure change callback.
+        # Configure change callback
         #
         # @param proc [Proc, nil] optional callback handler
         # @yield optional callback block
@@ -123,7 +123,7 @@ module Domainic
           self
         end
 
-        # Set private visibility for both read and write.
+        # Set private visibility for both read and write
         #
         # @return [self] the builder for method chaining
         # @rbs () -> self
@@ -132,7 +132,7 @@ module Domainic
           private_write
         end
 
-        # Set private visibility for read.
+        # Set private visibility for read
         #
         # @return [self] the builder for method chaining
         # @rbs () -> self
@@ -141,7 +141,7 @@ module Domainic
           self
         end
 
-        # Set private visibility for write.
+        # Set private visibility for write
         #
         # @return [self] the builder for method chaining
         # @rbs () -> self
@@ -150,7 +150,7 @@ module Domainic
           self
         end
 
-        # Set protected visibility for both read and write.
+        # Set protected visibility for both read and write
         #
         # @return [self] the builder for method chaining
         # @rbs () -> self
@@ -159,7 +159,7 @@ module Domainic
           protected_write
         end
 
-        # Set protected visibility for read.
+        # Set protected visibility for read
         #
         # @return [self] the builder for method chaining
         # @rbs () -> self
@@ -168,7 +168,7 @@ module Domainic
           self
         end
 
-        # Set protected visibility for write.
+        # Set protected visibility for write
         #
         # @return [self] the builder for method chaining
         # @rbs () -> self
@@ -177,7 +177,7 @@ module Domainic
           self
         end
 
-        # Set public visibility for both read and write.
+        # Set public visibility for both read and write
         #
         # @return [self] the builder for method chaining
         # @rbs () -> self
@@ -186,7 +186,7 @@ module Domainic
           public_write
         end
 
-        # Set public visibility for read.
+        # Set public visibility for read
         #
         # @return [self] the builder for method chaining
         # @rbs () -> self
@@ -195,7 +195,7 @@ module Domainic
           self
         end
 
-        # Set public visibility for write.
+        # Set public visibility for write
         #
         # @return [self] the builder for method chaining
         # @rbs () -> self
@@ -204,7 +204,7 @@ module Domainic
           self
         end
 
-        # Mark attribute as required.
+        # Mark attribute as required
         #
         # @return [self] the builder for method chaining
         # @rbs () -> self
@@ -213,7 +213,7 @@ module Domainic
           self
         end
 
-        # Configure value validation.
+        # Configure value validation
         #
         # @param object_or_proc [Object, Proc, nil] optional validation handler
         # @yield optional validation block

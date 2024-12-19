@@ -8,13 +8,13 @@ require 'domainic/attributer/instance_methods'
 require 'domainic/attributer/undefined'
 
 module Domainic
-  # Core functionality for defining and managing Ruby class attributes.
+  # Core functionality for defining and managing Ruby class attributes
   #
   # This module provides a flexible attribute system for Ruby classes that supports
   # positional arguments and keyword options with features like type validation,
   # coercion, and visibility control.
   #
-  # Can be included directly with default method names or customized via {Domainic.Attributer}.
+  # Can be included directly with default method names or customized via {Domainic.Attributer}
   #
   # @example Basic usage with default method names
   #   class Person
@@ -36,10 +36,14 @@ module Domainic
   # @since 0.1.0
   module Attributer
     class << self
-      # Create a customized Attributer module.
+      # Create a customized Attributer module
+      #
+      # @example
+      #   include Domainic.Attributer(argument: :param, option: :opt)
       #
       # @param argument [Symbol, String] custom name for the argument method
       # @param option [Symbol, String] custom name for the option method
+      #
       # @return [Module] configured Attributer module
       # @rbs (?argument: (String | Symbol)?, ?option: (String | Symbol)?) -> Module
       def call(argument: :argument, option: :option)
@@ -55,9 +59,10 @@ module Domainic
         end
       end
 
-      # Handle direct module inclusion.
+      # Handle direct module inclusion
       #
       # @param base [Class, Module] the including class/module
+      #
       # @return [void]
       # @rbs (untyped base) -> void
       def included(base)
@@ -67,10 +72,11 @@ module Domainic
 
       private
 
-      # Configure base class with Attributer functionality.
+      # Configure base class with Attributer functionality
       #
       # @param base [Class, Module] the target class/module
-      # @param options [Hash] method name customization options
+      # @param options [Hash{Symbol => String, Symbol}] method name customization options
+      #
       # @return [void]
       # @rbs (untyped base, ?argument: (String | Symbol)?, ?option: (String | Symbol)?) -> void
       def include_attributer(base, **options)
@@ -79,10 +85,11 @@ module Domainic
         inject_custom_methods!(base, **options)
       end
 
-      # Set up custom method names.
+      # Set up custom method names
       #
       # @param base [Class, Module] the target class/module
-      # @param options [Hash] method name customization options
+      # @param options [Hash{Symbol => String, Symbol}] method name customization options
+      #
       # @return [void]
       # @rbs (untyped base, ?argument: (String | Symbol)?, ?option: (String | Symbol)?) -> void
       def inject_custom_methods!(base, **options)
@@ -96,16 +103,17 @@ module Domainic
     end
   end
 
-  # Create a customized Attributer module.
+  # Create a customized Attributer module
   #
-  # Provides a convenient way to include Attributer with customized method names.
+  # Provides a convenient way to include Attributer with customized method names
   #
   # @example
   #   class Person
   #     include Domainic.Attributer(argument: :param, option: :opt)
   #   end
   #
-  # @param options [Hash] method name customization options
+  # @param options [Hash{Symbol => String, Symbol}] method name customization options
+  #
   # @return [Module] configured Attributer module
   # @rbs (?argument: (String | Symbol)?, ?option: (String | Symbol)?) -> Module
   def self.Attributer(**options) # rubocop:disable Naming/MethodName

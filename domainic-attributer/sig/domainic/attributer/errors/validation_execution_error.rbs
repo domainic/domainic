@@ -1,19 +1,22 @@
 module Domainic
   module Attributer
-    # A specialized error class for validation execution failures.
+    # A specialized error class for validation execution failures
     #
     # This error class is used when one or more validations encounter errors during
     # their execution. It aggregates all validation-related errors into a single
-    # error with a descriptive message listing each individual failure.
+    # error with a descriptive message listing each individual failure
     #
     # @author {https://aaronmallen.me Aaron Allen}
     # @since 0.2.0
     class ValidationExecutionError < AggregateError
-      # Initialize a new ValidationExecutionError instance.
+      # Initialize a new ValidationExecutionError instance
+      #
+      # @api private
+      # @!visibility private
       #
       # @param errors [Array<StandardError>] the collection of validation errors to aggregate
       #
-      # @return [void]
+      # @return [ValidationExecutionError] the new ValidationExecutionError instance
       def initialize: (Array[StandardError] errors) -> void
     end
   end

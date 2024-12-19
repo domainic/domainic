@@ -8,13 +8,15 @@ require 'domainic/attributer/undefined'
 
 module Domainic
   module Attributer
-    # A class representing a managed attribute in the Domainic::Attributer system.
+    # A class representing a managed attribute in the {Domainic::Attributer} system
     #
     # This class serves as the core component of the attribute management system.
     # It coordinates type information, visibility settings, value coercion,
     # validation, and change notifications for an attribute. Each instance
-    # represents a single attribute definition within a class.
+    # represents a single attribute definition within a class
     #
+    # @api private
+    # @!visibility private
     # @author {https://aaronmallen.me Aaron Allen}
     # @since 0.1.0
     class Attribute
@@ -43,22 +45,30 @@ module Domainic
       # @rbs @signature: Signature
       # @rbs @validator: Validator
 
+      # Get the class or module this attribute belongs to
+      #
       # @return [Class, Module] the class or module this attribute belongs to
       attr_reader :base #: __todo__
 
+      # Get the description of the attribute
+      #
       # @return [String, nil] the description of the attribute
       attr_reader :description #: String?
 
+      # Get the name of the attribute
+      #
       # @return [Symbol] the name of the attribute
       attr_reader :name #: Symbol
 
+      # Get the signature configuration for this attribute
+      #
       # @return [Signature] the signature configuration for this attribute
       attr_reader :signature #: Signature
 
-      # Initialize a new Attribute instance.
+      # Initialize a new {Attribute} instance
       #
       # @param base [Class, Module] the class or module this attribute belongs to
-      # @param options [Hash] the options to create the attribute with
+      # @param options [Hash{Symbol => Object}] the options to create the attribute with
       # @option options [Array<Proc>, Proc] :callbacks callbacks to trigger on value changes
       # @option options [Array<Proc, Symbol>, Proc, Symbol] :coercers handlers for value coercion
       # @option options [Object] :default the default value or generator
@@ -73,8 +83,7 @@ module Domainic
       # @option options [Symbol] :write the write visibility
       #
       # @raise [ArgumentError] if the configuration is invalid
-      # @return [void]
-      #
+      # @return [Attribute] the new Attribute instance
       # @rbs (
       #   __todo__ base,
       #   ?callbacks: Array[Callback::handler] | Callback::handler,
@@ -98,7 +107,7 @@ module Domainic
         raise ArgumentError, e.message
       end
 
-      # Apply a value to the attribute on an instance.
+      # Apply a value to the attribute on an instance
       #
       # This method applies all attribute constraints (coercion, validation) to a value
       # and sets it on the given instance. It manages the complete lifecycle of setting
@@ -128,7 +137,7 @@ module Domainic
         @callback.call(instance, old_value, coerced_value)
       end
 
-      # Check if this attribute has a default value.
+      # Check if this attribute has a default value
       #
       # @return [Boolean] true if a default value is set
       # @rbs () -> bool
@@ -136,10 +145,11 @@ module Domainic
         @default != Undefined
       end
 
-      # Create a duplicate instance for a new base class.
+      # Create a duplicate instance for a new base class
       #
       # @param new_base [Class, Module] the new base class
       #
+      # @raise [ArgumentError] if the new base is invalid
       # @return [Attribute] the duplicated instance
       # @rbs (__todo__ new_base) -> Attribute
       def dup_with_base(new_base)
@@ -148,7 +158,7 @@ module Domainic
         dup.tap { |duped| duped.instance_variable_set(:@base, new_base) }
       end
 
-      # Generate the default value for this attribute.
+      # Generate the default value for this attribute
       #
       # @param instance [Object] the instance to generate the default for
       #
@@ -158,11 +168,11 @@ module Domainic
         @default.is_a?(Proc) ? instance.instance_exec(&@default) : @default
       end
 
-      # Merge this attribute's configuration with another.
+      # Merge this attribute's configuration with another
       #
       # @param other [Attribute] the attribute to merge with
       #
-      # @raise [ArgumentError] if other is not an Attribute
+      # @raise [ArgumentError] if other is not an {Attribute}
       # @return [Attribute] a new attribute with merged configuration
       # @rbs (Attribute other) -> Attribute
       def merge(other)
@@ -173,7 +183,7 @@ module Domainic
 
       private
 
-      # Apply initialization options to create attribute components.
+      # Apply initialization options to create attribute components
       #
       # @param base [Class, Module] the base class
       # @param options [Hash] the initialization options
@@ -193,7 +203,7 @@ module Domainic
         @validator = Validator.new(self, options.fetch(:validators, []))
       end
 
-      # Initialize a copy of this attribute.
+      # Initialize a copy of this attribute
       #
       # @param source [Attribute] the source attribute
       #
@@ -211,7 +221,7 @@ module Domainic
         super
       end
 
-      # Get this attribute's configuration as options.
+      # Get this attribute's configuration as options
       #
       # @return [Hash] the configuration options
       # @rbs () -> initialize_options
@@ -226,7 +236,7 @@ module Domainic
         }.merge(signature.send(:to_options)) #: initialize_options
       end
 
-      # Validate and apply initialization options.
+      # Validate and apply initialization options
       #
       # @param base [Class, Module] the base class
       # @param options [Hash] the initialization options
@@ -238,7 +248,7 @@ module Domainic
         apply_initialize_options!(base, options)
       end
 
-      # Validate initialization options.
+      # Validate initialization options
       #
       # @param base [Class, Module] the base class
       # @param options [Hash] the initialization options

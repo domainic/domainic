@@ -8,12 +8,14 @@ require 'domainic/attributer/undefined'
 module Domainic
   module Attributer
     class Attribute
-      # A class responsible for validating attribute values.
+      # A class responsible for validating attribute values
       #
       # This class manages the validation of values assigned to an attribute. Validation
-      # can be performed either by a Proc that accepts a single value argument and returns
-      # a boolean, or by any object that responds to the `===` operator.
+      # can be performed either by a {Proc} that accepts a single value argument and returns
+      # a boolean, or by any object that responds to the `===` operator
       #
+      # @api private
+      # @!visibility private
       # @author {https://aaronmallen.me Aaron Allen}
       # @since 0.1.0
       class Validator
@@ -40,12 +42,12 @@ module Domainic
 
         # @rbs @handlers: Array[handler]
 
-        # Initialize a new Validator instance.
+        # Initialize a new Validator instance
         #
-        # @param attribute [Attribute] the attribute this Validator belongs to
+        # @param attribute [Attribute] the {Attribute} this instance belongs to
         # @param handlers [Array<Class, Module, Object, Proc>] the handlers to use for processing
         #
-        # @return [Validator] the new instance of Validator
+        # @return [Validator] the new Validator instance
         # @rbs (Attribute attribute, Array[handler] | handler handlers) -> void
         def initialize(attribute, handlers = [])
           super
@@ -55,7 +57,7 @@ module Domainic
           end.uniq
         end
 
-        # Validate a value using all configured validators.
+        # Validate a value using all configured validators
         #
         # @param instance [Object] the instance on which to perform validation
         # @param value [Object] the value to validate
@@ -73,10 +75,10 @@ module Domainic
 
         private
 
-        # Handle a `nil` value.
+        # Handle a nil value
         #
         # @raise [ArgumentError] if the attribute is not nilable
-        # @return [true] if the attribute is nilable
+        # @return [Boolean] true if the attribute is nilable
         # @rbs () -> bool
         def handle_nil!
           return true if @attribute.signature.nilable?
@@ -84,10 +86,10 @@ module Domainic
           raise ArgumentError, "`#{attribute_method_name}`: cannot be nil"
         end
 
-        # Handle an {Undefined} value.
+        # Handle an {Undefined} value
         #
         # @raise [ArgumentError] if the attribute is required
-        # @return [true] if the attribute is optional
+        # @return [Boolean] true if the attribute is optional
         # @rbs () -> bool
         def handle_undefined!
           return true if @attribute.signature.optional?
@@ -95,7 +97,7 @@ module Domainic
           raise ArgumentError, "`#{attribute_method_name}`: is required"
         end
 
-        # Run all configured validations.
+        # Run all configured validations
         #
         # @param instance [Object] the instance on which to perform validation
         # @param value [Object] the value to validate
@@ -118,7 +120,7 @@ module Domainic
           raise ArgumentError, "`#{attribute_method_name}`: has invalid value: #{value.inspect}" unless is_valid
         end
 
-        # Validate that a validation handler is valid.
+        # Validate that a validation handler is valid
         #
         # @param handler [Object] the handler to validate
         #
@@ -132,11 +134,13 @@ module Domainic
                            'or an object responding to `#===`.'
         end
 
-        # Validate a value using a single handler.
+        # Validate a value using a single handler
         #
         # @param handler [Object] the handler to use for validation
         # @param instance [Object] the instance on which to perform validation
         # @param value [Object] the value to validate
+        #
+        # @return [Boolean] true if validation succeeds
         # @rbs (handler handler, untyped instance, untyped value) -> bool
         def validate_value!(handler, instance, value)
           if handler.is_a?(Proc)
@@ -144,7 +148,7 @@ module Domainic
           elsif handler.respond_to?(:===)
             handler === value # rubocop:disable Style/CaseEquality
           else
-            # We should never get here because we validate the handlers in the initializer.
+            # We should never get here because we validate the handlers in the initializer
             raise TypeError, "`#{attribute_method_name}`: invalid validator: #{handler.inspect}"
           end
         end

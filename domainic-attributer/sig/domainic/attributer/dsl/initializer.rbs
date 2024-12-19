@@ -1,13 +1,15 @@
 module Domainic
   module Attributer
     module DSL
-      # A class responsible for handling object initialization with attributes.
+      # A class responsible for handling object initialization with attributes
       #
       # This class manages the process of setting attribute values during object
       # initialization. It handles both positional arguments and keyword options,
       # applying them to their corresponding attributes while respecting default
-      # values and required attributes.
+      # values and required attributes
       #
+      # @api private
+      # @!visibility private
       # @author {https://aaronmallen.me Aaron Allen}
       # @since 0.1.0
       class Initializer
@@ -19,21 +21,21 @@ module Domainic
 
         @attributes: AttributeSet
 
-        # Initialize a new Initializer.
+        # Initialize a new Initializer
         #
         # @param base [Object] the instance being initialized
         #
-        # @return [void]
+        # @return [Initializer] the new Initializer instance
         def initialize: (Object base) -> void
 
-        # Assign values to attributes.
+        # Assign values to attributes
         #
         # Validates and applies both positional arguments and keyword options to
         # their corresponding attributes. Raises an error if required arguments
-        # are missing.
+        # are missing
         #
-        # @param arguments [Array] positional arguments to assign
-        # @param keyword_arguments [Hash] keyword arguments to assign
+        # @param arguments [Array<Object>] positional arguments to assign
+        # @param keyword_arguments [Hash{Symbol => Object}] keyword arguments to assign
         #
         # @raise [ArgumentError] if required arguments are missing
         # @return [void]
@@ -41,46 +43,46 @@ module Domainic
 
         private
 
-        # Access to the current attribute set.
+        # Access to the current attribute set
         #
         # @return [AttributeSet] the attribute set for this instance
         attr_reader attributes: AttributeSet
 
-        # Apply positional arguments to their attributes.
+        # Apply positional arguments to their attributes
         #
-        # @param arguments [Array] the positional arguments to apply
+        # @param arguments [Array<Object>] the positional arguments to apply
         #
         # @return [void]
         def apply_arguments: (Array[untyped]) -> void
 
-        # Apply keyword arguments to their attributes.
+        # Apply keyword arguments to their attributes
         #
-        # @param options [Hash] the keyword options to apply
+        # @param options [Hash{Symbol => Object}] the keyword options to apply
         #
         # @return [void]
         def apply_options!: (Hash[String | Symbol, untyped]) -> void
 
-        # Get all argument attributes.
+        # Get all argument attributes
         #
         # @return [Array<Attribute>] the argument attributes
         def argument_attributes: () -> Array[Attribute]
 
-        # Assign a value to an attribute.
+        # Assign a value to an attribute
         #
         # @param attribute_name [Symbol] the name of the attribute
         # @param value [Object] the value to assign
         #
         # @return [void]
-        def assign_value: (untyped attribute_name, untyped value) -> untyped
+        def assign_value: (String | Symbol attribute_name, untyped value) -> void
 
-        # Get all option attributes.
+        # Get all option attributes
         #
         # @return [Array<Attribute>] the option attributes
         def option_attributes: () -> Array[Attribute]
 
-        # Validate that all required positional arguments are provided.
+        # Validate that all required positional arguments are provided
         #
-        # @param arguments [Array] the arguments to validate
+        # @param arguments [Array<Object>] the arguments to validate
         #
         # @raise [ArgumentError] if required arguments are missing
         # @return [void]
