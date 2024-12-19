@@ -1,0 +1,10 @@
+module Domainic
+  module Type
+    # @since 0.1.0
+    class AnythingType
+      include Behavior
+
+      def but: (*untyped types) -> untyped
+    end
+  end
+end

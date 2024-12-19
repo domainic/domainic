@@ -45,7 +45,7 @@ module Domainic
         # @return [String] The description of the constraint when it fails.
         # @rbs override
         def short_violation_description
-          "not #{@expected.short_description}"
+          @expected.short_description
         end
 
         protected

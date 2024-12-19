@@ -108,7 +108,7 @@ RSpec.describe Domainic::Type::Constraint::AndConstraint do
     before { constraint.satisfied?(actual_value) }
 
     context 'when no constraints are satisfied' do
-      let(:actual_value) { 123 }
+      let(:actual_value) { [] }
 
       it 'joins violation short_descriptions with and' do
         expect(short_violation_description).to eq('was not a string and was empty')
