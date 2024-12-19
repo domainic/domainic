@@ -19,8 +19,12 @@ The format is based on [Keep a Changelog], and this project adheres to [Break Ve
 
 ### Fixed
 
-* [#18](https://github.com/domainic/domainic/pull/18) Added missing requires for `Domainic::Attributer::Undefined` in
+* [#18](https://github.com/domainic/domainic/pull/18) Fixed missing requires for `Domainic::Attributer::Undefined` in
   the `Domainic::Attributer::Attribute` and `Domainic::Attributer::Attribute::Validator` classes.
+* [#94](https://github.com/domainic/domainic/pull/94) Fixed missing requires for `Domainic::Attributer::Undefined` in
+  `Domainic::Attributer::DSL::OptionParser`, and `Domainic::Attributer::DSL::Initializer`
+* [#94](https://github.com/domainic/domainic/pull/94) Fixed missing require for `Domainic::Attributer::Attribute` in
+  `Domainic::Attributer::Attribute::BelongsToAttribute`
 * Various documentation improvements and corrections.
 
 ## [v0.1.0] - 2024-12-12

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'domainic/attributer/attribute'
+
 module Domainic
   module Attributer
     class Attribute
