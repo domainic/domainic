@@ -5,12 +5,14 @@ require 'domainic/attributer/attribute/mixin/belongs_to_attribute'
 module Domainic
   module Attributer
     class Attribute
-      # A class responsible for managing attribute signature information.
+      # A class responsible for managing attribute signature information
       #
-      # This class encapsulates the type and visibility configuration for an attribute.
+      # This class encapsulates the type and visibility configuration for an {Attribute}
       # It validates and manages whether an attribute is an argument or option, as well
-      # as controlling read and write visibility (public, protected, or private).
+      # as controlling read and write visibility (public, protected, or private)
       #
+      # @api private
+      # @!visibility private
       # @author {https://aaronmallen.me Aaron Allen}
       # @since 0.1.0
       class Signature
@@ -37,10 +39,10 @@ module Domainic
 
         include BelongsToAttribute
 
-        # @return [Hash{Symbol => Object}] Default options for a new Signature instance.
+        # @return [Hash{Symbol => Object}] Default options for a new Signature instance
         DEFAULT_OPTIONS = { nilable: true, read: :public, required: false, write: :public }.freeze #: default_options
 
-        # Constants defining valid attribute types.
+        # Constants defining valid attribute types
         #
         # @author {https://aaronmallen.me Aaron Allen}
         # @since 0.1.0
@@ -55,7 +57,7 @@ module Domainic
           ALL = [ARGUMENT, OPTION].freeze #: Array[type_symbol]
         end
 
-        # Constants defining valid visibility levels.
+        # Constants defining valid visibility levels
         #
         # @author {https://aaronmallen.me Aaron Allen}
         # @since 0.1.0
@@ -80,30 +82,39 @@ module Domainic
         # @rbs @type: type_symbol
         # @rbs @write_visibility: visibility_symbol
 
+        # Get the position of the attribute
+        #
         # @return [Integer, nil] the position of the attribute
         attr_reader :position #: Integer?
 
+        # Get the visibility level for reading the attribute
+        #
         # @return [Symbol] the visibility level for reading the attribute
         attr_reader :read_visibility #: visibility_symbol
 
+        # Get the attribute type
+        #
         # @return [Symbol] the type of the attribute
         attr_reader :type #: type_symbol
 
+        # Get the visibility level for writing the attribute
+        #
         # @return [Symbol] the visibility level for writing the attribute
         attr_reader :write_visibility #: visibility_symbol
 
-        # Initialize a new Signature instance.
+        # Initialize a new {Signature} instance
         #
-        # @param attribute [Attribute] the attribute this signature belongs to
+        # @param attribute [Attribute] the {Attribute} this instance belongs to
         # @param options [Hash{Symbol => Object}] the signature options
-        # @option options [Boolean] nilable (true) whether the attribute is allowed to be nil.
+        # @option options [Boolean] nilable (true) whether the attribute is allowed to be nil
         # @option options [Integer, nil] position (nil) optional position for ordered attributes
         # @option options [Symbol] read (:public) the read visibility
         # @option options [Boolean] required (false) whether the attribute is required
         # @option options [Symbol] type the type of attribute
         # @option options [Symbol] write (:public) the write visibility
         #
-        # @return [void]
+        # @raise [ArgumentError] if the configuration is invalid
+        # @return [Signature] the new Signature instance
         # @rbs (
         #   Attribute attribute,
         #   ?nilable: bool,
@@ -127,7 +138,7 @@ module Domainic
           @write_visibility = options.fetch(:write).to_sym
         end
 
-        # Check if this signature is for an argument attribute.
+        # Check if this signature is for an argument attribute
         #
         # @return [Boolean] true if this is an argument attribute
         # @rbs () -> bool
@@ -135,15 +146,15 @@ module Domainic
           @type == TYPE::ARGUMENT
         end
 
-        # Check if the attribute is allowed to be nil.
+        # Check if the attribute allows nil values
         #
-        # @return [Boolean] true if the attribute is allowed to be nil
+        # @return [Boolean] true if the attribute allows nil values
         # @rbs () -> bool
         def nilable?
           @nilable
         end
 
-        # Check if this signature is for an option attribute.
+        # Check if this signature is for an option attribute
         #
         # @return [Boolean] true if this is an option attribute
         # @rbs () -> bool
@@ -151,7 +162,7 @@ module Domainic
           @type == TYPE::OPTION
         end
 
-        # Check if this signature is for an optional attribute.
+        # Check if this signature is for an optional attribute
         #
         # @return [Boolean] true if this is an optional attribute
         # @rbs () -> bool
@@ -159,7 +170,7 @@ module Domainic
           !required?
         end
 
-        # Check if both read and write operations are private.
+        # Check if both read and write operations are private
         #
         # @return [Boolean] true if both read and write are private
         # @rbs () -> bool
@@ -167,7 +178,7 @@ module Domainic
           private_read? && private_write?
         end
 
-        # Check if read operations are private.
+        # Check if read operations are private
         #
         # @return [Boolean] true if read operations are private
         # @rbs () -> bool
@@ -175,7 +186,7 @@ module Domainic
           [VISIBILITY::PRIVATE, VISIBILITY::PROTECTED].include?(@read_visibility)
         end
 
-        # Check if write operations are private.
+        # Check if write operations are private
         #
         # @return [Boolean] true if write operations are private
         # @rbs () -> bool
@@ -183,7 +194,7 @@ module Domainic
           [VISIBILITY::PRIVATE, VISIBILITY::PROTECTED].include?(@write_visibility)
         end
 
-        # Check if both read and write operations are protected.
+        # Check if both read and write operations are protected
         #
         # @return [Boolean] true if both read and write are protected
         # @rbs () -> bool
@@ -191,7 +202,7 @@ module Domainic
           protected_read? && protected_write?
         end
 
-        # Check if read operations are protected.
+        # Check if read operations are protected
         #
         # @return [Boolean] true if read operations are protected
         # @rbs () -> bool
@@ -199,7 +210,7 @@ module Domainic
           @read_visibility == VISIBILITY::PROTECTED
         end
 
-        # Check if write operations are protected.
+        # Check if write operations are protected
         #
         # @return [Boolean] true if write operations are protected
         # @rbs () -> bool
@@ -207,7 +218,7 @@ module Domainic
           @write_visibility == VISIBILITY::PROTECTED
         end
 
-        # Check if both read and write operations are public.
+        # Check if both read and write operations are public
         #
         # @return [Boolean] true if both read and write are public
         # @rbs () -> bool
@@ -215,7 +226,7 @@ module Domainic
           public_read? && public_write?
         end
 
-        # Check if read operations are public.
+        # Check if read operations are public
         #
         # @return [Boolean] true if read operations are public
         # @rbs () -> bool
@@ -223,7 +234,7 @@ module Domainic
           @read_visibility == VISIBILITY::PUBLIC
         end
 
-        # Check if write operations are public.
+        # Check if write operations are public
         #
         # @return [Boolean] true if write operations are public
         # @rbs () -> bool
@@ -231,9 +242,9 @@ module Domainic
           @write_visibility == VISIBILITY::PUBLIC
         end
 
-        # Check if the attribute is required.
+        # Check if this signature requires an attribute value
         #
-        # @return [Boolean] true if the attribute is required
+        # @return [Boolean] true if this signature requires an attribute value
         # @rbs () -> bool
         def required?
           @required
@@ -241,7 +252,7 @@ module Domainic
 
         private
 
-        # Get signature options as a hash.
+        # Get signature options as a hash
         #
         # @return [Hash] the signature options
         # @rbs () -> initialize_options
@@ -256,7 +267,7 @@ module Domainic
           }
         end
 
-        # Validate that a value is a Boolean.
+        # Validate that a value is a boolean
         #
         # @param name [String, Symbol] the name of the attribute being validated
         # @param value [Boolean] the value to validate
@@ -270,7 +281,7 @@ module Domainic
           raise ArgumentError, "`#{attribute_method_name}`: invalid #{name}: #{value}. Must be `true` or `false`."
         end
 
-        # Validate all initialization options.
+        # Validate all initialization options
         #
         # @param options [Hash{Symbol => Object}] the options to validate
         # @option options [Boolean] nilable the nilable flag to validate
@@ -291,7 +302,7 @@ module Domainic
           validate_type!(options[:type])
         end
 
-        # Validate that a position value is valid.
+        # Validate that a position value is valid
         #
         # @param position [Integer, nil] the position to validate
         #
@@ -304,7 +315,7 @@ module Domainic
           raise ArgumentError, "`#{attribute_method_name}`: invalid position: #{position}. Must be Integer or nil."
         end
 
-        # Validate that a type value is valid.
+        # Validate that a type value is valid
         #
         # @param type [Symbol] the type to validate
         #
@@ -318,7 +329,7 @@ module Domainic
                 "`#{attribute_method_name}`: invalid type: #{type}. Must be one of #{TYPE::ALL.join(', ')}"
         end
 
-        # Validate that visibility values are valid.
+        # Validate that visibility values are valid
         #
         # @param type [Symbol] which visibility setting to validate
         # @param value [Symbol] the visibility value to validate

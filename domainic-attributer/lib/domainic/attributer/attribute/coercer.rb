@@ -7,12 +7,14 @@ require 'domainic/attributer/undefined'
 module Domainic
   module Attributer
     class Attribute
-      # A class responsible for coercing attribute values.
+      # A class responsible for coercing attribute values
       #
       # This class manages the coercion of values assigned to an attribute. Coercion can be
-      # handled by either a Proc that accepts a single value argument, or by referencing an
-      # instance method via Symbol.
+      # handled by either a {Proc} that accepts a single value argument, or by referencing an
+      # instance method via {Symbol}
       #
+      # @api private
+      # @!visibility private
       # @author {https://aaronmallen.me Aaron Allen}
       # @since 0.1.0
       class Coercer
@@ -25,12 +27,12 @@ module Domainic
 
         # @rbs @handlers: Array[handler]
 
-        # Initialize a new Coercer instance.
+        # Initialize a new {Coercer} instance
         #
-        # @param attribute [Attribute] the attribute this Coercer belongs to
+        # @param attribute [Attribute] the {Attribute} this instance belongs to
         # @param handlers [Array<Proc, Symbol>] the handlers to use for processing
         #
-        # @return [Coercer] the new instance of Coercer
+        # @return [Coercer] the new Coercer instance
         # @rbs (Attribute attribute, Array[handler] | handler handlers) -> void
         def initialize(attribute, handlers = [])
           super
@@ -40,7 +42,7 @@ module Domainic
           end.uniq
         end
 
-        # Process a value through all coercion handlers.
+        # Process a value through all coercion handlers
         #
         # @param instance [Object] the instance on which to perform coercion
         # @param value [Object] the value to coerce
@@ -64,7 +66,7 @@ module Domainic
 
         private
 
-        # Process a value through a single coercion handler.
+        # Process a value through a single coercion handler
         #
         # @param instance [Object] the instance on which to perform coercion
         # @param handler [Proc, Symbol] the coercion handler
@@ -80,12 +82,12 @@ module Domainic
           when Symbol
             instance.send(handler, value)
           else
-            # We should never get here because we validate the handlers in the initializer.
+            # We should never get here because we validate the handlers in the initializer
             raise TypeError, "`#{attribute_method_name}`: invalid coercer: #{handler}. "
           end
         end
 
-        # Validate that a coercion handler is valid.
+        # Validate that a coercion handler is valid
         #
         # @param handler [Object] the handler to validate
         #

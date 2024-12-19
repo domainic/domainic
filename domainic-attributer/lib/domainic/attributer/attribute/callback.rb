@@ -6,12 +6,14 @@ require 'domainic/attributer/errors/callback_execution_error'
 module Domainic
   module Attributer
     class Attribute
-      # A class responsible for managing change callbacks for an attribute.
+      # A class responsible for managing change callbacks for an attribute
       #
       # This class handles the execution of callbacks that are triggered when an
       # attribute's value changes. Each callback must be a Proc that accepts two
-      # arguments: the old value and the new value.
+      # arguments: the old value and the new value
       #
+      # @api private
+      # @!visibility private
       # @author {https://aaronmallen.me Aaron Allen}
       # @since 0.1.0
       class Callback
@@ -22,12 +24,12 @@ module Domainic
 
         include BelongsToAttribute
 
-        # Initialize a new Callback instance.
+        # Initialize a new Callback instance
         #
-        # @param attribute [Attribute] the attribute this Callback belongs to
+        # @param attribute [Attribute] the {Attribute} this instance belongs to
         # @param handlers [Array<Proc>] the handlers to use for processing
         #
-        # @return [Callback] the new instance of Callback
+        # @return [Callback] the new Callback instance
         # @rbs (Attribute attribute, Array[handler] | handler handlers) -> void
         def initialize(attribute, handlers = [])
           super
@@ -37,7 +39,7 @@ module Domainic
           end.uniq
         end
 
-        # Execute all callbacks for a value change.
+        # Execute all callbacks for a value change
         #
         # @param instance [Object] the instance on which to execute callbacks
         # @param old_value [Object] the previous value
@@ -60,7 +62,7 @@ module Domainic
 
         private
 
-        # Validate that a callback handler is a valid Proc.
+        # Validate that a callback handler is a valid Proc
         #
         # @param handler [Object] the handler to validate
         #
@@ -70,7 +72,7 @@ module Domainic
         def validate_handler!(handler)
           return if handler.is_a?(Proc)
 
-          raise TypeError, "`#{attribute_method_name}`: invalid handler: #{handler.inspect}. Must be a Proc."
+          raise TypeError, "`#{attribute_method_name}`: invalid handler: #{handler.inspect}. Must be a Proc"
         end
       end
     end

@@ -1,12 +1,14 @@
 module Domainic
   module Attributer
     class Attribute
-      # A class responsible for validating attribute values.
+      # A class responsible for validating attribute values
       #
       # This class manages the validation of values assigned to an attribute. Validation
-      # can be performed either by a Proc that accepts a single value argument and returns
-      # a boolean, or by any object that responds to the `===` operator.
+      # can be performed either by a {Proc} that accepts a single value argument and returns
+      # a boolean, or by any object that responds to the `===` operator
       #
+      # @api private
+      # @!visibility private
       # @author {https://aaronmallen.me Aaron Allen}
       # @since 0.1.0
       class Validator
@@ -32,15 +34,15 @@ module Domainic
 
         @handlers: Array[handler]
 
-        # Initialize a new Validator instance.
+        # Initialize a new Validator instance
         #
-        # @param attribute [Attribute] the attribute this Validator belongs to
+        # @param attribute [Attribute] the {Attribute} this instance belongs to
         # @param handlers [Array<Class, Module, Object, Proc>] the handlers to use for processing
         #
-        # @return [Validator] the new instance of Validator
+        # @return [Validator] the new Validator instance
         def initialize: (Attribute attribute, Array[handler] | handler handlers) -> void
 
-        # Validate a value using all configured validators.
+        # Validate a value using all configured validators
         #
         # @param instance [Object] the instance on which to perform validation
         # @param value [Object] the value to validate
@@ -52,19 +54,19 @@ module Domainic
 
         private
 
-        # Handle a `nil` value.
+        # Handle a nil value
         #
         # @raise [ArgumentError] if the attribute is not nilable
-        # @return [true] if the attribute is nilable
+        # @return [Boolean] true if the attribute is nilable
         def handle_nil!: () -> bool
 
-        # Handle an {Undefined} value.
+        # Handle an {Undefined} value
         #
         # @raise [ArgumentError] if the attribute is required
-        # @return [true] if the attribute is optional
+        # @return [Boolean] true if the attribute is optional
         def handle_undefined!: () -> bool
 
-        # Run all configured validations.
+        # Run all configured validations
         #
         # @param instance [Object] the instance on which to perform validation
         # @param value [Object] the value to validate
@@ -74,7 +76,7 @@ module Domainic
         # @return [void]
         def run_validations!: (untyped instance, untyped value) -> void
 
-        # Validate that a validation handler is valid.
+        # Validate that a validation handler is valid
         #
         # @param handler [Object] the handler to validate
         #
@@ -82,11 +84,13 @@ module Domainic
         # @return [void]
         def validate_handler!: (handler handler) -> void
 
-        # Validate a value using a single handler.
+        # Validate a value using a single handler
         #
         # @param handler [Object] the handler to use for validation
         # @param instance [Object] the instance on which to perform validation
         # @param value [Object] the value to validate
+        #
+        # @return [Boolean] true if validation succeeds
         def validate_value!: (handler handler, untyped instance, untyped value) -> bool
       end
     end

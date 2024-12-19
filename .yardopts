@@ -7,3 +7,7 @@
 --markup=markdown
 --embed-mixins
 --plugin sitemap
+--tag rbs
+--hide-tag rbs
+-
+**/*.md
