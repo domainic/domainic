@@ -58,16 +58,16 @@ module Domainic
 
       private
 
-      # Initialize gem information from gemspec.
-      #
-      # @return [void]
-      def initialize_with_gemspec: () -> void
-
       # Initialize version information.
       #
       # @return [void]
       # @raise [RuntimeError] if the gemspec is missing a valid SEMVER
       def initialize_version: () -> void
+
+      # Initialize gem information from gemspec.
+      #
+      # @return [void]
+      def initialize_with_gemspec: () -> void
     end
   end
 end

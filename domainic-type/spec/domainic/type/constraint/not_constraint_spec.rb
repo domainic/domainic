@@ -9,11 +9,11 @@ RSpec.describe Domainic::Type::Constraint::NotConstraint do
     Class.new do
       include Domainic::Type::Constraint::Behavior
 
+      def satisfied?(_value) = true
+
       def short_description = 'be a string'
 
       def short_violation_description = 'was a string'
-
-      def satisfied?(_value) = true
     end.new(:self)
   end
 

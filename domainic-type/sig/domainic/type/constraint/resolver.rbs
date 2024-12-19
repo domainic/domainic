@@ -41,17 +41,6 @@ module Domainic
 
         self.@registry: Hash[Symbol, Hash[Symbol, registry_constraint]]
 
-        # Resolve a constraint type to its corresponding class.
-        #
-        # This is a convenience method that creates a new Resolver instance and
-        # immediately resolves the constraint class.
-        #
-        # @param constraint_type [Symbol] The type of constraint to resolve
-        #
-        # @raise [ArgumentError] if the constraint type is unknown
-        # @return [Class] The resolved constraint class
-        def self.resolve!: (Symbol constraint_type) -> _ConstraintClass
-
         # Register a new constraint with the resolver.
         #
         # @param lookup_key [String, Symbol] The lookup key for the constraint. This is how types should reference
@@ -62,6 +51,17 @@ module Domainic
         # @raise [ArgumentError] if the constraint is already registered
         # @return [void]
         def self.register_constraint: (String | Symbol lookup_key, String constant_name, String require_path) -> void
+
+        # Resolve a constraint type to its corresponding class.
+        #
+        # This is a convenience method that creates a new Resolver instance and
+        # immediately resolves the constraint class.
+        #
+        # @param constraint_type [Symbol] The type of constraint to resolve
+        #
+        # @raise [ArgumentError] if the constraint type is unknown
+        # @return [Class] The resolved constraint class
+        def self.resolve!: (Symbol constraint_type) -> _ConstraintClass
 
         # The registry of known constraints
         #

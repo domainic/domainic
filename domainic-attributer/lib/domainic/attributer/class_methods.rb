@@ -164,6 +164,14 @@ module Domainic
 
       private
 
+      # Get the attribute set for this class
+      #
+      # @return [AttributeSet] the set of attributes defined for this class
+      # @rbs () -> AttributeSet
+      def __attributes__
+        @__attributes__ ||= AttributeSet.new(self)
+      end
+
       # Handle class inheritance for attributes
       #
       # Ensures that subclasses inherit a copy of their parent's attributes while
@@ -175,14 +183,6 @@ module Domainic
       def inherited(subclass)
         super
         subclass.instance_variable_set(:@__attributes__, __attributes__.dup_with_base(subclass))
-      end
-
-      # Get the attribute set for this class
-      #
-      # @return [AttributeSet] the set of attributes defined for this class
-      # @rbs () -> AttributeSet
-      def __attributes__
-        @__attributes__ ||= AttributeSet.new(self)
       end
     end
   end

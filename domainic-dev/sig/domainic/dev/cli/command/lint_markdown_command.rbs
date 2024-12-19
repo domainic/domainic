@@ -24,15 +24,15 @@ module Domainic
           # @return [void]
           def execute: () -> void
 
-          # Print additional documentation messages for linting failures.
-          #
-          # @return [void]
-          def print_documentation_messages: () -> void
-
           # Set the exit status based on linting results.
           #
           # @return [void]
           def exit_status: () -> void
+
+          # Print additional documentation messages for linting failures.
+          #
+          # @return [void]
+          def print_documentation_messages: () -> void
 
           private
 
