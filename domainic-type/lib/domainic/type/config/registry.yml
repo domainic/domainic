@@ -38,3 +38,19 @@ constraints:
   uniqueness:
     constant: Domainic::Type::Constraint::UniquenessConstraint
     require_path: domainic/type/constraint/constraints/comparison/uniqueness_constraint
+types:
+  array:
+    constant: Domainic::Type::ArrayType
+    require_path: domainic/type/types/core/array_type
+  anything:
+    constant: Domainic::Type::AnythingType
+    require_path: domainic/type/types/specification/anything_type
+  duck:
+    constant: Domainic::Type::DuckType
+    require_path: domainic/type/types/specification/duck_type
+  union:
+    constant: Domainic::Type::UnionType
+    require_path: domainic/type/types/specification/union_type
+  void:
+    constant: Domainic::Type::VoidType
+    require_path: domainic/type/types/specification/void_type

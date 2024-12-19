@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'domainic/type/types/union_type'
+require 'domainic/type/types/specification/union_type'
 
 RSpec.describe Domainic::Type::UnionType do
   describe '#validate' do

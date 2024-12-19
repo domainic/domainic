@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'domainic/type/types/array_type'
+require 'domainic/type/types/core/array_type'
 
 RSpec.describe Domainic::Type::ArrayType do
   pending "add some examples to (or delete) #{__FILE__}"

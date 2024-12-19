@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'domainic/type/types/void_type'
+require 'domainic/type/types/specification/void_type'
 
 RSpec.describe Domainic::Type::VoidType do
   describe '#validate' do
