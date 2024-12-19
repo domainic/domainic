@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+require 'domainic/type/constraint/behavior'
+
 module Domainic
   module Type
     module Constraint
@@ -25,14 +29,21 @@ module Domainic
       # @author {https://aaronmallen.me Aaron Allen}
       # @since 0.1.0
       class OrConstraint
-        include Behavior[Array[Behavior[untyped, untyped, untyped]], untyped, { }]
+        include Behavior #[Array[Behavior[untyped, untyped, untyped]], untyped, {}]
 
         # Get a description of what the constraint expects.
         #
         # @return [String] a description combining all constraint descriptions with 'or'
-        def short_description: ...
+        # @rbs override
+        def short_description
+          descriptions = @expected.map(&:short_description)
+          return descriptions.first if descriptions.size == 1
 
-        def expecting: (Behavior[untyped, untyped, untyped]) -> self
+          *first, last = descriptions
+          "#{first.join(', ')} or #{last}"
+        end
+
+        # @rbs! def expecting: (Behavior[untyped, untyped, untyped]) -> self
 
         # The description of the violations that caused the constraint to be unsatisfied.
         #
@@ -42,7 +53,17 @@ module Domainic
         # symbol" rather than "was not a string OR was not a symbol").
         #
         # @return [String] The combined violation descriptions from all constraints
-        def short_violation_description: ...
+        # @rbs override
+        def short_violation_description
+          violations = @expected.reject { |constraint| constraint.satisfied?(@actual) }
+          descriptions = violations.map(&:short_violation_description)
+          return descriptions.first if descriptions.size == 1
+
+          *first, last = descriptions
+          "#{first.join(', ')} and #{last}"
+        end
+
+        protected
 
         # Coerce the expectation into an array and append new constraints.
         #
@@ -52,14 +73,20 @@ module Domainic
         # @param expectation [Behavior] the constraint to add
         #
         # @return [Array<Behavior>] the updated array of constraints
-        def coerce_expectation: (Behavior[untyped, untyped, untyped] expectation) -> Array[Behavior[untyped, untyped, untyped]]
+        # @rbs (untyped expectation) -> Array[Behavior[untyped, untyped, untyped]]
+        def coerce_expectation(expectation)
+          expectation.is_a?(Array) ? (@expected || []).concat(expectation) : (@expected || []) << expectation
+        end
 
         # Check if the value satisfies any of the expected constraints.
         #
         # Short-circuits on the first satisfied constraint for efficiency.
         #
         # @return [Boolean] whether any constraint is satisfied
-        def satisfies_constraint?: ...
+        # @rbs override
+        def satisfies_constraint?
+          @expected.any? { |constraint| constraint.satisfied?(@actual) }
+        end
 
         # Validate that the expectation is an array of valid constraints.
         #
@@ -67,7 +94,12 @@ module Domainic
         #
         # @raise [ArgumentError] if the expectation is not valid
         # @return [void]
-        def validate_expectation!: ...
+        # @rbs override
+        def validate_expectation!(expectation)
+          return if expectation.is_a?(Array) && expectation.all?(Behavior)
+
+          raise ArgumentError, 'Expectation must be a Domainic::Type::Constraint'
+        end
       end
     end
   end

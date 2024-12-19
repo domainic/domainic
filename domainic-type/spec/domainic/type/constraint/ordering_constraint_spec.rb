@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'domainic/type/constraint/constraints/ordering_constraint'
+require 'domainic/type/constraint/constraints/structural/ordering_constraint'
 
 RSpec.describe Domainic::Type::Constraint::OrderingConstraint do
   describe '.new' do

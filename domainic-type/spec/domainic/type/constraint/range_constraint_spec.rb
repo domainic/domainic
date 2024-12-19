@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'domainic/type/constraint/constraints/range_constraint'
+require 'domainic/type/constraint/constraints/structural/range_constraint'
 
 RSpec.describe Domainic::Type::Constraint::RangeConstraint do
   shared_examples 'coerces and validates expectation' do

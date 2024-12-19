@@ -1,6 +1,10 @@
 ---
 path: ".gem_rbs_collection"
 gems:
+- name: dbm
+  version: '0'
+  source:
+    type: stdlib
 - name: domainic-attributer
   version: 0.2.0
   source:
@@ -25,6 +29,14 @@ gems:
   version: '0'
   source:
     type: stdlib
+- name: pstore
+  version: '0'
+  source:
+    type: stdlib
+- name: psych
+  version: '0'
+  source:
+    type: stdlib
 - name: thor
   version: '1.2'
   source:
@@ -33,4 +45,8 @@ gems:
     revision: 71fb7ae83789ae150bdee1cd8a7cd3035b5d79e2
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
+- name: yaml
+  version: '0'
+  source:
+    type: stdlib
 gemfile_lock_path: Gemfile.lock

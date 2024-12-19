@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'domainic/type/types/duck_type'
+require 'domainic/type/types/specification/duck_type'
 
 RSpec.describe Domainic::Type::DuckType do
   describe '#validate' do

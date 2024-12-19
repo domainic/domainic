@@ -1,0 +1,14 @@
+module Domainic
+  module Type
+    # @since 0.1.0
+    class EnumType
+      include Behavior
+
+      def initialize: (*untyped literals, **untyped options) -> void
+
+      def literal: (*untyped literals) -> void
+
+      alias value literal
+    end
+  end
+end

@@ -1,0 +1,14 @@
+module Domainic
+  module Type
+    # @since 0.1.0
+    class UnionType
+      include Behavior
+
+      def initialize: (*Class | Module | Behavior[untyped, untyped, untyped] types, **untyped options) -> void
+
+      def type: (*Class | Module | Behavior[untyped, untyped, untyped] types) -> self
+
+      alias or type
+    end
+  end
+end

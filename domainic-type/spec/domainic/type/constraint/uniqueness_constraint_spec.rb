@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'domainic/type/constraint/constraints/uniqueness_constraint'
+require 'domainic/type/constraint/constraints/comparison/uniqueness_constraint'
 require 'set'
 
 RSpec.describe Domainic::Type::Constraint::UniquenessConstraint do

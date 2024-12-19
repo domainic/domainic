@@ -1,7 +1,3 @@
-# frozen_string_literal: true
-
-require 'domainic/type/constraint/behavior'
-
 module Domainic
   module Type
     module Constraint
@@ -29,17 +25,14 @@ module Domainic
       # @author {https://aaronmallen.me Aaron Allen}
       # @since 0.1.0
       class OrConstraint
-        include Behavior #[Array[Behavior[untyped, untyped, untyped]], untyped, {}]
+        include Behavior[Array[Behavior[untyped, untyped, untyped]], untyped, { }]
 
         # Get a description of what the constraint expects.
         #
         # @return [String] a description combining all constraint descriptions with 'or'
-        # @rbs override
-        def short_description
-          @expected.map(&:short_description).join(' or ')
-        end
+        def short_description: ...
 
-        # @rbs! def expecting: (Behavior[untyped, untyped, untyped]) -> self
+        def expecting: (Behavior[untyped, untyped, untyped]) -> self
 
         # The description of the violations that caused the constraint to be unsatisfied.
         #
@@ -49,12 +42,7 @@ module Domainic
         # symbol" rather than "was not a string OR was not a symbol").
         #
         # @return [String] The combined violation descriptions from all constraints
-        # @rbs override
-        def short_violation_description
-          @expected.map(&:short_violation_description).join(' and ')
-        end
-
-        protected
+        def short_violation_description: ...
 
         # Coerce the expectation into an array and append new constraints.
         #
@@ -64,20 +52,14 @@ module Domainic
         # @param expectation [Behavior] the constraint to add
         #
         # @return [Array<Behavior>] the updated array of constraints
-        # @rbs (Behavior[untyped, untyped, untyped] expectation) -> Array[Behavior[untyped, untyped, untyped]]
-        def coerce_expectation(expectation)
-          @expected.is_a?(Array) ? @expected.push(expectation) : [expectation]
-        end
+        def coerce_expectation: (untyped expectation) -> Array[Behavior[untyped, untyped, untyped]]
 
         # Check if the value satisfies any of the expected constraints.
         #
         # Short-circuits on the first satisfied constraint for efficiency.
         #
         # @return [Boolean] whether any constraint is satisfied
-        # @rbs override
-        def satisfies_constraint?
-          @expected.any? { |constraint| constraint.satisfied?(@actual) }
-        end
+        def satisfies_constraint?: ...
 
         # Validate that the expectation is an array of valid constraints.
         #
@@ -85,12 +67,7 @@ module Domainic
         #
         # @raise [ArgumentError] if the expectation is not valid
         # @return [void]
-        # @rbs override
-        def validate_expectation!(expectation)
-          return if expectation.is_a?(Array) && expectation.all?(Behavior)
-
-          raise ArgumentError, 'Expectation must be a Domainic::Type::Constraint'
-        end
+        def validate_expectation!: ...
       end
     end
   end

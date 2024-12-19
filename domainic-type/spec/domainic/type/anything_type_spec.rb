@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'domainic/type/types/anything_type'
+require 'domainic/type/types/specification/anything_type'
 
 RSpec.describe Domainic::Type::AnythingType do
   describe '#validate' do
