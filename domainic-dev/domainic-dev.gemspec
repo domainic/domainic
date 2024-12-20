@@ -29,5 +29,5 @@ Gem::Specification.new do |spec|
     'source_code_uri' => 'https://github.com/domainic/domainic/tree/main/domainic-dev'
   }
 
-  spec.add_dependency 'thor', '>= 1.3', '< 2'
+  spec.add_dependency 'thor', '~> 1.3'
 end

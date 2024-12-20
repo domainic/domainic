@@ -1,9 +1,9 @@
 # Domainic
 
+[![Domainic Version](https://img.shields.io/badge/unreleased-orange?label=gem%20version&logo=rubygems&logoColor=white&logoSize=auto&style=for-the-badge)](https://rubygems.org/gems/domainic)
 [![Domainic Build](https://img.shields.io/github/actions/workflow/status/domainic/domainic/build.yml?branch=main&style=for-the-badge&logo=githubactions&logoColor=white&logoSize=auto)](https://github.com/domainic/domainic/actions/workflows/build.yml)
-[![Domainic Code Coverage](https://img.shields.io/codacy/coverage/17177dca4a76428c9422ceb8fb970271/main?style=for-the-badge&logo=codacy&logoSize=auto)](https://app.codacy.com/gh/domainic/domainic/coverage)
 [![Domainic Code Quality](https://img.shields.io/codacy/grade/17177dca4a76428c9422ceb8fb970271/main?style=for-the-badge&logo=codacy&logoSize=auto)](https://app.codacy.com/gh/domainic/domainic/dashboard)
-[![Domainic Version](https://img.shields.io/badge/not%20released-orange?label=gem%20version&logo=rubygems&logoSize=auto&style=for-the-badge)](https://rubygems.org/gems/domainic)
+[![Domainic Code Coverage](https://img.shields.io/codacy/coverage/17177dca4a76428c9422ceb8fb970271/main?style=for-the-badge&logo=codacy&logoSize=auto)](https://app.codacy.com/gh/domainic/domainic/coverage)
 [![Domainic License](https://img.shields.io/github/license/domainic/domainic?logo=opensourceinitiative&logoColor=white&logoSize=auto&style=for-the-badge)](./LICENSE)
 [![Domainic Open Issues](https://img.shields.io/github/issues-search/domainic/domainic?label=open%20issues&logo=github&logoSize=auto&query=is%3Aopen&color=red&style=for-the-badge)](https://github.com/domainic/domainic/issues?q=state%3Aopen)
 
@@ -60,13 +60,13 @@ gem 'domainic' # Will include all components
 ### Quick Start
 
 1. Clone the repository
-2. Run `bundle install`
+2. Run `bin/setup` to install dependencies
 3. Run `bin/dev ci` to ensure everything is set up correctly
 
 ### Development CLI
 
 Domainic uses a development CLI to manage the monorepo and ensure consistent development practices. View available
-commands with `bin/dev help`.
+commands with `bin/dev help`. See [domainic-dev](./domainic-dev/README.md) for more information.
 
 Key commands:
 
