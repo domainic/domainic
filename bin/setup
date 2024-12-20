@@ -3,5 +3,32 @@ set -euo pipefail
 IFS=$'\n\t'
 set -vx
 
+# Install deoendencies
 bundle install
 bundle exec rbs collection install
+
+# Configure git commit template
+git config --local commit.template .github/COMMIT_MESSAGE_TEMPLATE.md
+
+# Configure pre-commit hook
+cat > .git/hooks/pre-commit << 'EOL'
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Stash any unstaged changes
+git stash -q --keep-index
+
+# Run CI checks
+bin/dev ci
+
+# Store the last exit code
+RESULT=$?
+
+# Restore unstaged changes
+git stash pop -q || true
+
+# Return the exit code
+exit $RESULT
+EOL
+
+chmod +x .git/hooks/pre-commit
