@@ -112,10 +112,7 @@ module Domainic
         #   Type::accessor accessor,
         #   String | Symbol constraint_type,
         #   ?untyped expectation,
-        #   ?abort_on_failure: bool,
-        #   ?coerce_with: Array[Proc] | Proc,
-        #   ?concerning: String | Symbol,
-        #   ?description: String | Symbol
+        #   **untyped options
         #   ) -> void
         def intrinsic(...)
           intrinsic_constraints.add(...)
@@ -233,10 +230,7 @@ module Domainic
       #   Type::accessor accessor,
       #   String | Symbol constraint_type,
       #   ?untyped expectation,
-      #   ?abort_on_failure: bool,
-      #   ?coerce_with: Array[Proc] | Proc,
-      #   ?concerning: String | Symbol,
-      #   ?description: String | Symbol
+      #   **untyped options
       #   ) -> self
       def constrain(...)
         @constraints.add(...)

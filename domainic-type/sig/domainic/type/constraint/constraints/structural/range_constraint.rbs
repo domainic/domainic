@@ -28,7 +28,9 @@ module Domainic
       class RangeConstraint
         type expected = { ?minimum: Numeric, ?maximum: Numeric }
 
-        include Behavior[expected, Numeric, { }]
+        type options = { ?inclusive: bool }
+
+        include Behavior[expected, Numeric, options]
 
         # Get a human-readable description of the range constraint.
         #
