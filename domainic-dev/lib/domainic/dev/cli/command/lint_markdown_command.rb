@@ -21,6 +21,16 @@ module Domainic
           # @rbs!
           #   type result = { success: bool, message: String, file: Pathname, output: String }
 
+          # Pattern to match a GitHub link in an mdl documentation message.
+          #
+          # @return [Regexp] the pattern
+          MDL_DOCSTRING_TO_GITHUB_LINK_PATTERN = %r{https://github\.com/[^\s]+} #: Regexp
+
+          # Pattern to match an mdl violation line and extract the file, line number, rule ID, and message.
+          #
+          # @return [Regexp] the pattern
+          MDL_VIOLATION_TO_LINE_AND_RULE_PATTERN = /^(.+?):(\d+): (MD\d+)(.*)$/i #: Regexp
+
           # @rbs @documentation_messages: Set[String]
           # @rbs @markdown_files: Array[Pathname]
           # @rbs @results: Array[result]
@@ -38,9 +48,10 @@ module Domainic
               puts result[:message]
               next if result[:success]
 
-              error_lines = extract_error_lines(result)
-              puts error_lines.map { |line| "  - #{line}" }.join("\n")
+              error_lines = parse_result(result)
+              puts error_lines.map { |line| "  #{line}" }.join("\n")
             end
+            print_documentation_messages
           end
 
           # Set the exit status based on linting results.
@@ -74,26 +85,26 @@ module Domainic
             @documentation_messages ||= Set.new
           end
 
-          # Extract error lines from a result, capturing any documentation messages.
+          # Generate a linked line number for a Markdown file.
           #
-          # @param result [Hash{Symbol => Boolean, Pathname, String}] the lint result
-          # @return [Array<String>] the error lines
-          # @rbs (result result) -> Array[String]
-          def extract_error_lines(result)
-            lines = result[:output].gsub("#{result[:file]}:", 'L').lines.map(&:chomp)
-            doc_index = lines.index('Further documentation is available for these failures:')
+          # @param file [String] the file path
+          # @param line_number [String] the line number
+          # @return [String] the linked line number
+          # @rbs (String file, String line_number) -> String
+          def linked_line_number(file, line_number)
+            formatted_line_num = line_number.rjust(2, '0').strip
+            colorize(hyper_link("#{file}:#{line_number}", formatted_line_num), :red).strip
+          end
 
-            if doc_index
-              error_lines = lines[0...doc_index]
-              doc_lines = lines[(doc_index + 1)..]
-              # @type var doc_lines: Array[String]
-              documentation_messages.merge(doc_lines)
-            else
-              error_lines = lines
-            end
-
-            # @type var error_lines: Array[String]
-            error_lines.reject(&:empty?)
+          # Generate a linked mdl rule id.
+          #
+          # @param mdl_rule_id [String] the mdl rule id
+          # @return [String] the linked mdl rule id
+          # @rbs (String mdl_rule_id) -> String
+          def linked_mdl_rule(mdl_rule_id)
+            doc_string = documentation_messages.find { |entry| entry.include?(mdl_rule_id) }
+            doc_link = doc_string&.match(MDL_DOCSTRING_TO_GITHUB_LINK_PATTERN)&.[](0) || ''
+            colorize(hyper_link(doc_link, mdl_rule_id), :cyan).strip
           end
 
           # Get all Markdown files in the project.
@@ -102,6 +113,56 @@ module Domainic
           # @rbs () -> Array[Pathname]
           def markdown_files
             @markdown_files ||= Domainic::Dev.root.glob('**/*.md').reject { |path| path.to_s.include?('/vendor/') }
+          end
+
+          # Extract mdl violation lines from a result, capturing any mdl documentation messages.
+          #
+          # @param result [Hash{Symbol => Boolean, Pathname, String}] the lint result
+          # @return [Array<String>] the error lines
+          # @rbs (result result) -> Array[String]
+          def parse_result(result)
+            lines = result[:output].lines.map(&:chomp)
+            doc_index = lines.index('Further documentation is available for these failures:')
+
+            if doc_index
+              violation_lines = lines[0...doc_index]
+              doc_lines = lines[(doc_index + 1)..]
+              # @type var doc_lines: Array[String]
+              documentation_messages.merge(doc_lines)
+            else
+              violation_lines = lines
+            end
+
+            # @type var violation_lines: Array[String]
+            parse_violation_lines(violation_lines)
+          end
+
+          # Parse a single violation line from mdl output.
+          #
+          # @param line [String] the violation line
+          # @return [String] the parsed violation line
+          # @rbs (String line) -> String
+          def parse_violation_line(line)
+            file, line_number, mdl_rule_id, message = line.match(MDL_VIOLATION_TO_LINE_AND_RULE_PATTERN)&.captures
+            return '' unless file && line_number && mdl_rule_id && message
+
+            linked_line_number = linked_line_number(file, line_number)
+            linked_mdl_rule = linked_mdl_rule(mdl_rule_id)
+
+            "#{embolden(linked_line_number)}: #{embolden(linked_mdl_rule)}:#{message}"
+          end
+
+          # Parse all violation lines from mdl output.
+          #
+          # Sorts violations by line number and parses each line.
+          #
+          # @param violation_lines [Array<String>] the violation lines
+          # @return [Array<String>] the parsed violation lines
+          # @rbs (Array[String] violation_lines) -> Array[String]
+          def parse_violation_lines(violation_lines)
+            violation_lines.reject(&:empty?)
+                           .sort_by { |line| line.match(MDL_VIOLATION_TO_LINE_AND_RULE_PATTERN)&.[](2).to_i }
+                           .map { |line| parse_violation_line(line) }
           end
 
           # Run mdl on all Markdown files and collect results.
@@ -114,7 +175,7 @@ module Domainic
               success = output.strip.empty?
               relative_file = file.relative_path_from(Domainic::Dev.root)
               message = success ? "#{icon(:check, :green)} #{relative_file}" : "#{icon(:x, :red)} #{relative_file}"
-              { success: success, message: message, file: file, output: output }
+              { success: success, message: message, output: output }
             end
           end
         end
