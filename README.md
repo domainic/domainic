@@ -1,6 +1,8 @@
 # Domainic
 
 [![Domainic Build](https://img.shields.io/github/actions/workflow/status/domainic/domainic/build.yml?branch=main&style=for-the-badge&logo=githubactions&logoColor=white&logoSize=auto)](https://github.com/domainic/domainic/actions/workflows/build.yml)
+[![Domainic Code Coverage](https://img.shields.io/codacy/coverage/17177dca4a76428c9422ceb8fb970271/main?style=for-the-badge&logo=codacy&logoSize=auto)](https://app.codacy.com/gh/domainic/domainic/coverage)
+[![Domainic Code Quality](https://img.shields.io/codacy/grade/17177dca4a76428c9422ceb8fb970271/main?style=for-the-badge&logo=codacy&logoSize=auto)](https://app.codacy.com/gh/domainic/domainic/dashboard)
 [![Domainic Version](https://img.shields.io/badge/not%20released-orange?label=gem%20version&logo=rubygems&logoSize=auto&style=for-the-badge)](https://rubygems.org/gems/domainic)
 [![Domainic License](https://img.shields.io/github/license/domainic/domainic?logo=opensourceinitiative&logoColor=white&logoSize=auto&style=for-the-badge)](./LICENSE)
 [![Domainic Open Issues](https://img.shields.io/github/issues-search/domainic/domainic?label=open%20issues&logo=github&logoSize=auto&query=is%3Aopen&color=red&style=for-the-badge)](https://github.com/domainic/domainic/issues?q=state%3Aopen)

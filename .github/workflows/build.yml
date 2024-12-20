@@ -33,6 +33,8 @@ jobs:
       - name: Setup ruby
         uses: ./.github/actions/setup/ruby
       - name: Test ruby code
+        env:
+          CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
         uses: ./.github/actions/test/ruby
       - name: Test ruby types
         uses: ./.github/actions/test/types

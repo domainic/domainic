@@ -6,4 +6,4 @@ runs:
   steps:
     - name: Run rspec
       shell: bash
-      run: bin/dev test
+      run: bin/dev test && bash <(curl -Ls https://coverage.codacy.com/get.sh)
