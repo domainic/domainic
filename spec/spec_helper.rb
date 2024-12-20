@@ -2,11 +2,19 @@
 
 # Setup coverage reporting
 require 'simplecov'
+require 'simplecov-lcov'
 
 SimpleCov.start do
   enable_coverage :branch
   coverage_dir File.expand_path('../coverage', __dir__)
+  formatter SimpleCov::Formatter::MultiFormatter.new(
+    [
+      SimpleCov::Formatter::LcovFormatter,
+      SimpleCov::Formatter::HTMLFormatter
+    ]
+  )
   add_filter '/spec/'
+  add_filter '/domainic-dev/'
   track_files File.expand_path('../**/*.rb', __dir__)
 end
 

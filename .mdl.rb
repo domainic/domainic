@@ -1,16 +1,14 @@
 # frozen_string_literal: true
 
+require 'yaml'
+config = YAML.load_file(File.expand_path('.markdownlint.yml', __dir__), symbolize_names: true)
+
 all
 
-rule 'MD007', indent: 2
+config.except(:default).each_pair do |rule_id, options|
+  options = options.transform_values do |value|
+    value.is_a?(Array) ? value.join(',') : value
+  end
 
-rule 'MD013', line_length: 120, tables: false
-
-# Allow CHANGELOG.md like nesting
-rule 'MD024', allow_different_nesting: true
-
-# Allow ordered lists
-rule 'MD029', style: 'ordered'
-
-# Allow collapsible details
-rule 'MD033', allowed_elements: 'details, summary'
+  rule(rule_id.to_s, **options)
+end

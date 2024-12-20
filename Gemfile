@@ -34,4 +34,5 @@ end
 group :test do
   gem 'rspec', require: false
   gem 'simplecov', require: false
+  gem 'simplecov-lcov', require: false
 end
