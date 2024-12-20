@@ -35,7 +35,7 @@ module Domainic
       # @author {https://aaronmallen.me Aaron Allen}
       # @since 0.1.0
       module EnumerableBehavior
-        include Behavior
+        include SizableBehavior
 
         def being_distinct: () -> untyped
 
@@ -55,7 +55,7 @@ module Domainic
         #   type.validate([1, 2, 3])   # => false
         #
         # @return [self] self for method chaining
-        def being_duplicative: () -> EnumerableBehavior
+        def being_duplicative: () -> Behavior
 
         alias being_redundant being_duplicative
 
@@ -77,7 +77,7 @@ module Domainic
         #   type.validate([1])    # => false
         #
         # @return [self] self for method chaining
-        def being_empty: () -> EnumerableBehavior
+        def being_empty: () -> Behavior
 
         alias being_vacant being_empty
 
@@ -95,7 +95,7 @@ module Domainic
         #   type.validate([])     # => false
         #
         # @return [self] self for method chaining
-        def being_populated: () -> EnumerableBehavior
+        def being_populated: () -> Behavior
 
         alias being_inhabited being_populated
 
@@ -118,7 +118,7 @@ module Domainic
         #   type.validate([3, 1, 2])   # => false
         #
         # @return [self] self for method chaining
-        def being_sorted: () -> EnumerableBehavior
+        def being_sorted: () -> Behavior
 
         alias being_aranged being_sorted
 
@@ -144,7 +144,7 @@ module Domainic
         #   type.validate([1, 2, 3])   # => false
         #
         # @return [self] self for method chaining
-        def being_unsorted: () -> EnumerableBehavior
+        def being_unsorted: () -> Behavior
 
         alias being_disordered being_unsorted
 
@@ -167,7 +167,7 @@ module Domainic
         #
         # @param entries [Array<Object>] the elements that must be present
         # @return [self] self for method chaining
-        def containing: (*untyped entries) -> EnumerableBehavior
+        def containing: (*untyped entries) -> Behavior
 
         alias including containing
 
@@ -182,7 +182,7 @@ module Domainic
         #
         # @param literal [Object] the value that must be the last entry
         # @return [self] self for method chaining
-        def ending_with: (untyped literal) -> EnumerableBehavior
+        def ending_with: (untyped literal) -> Behavior
 
         alias closing_with ending_with
 
@@ -200,40 +200,9 @@ module Domainic
         #
         # @param entries [Array<Object>] the elements that must not be present
         # @return [self] self for method chaining
-        def excluding: (*untyped entries) -> EnumerableBehavior
+        def excluding: (*untyped entries) -> Behavior
 
         alias omitting excluding
-
-        # Validates that the enumerable has count equal to the desired specifications
-        #
-        # @example with explicit options
-        #   type.having_count(at_least: 1, at_most: 5)
-        #   type.having_count(between: { minimum: 1, maximum: 3 })
-        #   type.having_count(exactly: 3)
-        #
-        # @example with builder pattern
-        #   type.having_count.at_least(1).at_most(5)
-        #   type.having_count.between(min: 1, max: 3)
-        #   type.having_count.exactly(3)
-        #
-        # @param options [Hash{Symbol => Integer, Hash{Symbol => Integer}}] size constraint options
-        # @option options [Integer] :at_least minimum size
-        # @option options [Integer] :at_most maximum size
-        # @option options [Hash{Symbol => Integer}] :between min/max size range
-        # @option options [Integer] :exactly exact size
-        #
-        # @return [RangeBuilder] for chaining additional constraints
-        def having_count: (**Integer | Hash[String | Symbol, Integer] options) -> RangeBuilder
-
-        alias count having_count
-
-        alias having_length having_count
-
-        alias having_size having_count
-
-        alias length having_count
-
-        alias size having_count
 
         # Validate that the enumerable contains elements of a specific type.
         #
@@ -246,7 +215,7 @@ module Domainic
         #
         # @param type [Class, Module, Behavior] the type that all elements must be
         # @return [self] self for method chaining
-        def of: (Class | Module | Behavior type) -> EnumerableBehavior
+        def of: (Class | Module | Behavior type) -> Behavior
 
         # Validate that the enumerable contains a specific first entry.
         #
@@ -259,7 +228,7 @@ module Domainic
         #
         # @param literal [Object] the value that must be the first entry
         # @return [self] self for method chaining
-        def starting_with: (untyped literal) -> EnumerableBehavior
+        def starting_with: (untyped literal) -> Behavior
 
         alias begining_with starting_with
 

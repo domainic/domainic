@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'domainic/type/behavior'
-require 'domainic/type/behavior/range_builder'
+require 'domainic/type/behavior/sizable_behavior'
 
 module Domainic
   module Type
@@ -40,9 +40,10 @@ module Domainic
       # @author {https://aaronmallen.me Aaron Allen}
       # @since 0.1.0
       module EnumerableBehavior
-        include Behavior
+        include SizableBehavior
 
         def being_distinct
+          # @type self: Object & Behavior
           constrain :entries, :uniqueness, description: 'being'
         end
         alias being_unique being_distinct
@@ -59,8 +60,9 @@ module Domainic
         #   type.validate([1, 2, 3])   # => false
         #
         # @return [self] self for method chaining
-        # @rbs () -> EnumerableBehavior
+        # @rbs ()-> Behavior
         def being_duplicative
+          # @type self: Object & Behavior
           unique = @constraints.prepare :self, :uniqueness
           constrain :entries, :not, unique, concerning: :uniqueness, description: 'being'
         end
@@ -80,8 +82,9 @@ module Domainic
         #   type.validate([1])    # => false
         #
         # @return [self] self for method chaining
-        # @rbs () -> EnumerableBehavior
+        # @rbs ()-> Behavior
         def being_empty
+          # @type self: Object & Behavior
           constrain :entries, :emptiness, description: 'being'
         end
         alias being_vacant being_empty
@@ -98,8 +101,9 @@ module Domainic
         #   type.validate([])     # => false
         #
         # @return [self] self for method chaining
-        # @rbs () -> EnumerableBehavior
+        # @rbs ()-> Behavior
         def being_populated
+          # @type self: Object & Behavior
           empty = @constraints.prepare :self, :emptiness
           constrain :entries, :not, empty, concerning: :emptiness, description: 'being'
         end
@@ -120,8 +124,9 @@ module Domainic
         #   type.validate([3, 1, 2])   # => false
         #
         # @return [self] self for method chaining
-        # @rbs () -> EnumerableBehavior
+        # @rbs ()-> Behavior
         def being_sorted
+          # @type self: Object & Behavior
           constrain :entries, :ordering, description: 'being'
         end
         alias being_aranged being_sorted
@@ -142,8 +147,9 @@ module Domainic
         #   type.validate([1, 2, 3])   # => false
         #
         # @return [self] self for method chaining
-        # @rbs () -> EnumerableBehavior
+        # @rbs ()-> Behavior
         def being_unsorted
+          # @type self: Object & Behavior
           ordered = @constraints.prepare :self, :ordering
           constrain :entries, :not, ordered, concerning: :ordering, description: 'being'
         end
@@ -164,8 +170,9 @@ module Domainic
         #
         # @param entries [Array<Object>] the elements that must be present
         # @return [self] self for method chaining
-        # @rbs (*untyped entries) -> EnumerableBehavior
+        # @rbs (*untyped entries)-> Behavior
         def containing(*entries)
+          # @type self: Object & Behavior
           constrain :entries, :inclusion, entries
         end
         alias including containing
@@ -181,8 +188,9 @@ module Domainic
         #
         # @param literal [Object] the value that must be the last entry
         # @return [self] self for method chaining
-        # @rbs (untyped literal) -> EnumerableBehavior
+        # @rbs (untyped literal)-> Behavior
         def ending_with(literal)
+          # @type self: Object & Behavior
           constrain :last, :equality, literal, concerning: :last_entry_value, description: 'with last entry'
         end
         alias closing_with ending_with
@@ -200,49 +208,13 @@ module Domainic
         #
         # @param entries [Array<Object>] the elements that must not be present
         # @return [self] self for method chaining
-        # @rbs (*untyped entries) -> EnumerableBehavior
+        # @rbs (*untyped entries)-> Behavior
         def excluding(*entries)
+          # @type self: Object & Behavior
           including = @constraints.prepare :self, :inclusion, entries
           constrain :entries, :not, including, concerning: :exclusion
         end
         alias omitting excluding
-
-        # Validates that the enumerable has count equal to the desired specifications
-        #
-        # @example with explicit options
-        #   type.having_count(at_least: 1, at_most: 5)
-        #   type.having_count(between: { minimum: 1, maximum: 3 })
-        #   type.having_count(exactly: 3)
-        #
-        # @example with builder pattern
-        #   type.having_count.at_least(1).at_most(5)
-        #   type.having_count.between(min: 1, max: 3)
-        #   type.having_count.exactly(3)
-        #
-        # @param options [Hash{Symbol => Integer, Hash{Symbol => Integer}}] size constraint options
-        # @option options [Integer] :at_least minimum size
-        # @option options [Integer] :at_most maximum size
-        # @option options [Hash{Symbol => Integer}] :between min/max size range
-        # @option options [Integer] :exactly exact size
-        #
-        # @return [RangeBuilder] for chaining additional constraints
-        # @rbs (**Integer | Hash[String | Symbol, Integer] options) -> RangeBuilder
-        def having_count(**options)
-          builder_options = { concerning: :size, description: "having #{__method__.to_s.split('_').last}" }
-          builder = RangeBuilder.new(self, :size, **builder_options) # steep:ignore ArgumentTypeMismatch
-          return builder if options.empty?
-
-          options.each_pair do |method, value|
-            value.is_a?(Hash) ? builder.send(method, **value.transform_keys(&:to_sym)) : builder.send(method, value)
-          end
-
-          builder
-        end
-        alias count having_count
-        alias having_length having_count
-        alias having_size having_count
-        alias length having_count
-        alias size having_count
 
         # Validate that the enumerable contains elements of a specific type.
         #
@@ -255,8 +227,9 @@ module Domainic
         #
         # @param type [Class, Module, Behavior] the type that all elements must be
         # @return [self] self for method chaining
-        # @rbs (Class | Module | Behavior type) -> EnumerableBehavior
+        # @rbs (Class | Module | Behavior type)-> Behavior
         def of(type)
+          # @type self: Object & Behavior
           type = @constraints.prepare :entries, :type, type
           constrain :entries, :all, type, concerning: :entry_type
         end
@@ -272,8 +245,9 @@ module Domainic
         #
         # @param literal [Object] the value that must be the first entry
         # @return [self] self for method chaining
-        # @rbs (untyped literal) -> EnumerableBehavior
+        # @rbs (untyped literal)-> Behavior
         def starting_with(literal)
+          # @type self: Object & Behavior
           constrain :first, :equality, literal, concerning: :first_entry_value, description: 'with first entry'
         end
         alias begining_with starting_with
