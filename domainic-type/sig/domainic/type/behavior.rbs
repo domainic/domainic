@@ -90,7 +90,7 @@ module Domainic
         # @see Constraint::Set#add
         #
         # @return [void]
-        def intrinsic: (Type::accessor accessor, String | Symbol constraint_type, ?untyped expectation, ?abort_on_failure: bool, ?coerce_with: Array[Proc] | Proc, ?concerning: String | Symbol, ?description: String | Symbol) -> void
+        def intrinsic: (Type::accessor accessor, String | Symbol constraint_type, ?untyped expectation, **untyped options) -> void
 
         # Get the set of intrinsic constraints for this type.
         #
@@ -149,7 +149,7 @@ module Domainic
       # @see Constraint::Set#add
       #
       # @return [self]
-      def constrain: (Type::accessor accessor, String | Symbol constraint_type, ?untyped expectation, ?abort_on_failure: bool, ?coerce_with: Array[Proc] | Proc, ?concerning: String | Symbol, ?description: String | Symbol) -> self
+      def constrain: (Type::accessor accessor, String | Symbol constraint_type, ?untyped expectation, **untyped options) -> self
     end
   end
 end

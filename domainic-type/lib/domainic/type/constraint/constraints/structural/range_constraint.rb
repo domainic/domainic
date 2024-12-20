@@ -32,8 +32,10 @@ module Domainic
       class RangeConstraint
         # @rbs!
         #   type expected = { ?minimum: Numeric, ?maximum: Numeric }
+        #
+        #   type options = { ?inclusive: bool }
 
-        include Behavior #[expected, Numeric, {}]
+        include Behavior #[expected, Numeric, options]
 
         # Get a human-readable description of the range constraint.
         #
@@ -90,7 +92,10 @@ module Domainic
         # @rbs override
         def satisfies_constraint?
           min, max = @expected.values_at(:minimum, :maximum)
-          @actual >= (min || -Float::INFINITY) && @actual <= (max || Float::INFINITY)
+          min_comparison, max_comparison = @options.fetch(:inclusive, true) ? %i[>= <=] : %i[> <]
+
+          @actual.send(min_comparison, (min || -Float::INFINITY)) &&
+            @actual.send(max_comparison, (max || Float::INFINITY))
         end
 
         # Validate that the expected value is a properly formatted range specification.

@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
 require 'domainic/type/behavior'
+require 'domainic/type/behavior/range_builder'
 
 module Domainic
   module Type
     module Behavior
       # A module providing enumerable-specific validation behaviors for types.
       #
-      # This module extends the base Type::Behavior with methods specifically designed
-      # for validating enumerable collections. It provides a fluent interface for
-      # common enumerable validations such as uniqueness, emptiness, ordering,
-      # and size constraints.
+      # This module extends the base Type::Behavior with methods specifically designed for validating enumerable
+      # collections. It provides a fluent interface for common enumerable validations such as uniqueness, emptiness,
+      # ordering, and size constraints.
       #
       # @example Basic usage
       #   class ArrayType
@@ -42,22 +42,33 @@ module Domainic
       module EnumerableBehavior
         include Behavior
 
+        def being_distinct
+          constrain :entries, :uniqueness, description: 'being'
+        end
+        alias being_unique being_distinct
+        alias distinct being_distinct
+        alias unique being_distinct
+
         # Validate that the enumerable contains duplicate elements.
         #
-        # Creates an inverse uniqueness constraint that ensures the collection
-        # has at least one duplicate element.
+        # Creates an inverse uniqueness constraint that ensures the collection has at least one duplicate element.
         #
         # @example
         #   type.being_duplicative
         #   type.validate([1, 1, 2])   # => true
         #   type.validate([1, 2, 3])   # => false
         #
-        # @return [EnumerableBehavior] self for method chaining
+        # @return [self] self for method chaining
         # @rbs () -> EnumerableBehavior
         def being_duplicative
           unique = @constraints.prepare :self, :uniqueness
-          constrain :self, :not, unique, concerning: :uniqueness, description: 'being'
+          constrain :entries, :not, unique, concerning: :uniqueness, description: 'being'
         end
+        alias being_redundant being_duplicative
+        alias being_repetitive being_duplicative
+        alias duplicative being_duplicative
+        alias redundant being_duplicative
+        alias repetitive being_duplicative
 
         # Validate that the enumerable is empty.
         #
@@ -68,66 +79,83 @@ module Domainic
         #   type.validate([])     # => true
         #   type.validate([1])    # => false
         #
-        # @return [EnumerableBehavior] self for method chaining
+        # @return [self] self for method chaining
         # @rbs () -> EnumerableBehavior
         def being_empty
-          constrain :self, :emptiness, description: 'being'
+          constrain :entries, :emptiness, description: 'being'
         end
-
-        # Validate that the enumerable elements are in sorted order.
-        #
-        # Creates a constraint that ensures the collection's elements are
-        # in ascending order based on their natural comparison methods.
-        #
-        # @example
-        #   type.being_ordered
-        #   type.validate([1, 2, 3])   # => true
-        #   type.validate([3, 1, 2])   # => false
-        #
-        # @return [EnumerableBehavior] self for method chaining
-        # @rbs () -> EnumerableBehavior
-        def being_ordered
-          constrain :self, :ordering, description: 'being'
-        end
+        alias being_vacant being_empty
+        alias empty being_empty
+        alias vacant being_empty
 
         # Validate that the enumerable contains elements.
         #
-        # Creates an inverse emptiness constraint that ensures the collection
-        # has at least one element.
+        # Creates an inverse emptiness constraint that ensures the collection has at least one element.
         #
         # @example
         #   type.being_populated
         #   type.validate([1])    # => true
         #   type.validate([])     # => false
         #
-        # @return [EnumerableBehavior] self for method chaining
+        # @return [self] self for method chaining
         # @rbs () -> EnumerableBehavior
         def being_populated
           empty = @constraints.prepare :self, :emptiness
-          constrain :self, :not, empty, concerning: :emptiness, description: 'being'
+          constrain :entries, :not, empty, concerning: :emptiness, description: 'being'
         end
+        alias being_inhabited being_populated
+        alias being_occupied being_populated
+        alias populated being_populated
+        alias inhabited being_populated
+        alias occupied being_populated
+
+        # Validate that the enumerable elements are in sorted order.
+        #
+        # Creates a constraint that ensures the collection's elements are in ascending order based on their natural
+        # comparison methods.
+        #
+        # @example
+        #   type.being_ordered
+        #   type.validate([1, 2, 3])   # => true
+        #   type.validate([3, 1, 2])   # => false
+        #
+        # @return [self] self for method chaining
+        # @rbs () -> EnumerableBehavior
+        def being_sorted
+          constrain :entries, :ordering, description: 'being'
+        end
+        alias being_aranged being_sorted
+        alias being_ordered being_sorted
+        alias being_sequential being_sorted
+        alias aranged being_sorted
+        alias ordered being_sorted
+        alias sorted being_sorted
+        alias sequential being_sorted
 
         # Validate that the enumerable elements are not in sorted order.
         #
-        # Creates an inverse ordering constraint that ensures the collection's
-        # elements are not in ascending order.
+        # Creates an inverse ordering constraint that ensures the collection's elements are not in ascending order.
         #
         # @example
         #   type.being_unordered
         #   type.validate([3, 1, 2])   # => true
         #   type.validate([1, 2, 3])   # => false
         #
-        # @return [EnumerableBehavior] self for method chaining
+        # @return [self] self for method chaining
         # @rbs () -> EnumerableBehavior
-        def being_unordered
+        def being_unsorted
           ordered = @constraints.prepare :self, :ordering
-          constrain :self, :not, ordered, concerning: :ordering, description: 'being'
+          constrain :entries, :not, ordered, concerning: :ordering, description: 'being'
         end
+        alias being_disordered being_unsorted
+        alias being_unordered being_unsorted
+        alias disordered being_unsorted
+        alias unsorted being_unsorted
+        alias unordered being_unsorted
 
         # Validate that the enumerable contains specific entries.
         #
-        # Creates a series of inclusion constraints ensuring the collection
-        # contains all specified elements.
+        # Creates a series of inclusion constraints ensuring the collection contains all specified elements.
         #
         # @example
         #   type.containing(1, 2)
@@ -135,49 +163,121 @@ module Domainic
         #   type.validate([1, 3])      # => false
         #
         # @param entries [Array<Object>] the elements that must be present
-        # @return [EnumerableBehavior] self for method chaining
+        # @return [self] self for method chaining
         # @rbs (*untyped entries) -> EnumerableBehavior
         def containing(*entries)
-          constrain :self, :inclusion, entries
+          constrain :entries, :inclusion, entries
         end
+        alias including containing
 
-        # Validate that the enumerable's size is at most a given value.
+        # Validate that the enumerable contains a specific last entry.
         #
-        # Creates a range constraint on the collection's size ensuring it
-        # does not exceed the specified maximum.
+        # Creates an equality constraint on the collection's last entry ensuring it is equal to the specified value.
         #
         # @example
-        #   type.having_maximum_count(3)
+        #   type.having_last_entry(3)
         #   type.validate([1, 2, 3])   # => true
-        #   type.validate([1, 2, 3, 4]) # => false
+        #   type.validate([1, 3, 2])   # => false
         #
-        # @param maximum [Integer] the maximum allowed size
-        # @return [EnumerableBehavior] self for method chaining
-        # @rbs (Integer maximum) -> EnumerableBehavior
-        def having_maximum_count(maximum)
-          accessor = __method__.to_s.split('_').last.to_sym
-          # @type var accessor: Type::accessor
-          constrain accessor, :range, { maximum: maximum }, concerning: :size, description: 'having'
+        # @param literal [Object] the value that must be the last entry
+        # @return [self] self for method chaining
+        # @rbs (untyped literal) -> EnumerableBehavior
+        def ending_with(literal)
+          constrain :last, :equality, literal, concerning: :last_entry_value, description: 'with last entry'
         end
+        alias closing_with ending_with
+        alias finishing_with ending_with
 
-        # Validate that the enumerable's size is at least a given value.
+        # Validate that the enumerable does not contain specific entries.
         #
-        # Creates a range constraint on the collection's size ensuring it
-        # has at least the specified minimum number of elements.
+        # Creates a series of exclusion constraints ensuring the collection does not contain any of the specified
+        # elements.
         #
         # @example
-        #   type.having_minimum_count(2)
-        #   type.validate([1, 2, 3])   # => true
-        #   type.validate([1])         # => false
+        #   type.excluding(1, 2)
+        #   type.validate([3, 4, 5])   # => true
+        #   type.validate([1, 2, 3])   # => false
         #
-        # @param minimum [Integer] the minimum required size
-        # @return [EnumerableBehavior] self for method chaining
-        # @rbs (Integer minimum) -> EnumerableBehavior
-        def having_minimum_count(minimum)
-          accessor = __method__.to_s.split('_').last.to_sym
-          # @type var accessor: Type::accessor
-          constrain accessor, :range, { minimum: minimum }, concerning: :size, description: 'having'
+        # @param entries [Array<Object>] the elements that must not be present
+        # @return [self] self for method chaining
+        # @rbs (*untyped entries) -> EnumerableBehavior
+        def excluding(*entries)
+          including = @constraints.prepare :self, :inclusion, entries
+          constrain :entries, :not, including, concerning: :exclusion
         end
+        alias omitting excluding
+
+        # Validates that the enumerable has count equal to the desired specifications
+        #
+        # @example with explicit options
+        #   type.having_count(at_least: 1, at_most: 5)
+        #   type.having_count(between: { minimum: 1, maximum: 3 })
+        #   type.having_count(exactly: 3)
+        #
+        # @example with builder pattern
+        #   type.having_count.at_least(1).at_most(5)
+        #   type.having_count.between(min: 1, max: 3)
+        #   type.having_count.exactly(3)
+        #
+        # @param options [Hash{Symbol => Integer, Hash{Symbol => Integer}}] size constraint options
+        # @option options [Integer] :at_least minimum size
+        # @option options [Integer] :at_most maximum size
+        # @option options [Hash{Symbol => Integer}] :between min/max size range
+        # @option options [Integer] :exactly exact size
+        #
+        # @return [RangeBuilder] for chaining additional constraints
+        # @rbs (**Integer | Hash[String | Symbol, Integer] options) -> RangeBuilder
+        def having_count(**options)
+          builder_options = { concerning: :size, description: "having #{__method__.to_s.split('_').last}" }
+          builder = RangeBuilder.new(self, :size, **builder_options) # steep:ignore ArgumentTypeMismatch
+          return builder if options.empty?
+
+          options.each_pair do |method, value|
+            value.is_a?(Hash) ? builder.send(method, **value.transform_keys(&:to_sym)) : builder.send(method, value)
+          end
+
+          builder
+        end
+        alias count having_count
+        alias having_length having_count
+        alias having_size having_count
+        alias length having_count
+        alias size having_count
+
+        # Validate that the enumerable contains elements of a specific type.
+        #
+        # Creates a type constraint on the collection's elements ensuring they are all of the specified type.
+        #
+        # @example
+        #   type.of(String)
+        #   type.validate(['a', 'b', 'c'])   # => true
+        #   type.validate(['a', 1, 'c'])     # => false
+        #
+        # @param type [Class, Module, Behavior] the type that all elements must be
+        # @return [self] self for method chaining
+        # @rbs (Class | Module | Behavior type) -> EnumerableBehavior
+        def of(type)
+          type = @constraints.prepare :entries, :type, type
+          constrain :entries, :all, type, concerning: :entry_type
+        end
+
+        # Validate that the enumerable contains a specific first entry.
+        #
+        # Creates an equality constraint on the collection's first entry ensuring it is equal to the specified value.
+        #
+        # @example
+        #   type.having_first_entry(1)
+        #   type.validate([1, 2, 3])   # => true
+        #   type.validate([2, 3, 1])   # => false
+        #
+        # @param literal [Object] the value that must be the first entry
+        # @return [self] self for method chaining
+        # @rbs (untyped literal) -> EnumerableBehavior
+        def starting_with(literal)
+          constrain :first, :equality, literal, concerning: :first_entry_value, description: 'with first entry'
+        end
+        alias begining_with starting_with
+        alias leading_with starting_with
       end
     end
   end

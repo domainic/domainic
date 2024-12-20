@@ -3,10 +3,9 @@ module Domainic
     module Behavior
       # A module providing enumerable-specific validation behaviors for types.
       #
-      # This module extends the base Type::Behavior with methods specifically designed
-      # for validating enumerable collections. It provides a fluent interface for
-      # common enumerable validations such as uniqueness, emptiness, ordering,
-      # and size constraints.
+      # This module extends the base Type::Behavior with methods specifically designed for validating enumerable
+      # collections. It provides a fluent interface for common enumerable validations such as uniqueness, emptiness,
+      # ordering, and size constraints.
       #
       # @example Basic usage
       #   class ArrayType
@@ -38,18 +37,35 @@ module Domainic
       module EnumerableBehavior
         include Behavior
 
+        def being_distinct: () -> untyped
+
+        alias being_unique being_distinct
+
+        alias distinct being_distinct
+
+        alias unique being_distinct
+
         # Validate that the enumerable contains duplicate elements.
         #
-        # Creates an inverse uniqueness constraint that ensures the collection
-        # has at least one duplicate element.
+        # Creates an inverse uniqueness constraint that ensures the collection has at least one duplicate element.
         #
         # @example
         #   type.being_duplicative
         #   type.validate([1, 1, 2])   # => true
         #   type.validate([1, 2, 3])   # => false
         #
-        # @return [EnumerableBehavior] self for method chaining
+        # @return [self] self for method chaining
         def being_duplicative: () -> EnumerableBehavior
+
+        alias being_redundant being_duplicative
+
+        alias being_repetitive being_duplicative
+
+        alias duplicative being_duplicative
+
+        alias redundant being_duplicative
+
+        alias repetitive being_duplicative
 
         # Validate that the enumerable is empty.
         #
@@ -60,52 +76,89 @@ module Domainic
         #   type.validate([])     # => true
         #   type.validate([1])    # => false
         #
-        # @return [EnumerableBehavior] self for method chaining
+        # @return [self] self for method chaining
         def being_empty: () -> EnumerableBehavior
 
-        # Validate that the enumerable elements are in sorted order.
-        #
-        # Creates a constraint that ensures the collection's elements are
-        # in ascending order based on their natural comparison methods.
-        #
-        # @example
-        #   type.being_ordered
-        #   type.validate([1, 2, 3])   # => true
-        #   type.validate([3, 1, 2])   # => false
-        #
-        # @return [EnumerableBehavior] self for method chaining
-        def being_ordered: () -> EnumerableBehavior
+        alias being_vacant being_empty
+
+        alias empty being_empty
+
+        alias vacant being_empty
 
         # Validate that the enumerable contains elements.
         #
-        # Creates an inverse emptiness constraint that ensures the collection
-        # has at least one element.
+        # Creates an inverse emptiness constraint that ensures the collection has at least one element.
         #
         # @example
         #   type.being_populated
         #   type.validate([1])    # => true
         #   type.validate([])     # => false
         #
-        # @return [EnumerableBehavior] self for method chaining
+        # @return [self] self for method chaining
         def being_populated: () -> EnumerableBehavior
+
+        alias being_inhabited being_populated
+
+        alias being_occupied being_populated
+
+        alias populated being_populated
+
+        alias inhabited being_populated
+
+        alias occupied being_populated
+
+        # Validate that the enumerable elements are in sorted order.
+        #
+        # Creates a constraint that ensures the collection's elements are in ascending order based on their natural
+        # comparison methods.
+        #
+        # @example
+        #   type.being_ordered
+        #   type.validate([1, 2, 3])   # => true
+        #   type.validate([3, 1, 2])   # => false
+        #
+        # @return [self] self for method chaining
+        def being_sorted: () -> EnumerableBehavior
+
+        alias being_aranged being_sorted
+
+        alias being_ordered being_sorted
+
+        alias being_sequential being_sorted
+
+        alias aranged being_sorted
+
+        alias ordered being_sorted
+
+        alias sorted being_sorted
+
+        alias sequential being_sorted
 
         # Validate that the enumerable elements are not in sorted order.
         #
-        # Creates an inverse ordering constraint that ensures the collection's
-        # elements are not in ascending order.
+        # Creates an inverse ordering constraint that ensures the collection's elements are not in ascending order.
         #
         # @example
         #   type.being_unordered
         #   type.validate([3, 1, 2])   # => true
         #   type.validate([1, 2, 3])   # => false
         #
-        # @return [EnumerableBehavior] self for method chaining
-        def being_unordered: () -> EnumerableBehavior
+        # @return [self] self for method chaining
+        def being_unsorted: () -> EnumerableBehavior
+
+        alias being_disordered being_unsorted
+
+        alias being_unordered being_unsorted
+
+        alias disordered being_unsorted
+
+        alias unsorted being_unsorted
+
+        alias unordered being_unsorted
 
         # Validate that the enumerable contains specific entries.
         #
-        # Creates a series of inclusion constraints ensuring the collection
-        # contains all specified elements.
+        # Creates a series of inclusion constraints ensuring the collection contains all specified elements.
         #
         # @example
         #   type.containing(1, 2)
@@ -113,36 +166,104 @@ module Domainic
         #   type.validate([1, 3])      # => false
         #
         # @param entries [Array<Object>] the elements that must be present
-        # @return [EnumerableBehavior] self for method chaining
+        # @return [self] self for method chaining
         def containing: (*untyped entries) -> EnumerableBehavior
 
-        # Validate that the enumerable's size is at most a given value.
-        #
-        # Creates a range constraint on the collection's size ensuring it
-        # does not exceed the specified maximum.
-        #
-        # @example
-        #   type.having_maximum_count(3)
-        #   type.validate([1, 2, 3])   # => true
-        #   type.validate([1, 2, 3, 4]) # => false
-        #
-        # @param maximum [Integer] the maximum allowed size
-        # @return [EnumerableBehavior] self for method chaining
-        def having_maximum_count: (Integer maximum) -> EnumerableBehavior
+        alias including containing
 
-        # Validate that the enumerable's size is at least a given value.
+        # Validate that the enumerable contains a specific last entry.
         #
-        # Creates a range constraint on the collection's size ensuring it
-        # has at least the specified minimum number of elements.
+        # Creates an equality constraint on the collection's last entry ensuring it is equal to the specified value.
         #
         # @example
-        #   type.having_minimum_count(2)
+        #   type.having_last_entry(3)
         #   type.validate([1, 2, 3])   # => true
-        #   type.validate([1])         # => false
+        #   type.validate([1, 3, 2])   # => false
         #
-        # @param minimum [Integer] the minimum required size
-        # @return [EnumerableBehavior] self for method chaining
-        def having_minimum_count: (Integer minimum) -> EnumerableBehavior
+        # @param literal [Object] the value that must be the last entry
+        # @return [self] self for method chaining
+        def ending_with: (untyped literal) -> EnumerableBehavior
+
+        alias closing_with ending_with
+
+        alias finishing_with ending_with
+
+        # Validate that the enumerable does not contain specific entries.
+        #
+        # Creates a series of exclusion constraints ensuring the collection does not contain any of the specified
+        # elements.
+        #
+        # @example
+        #   type.excluding(1, 2)
+        #   type.validate([3, 4, 5])   # => true
+        #   type.validate([1, 2, 3])   # => false
+        #
+        # @param entries [Array<Object>] the elements that must not be present
+        # @return [self] self for method chaining
+        def excluding: (*untyped entries) -> EnumerableBehavior
+
+        alias omitting excluding
+
+        # Validates that the enumerable has count equal to the desired specifications
+        #
+        # @example with explicit options
+        #   type.having_count(at_least: 1, at_most: 5)
+        #   type.having_count(between: { minimum: 1, maximum: 3 })
+        #   type.having_count(exactly: 3)
+        #
+        # @example with builder pattern
+        #   type.having_count.at_least(1).at_most(5)
+        #   type.having_count.between(min: 1, max: 3)
+        #   type.having_count.exactly(3)
+        #
+        # @param options [Hash{Symbol => Integer, Hash{Symbol => Integer}}] size constraint options
+        # @option options [Integer] :at_least minimum size
+        # @option options [Integer] :at_most maximum size
+        # @option options [Hash{Symbol => Integer}] :between min/max size range
+        # @option options [Integer] :exactly exact size
+        #
+        # @return [RangeBuilder] for chaining additional constraints
+        def having_count: (**Integer | Hash[String | Symbol, Integer] options) -> RangeBuilder
+
+        alias count having_count
+
+        alias having_length having_count
+
+        alias having_size having_count
+
+        alias length having_count
+
+        alias size having_count
+
+        # Validate that the enumerable contains elements of a specific type.
+        #
+        # Creates a type constraint on the collection's elements ensuring they are all of the specified type.
+        #
+        # @example
+        #   type.of(String)
+        #   type.validate(['a', 'b', 'c'])   # => true
+        #   type.validate(['a', 1, 'c'])     # => false
+        #
+        # @param type [Class, Module, Behavior] the type that all elements must be
+        # @return [self] self for method chaining
+        def of: (Class | Module | Behavior type) -> EnumerableBehavior
+
+        # Validate that the enumerable contains a specific first entry.
+        #
+        # Creates an equality constraint on the collection's first entry ensuring it is equal to the specified value.
+        #
+        # @example
+        #   type.having_first_entry(1)
+        #   type.validate([1, 2, 3])   # => true
+        #   type.validate([2, 3, 1])   # => false
+        #
+        # @param literal [Object] the value that must be the first entry
+        # @return [self] self for method chaining
+        def starting_with: (untyped literal) -> EnumerableBehavior
+
+        alias begining_with starting_with
+
+        alias leading_with starting_with
       end
     end
   end
