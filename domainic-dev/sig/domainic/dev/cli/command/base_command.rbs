@@ -51,6 +51,13 @@ module Domainic
           # @return [String] the bolded text
           def embolden: (String text) -> String
 
+          # Creates a hyperlink with the given reference and text.
+          #
+          # @param reference [String] the URL reference
+          # @param text [String] the text to display
+          # @return [String] the hyperlink
+          def hyper_link: (String reference, String text) -> String
+
           # Retrieves the icon for the given name.
           #
           # @param name [String, Symbol] the name of the icon

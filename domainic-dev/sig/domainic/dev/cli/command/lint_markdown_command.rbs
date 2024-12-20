@@ -13,11 +13,21 @@ module Domainic
         class LintMarkdownCommand < BaseCommand
           type result = { success: bool, message: String, file: Pathname, output: String }
 
+          # Pattern to match a GitHub link in an mdl documentation message.
+          #
+          # @return [Regexp] the pattern
+          MDL_DOCSTRING_TO_GITHUB_LINK_PATTERN: Regexp
+
+          # Pattern to match an mdl violation line and extract the file, line number, rule ID, and message.
+          #
+          # @return [Regexp] the pattern
+          MDL_VIOLATION_TO_LINE_AND_RULE_PATTERN: Regexp
+
           @results: Array[result]
 
-          @markdown_files: Array[Pathname]
-
           @documentation_messages: Set[String]
+
+          @markdown_files: Array[Pathname]
 
           # Execute the Markdown linting command.
           #
@@ -41,16 +51,43 @@ module Domainic
           # @return [Set<String>] the documentation messages
           def documentation_messages: () -> Set[String]
 
-          # Extract error lines from a result, capturing any documentation messages.
+          # Generate a linked line number for a Markdown file.
           #
-          # @param result [Hash{Symbol => Boolean, Pathname, String}] the lint result
-          # @return [Array<String>] the error lines
-          def extract_error_lines: (result result) -> Array[String]
+          # @param file [String] the file path
+          # @param line_number [String] the line number
+          # @return [String] the linked line number
+          def linked_line_number: (String file, String line_number) -> String
+
+          # Generate a linked mdl rule id.
+          #
+          # @param mdl_rule_id [String] the mdl rule id
+          # @return [String] the linked mdl rule id
+          def linked_mdl_rule: (String mdl_rule_id) -> String
 
           # Get all Markdown files in the project.
           #
           # @return [Array<Pathname>] array of Markdown file paths
           def markdown_files: () -> Array[Pathname]
+
+          # Extract mdl violation lines from a result, capturing any mdl documentation messages.
+          #
+          # @param result [Hash{Symbol => Boolean, Pathname, String}] the lint result
+          # @return [Array<String>] the error lines
+          def parse_result: (result result) -> Array[String]
+
+          # Parse a single violation line from mdl output.
+          #
+          # @param line [String] the violation line
+          # @return [String] the parsed violation line
+          def parse_violation_line: (String line) -> String
+
+          # Parse all violation lines from mdl output.
+          #
+          # Sorts violations by line number and parses each line.
+          #
+          # @param violation_lines [Array<String>] the violation lines
+          # @return [Array<String>] the parsed violation lines
+          def parse_violation_lines: (Array[String] violation_lines) -> Array[String]
 
           # Run mdl on all Markdown files and collect results.
           #

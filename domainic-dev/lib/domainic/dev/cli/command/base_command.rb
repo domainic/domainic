@@ -81,6 +81,16 @@ module Domainic
             "\e[1m#{text}\e[0m"
           end
 
+          # Creates a hyperlink with the given reference and text.
+          #
+          # @param reference [String] the URL reference
+          # @param text [String] the text to display
+          # @return [String] the hyperlink
+          # @rbs (String reference, String text) -> String
+          def hyper_link(reference, text)
+            "\e]8;;#{reference}\e\\#{text}\e]8;;\e\\"
+          end
+
           # Retrieves the icon for the given name.
           #
           # @param name [String, Symbol] the name of the icon
