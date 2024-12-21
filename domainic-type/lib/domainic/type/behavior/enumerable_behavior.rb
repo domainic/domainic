@@ -230,7 +230,7 @@ module Domainic
         # @rbs (Class | Module | Behavior type)-> Behavior
         def of(type)
           # @type self: Object & Behavior
-          type = @constraints.prepare :entries, :type, type
+          type = @constraints.prepare :self, :type, type
           constrain :entries, :all, type, concerning: :entry_type
         end
 
