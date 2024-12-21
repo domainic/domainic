@@ -2,6 +2,7 @@
 
 require 'domainic/dev/cli/command/generate_signatures_command'
 require 'domainic/dev/generator/gem_generator'
+require 'domainic/dev/generator/project_doc_generator'
 require 'thor'
 
 module Domainic
@@ -31,6 +32,13 @@ module Domainic
           'gem',
           'gem NAME',
           'Generate a new Domainic gem'
+        )
+
+        register(
+          Generator::ProjectDocGenerator,
+          'project_doc',
+          'project_doc <NAME> <ID>',
+          'Generate project documentation'
         )
         # steep:ignore:end
       end

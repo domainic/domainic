@@ -1,0 +1,37 @@
+module Domainic
+  module Dev
+    module Generator
+      # A generator for creating new project documentation.
+      #
+      # This creates new project documentation in the `docs/projects` directory.
+      #
+      # @author {https://aaronmallen.me Aaron Allen}
+      # @since 0.1.0
+      class ProjectDocGenerator < BaseGenerator
+        # Ensure the project does not already exist.
+        #
+        # @raise [ArgumentError] if the project already exists
+        # @return [void]
+        def ensure_project_does_not_exist: () -> void
+
+        # Create the project directory.
+        #
+        # @return [void]
+        def create_project_directory: () -> void
+
+        def create_project_readme: () -> untyped
+
+        def id: () -> Integer
+
+        def name: () -> String
+
+        private
+
+        # The name of the project directory based on the project name.
+        #
+        # @return [String]
+        def directory_name: () -> String
+      end
+    end
+  end
+end
