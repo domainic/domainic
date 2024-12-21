@@ -1,0 +1,107 @@
+module Domainic
+  module Type
+    # A type for validating Hash objects with flexible key and value constraints
+    #
+    # This class provides a comprehensive set of validations specifically designed
+    # for Hash objects, including key/value type checking, inclusion/exclusion of
+    # specific keys or values, and all standard enumerable validations.
+    #
+    # Key features:
+    # - Key type validation
+    # - Value type validation
+    # - Key presence/absence checking
+    # - Value presence/absence checking
+    # - Size constraints (via EnumerableBehavior)
+    # - Standard collection validations (via EnumerableBehavior)
+    #
+    # @example Basic usage
+    #   type = HashType.new
+    #   type.of(String => Integer)          # enforce key/value types
+    #   type.containing_keys('a', 'b')      # require specific keys
+    #   type.containing_values(1, 2)        # require specific values
+    #   type.having_size(2)                 # exact size constraint
+    #
+    # @example Complex constraints
+    #   type = HashType.new
+    #   type
+    #     .of(Symbol => String)             # type constraints
+    #     .containing_keys(:name, :email)   # required keys
+    #     .excluding_values(nil, '')        # no empty values
+    #     .having_size_between(2, 5)        # size range
+    #
+    # @author {https://aaronmallen.me Aaron Allen}
+    # @since 0.1.0
+    class HashType
+      extend Behavior::ClassMethods
+
+      include Behavior
+
+      include Behavior::EnumerableBehavior
+
+      # Validate that the hash contains specific keys
+      #
+      # @example
+      #   type.containing_keys(:name, :email)
+      #   type.validate({ name: 'John', email: 'john@example.com' })  # => true
+      #   type.validate({ name: 'John' })                            # => false
+      #
+      # @param keys [Array<Object>] the keys that must be present
+      # @return [self] self for method chaining
+      def containing_keys: (*untyped keys) -> self
+
+      alias including_keys containing_keys
+
+      # Validate that the hash contains specific values
+      #
+      # @example
+      #   type.containing_values('active', 'pending')
+      #   type.validate({ status: 'active' })   # => true
+      #   type.validate({ status: 'inactive' }) # => false
+      #
+      # @param values [Array<Object>] the values that must be present
+      # @return [self] self for method chaining
+      def containing_values: (*untyped values) -> self
+
+      alias including_values containing_values
+
+      # Validate that the hash does not contain specific keys
+      #
+      # @example
+      #   type.excluding_keys(:admin, :superuser)
+      #   type.validate({ user: 'John' })           # => true
+      #   type.validate({ admin: true })            # => false
+      #
+      # @param keys [Array<Object>] the keys that must not be present
+      # @return [self] self for method chaining
+      def excluding_keys: (*untyped keys) -> self
+
+      alias omitting_keys excluding_keys
+
+      # Validate that the hash does not contain specific values
+      #
+      # @example
+      #   type.excluding_values(nil, '')
+      #   type.validate({ name: 'John' })   # => true
+      #   type.validate({ name: nil })      # => false
+      #
+      # @param values [Array<Object>] the values that must not be present
+      # @return [self] self for method chaining
+      def excluding_values: (*untyped values) -> self
+
+      alias omitting_values excluding_values
+
+      # Validate the hash to have the given key type and value type.
+      #
+      # @example
+      #   type.of(String => Integer)
+      #   type.validate({ 'a' => 1 })   # => true
+      #   type.validate({ 1 => 'a' })   # => false
+      #
+      # @param key_to_value_type [Hash{Object => Object}] the key type and value type that the hash must have
+      #
+      # @raise [ArgumentError] if the key_to_value_type pair is not a Hash or does not have exactly one entry
+      # @return [self] self for method chaining
+      def of: (Hash[untyped, untyped] key_to_value_type) -> self
+    end
+  end
+end
