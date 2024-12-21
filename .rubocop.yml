@@ -1,42 +1,9 @@
+inherit_from: .rubocop-base.yml
+
 require:
   - rubocop-on-rbs
   - rubocop-ordered_methods
-  - rubocop-performance
-  - rubocop-rspec
   - rubocop-yard
-
-AllCops:
-  Exclude:
-    - vendor/**/*
-  NewCops: enable
-  TargetRubyVersion: 3.1
-
-Layout/LeadingCommentSpace:
-  AllowRBSInlineAnnotation: true
-
-Metrics/ClassLength:
-  Max: 500
-
-Metrics/ModuleLength:
-  Max: 500
-
-Naming/FileName:
-  Exclude:
-    - '**/domainic-*'
 
 RBS:
   Enabled: true
-
-RSpec/ExampleLength:
-  Max: 15
-
-RSpec/MultipleMemoizedHelpers:
-  Max: 10
-
-RSpec/NestedGroups:
-  AllowedGroups:
-    - describe
-
-Style/Documentation:
-  AllowedConstants:
-    - Domainic

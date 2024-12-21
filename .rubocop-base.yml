@@ -1,0 +1,36 @@
+require:
+  - rubocop-performance
+  - rubocop-rspec
+
+AllCops:
+  Exclude:
+    - vendor/**/*
+  NewCops: enable
+  TargetRubyVersion: 3.1
+
+Layout/LeadingCommentSpace:
+  AllowRBSInlineAnnotation: true
+
+Metrics/ClassLength:
+  Max: 500
+
+Metrics/ModuleLength:
+  Max: 500
+
+Naming/FileName:
+  Exclude:
+    - '**/domainic-*'
+
+RSpec/ExampleLength:
+  Max: 15
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 10
+
+RSpec/NestedGroups:
+  AllowedGroups:
+    - describe
+
+Style/Documentation:
+  AllowedConstants:
+    - Domainic
