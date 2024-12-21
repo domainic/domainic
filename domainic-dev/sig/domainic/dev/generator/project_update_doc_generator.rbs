@@ -1,0 +1,51 @@
+module Domainic
+  module Dev
+    module Generator
+      # This generator creates a new document for a project update.
+      #
+      # @since 0.1.0
+      class ProjectUpdateDocGenerator < BaseGenerator
+        @date_string: String
+
+        @update_number: String
+
+        @project_directory: Pathname
+
+        # Ensure the project exists
+        #
+        # @raise [ArgumentError] if the project does not exist
+        # @return [void]
+        def ensure_project_exists: () -> void
+
+        # Create the updates directory if it does not exist
+        #
+        # @return [void]
+        def create_update_directory: () -> void
+
+        # Create the new update document
+        #
+        # @return [void]
+        def create_update_document: () -> void
+
+        def project_name: () -> String
+
+        private
+
+        # Today's date as a string in the format 'YYYY-MM-DD'
+        #
+        # @return [String]
+        def date_string: () -> String
+
+        # The directory for the project's documentation
+        #
+        # @return [Pathname]
+        def project_directory: () -> Pathname
+
+        # The update number for the new document
+        #
+        # @return [String]
+        def update_number: () -> String
+      end
+    end
+  end
+end
