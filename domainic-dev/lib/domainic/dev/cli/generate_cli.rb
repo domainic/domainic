@@ -2,6 +2,7 @@
 
 require 'domainic/dev/cli/command/generate_signatures_command'
 require 'domainic/dev/generator/gem_generator'
+require 'domainic/dev/generator/milestone_doc_generator'
 require 'domainic/dev/generator/project_doc_generator'
 require 'thor'
 
@@ -32,6 +33,13 @@ module Domainic
           'gem',
           'gem NAME',
           'Generate a new Domainic gem'
+        )
+
+        register(
+          Generator::MilestoneDocGenerator,
+          'milestone_doc',
+          'milestone_doc <NAME> <ID>',
+          'Generate milestone documentation'
         )
 
         register(

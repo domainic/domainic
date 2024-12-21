@@ -1,0 +1,43 @@
+module Domainic
+  module Dev
+    module Generator
+      # A generator for creating new milestone documentation.
+      #
+      # This creates new milestone documentation in the `docs/milestone` directory.
+      #
+      # @author {https://aaronmallen.me Aaron Allen}
+      # @since 0.1.0
+      class MilestoneDocGenerator < BaseGenerator
+        @due_date: String
+
+        # @param arguments [Array<Object>] the generator arguments
+        # @param options [Array<Object>] additional options
+        # @return [void]
+        def initialize: (Array[untyped], *untyped) -> void
+
+        # Ensure the milestone does not already exist.
+        #
+        # @raise [ArgumentError] if the milestone already exists
+        # @return [void]
+        def ensure_project_does_not_exist: () -> void
+
+        def create_milestone_documentation: () -> untyped
+
+        def name: () -> String
+
+        def id: () -> Integer
+
+        private
+
+        attr_reader due_date: untyped
+
+        # The name of the project directory based on the project name.
+        #
+        # @return [String]
+        def filename: () -> String
+
+        def parse_due_date!: () -> untyped
+      end
+    end
+  end
+end
