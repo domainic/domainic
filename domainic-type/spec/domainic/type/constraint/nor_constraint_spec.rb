@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 require 'domainic/type/constraint/behavior'
-require 'domainic/type/constraint/constraints/logical/nor_constraint'
+require 'domainic/type/constraint/constraints/nor_constraint'
 
 RSpec.describe Domainic::Type::Constraint::NorConstraint do
   let(:string_constraint) do

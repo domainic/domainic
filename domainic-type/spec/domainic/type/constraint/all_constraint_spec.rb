@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 require 'domainic/type/constraint/behavior'
-require 'domainic/type/constraint/constraints/logical/all_constraint'
+require 'domainic/type/constraint/constraints/all_constraint'
 
 RSpec.describe Domainic::Type::Constraint::AllConstraint do
   let(:inner_constraint) do

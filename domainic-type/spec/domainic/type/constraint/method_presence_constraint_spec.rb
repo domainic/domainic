@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'domainic/type/constraint/constraints/structural/method_presence_constraint'
+require 'domainic/type/constraint/constraints/method_presence_constraint'
 
 RSpec.describe Domainic::Type::Constraint::MethodPresenceConstraint do
   let(:test_object) do

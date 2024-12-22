@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'domainic/type/constraint/constraints/structural/type_constraint'
+require 'domainic/type/constraint/constraints/type_constraint'
 
 RSpec.describe Domainic::Type::Constraint::TypeConstraint do
   shared_examples 'coerces and validates expectation' do
