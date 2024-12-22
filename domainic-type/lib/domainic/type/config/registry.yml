@@ -72,6 +72,9 @@ types:
   hash:
     constant: Domainic::Type::HashType
     require_path: domainic/type/types/core/hash_type
+  integer:
+    constant: Domainic::Type::IntegerType
+    require_path: domainic/type/types/core/integer_type
   union:
     constant: Domainic::Type::UnionType
     require_path: domainic/type/types/specification/union_type
