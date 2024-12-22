@@ -23,6 +23,9 @@ constraints:
   inclusion:
     constant: Domainic::Type::Constraint::InclusionConstraint
     require_path: domainic/type/constraint/constraints/inclusion_constraint
+  match_pattern:
+    constant: Domainic::Type::Constraint::MatchPatternConstraint
+    require_path: domainic/type/constraint/constraints/match_pattern_constraint
   method_presence:
     constant: Domainic::Type::Constraint::MethodPresenceConstraint
     require_path: domainic/type/constraint/constraints/method_presence_constraint
