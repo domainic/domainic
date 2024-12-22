@@ -1,0 +1,71 @@
+module Domainic
+  module Type
+    module Constraint
+      # A constraint for validating numeric parity (even or odd).
+      #
+      # This constraint verifies a number's parity by calling Ruby's standard
+      # even? and odd? methods. It normalizes method names
+      # to ensure compatibility with Ruby's predicate method naming conventions.
+      #
+      # @example Basic polarity checks
+      #   constraint = ParityConstraint.new(:self).expecting(:even)
+      #   constraint.satisfied?(2)   # => true
+      #   constraint.satisfied?(-2)  # => true
+      #   constraint.satisfied?(1)    # => false
+      #
+      # @author {https://aaronmallen.me Aaron Allen}
+      # @since 0.1.0
+      class ParityConstraint
+        type expected = :even | :even? | :odd | :odd?
+
+        include Behavior[expected, Numeric, { }]
+
+        # Get a human-readable description of the parity requirement.
+        #
+        # @example
+        #   constraint = ParityConstraint.new(:self).expecting(:even)
+        #   constraint.short_description  # => "even"
+        #
+        # @return [String] Description of the parity requirement
+        def short_description: ...
+
+        # Get a human-readable description of why parity validation failed.
+        #
+        # @example
+        #   constraint = ParityConstraint.new(:self).expecting(:positive)
+        #   constraint.satisfied?(0)
+        #   constraint.short_violation_description  # => "odd"
+        #
+        # @return [String] Description of the validation failure
+        def short_violation_description: ...
+
+        # Coerce the expectation into the correct method name format.
+        #
+        # Ensures the expectation ends with a question mark to match Ruby's
+        # standard method naming for predicate methods.
+        #
+        # @example
+        #   coerce_expectation(:even)   # => :even?
+        #   coerce_expectation(:even?)  # => :eve?
+        #
+        # @param expectation [Symbol, String] The parity check to perform
+        #
+        # @return [Symbol] The coerced method name
+        def coerce_expectation: ...
+
+        # Check if the value satisfies the parity constraint.
+        #
+        # @return [Boolean] true if the value matches the parity requirement
+        def satisfies_constraint?: ...
+
+        # Validate that the expectation is a valid parity check.
+        #
+        # @param expectation [Object] The value to validate
+        #
+        # @raise [ArgumentError] if the expectation is not :even, :even?, :odd, or :odd?
+        # @return [void]
+        def validate_expectation!: ...
+      end
+    end
+  end
+end
