@@ -1,28 +1,34 @@
 build:
   - changed-files:
     - any-glob-to-any-file:
-      - .github/*
+      - .github/**
+
 documentation:
   - changed-files:
     - any-glob-to-any-file:
-      - docs/*
+      - docs/**
+
 domainic-attributer:
   - changed-files:
     - any-glob-to-any-file:
-      - domainic-attributer/*
+      - domainic-attributer/**
+
 domainic-boundary:
   - changed-files:
     - any-glob-to-any-file:
-      - domainic-boundary/*
+      - domainic-boundary/**
+
 domainic-command:
   - changed-files:
     - any-glob-to-any-file:
-      - domainic-command/*
+      - domainic-command/**
+
 domainic-dev:
   - changed-files:
     - any-glob-to-any-file:
-      - domainic-dev/*
+      - domainic-dev/**
+
 domainic-type:
   - changed-files:
     - any-glob-to-any-file:
-      - domainic-type/*
+      - domainic-type/**
