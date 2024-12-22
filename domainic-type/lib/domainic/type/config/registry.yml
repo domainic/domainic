@@ -11,6 +11,9 @@ constraints:
   case:
     constant: Domainic::Type::Constraint::CaseConstraint
     require_path: domainic/type/constraint/constraints/case_constraint
+  character_set:
+    constant: Domainic::Type::Constraint::CharacterSetConstraint
+    require_path: domainic/type/constraint/constraints/character_set_constraint
   divisibility:
     constant: Domainic::Type::Constraint::DivisibilityConstraint
     require_path: domainic/type/constraint/constraints/divisibility_constraint
