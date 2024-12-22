@@ -46,6 +46,21 @@ module Domainic
           # steep:ignore:end
         end
 
+        # Print instructions for the user.
+        #
+        # @return [void]
+        # @rbs () -> void
+        def print_instructions
+          puts <<~INSTRUCTIONS
+
+            #################################################################
+
+              Be sure to add your project update to docs/projects/README.md
+
+            #################################################################
+          INSTRUCTIONS
+        end
+
         # @rbs! def project_name: () -> String
 
         # rubocop:enable Layout/OrderedMethods

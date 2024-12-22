@@ -19,11 +19,19 @@ module Domainic
         # @return [void]
         def create_project_directory: () -> void
 
-        def create_project_readme: () -> untyped
+        # Create the project README file.
+        #
+        # @return [void]
+        def create_project_readme: () -> void
 
-        def id: () -> Integer
+        # Print instructions for the user.
+        #
+        # @return [void]
+        def print_instructions: () -> void
 
         def name: () -> String
+
+        def id: () -> Integer
 
         private
 

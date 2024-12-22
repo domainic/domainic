@@ -27,6 +27,11 @@ module Domainic
         # @return [void]
         def create_update_document: () -> void
 
+        # Print instructions for the user.
+        #
+        # @return [void]
+        def print_instructions: () -> void
+
         def project_name: () -> String
 
         private
