@@ -23,6 +23,9 @@ constraints:
   none:
     constant: Domainic::Type::Constraint::NoneConstraint
     require_path: domainic/type/constraint/constraints/logical/none_constraint
+  nor:
+    constant: Domainic::Type::Constraint::NorConstraint
+    require_path: domainic/type/constraint/constraints/logical/nor_constraint
   not:
     constant: Domainic::Type::Constraint::NotConstraint
     require_path: domainic/type/constraint/constraints/logical/not_constraint
