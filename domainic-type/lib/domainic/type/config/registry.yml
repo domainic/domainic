@@ -8,6 +8,9 @@ constraints:
   any:
     constant: Domainic::Type::Constraint::AnyConstraint
     require_path: domainic/type/constraint/constraints/any_constraint
+  divisibility:
+    constant: Domainic::Type::Constraint::DivisibilityConstraint
+    require_path: domainic/type/constraint/constraints/divisibility_constraint
   emptiness:
     constant: Domainic::Type::Constraint::EmptinessConstraint
     require_path: domainic/type/constraint/constraints/emptiness_constraint
