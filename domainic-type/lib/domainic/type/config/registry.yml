@@ -41,6 +41,9 @@ constraints:
   ordering:
     constant: Domainic::Type::Constraint::OrderingConstraint
     require_path: domainic/type/constraint/constraints/ordering_constraint
+  polarity:
+    constant: Domainic::Type::Constraint::PolarityConstraint
+    require_path: domainic/type/constraint/constraints/polarity_constraint
   range:
     constant: Domainic::Type::Constraint::RangeConstraint
     require_path: domainic/type/constraint/constraints/range_constraint
