@@ -5,61 +5,61 @@ require 'domainic/type/constraint/behavior'
 module Domainic
   module Type
     module Constraint
-      # A constraint that combines multiple constraints with logical AND behavior.
+      # A constraint that ensures none of the provided constraints are satisfied.
       #
-      # The AndConstraint validates that a value satisfies all of its provided constraints,
-      # implementing logical AND behavior. This enables validation rules like "must be both
-      # a string and non-empty" or "must be numeric and positive".
+      # The NorConstraint validates that none of the elements in an enumerable value meet
+      # any of the provided constraints. This enables validation rules like "must not contain
+      # any strings or negative numbers".
       #
       # Key features:
-      # - Combines multiple constraints with AND logic
-      # - Short-circuits on first failing constraint
-      # - Provides clear error messages for failing validations
+      # - Validates enumerable elements against multiple constraints with NOR logic
+      # - Short-circuits on first satisfying constraint for performance
+      # - Provides clear error messages for violating constraints
+      # - Handles non-enumerable values gracefully
       # - Supports incremental constraint addition
       #
-      # @example Validating a value is both a String and non-empty
+      # @example Validating an array contains no strings or negative numbers
       #   string_constraint = StringConstraint.new(:self)
-      #   non_empty = LengthConstraint.new(:length, minimum: 1)
-      #   string_and_non_empty = AndConstraint.new(:self, [string_constraint, non_empty])
+      #   negative_number_constraint = NegativeNumberConstraint.new(:self)
+      #   no_strings_or_negatives = NorConstraint.new(:self, [string_constraint, negative_number_constraint])
       #
-      #   string_and_non_empty.satisfied?("test")  # => true
-      #   string_and_non_empty.satisfied?("")      # => false
-      #   string_and_non_empty.satisfied?(123)     # => false
+      #   no_strings_or_negatives.satisfied?([1, 2, 3])            # => true
+      #   no_strings_or_negatives.satisfied?(['a', 1, 'c'])        # => false
+      #   no_strings_or_negatives.satisfied?([1, -2, 3])           # => false
+      #   no_strings_or_negatives.satisfied?(nil)                  # => false (not enumerable)
       #
       # @author {https://aaronmallen.me Aaron Allen}
       # @since 0.1.0
-      class AndConstraint
+      class NorConstraint
         include Behavior #[Array[Behavior[untyped, untyped, untyped]], untyped, {}]
 
         # Get a description of what the constraint expects.
         #
-        # @return [String] a description combining all constraint descriptions with 'and'
+        # @return [String] a description combining all constraint descriptions with 'nor'
         # @rbs override
         def short_description
           descriptions = @expected.map(&:short_description)
+          return descriptions.first if descriptions.size == 1
+
+          *first, last = descriptions
+          "#{first.join(', ')} nor #{last}"
+        end
+
+        # The description of the violations that caused the constraint to be unsatisfied.
+        #
+        # This method provides detailed feedback about which constraints were satisfied,
+        # listing all violations that caused the validation to fail.
+        #
+        # @return [String] The combined violation descriptions from all satisfied constraints
+        # @rbs override
+        def short_violation_description
+          violations = @expected.select { |constraint| constraint.satisfied?(@actual) }
+          descriptions = violations.map(&:short_violation_description)
           return descriptions.first if descriptions.size == 1
           return '' if descriptions.empty?
 
           *first, last = descriptions
           "#{first.join(', ')} and #{last}"
-        end
-
-        # @rbs! def expecting: (Behavior[untyped, untyped, untyped]) -> self
-
-        # The description of the violations that caused the constraint to be unsatisfied.
-        #
-        # This method provides detailed feedback about which constraints failed,
-        # listing all violations that prevented validation from succeeding.
-        #
-        # @return [String] The combined violation descriptions from all constraints
-        # @rbs override
-        def short_violation_description
-          violations = @expected.reject { |constraint| constraint.satisfied?(@actual) }
-          descriptions = violations.map(&:short_violation_description)
-          return descriptions.first if descriptions.size == 1
-
-          *first, last = descriptions
-          "#{first.join(', ')} nor #{last}"
         end
 
         protected
@@ -77,21 +77,21 @@ module Domainic
           expectation.is_a?(Array) ? (@expected || []).concat(expectation) : (@expected || []) << expectation
         end
 
-        # Check if the value satisfies all expected constraints.
+        # Check if none of the values satisfy any of the expected constraints.
         #
-        # Short-circuits on the first failing constraint for efficiency.
+        # Short-circuits on the first satisfying constraint for efficiency.
         #
-        # @return [Boolean] whether all constraints are satisfied
+        # @return [Boolean] whether none of the constraints are satisfied
         # @rbs override
         def satisfies_constraint?
-          @expected.all? { |constraint| constraint.satisfied?(@actual) }
+          @expected.none? { |constraint| constraint.satisfied?(@actual) }
         end
 
         # Validate that the expectation is an array of valid constraints.
         #
         # @param expectation [Object] the expectation to validate
         #
-        # @raise [ArgumentError] if the expectation is not valid
+        # @raise [ArgumentError] if the expectation is not a valid Domainic::Type::Constraint
         # @return [void]
         # @rbs override
         def validate_expectation!(expectation)

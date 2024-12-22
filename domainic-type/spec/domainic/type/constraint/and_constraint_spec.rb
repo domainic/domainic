@@ -111,7 +111,7 @@ RSpec.describe Domainic::Type::Constraint::AndConstraint do
       let(:actual_value) { [] }
 
       it 'joins violation short_descriptions with and' do
-        expect(short_violation_description).to eq('was not a string and was empty')
+        expect(short_violation_description).to eq('was not a string nor was empty')
       end
     end
   end

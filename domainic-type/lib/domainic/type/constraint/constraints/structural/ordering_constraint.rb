@@ -27,7 +27,6 @@ module Domainic
       #   constraint.satisfied?([1, 1.5, 2])     # => true
       #   constraint.satisfied?([2, 1, 1.5])     # => false
       #
-      # @api private
       # @author {https://aaronmallen.me Aaron Allen}
       # @since 0.1.0
       class OrderingConstraint

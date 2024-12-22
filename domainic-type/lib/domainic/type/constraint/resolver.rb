@@ -31,8 +31,6 @@ module Domainic
       #   resolver = Resolver.new(:unknown)
       #   resolver.resolve! # raises ArgumentError: Unknown constraint: unknown
       #
-      # @api private
-      #
       # @author {https://aaronmallen.me Aaron Allen}
       # @since 0.1.0
       class Resolver

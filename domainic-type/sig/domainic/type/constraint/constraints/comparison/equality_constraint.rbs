@@ -23,7 +23,6 @@ module Domainic
       #   constraint.satisfied?([1, 2, 3]) # => true
       #   constraint.satisfied?([3, 2, 1]) # => false
       #
-      # @api private
       # @author {https://aaronmallen.me Aaron Allen}
       # @since 0.1.0
       class EqualityConstraint

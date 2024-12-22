@@ -17,7 +17,6 @@ module Domainic
       #   constraint.satisfied?(Set.new)    # => true
       #   constraint.satisfied?(['a', 'b']) # => false
       #
-      # @api private
       # @author {https://aaronmallen.me Aaron Allen}
       # @since 0.1.0
       class EmptinessConstraint

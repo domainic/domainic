@@ -23,8 +23,6 @@ module Domainic
       #   set.constraints  # => [StringConstraint, RangeConstraint]
       #   set.count       # => 2
       #
-      # @api private
-      #
       # @author {https://aaronmallen.me Aaron Allen}
       # @since 0.1.0
       class Set

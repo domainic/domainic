@@ -57,7 +57,6 @@ module Domainic
       #   type.maximum_size(10)        # same as above
       #   type.max_length(10)          # same as above
       #
-      # @api private
       # @author {https://aaronmallen.me Aaron Allen}
       # @since 0.1.0
       module SizableBehavior

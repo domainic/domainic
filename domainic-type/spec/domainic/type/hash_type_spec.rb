@@ -59,7 +59,7 @@ RSpec.describe Domainic::Type::HashType do
       it { is_expected.to be true }
     end
 
-    context 'when validating a hash with excluded values', skip: 'pending the resolution of #107' do
+    context 'when validating a hash with excluded values' do
       subject(:validation) { type.excluding_values(nil, 'Jane').validate({ name: 'John', email: nil }) }
 
       it { is_expected.to be false }
