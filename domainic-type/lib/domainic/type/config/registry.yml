@@ -17,6 +17,9 @@ constraints:
   equality:
     constant: Domainic::Type::Constraint::EqualityConstraint
     require_path: domainic/type/constraint/constraints/equality_constraint
+  finiteness:
+    constant: Domainic::Type::Constraint::FinitenessConstraint
+    require_path: domainic/type/constraint/constraints/finiteness_constraint
   inclusion:
     constant: Domainic::Type::Constraint::InclusionConstraint
     require_path: domainic/type/constraint/constraints/inclusion_constraint
