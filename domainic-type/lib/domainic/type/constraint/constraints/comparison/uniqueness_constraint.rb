@@ -22,7 +22,6 @@ module Domainic
       #   constraint.satisfied?(Set[1, 2, 3])        # => true
       #   constraint.satisfied?(['a', 'b', 'b'])     # => false
       #
-      # @api private
       # @author {https://aaronmallen.me Aaron Allen}
       # @since 0.1.0
       class UniquenessConstraint

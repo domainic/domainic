@@ -1,30 +1,16 @@
 module Domainic
   module Type
     module Constraint
-      # A constraint for validating that a collection includes one or more values.
+      # A constraint for validating that a collection includes a specific value.
       #
-      # This constraint verifies that a collection contains expected values by using
+      # This constraint verifies that a collection contains an expected value by using
       # the collection's #include? method. It works with any object that responds to
-      # #include?, such as Arrays, Sets, Strings, and Ranges. The constraint can be
-      # configured to check for a single value or multiple values, and supports
-      # incremental addition of values to check.
+      # #include?, such as Arrays, Sets, Strings, and Ranges.
       #
-      # @example Single value inclusion
+      # @example Array inclusion
       #   constraint = InclusionConstraint.new(:self, 2)
       #   constraint.satisfied?([1, 2, 3])  # => true
       #   constraint.satisfied?([1, 3, 4])  # => false
-      #
-      # @example Multiple value inclusion
-      #   constraint = InclusionConstraint.new(:self)
-      #   constraint.expecting([1, 2])
-      #   constraint.satisfied?([1, 2, 3])  # => true
-      #   constraint.satisfied?([1, 3])     # => false
-      #
-      # @example Incremental value addition
-      #   constraint = InclusionConstraint.new(:self)
-      #   constraint.expecting(1).expecting(2)
-      #   constraint.satisfied?([1, 2, 3])  # => true
-      #   constraint.satisfied?([1, 3])     # => false
       #
       # @example String inclusion
       #   constraint = InclusionConstraint.new(:self, 'b')
@@ -36,69 +22,36 @@ module Domainic
       #   constraint.satisfied?(1..10)  # => true
       #   constraint.satisfied?(11..20) # => false
       #
-      # @api private
       # @author {https://aaronmallen.me Aaron Allen}
       # @since 0.1.0
       class InclusionConstraint
-        include Behavior[Array[untyped], untyped, { }]
+        include Behavior[untyped, Enumerable[untyped], { }]
 
         # Get a human-readable description of the inclusion requirement.
         #
-        # When checking for a single value, returns "including <value>". When checking
-        # for multiple values, returns a comma-separated list with "and" before the
-        # final value.
-        #
-        # @example Single value
+        # @example
         #   constraint = InclusionConstraint.new(:self, 42)
         #   constraint.short_description # => "including 42"
         #
-        # @example Multiple values
-        #   constraint = InclusionConstraint.new(:self)
-        #   constraint.expecting([1, 2, 3])
-        #   constraint.short_description # => "including 1, 2 and 3"
-        #
-        # @return [String] A description of the inclusion requirements
+        # @return [String] A description of the inclusion requirement
         def short_description: ...
 
         # Get a human-readable description of why inclusion validation failed.
         #
-        # Returns a description listing only the values that were missing from
-        # the collection. If multiple values were missing, they are joined with
-        # commas and "and".
+        # @example
+        #   constraint = InclusionConstraint.new(:self, 42)
+        #   constraint.satisfied?([1, 2, 3])
+        #   constraint.short_violation_description # => 'excluding 42'
         #
-        # @example Single missing value
-        #   constraint = InclusionConstraint.new(:self)
-        #   constraint.expecting(['a', 'b', 'c'])
-        #   constraint.satisfied?(['a', 'b'])
-        #   constraint.short_violation_description # => 'excluding "c"'
-        #
-        # @example Multiple missing values
-        #   constraint = InclusionConstraint.new(:self)
-        #   constraint.expecting(['a', 'b', 'c'])
-        #   constraint.satisfied?(['a'])
-        #   constraint.short_violation_description # => 'excluding "b" and "c"'
-        #
-        # @return [String] A description of which values were missing
+        # @return [String] A description of which value was missing
         def short_violation_description: ...
 
-        # Coerce the expectation into a collection of values to check.
+        # Check if the collection includes the expected value.
         #
-        # This method handles both single values and collections of values:
-        # - Single values are appended to the existing collection
-        # - Enumerable values are concatenated with the existing collection
-        # This allows for both single-value checking and multiple-value checking,
-        # as well as incremental addition of values through multiple expecting() calls.
+        # Uses the collection's #include? method to verify that the expected
+        # value is present in the collection being validated.
         #
-        # @param expectation [Object, Enumerable] The value(s) to check for
-        # @return [Array] The collection of values to check for
-        def coerce_expectation: ...
-
-        # Check if the collection includes all expected values.
-        #
-        # Uses the collection's #include? method to verify that all expected
-        # values are present in the collection being validated.
-        #
-        # @return [Boolean] true if the collection includes all expected values
+        # @return [Boolean] true if the collection includes the expected value
         def satisfies_constraint?: ...
       end
     end

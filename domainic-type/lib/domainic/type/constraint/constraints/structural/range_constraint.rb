@@ -26,7 +26,6 @@ module Domainic
       #   constraint.satisfied?(50)   # => true
       #   constraint.satisfied?(150)  # => false
       #
-      # @api private
       # @author {https://aaronmallen.me Aaron Allen}
       # @since 0.1.0
       class RangeConstraint

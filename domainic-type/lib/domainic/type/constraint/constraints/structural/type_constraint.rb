@@ -38,7 +38,6 @@ module Domainic
       #   constraint.satisfied?(nil)   # => true
       #   constraint.satisfied?(false) # => false
       #
-      # @api private
       # @author {https://aaronmallen.me Aaron Allen}
       # @since 0.1.0
       class TypeConstraint

@@ -61,8 +61,6 @@ module Domainic
       # These methods provide class-level validation capabilities and constraint
       # management.
       #
-      # @api private
-      #
       # @since 0.1.0
       module ClassMethods
         # @rbs @intrinsic_constraints: Constraint::Set

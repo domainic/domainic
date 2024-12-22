@@ -36,7 +36,6 @@ module Domainic
       #     end
       #   end
       #
-      # @api private
       # @author {https://aaronmallen.me Aaron Allen}
       # @since 0.1.0
       module EnumerableBehavior
@@ -173,7 +172,10 @@ module Domainic
         # @rbs (*untyped entries)-> Behavior
         def containing(*entries)
           # @type self: Object & Behavior
-          constrain :entries, :inclusion, entries
+          including = entries.map do |entry|
+            @constraints.prepare :entries, :inclusion, entry
+          end
+          constrain :entries, :and, including, concerning: :entry_inclusion
         end
         alias including containing
 
@@ -211,8 +213,10 @@ module Domainic
         # @rbs (*untyped entries)-> Behavior
         def excluding(*entries)
           # @type self: Object & Behavior
-          including = @constraints.prepare :self, :inclusion, entries
-          constrain :entries, :not, including, concerning: :exclusion
+          including = entries.map do |entry|
+            @constraints.prepare :entries, :inclusion, entry
+          end
+          constrain :entries, :nor, including, concerning: :entry_exclusion
         end
         alias omitting excluding
 

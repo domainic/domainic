@@ -55,7 +55,10 @@ module Domainic
       # @return [self] self for method chaining
       # @rbs (*untyped keys) -> self
       def containing_keys(*keys)
-        constrain :keys, :inclusion, keys, concerning: :key_inclusion, description: 'keys'
+        including = keys.map do |key|
+          @constraints.prepare :entries, :inclusion, key
+        end
+        constrain :keys, :and, including, concerning: :key_inclusion, description: 'keys'
       end
       alias including_keys containing_keys
 
@@ -70,7 +73,10 @@ module Domainic
       # @return [self] self for method chaining
       # @rbs (*untyped values) -> self
       def containing_values(*values)
-        constrain :values, :inclusion, values, concerning: :value_inclusion, description: 'values'
+        including = values.map do |value|
+          @constraints.prepare :entries, :inclusion, value
+        end
+        constrain :values, :and, including, concerning: :values_inclusion, description: 'values'
       end
       alias including_values containing_values
 
@@ -85,8 +91,10 @@ module Domainic
       # @return [self] self for method chaining
       # @rbs (*untyped keys) -> self
       def excluding_keys(*keys)
-        including = @constraints.prepare :self, :inclusion, keys
-        constrain :keys, :not, including, concerning: :key_exclusion
+        including = keys.map do |key|
+          @constraints.prepare :entries, :inclusion, key
+        end
+        constrain :keys, :nor, including, concerning: :key_exclusion, description: 'keys'
       end
       alias omitting_keys excluding_keys
 
@@ -101,8 +109,10 @@ module Domainic
       # @return [self] self for method chaining
       # @rbs (*untyped values) -> self
       def excluding_values(*values)
-        including = @constraints.prepare :self, :inclusion, values
-        constrain :values, :not, including, concerning: :value_exclusion
+        including = values.map do |value|
+          @constraints.prepare :entries, :inclusion, value
+        end
+        constrain :values, :nor, including, concerning: :values_exclusion, description: 'values'
       end
       alias omitting_values excluding_values
 
