@@ -56,7 +56,7 @@ module Domainic
         #
         # @return [String] Description of the validation failure
         # @rbs override
-        def short_violation_description
+        def short_violation_description # rubocop:disable Metrics/MethodLength
           case @expected
           when :positive?
             @actual.zero? ? 'zero' : 'negative'
