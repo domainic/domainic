@@ -37,8 +37,27 @@ module Domainic
           empty_directory("docs/projects/#{directory_name}") # steep:ignore NoMethod
         end
 
+        # Create the project README file.
+        #
+        # @return [void]
+        # @rbs () -> void
         def create_project_readme
           template('README.md.erb', "docs/projects/#{directory_name}/README.md") # steep:ignore NoMethod
+        end
+
+        # Print instructions for the user.
+        #
+        # @return [void]
+        # @rbs () -> void
+        def print_instructions
+          puts <<~INSTRUCTIONS
+
+            ##########################################################
+
+              Be sure to add your project to docs/projects/README.md
+
+            ##########################################################
+          INSTRUCTIONS
         end
 
         # @rbs! def id: () -> Integer

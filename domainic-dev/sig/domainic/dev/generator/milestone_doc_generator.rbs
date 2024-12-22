@@ -27,6 +27,11 @@ module Domainic
 
         def id: () -> Integer
 
+        # Add the milestone to the README.md file.
+        #
+        # @return [void]
+        def add_to_readme: () -> void
+
         private
 
         attr_reader due_date: untyped
@@ -36,7 +41,17 @@ module Domainic
         # @return [String]
         def filename: () -> String
 
+        # Extract the gem name from the milestone name.
+        #
+        # @return [String]
+        def gem_name: () -> String
+
         def parse_due_date!: () -> untyped
+
+        # Extract the version name from the milestone name.
+        #
+        # @return [String]
+        def version_name: () -> String
       end
     end
   end
