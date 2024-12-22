@@ -1,4 +1,4 @@
-# domainic-attributer v0.1.0
+# domainic-type v0.1.0
 
 [![Milestone Progress](https://img.shields.io/github/milestones/progress-percent/domainic/domainic/5?style=for-the-badge&label=Progress)](https://github.com/domainic/domainic/milestone/5)
 
