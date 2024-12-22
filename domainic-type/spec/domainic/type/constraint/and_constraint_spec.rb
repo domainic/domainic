@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 require 'domainic/type/constraint/behavior'
-require 'domainic/type/constraint/constraints/logical/and_constraint'
+require 'domainic/type/constraint/constraints/and_constraint'
 
 RSpec.describe Domainic::Type::Constraint::AndConstraint do
   let(:string_constraint) do

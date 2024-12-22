@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'domainic/type/constraint/constraints/comparison/inclusion_constraint'
+require 'domainic/type/constraint/constraints/inclusion_constraint'
 
 RSpec.describe Domainic::Type::Constraint::InclusionConstraint do
   describe '#satisfied?' do

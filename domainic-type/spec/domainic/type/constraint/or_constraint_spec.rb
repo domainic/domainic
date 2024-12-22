@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 require 'domainic/type/constraint/behavior'
-require 'domainic/type/constraint/constraints/logical/or_constraint'
+require 'domainic/type/constraint/constraints/or_constraint'
 
 RSpec.describe Domainic::Type::Constraint::OrConstraint do
   let(:string_constraint) do

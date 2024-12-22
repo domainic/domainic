@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'domainic/type/constraint/constraints/structural/emptiness_constraint'
+require 'domainic/type/constraint/constraints/emptiness_constraint'
 require 'set'
 
 RSpec.describe Domainic::Type::Constraint::EmptinessConstraint do

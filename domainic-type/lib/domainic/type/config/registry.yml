@@ -1,49 +1,49 @@
 constraints:
   all:
     constant: Domainic::Type::Constraint::AllConstraint
-    require_path: domainic/type/constraint/constraints/logical/all_constraint
+    require_path: domainic/type/constraint/constraints/all_constraint
   and:
     constant: Domainic::Type::Constraint::AndConstraint
-    require_path: domainic/type/constraint/constraints/logical/and_constraint
+    require_path: domainic/type/constraint/constraints/and_constraint
   any:
     constant: Domainic::Type::Constraint::AnyConstraint
-    require_path: domainic/type/constraint/constraints/logical/any_constraint
+    require_path: domainic/type/constraint/constraints/any_constraint
   emptiness:
     constant: Domainic::Type::Constraint::EmptinessConstraint
-    require_path: domainic/type/constraint/constraints/structural/emptiness_constraint
+    require_path: domainic/type/constraint/constraints/emptiness_constraint
   equality:
     constant: Domainic::Type::Constraint::EqualityConstraint
-    require_path: domainic/type/constraint/constraints/comparison/equality_constraint
+    require_path: domainic/type/constraint/constraints/equality_constraint
   inclusion:
     constant: Domainic::Type::Constraint::InclusionConstraint
-    require_path: domainic/type/constraint/constraints/comparison/inclusion_constraint
+    require_path: domainic/type/constraint/constraints/inclusion_constraint
   method_presence:
     constant: Domainic::Type::Constraint::MethodPresenceConstraint
-    require_path: domainic/type/constraint/constraints/structural/method_presence_constraint
+    require_path: domainic/type/constraint/constraints/method_presence_constraint
   none:
     constant: Domainic::Type::Constraint::NoneConstraint
-    require_path: domainic/type/constraint/constraints/logical/none_constraint
+    require_path: domainic/type/constraint/constraints/none_constraint
   nor:
     constant: Domainic::Type::Constraint::NorConstraint
-    require_path: domainic/type/constraint/constraints/logical/nor_constraint
+    require_path: domainic/type/constraint/constraints/nor_constraint
   not:
     constant: Domainic::Type::Constraint::NotConstraint
-    require_path: domainic/type/constraint/constraints/logical/not_constraint
+    require_path: domainic/type/constraint/constraints/not_constraint
   or:
     constant: Domainic::Type::Constraint::OrConstraint
-    require_path: domainic/type/constraint/constraints/logical/or_constraint
+    require_path: domainic/type/constraint/constraints/or_constraint
   ordering:
     constant: Domainic::Type::Constraint::OrderingConstraint
-    require_path: domainic/type/constraint/constraints/structural/ordering_constraint
+    require_path: domainic/type/constraint/constraints/ordering_constraint
   range:
     constant: Domainic::Type::Constraint::RangeConstraint
-    require_path: domainic/type/constraint/constraints/structural/range_constraint
+    require_path: domainic/type/constraint/constraints/range_constraint
   type:
     constant: Domainic::Type::Constraint::TypeConstraint
-    require_path: domainic/type/constraint/constraints/structural/type_constraint
+    require_path: domainic/type/constraint/constraints/type_constraint
   uniqueness:
     constant: Domainic::Type::Constraint::UniquenessConstraint
-    require_path: domainic/type/constraint/constraints/comparison/uniqueness_constraint
+    require_path: domainic/type/constraint/constraints/uniqueness_constraint
 types:
   array:
     constant: Domainic::Type::ArrayType
