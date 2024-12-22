@@ -55,7 +55,7 @@ module Domainic
 
             #################################################################
 
-              Be sure to add your project update to docs/projects/README.md
+              Be sure to add your project update to docs/projects/projects.md
 
             #################################################################
           INSTRUCTIONS
