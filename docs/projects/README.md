@@ -10,6 +10,8 @@ significant changes.
   * **December 12, 2024**
     * [domainic-attributer v0.1.0 Released](./domainic-v0.1.0/updates/2024-12-12-01.md)
     * [domainic-attributer v0.2.0 Development Started](./domainic-v0.1.0/updates/2024-12-12-02.md)
+  * **December 23, 2024**
+    * [🧪 Experiment Launch: Domainic::Type Alpha 3](./domainic-v0.1.0/updates/2024-12-23-01.md)
 
 ## Related Documentation
 

@@ -7,9 +7,15 @@
 [![Domainic License](https://img.shields.io/github/license/domainic/domainic?logo=opensourceinitiative&logoColor=white&logoSize=auto&style=for-the-badge)](./LICENSE)
 [![Domainic Open Issues](https://img.shields.io/github/issues-search/domainic/domainic?label=open%20issues&logo=github&logoSize=auto&query=is%3Aopen&color=red&style=for-the-badge)](https://github.com/domainic/domainic/issues?q=state%3Aopen)
 
+> [!IMPORTANT]  
+> We're running an experiment with Domainic::Type! Help us explore flexible type validation in Ruby by trying our
+> [alpha release](./docs/experiments/domainic-type-alpha-3/README.md). Your feedback is invaluable for shaping
+> the future of domain-driven design in Ruby.
+
 A suite of Ruby libraries crafted to arm engineers with the magic of domain-driven design.
 
-> **Note**: The Domainic gem is currently in pre-release. Until v0.1.0, components must be installed individually.
+> [!WARNING]
+> The Domainic gem is currently in pre-release. Until v0.1.0, components must be installed individually.
 
 ## About
 
