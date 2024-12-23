@@ -1,0 +1,315 @@
+module Domainic
+  module Type
+    module Behavior
+      # A module providing string-specific validation behaviors for types.
+      #
+      # This module extends the base Type::Behavior with methods specifically designed for
+      # validating string values. It provides a fluent interface for common string validations
+      # such as case checking, character set validation, equality, and pattern matching.
+      #
+      # Key capabilities:
+      # - Case validation (upper, lower, mixed, title case)
+      # - Character set checking (ASCII, alphanumeric, letters, numbers)
+      # - Pattern matching with regular expressions
+      # - Substring inclusion/exclusion
+      # - Character ordering checks
+      # - Length constraints (via SizableBehavior)
+      #
+      # @example Basic string validation
+      #   class StringType
+      #     include Domainic::Type::Behavior::StringBehavior
+      #
+      #     def initialize
+      #       super
+      #       being_ascii             # validates ASCII characters only
+      #       being_alphanumeric      # validates letters and numbers only
+      #       having_minimum_size(5)  # validates minimum length
+      #     end
+      #   end
+      #
+      # @example Complex string validation
+      #   class UsernameType
+      #     include Domainic::Type::Behavior::StringBehavior
+      #
+      #     def initialize
+      #       super
+      #       being_lowercase
+      #       being_alphanumeric
+      #       having_size_between(3, 20)
+      #       not_matching(/^admin/i)  # prevent admin-like usernames
+      #     end
+      #   end
+      #
+      # @example Building constraints dynamically
+      #   type = StringType.new
+      #     .being_ascii
+      #     .being_titlecase
+      #     .having_size_between(5, 50)
+      #     .matching(/^[A-Z]/)
+      #
+      # @author {https://aaronmallen.me Aaron Allen}
+      # @since 0.1.0
+      module StringBehavior
+        include SizableBehavior
+
+        # Validate string contains only alphanumeric characters.
+        #
+        # @example
+        #   type.being_alphanumeric
+        #   type.validate("abc123")   # => true
+        #   type.validate("abc-123")  # => false
+        #
+        # @return [Behavior] self for method chaining
+        def being_alphanumeric: () -> Behavior
+
+        alias alphanumeric being_alphanumeric
+
+        # Validate string contains only ASCII characters.
+        #
+        # @example
+        #   type.being_ascii
+        #   type.validate("hello")  # => true
+        #   type.validate("héllo")  # => false
+        #
+        # @return [Behavior] self for method chaining
+        def being_ascii: () -> Behavior
+
+        alias ascii being_ascii
+
+        alias ascii_only being_ascii
+
+        # Validate string is empty.
+        #
+        # @example
+        #   type.being_empty
+        #   type.validate("")    # => true
+        #   type.validate("a")   # => false
+        #
+        # @return [Behavior] self for method chaining
+        def being_empty: () -> Behavior
+
+        alias empty being_empty
+
+        # Validate string equals a specific value.
+        #
+        # @example
+        #   type.being_equal_to("hello")
+        #   type.validate("hello")  # => true
+        #   type.validate("world")  # => false
+        #
+        # @param literal [String, Symbol] the value to compare against
+        # @return [Behavior] self for method chaining
+        def being_equal_to: (String | Symbol literal) -> Behavior
+
+        alias eql being_equal_to
+
+        alias equal_to being_equal_to
+
+        alias equaling being_equal_to
+
+        # Validate string is lowercase.
+        #
+        # @example
+        #   type.being_lowercase
+        #   type.validate("hello")  # => true
+        #   type.validate("Hello")  # => false
+        #
+        # @return [Behavior] self for method chaining
+        def being_lowercase: () -> Behavior
+
+        alias lowercase being_lowercase
+
+        alias not_being_uppercase being_lowercase
+
+        # Validate string contains both uppercase and lowercase characters.
+        #
+        # @example
+        #   type.being_mixedcase
+        #   type.validate("helloWORLD")  # => true
+        #   type.validate("hello")       # => false
+        #
+        # @return [Behavior] self for method chaining
+        def being_mixedcase: () -> Behavior
+
+        alias mixedcase being_mixedcase
+
+        # Validate string contains only letters.
+        #
+        # @example
+        #   type.being_only_letters
+        #   type.validate("hello")     # => true
+        #   type.validate("hello123")  # => false
+        #
+        # @return [Behavior] self for method chaining
+        def being_only_letters: () -> Behavior
+
+        alias alpha being_only_letters
+
+        alias letters_only being_only_letters
+
+        alias only_letters being_only_letters
+
+        # Validate string contains only numbers.
+        #
+        # @example
+        #   type.being_only_numbers
+        #   type.validate("123")     # => true
+        #   type.validate("abc123")  # => false
+        #
+        # @return [Behavior] self for method chaining
+        def being_only_numbers: () -> Behavior
+
+        alias digits_only being_only_numbers
+
+        alias numbers_only being_only_numbers
+
+        alias numeric being_only_numbers
+
+        alias only_digits being_only_numbers
+
+        alias only_numbers being_only_numbers
+
+        # Validate string characters are in sorted order.
+        #
+        # @example
+        #   type.being_ordered
+        #   type.validate("abcd")  # => true
+        #   type.validate("dcba")  # => false
+        #
+        # @return [Behavior] self for method chaining
+        def being_ordered: () -> Behavior
+
+        alias not_being_unordered being_ordered
+
+        alias ordered being_ordered
+
+        # Validate string contains only printable characters.
+        #
+        # @example
+        #   type.being_printable
+        #   type.validate("Hello!")           # => true
+        #   type.validate("Hello\x00World")   # => false
+        #
+        # @return [Behavior] self for method chaining
+        def being_printable: () -> Behavior
+
+        alias printable being_printable
+
+        # Validate string is in title case (first letter of each word capitalized).
+        #
+        # @example
+        #   type.being_titlecase
+        #   type.validate("Hello World")  # => true
+        #   type.validate("hello world")  # => false
+        #
+        # @return [Behavior] self for method chaining
+        def being_titlecase: () -> Behavior
+
+        alias titlecase being_titlecase
+
+        # Validate string characters are not in sorted order.
+        #
+        # @example
+        #   type.being_unordered
+        #   type.validate("dcba")  # => true
+        #   type.validate("abcd")  # => false
+        #
+        # @return [Behavior] self for method chaining
+        def being_unordered: () -> Behavior
+
+        alias not_being_ordered being_unordered
+
+        alias unordered being_unordered
+
+        # Validate string is uppercase.
+        #
+        # @example
+        #   type.being_uppercase
+        #   type.validate("HELLO")  # => true
+        #   type.validate("Hello")  # => false
+        #
+        # @return [Behavior] self for method chaining
+        def being_uppercase: () -> Behavior
+
+        alias not_being_lowercase being_uppercase
+
+        alias uppercase being_uppercase
+
+        # Validate string contains all specified substrings.
+        #
+        # @example
+        #   type.containing("hello", "world")
+        #   type.validate("hello world")  # => true
+        #   type.validate("hello")        # => false
+        #
+        # @param literals [Array<String, Symbol>] the substrings to look for
+        # @return [Behavior] self for method chaining
+        def containing: (*String | Symbol literals) -> Behavior
+
+        alias including containing
+
+        # Validate string does not contain any specified substrings.
+        #
+        # @example
+        #   type.excluding("foo", "bar")
+        #   type.validate("hello world")  # => true
+        #   type.validate("foo bar")      # => false
+        #
+        # @param literals [Array<String, Symbol>] the substrings to exclude
+        # @return [Behavior] self for method chaining
+        def excluding: (*String | Symbol literals) -> Behavior
+
+        alias omitting excluding
+
+        # Validate string matches all specified patterns.
+        #
+        # @example
+        #   type.matching(/^\w+$/, /\d/)
+        #   type.validate("hello123")  # => true
+        #   type.validate("hello")     # => false
+        #
+        # @param patterns [Array<String, Regexp>] the patterns to match against
+        # @return [Behavior] self for method chaining
+        def matching: (*String | Regexp patterns) -> Behavior
+
+        # Validate string is not empty.
+        #
+        # @example
+        #   type.not_being_empty
+        #   type.validate("a")   # => true
+        #   type.validate("")    # => false
+        #
+        # @return [Behavior] self for method chaining
+        def not_being_empty: () -> Behavior
+
+        # Validate string does not equal a specific value.
+        #
+        # @example
+        #   type.not_being_equal_to("admin")
+        #   type.validate("user")   # => true
+        #   type.validate("admin")  # => false
+        #
+        # @param literal [String, Symbol] the value to compare against
+        # @return [Behavior] self for method chaining
+        def not_being_equal_to: (String | Symbol literal) -> Behavior
+
+        alias not_eql not_being_equal_to
+
+        alias not_equal_to not_being_equal_to
+
+        alias not_equaling not_being_equal_to
+
+        # Validate string does not match any specified patterns.
+        #
+        # @example
+        #   type.not_matching(/\d/, /[A-Z]/)
+        #   type.validate("hello")     # => true
+        #   type.validate("Hello123")  # => false
+        #
+        # @param patterns [Array<String, Regexp>] the patterns to avoid matching
+        # @return [Behavior] self for method chaining
+        def not_matching: (*String | Regexp patterns) -> Behavior
+      end
+    end
+  end
+end
