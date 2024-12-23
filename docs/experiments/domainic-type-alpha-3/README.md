@@ -176,18 +176,18 @@ Include code examples if you can, but don't worry if you can't!
 
 We've set up mega-issues for collecting certain types of feedback:
 
-* [Error Messages](https://github.com/domainic/domainic/issues/132) * Share confusing or unhelpful error messages
-* [Unexpected Behavior](https://github.com/domainic/domainic/issues/133) * Report surprising or unexpected behavior
-* [Feature Requests](https://github.com/domainic/domainic/issues/134) * Suggest new types, constraints, or capabilities
-* [General Feedback](https://github.com/domainic/domainic/issues/135) * Everything else!
+* [Error Messages](https://github.com/domainic/domainic/issues/132) - Share confusing or unhelpful error messages
+* [Unexpected Behavior](https://github.com/domainic/domainic/issues/133) - Report surprising or unexpected behavior
+* [Feature Requests](https://github.com/domainic/domainic/issues/134) - Suggest new types, constraints, or capabilities
+* [General Feedback](https://github.com/domainic/domainic/issues/135) - Everything else!
 
 ## Inspiration
 
 This experiment draws inspiration from several existing type systems and validation libraries:
 
-* [ValueSemantics](https://github.com/tomdalling/value_semantics) (Ruby)
-* [Literal](https://github.com/joeldrapper/literal) (Ruby)
-* [Sorbet](https://github.com/sorbet/sorbet) & [RBS](https://github.com/ruby/rbs) (Ruby)
+* [ValueSemantics](https://github.com/tomdalling/value_semantics)
+* [Literal](https://github.com/joeldrapper/literal)
+* [Sorbet](https://github.com/sorbet/sorbet) & [RBS](https://github.com/ruby/rbs)
 * [TypeScript](https://github.com/microsoft/TypeScript)
 
 ## Going Wild
