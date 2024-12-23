@@ -87,6 +87,9 @@ types:
   integer:
     constant: Domainic::Type::IntegerType
     require_path: domainic/type/types/core/integer_type
+  string:
+    constant: Domainic::Type::StringType
+    require_path: domainic/type/types/core/string_type
   union:
     constant: Domainic::Type::UnionType
     require_path: domainic/type/types/specification/union_type
