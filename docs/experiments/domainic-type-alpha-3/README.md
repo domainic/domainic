@@ -15,7 +15,7 @@ This experiment includes several documentation files:
 ## Quick Start
 
 ```ruby
-gem 'domainic-type', '0.1.0-alpha.3.0.0'
+gem 'domainic-type', '~> 0.1.0.alpha.3'
 ```
 
 ```ruby
