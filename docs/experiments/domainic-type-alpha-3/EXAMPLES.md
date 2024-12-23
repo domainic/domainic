@@ -164,19 +164,18 @@ ApiResponse = _Hash.of(_Symbol => _Union(
     )
   ),
   # Error case
-  _Hash.of(
-    error: _String,
-    code: _Integer.being_positive
-  )
+  _Hash.of(_Symbol => _String).containing_keys(:error, :message)
 ))
 
 # Form validation
 FormData = _Hash.of(
-  username: _String.being_alphanumeric.having_size_between(3, 20),
-  email: _String.matching(URI::MailTo::EMAIL_REGEXP),
-  age: _Nilable(_Integer.being_greater_than_or_equal_to(18)),
-  interests: _Array.of(_String).having_maximum_size(5)
-)
+  _Symbol => _Union(
+    _String.being_alphanumeric.having_size_between(3, 20),
+    _String.matching(URI::MailTo::EMAIL_REGEXP),
+    _Nilable(_Integer.being_greater_than_or_equal_to(18)),
+    _Array.of(_String).having_maximum_size(5)
+  )
+).containing_keys(:username, :email, :age, :interests)
 ```
 
 ## Error Message Examples
