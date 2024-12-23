@@ -8,6 +8,12 @@ constraints:
   any:
     constant: Domainic::Type::Constraint::AnyConstraint
     require_path: domainic/type/constraint/constraints/any_constraint
+  case:
+    constant: Domainic::Type::Constraint::CaseConstraint
+    require_path: domainic/type/constraint/constraints/case_constraint
+  character_set:
+    constant: Domainic::Type::Constraint::CharacterSetConstraint
+    require_path: domainic/type/constraint/constraints/character_set_constraint
   divisibility:
     constant: Domainic::Type::Constraint::DivisibilityConstraint
     require_path: domainic/type/constraint/constraints/divisibility_constraint
@@ -23,6 +29,9 @@ constraints:
   inclusion:
     constant: Domainic::Type::Constraint::InclusionConstraint
     require_path: domainic/type/constraint/constraints/inclusion_constraint
+  match_pattern:
+    constant: Domainic::Type::Constraint::MatchPatternConstraint
+    require_path: domainic/type/constraint/constraints/match_pattern_constraint
   method_presence:
     constant: Domainic::Type::Constraint::MethodPresenceConstraint
     require_path: domainic/type/constraint/constraints/method_presence_constraint
@@ -78,6 +87,12 @@ types:
   integer:
     constant: Domainic::Type::IntegerType
     require_path: domainic/type/types/core/integer_type
+  string:
+    constant: Domainic::Type::StringType
+    require_path: domainic/type/types/core/string_type
+  symbol:
+    constant: Domainic::Type::SymbolType
+    require_path: domainic/type/types/core/symbol_type
   union:
     constant: Domainic::Type::UnionType
     require_path: domainic/type/types/specification/union_type
