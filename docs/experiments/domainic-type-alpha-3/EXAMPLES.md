@@ -240,7 +240,7 @@ also known as `_List`, `_Array?`, `_List?`
 > Checkout the documentation for
 > [EnumerableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.0.1/domainic-type/lib/domainic/type/behavior/enumerable_behavior.rb)
 > and
-> [SizeableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.0.1/domainic-type/lib/domainic/type/behavior/sizeable_behavior.rb)
+> [SizableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.0.1/domainic-type/lib/domainic/type/behavior/sizable_behavior.rb)
 > for the full list of available methods and aliases!
 
 The `_Array` type provides comprehensive validation for array values with constraints for content, ordering, and size.
