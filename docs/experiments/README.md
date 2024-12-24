@@ -1,4 +1,4 @@
-# 🧪 Domainic Experiments Documentation
+# Domainic Experiments Documentation
 
 Welcome to the Domainic Experiments documentation! This directory contains comprehensive documentation for our
 experimental releases - gems that are pushing the boundaries of what's possible with domain-driven design in Ruby. Think
@@ -14,12 +14,12 @@ our growing understanding of developer needs.
 
 Each experimental release is:
 
-* 🔬 **Exploratory** - Testing new approaches and ideas
-* 🔄 **Iterative** - Evolving based on feedback and learnings
-* 🤝 **Collaborative** - Shaped by community input and real-world usage
-* 🎯 **Focused** - Targeting specific aspects of domain-driven design
+* **Exploratory** - Testing new approaches and ideas
+* **Iterative** - Evolving based on feedback and learnings
+* **Collaborative** - Shaped by community input and real-world usage
+* **Focused** - Targeting specific aspects of domain-driven design
 
-## 🚨 Current Experiments
+## Current Experiments
 
 ### Domainic::Type Alpha 3
 
@@ -50,12 +50,10 @@ experiments/
 
 ## Important Notes
 
-* 🔬 Documentation here covers experimental gem releases
-* 🔄 APIs may evolve or be completely redesigned based on feedback
-* 📝 Documentation will be frequently updated
-* 💡 Your feedback is essential and valued!
-
-## Versioning
+* Documentation here covers experimental gem releases
+* APIs may evolve or be completely redesigned based on feedback
+* Documentation will be frequently updated
+* Your feedback is essential and valued!
 
 ## Versioning
 
@@ -88,7 +86,8 @@ Remember, there are no "wrong" answers in experiments * every piece of feedback 
 
 ## Historical Experiments
 
-_This section will be populated as experiments graduate from experimental status or are archived._
+> [!NOTE]
+> This section will be populated as experiments graduate from experimental status or are archived.
 
 ## Feedback Guidelines
 

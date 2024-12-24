@@ -1,9 +1,12 @@
-# 🧪 Domainic::Type Alpha 3
+# Domainic::Type Alpha 3
 
 Welcome to the Domainic::Type Alpha 3 experiment! This is a Ruby gem exploring flexible, composable type
 validation with clear error messages.
 
 ![Experiment Status](https://img.shields.io/badge/ACTIVE-orange?label=Status&style=for-the-badge)
+
+![Experiment Start Date](https://img.shields.io/badge/12%2F23%2F2024-blue?style=for-the-badge&label=Start%20Date)
+![Experiment End Date](https://img.shields.io/badge/02%2F01%2F2025-blue?style=for-the-badge&label=End%20Date)
 
 ## Documentation Structure
 
@@ -215,3 +218,7 @@ Not sure about something? Just open an issue! The only bad question is the unask
 
 Remember: This is an experiment! Things might break, error messages might be confusing, and features might be missing.
 That's exactly what we want to learn about!
+
+|                         |                                       |                                 |                            |
+|-------------------------|---------------------------------------|---------------------------------|----------------------------|
+| [Examples](EXAMPLES.md) | [Troubleshooting](TROUBLESHOOTING.md) | [Known Issues](KNOWN_ISSUES.md) | [Changelog](CHANGELOG.md)  |

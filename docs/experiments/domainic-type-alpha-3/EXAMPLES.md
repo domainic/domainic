@@ -546,3 +546,7 @@ class Interface
   end
 end
 ```
+
+|                               |                                       |                                 |                            |
+|-------------------------------|---------------------------------------|---------------------------------|----------------------------|
+| [Experiment Home](README.md)  | [Troubleshooting](TROUBLESHOOTING.md) | [Known Issues](KNOWN_ISSUES.md) | [Changelog](CHANGELOG.md)  |

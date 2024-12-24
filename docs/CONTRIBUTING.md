@@ -82,10 +82,10 @@ We use RSpec for testing. Key guidelines:
 ```
 
 2. Test Guidelines:
-  * Test behavior, not implementation
-  * One expectation per test
-  * Use descriptive contexts starting with "when", "with", or "without"
-  * Limit to 5 memoized helpers per context
+* Test behavior, not implementation
+* One expectation per test
+* Use descriptive contexts starting with "when", "with", or "without"
+* Limit to 5 memoized helpers per context
 
 ## Making Changes
 
@@ -132,10 +132,10 @@ Before submitting a PR:
 1. Run `bin/dev ci` to ensure all tests and checks pass
 2. Update documentation as needed
 3. Include in your PR:
-  * Clear title and description
-  * Reference to related issues
-  * List of significant changes
-  * Screenshots for UI changes
+* Clear title and description
+* Reference to related issues
+* List of significant changes
+* Screenshots for UI changes
 
 ## For Questions
 

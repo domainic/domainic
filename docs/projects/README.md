@@ -1,8 +1,14 @@
 # Projects
 
-This directory contains documentation for all Domainic [Github projects](https://github.com/domainic/domainic/projects)
-and their development updates. Each project directory includes detailed information about project goals, progress, and
-significant changes.
+This directory tracks active initiatives and development efforts in the Domainic ecosystem. Projects are how we organize
+and track major development efforts, serving as:
+
+1. Collection of related epics/stories for a specific initiative
+2. Iteration planning and scheduling
+3. Progress and milestone tracking
+
+Each project directory contains detailed documentation about goals, progress updates, and significant changes. Projects
+are linked to [Github project boards](https://github.com/domainic/domainic/projects) for task management.
 
 ## Active Projects
 
@@ -11,13 +17,13 @@ significant changes.
     * [domainic-attributer v0.1.0 Released](./domainic-v0.1.0/updates/2024-12-12-01.md)
     * [domainic-attributer v0.2.0 Development Started](./domainic-v0.1.0/updates/2024-12-12-02.md)
   * **December 23, 2024**
-    * [🧪 Experiment Launch: Domainic::Type Alpha 3](./domainic-v0.1.0/updates/2024-12-23-01.md)
+    * [Experiment Launch: Domainic::Type Alpha 3](./domainic-v0.1.0/updates/2024-12-23-01.md)
 
 ## Related Documentation
 
 For milestone-specific documentation, see the [milestones](../milestones) directory.
 
-## Creating Documentation
+## Quick Actions
 
 ### New Project Documentation
 
@@ -35,5 +41,5 @@ To create a new project update:
 bin/dev generate project_update_doc <PROJECT_NAME>
 ```
 
-> Note: After generating a project update, you must manually add it as an item in the corresponding GitHub project
-> board.
+> [!NOTE]
+> After generating a project update, you must manually add it as an item in the corresponding GitHub project board.

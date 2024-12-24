@@ -1,13 +1,5 @@
 # Security Policy
 
-## Supported Versions
-
-### `domainic-attributer`
-
-| Version  | Supported |
-|:--------:|:---------:|
-|  0.1.0   |     ✔     |
-
 ## Reporting a Vulnerability
 
 We take security vulnerabilities seriously. If you discover a security issue, please bring it to our attention right away!
@@ -31,9 +23,9 @@ After you've submitted your report:
 1. You'll receive an acknowledgment within 24 hours
 2. We'll investigate and keep you updated on our findings
 3. Once we've determined the impact and resolution:
-  * We'll patch the vulnerability
-  * We'll make an announcement to the community if warranted
-  * You'll be credited for the discovery (unless you prefer to remain anonymous)
+* We'll patch the vulnerability
+* We'll make an announcement to the community if warranted
+* You'll be credited for the discovery (unless you prefer to remain anonymous)
 
 ### Disclosure Policy
 
@@ -47,3 +39,40 @@ When we receive a security bug report, we will:
 ### Comments on this Policy
 
 If you have suggestions on how this process could be improved, please submit a pull request.
+
+## Supported Versions
+
+### [domainic-attributer](../domainic-attributer/README.md)
+
+|  Version  | Support |
+|:---------:|:-------:|
+|  `0.1.0`  |    ✅   |
+| `> 0.1.0` |    ❌   |
+
+### domainic-boundary
+
+| Version | Support |
+|:-------:|:-------:|
+| `0.1.0` |   🚧    |
+
+### domainic-command
+
+| Version | Support |
+|:-------:|:-------:|
+| `0.1.0` |   🚧    |
+
+### [domainic-type](./experiments/domainic-type-v0.1.0-alpha.3/README.md)
+
+|        Version        | Support |
+|:---------------------:|:-------:|
+|  `0.1.0-alpha.3.0.1`  |   🧪    |
+| `> 0.1.0-alpha.3.0.1` |    ❌   |
+
+### Key
+
+| Symbol | Meaning       |
+|:------:|:-------------:|
+|   ✅   | Supported     |
+|   ❌   | Not Supported |
+|   🧪   | Experimental  |
+|   🚧   | In Development|
