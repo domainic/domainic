@@ -1,7 +1,7 @@
 # 🧪 Domainic Experiments Documentation
 
 Welcome to the Domainic Experiments documentation! This directory contains comprehensive documentation for our
-experimental releases * gems that are pushing the boundaries of what's possible with domain-driven design in Ruby. Think
+experimental releases - gems that are pushing the boundaries of what's possible with domain-driven design in Ruby. Think
 of this space as the laboratory notebook where we document our explorations, gather feedback, and evolve our
 understanding of what makes great domain-driven design tools.
 

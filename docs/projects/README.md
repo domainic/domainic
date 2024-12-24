@@ -6,7 +6,7 @@ significant changes.
 
 ## Active Projects
 
-* [domainic v0.1.0](./domainic-v0.1.0)
+* [domainic v0.1.0](./domainic-v0.1.0/README.md)
   * **December 12, 2024**
     * [domainic-attributer v0.1.0 Released](./domainic-v0.1.0/updates/2024-12-12-01.md)
     * [domainic-attributer v0.2.0 Development Started](./domainic-v0.1.0/updates/2024-12-12-02.md)

@@ -20,9 +20,9 @@ username = _String
   .not_matching(/^admin/i)
 
 username.validate!('admin01')
-# => TypeError: Expected String(being lower case, being only alphanumeric 
-# characters, matching /^admin/i, having size greater than or equal to 3 
-# and less than or equal to 20), but got String(being not lower case, 
+# => TypeError: Expected String(being lower case, being only alphanumeric
+# characters, matching /^admin/i, having size greater than or equal to 3
+# and less than or equal to 20), but got String(being not lower case,
 # being non-alphanumeric characters, does not match /^admin/i, having size 7)
 ```
 
@@ -30,7 +30,6 @@ username.validate!('admin01')
 
 * **Status**: investigating
 * **Reported**: 2023-12-23
-* **Related Issues**: 
+* **Related Issues**:
   * initially reported in [#132](https://github.com/domainic/domainic/issues/132#issuecomment-2560546327)
   * tracked in [#138](https://github.com/domainic/domainic/issues/138)
-

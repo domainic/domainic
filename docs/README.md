@@ -5,12 +5,27 @@ including milestone plans, project updates, and development guidelines.
 
 ## Directory Structure
 
-### [milestones](./milestones)
+### [Experiments](./experiments)
+
+Documentation for experimental features and alpha releases. These experiments allow us to test new ideas and gather
+feedback from the community before finalizing implementations. Each experiment has its own directory containing:
+
+* Experiment overview and goals
+* Installation and usage guides
+* Known issues and troubleshooting
+* Feedback collection guidelines
+
+Current experiments:
+
+* [Domainic::Type Alpha 3](./experiments/domainic-type-alpha-3/README.md) - Exploring flexible type validation with
+  composable constraints
+
+### [Milestones](./milestones)
 
 Documentation for planned feature releases and development milestones across all Domainic gems. Each milestone document
 outlines specific goals, requirements, and implementation details for a particular release.
 
-### [projects](./projects)
+### [Projects](./projects)
 
 Documentation for active project development, including:
 

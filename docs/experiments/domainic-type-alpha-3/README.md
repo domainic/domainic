@@ -3,6 +3,8 @@
 Welcome to the Domainic::Type Alpha 3 experiment! This is a Ruby gem exploring flexible, composable type
 validation with clear error messages.
 
+![Experiment Status](https://img.shields.io/badge/ACTIVE-orange?label=Status&style=for-the-badge)
+
 ## Documentation Structure
 
 This experiment includes several documentation files:
@@ -19,7 +21,7 @@ gem 'domainic-type', '~> 0.1.0.alpha.3'
 ```
 
 ```ruby
-require 'domainic/type'
+require 'domainic/type/definitions'
 include Domainic::Type::Definitions
 
 # Simple type validation
