@@ -8,6 +8,7 @@ in the Domainic project.
 ### Domainic::Attributer
 
 * [v0.2.0](./domainic-attributer-v0.2.0.md)
+* [v0.3.0](./domainic-attributer-v0.3.0.md)
 
 ### Domainic::Boundary
 
