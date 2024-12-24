@@ -5,6 +5,12 @@ including milestone plans, project updates, and development guidelines.
 
 ## Directory Structure
 
+### Gem Documentation
+
+#### [Domainic::Attributer](../domainic-attributer/README.md)
+
+* [Usage](../domainic-attributer/docs/USAGE.md)
+
 ### [Experiments](./experiments)
 
 Documentation for experimental features and alpha releases. These experiments allow us to test new ideas and gather
