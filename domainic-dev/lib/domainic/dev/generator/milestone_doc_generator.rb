@@ -57,7 +57,7 @@ module Domainic
         # @return [void]
         # @rbs () -> void
         def add_to_readme
-          readme_path = Domainic::Dev.root.join('docs/milestones/milestones.md')
+          readme_path = Domainic::Dev.root.join('docs/milestones/README.md')
           content = File.read(readme_path.to_s)
 
           section = "### #{gem_name}\n"
