@@ -209,14 +209,45 @@ RSpec.describe Domainic::Type::Constraint::Set do
     subject(:violation_description) { set.violation_description }
 
     let(:set) { described_class.new }
-
-    before do
-      set.add(:self, :test, nil, description: 'first test')
-      set.add(:length, :test, nil, description: 'second test')
+    let(:successful_constraint) do
+      instance_double(TestConstraint, successful?: true, full_violation_description: 'success')
+    end
+    let(:failed_constraint) do
+      instance_double(TestConstraint, successful?: false, full_violation_description: 'failure')
     end
 
-    it 'is expected to return a combined violation description of all constraints' do
-      expect(violation_description).to eq('first test, second test')
+    before do
+      allow(TestConstraint).to receive(:new).and_return(successful_constraint, failed_constraint)
+      allow(successful_constraint).to receive_messages(expecting: successful_constraint,
+                                                       with_options: successful_constraint)
+      allow(failed_constraint).to receive_messages(expecting: failed_constraint, with_options: failed_constraint)
+
+      set.add(:self, :test, nil, description: 'first test') # Will be successful
+      set.add(:length, :test, nil, description: 'second test') # Will fail
+    end
+
+    it 'is expected to only include violation descriptions from failed constraints' do
+      expect(violation_description).to eq('failure')
+    end
+
+    context 'when all constraints succeed' do
+      let(:failed_constraint) do
+        instance_double(TestConstraint, successful?: true, full_violation_description: 'success')
+      end
+
+      it 'is expected to return an empty string' do
+        expect(violation_description).to be_empty
+      end
+    end
+
+    context 'when all constraints fail' do
+      let(:successful_constraint) do
+        instance_double(TestConstraint, successful?: false, full_violation_description: 'also failed')
+      end
+
+      it 'is expected to include all violation descriptions' do
+        expect(violation_description).to eq('also failed, failure')
+      end
     end
   end
 end

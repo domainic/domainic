@@ -225,7 +225,7 @@ module Domainic
         # @rbs () -> String
         def violation_description
           Type::ACCESSORS.flat_map do |accessor|
-            @lookup[accessor].values.filter_map(&:full_violation_description)
+            @lookup[accessor].values.reject(&:successful?).filter_map(&:full_violation_description)
           end.join(', ').strip
         end
 
