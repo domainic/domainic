@@ -5,6 +5,11 @@ through testing and feedback.
 
 ## Current Issues
 
+> [!NOTE]
+> No active issues yet - experiment in progress
+
+## Fixed Issues
+
 ### Verbose Error Messages Display All Constraint Failures
 
 **Description**: When a type fails validation, the error message shows failures for ALL constraints, even those that
@@ -28,8 +33,12 @@ username.validate!('admin01')
 
 **Expected Behavior**: Error message should only show the constraints that actually failed.
 
-* **Status**: investigating
+* **Status**: fixed
 * **Reported**: 2023-12-23
+* **Fixed**: 2023-12-23
 * **Related Issues**:
   * initially reported in [#132](https://github.com/domainic/domainic/issues/132#issuecomment-2560546327)
   * tracked in [#138](https://github.com/domainic/domainic/issues/138)
+  * fixed in [#139](https://github.com/domainic/domainic/pull/139)
+  * released in [domainic-type v0.1.0-alpha.3.0.1](https://github.com/domainic/domainic/tree/domainic-type-v0.1.0-alpha.3.0.1/domainic-type)
+* **Resolution**: Error messages now only show constraints that failed validation

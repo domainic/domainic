@@ -14,7 +14,7 @@ gems:
   source:
     type: rubygems
 - name: domainic-type
-  version: 0.1.0.alpha.3.0.0
+  version: 0.1.0.alpha.3.0.1
   source:
     type: rubygems
 - name: fileutils
