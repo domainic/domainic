@@ -384,7 +384,7 @@ _Hash.starting_with(value) # Constrains the hash to start with the specified val
 
 ### _Instance
 
-also known as `Record`, `_Instance?`, `Record?`
+also known as `_Record`, `_Instance?`, `_Record?`
 
 The `_Instance` type validates instances of a specific class or module. This is useful for ensuring objects conform to a
 specific interface or protocol:
