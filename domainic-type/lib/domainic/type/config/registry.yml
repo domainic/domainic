@@ -90,6 +90,9 @@ types:
   hash:
     constant: Domainic::Type::HashType
     require_path: domainic/type/types/core/hash_type
+  instance_type:
+    constant: Domainic::Type::InstanceType
+    require_path: domainic/type/types/specialized/instance_type
   integer:
     constant: Domainic::Type::IntegerType
     require_path: domainic/type/types/core/integer_type
