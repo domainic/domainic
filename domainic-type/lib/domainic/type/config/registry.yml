@@ -81,6 +81,9 @@ types:
   duck:
     constant: Domainic::Type::DuckType
     require_path: domainic/type/types/specification/duck_type
+  email_address:
+    constant: Domainic::Type::EmailAddressType
+    require_path: domainic/type/types/network/email_address_type
   enum:
     constant: Domainic::Type::EnumType
     require_path: domainic/type/types/specification/enum_type
