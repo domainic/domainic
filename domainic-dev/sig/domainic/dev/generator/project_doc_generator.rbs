@@ -8,6 +8,14 @@ module Domainic
       # @author {https://aaronmallen.me Aaron Allen}
       # @since 0.1.0
       class ProjectDocGenerator < BaseGenerator
+        @due_date: String
+
+        @status: String
+
+        @start_date: String
+
+        def initialize: (untyped arguments, *untyped options) -> untyped
+
         # Ensure the project does not already exist.
         #
         # @raise [ArgumentError] if the project already exists
@@ -35,10 +43,21 @@ module Domainic
 
         private
 
+        attr_reader due_date: String
+
+        attr_reader start_date: String
+
+        attr_reader status: String
+
         # The name of the project directory based on the project name.
         #
         # @return [String]
         def directory_name: () -> String
+
+        # The color to use for the status badge.
+        #
+        # @return [String]
+        def status_color: () -> String
       end
     end
   end

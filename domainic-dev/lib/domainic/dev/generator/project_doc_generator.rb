@@ -2,6 +2,7 @@
 
 require 'domainic/dev'
 require 'domainic/dev/generator/base_generator'
+require 'uri'
 
 module Domainic
   module Dev
@@ -13,8 +14,26 @@ module Domainic
       # @author {https://aaronmallen.me Aaron Allen}
       # @since 0.1.0
       class ProjectDocGenerator < BaseGenerator
-        argument :name, type: :string # steep:ignore NoMethod
-        argument :id, type: :numeric # steep:ignore NoMethod
+        # @rbs @due_date: String
+        # @rbs @start_date: String
+        # @rbs @status: String
+
+        # steep:ignore:start
+        argument :name, type: :string
+        argument :id, type: :numeric
+
+        class_option :status, type: :string, default: 'In Progress', desc: 'The status of the project'
+        class_option :start_date, type: :string, desc: 'The start date of the project'
+        class_option :due_date, type: :string, desc: 'The end date of the project', default: 'TBD'
+        # steep:ignore:end
+
+        def initialize(arguments, *options)
+          super
+          status, start_date, due_date = self.options.values_at(:status, :start_date, :due_date) # steep:ignore NoMethod
+          @due_date = URI.encode_uri_component(due_date)
+          @start_date = URI.encode_uri_component(start_date || Date.today.strftime('%m/%d/%Y'))
+          @status = URI.encode_uri_component(status)
+        end
 
         # rubocop:disable Layout/OrderedMethods
 
@@ -66,12 +85,29 @@ module Domainic
         # rubocop:enable Layout/OrderedMethods
         private
 
+        attr_reader :due_date, :start_date, :status #: String
+
         # The name of the project directory based on the project name.
         #
         # @return [String]
         # @rbs () -> String
         def directory_name
           name.split.join('-').downcase
+        end
+
+        # The color to use for the status badge.
+        #
+        # @return [String]
+        # @rbs () -> String
+        def status_color
+          case options[:status] # steep:ignore NoMethod
+          when 'In Progress'
+            'orange'
+          when 'Planned'
+            'blue'
+          else
+            ''
+          end
         end
       end
     end
