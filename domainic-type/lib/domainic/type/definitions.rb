@@ -250,6 +250,36 @@ module Domainic
       end
       alias _Map? _Hash?
 
+      # Creates a HostnameType instance.
+      #
+      # HostnameType restricts values to valid hostnames.
+      #
+      # @example
+      #   type = _Hostname.matching('example.com')
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::HostnameType] the created type
+      # @rbs (**__todo__ options) -> HostnameType
+      def _Hostname(**options)
+        require 'domainic/type/types/network/hostname_type'
+        Domainic::Type::HostnameType.new(**options)
+      end
+
+      # Creates a nilable HostnameType instance.
+      #
+      # @example
+      #   _Hostname?.validate("example.com") # => true
+      #   _Hostname?.validate(nil)           # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::UnionType] the created type (Hostname or NilClass)
+      # @rbs (**__todo__ options) -> UnionType
+      def _Hostname?(**options)
+        _Nilable(_Hostname(**options))
+      end
+
       # Create an InstanceType instance.
       #
       # @example

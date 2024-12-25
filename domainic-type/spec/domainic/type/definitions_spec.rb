@@ -92,6 +92,14 @@ RSpec.describe Domainic::Type::Definitions do
     end
   end
 
+  describe '._Hostname' do
+    subject(:hostname_type) { definitions._Hostname }
+
+    it 'is expected to return a HostnameType' do
+      expect(hostname_type).to be_a(Domainic::Type::HostnameType)
+    end
+  end
+
   describe '._Instance' do
     subject(:instance_type) { definitions._Instance }
 
