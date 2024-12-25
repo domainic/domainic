@@ -122,6 +122,38 @@ module Domainic
       alias _Protocol _Duck
       alias _RespondingTo _Duck
 
+      # Creates an EmailAddressType instance.
+      #
+      # EmailAddressType restricts values to valid email addresses.
+      #
+      # @example
+      #   type = _EmailAddress.having_hostname('example.com')
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::EmailAddressType] the created type
+      # @rbs (**__todo__ options) -> EmailAddressType
+      def _EmailAddress(**options)
+        require 'domainic/type/types/network/email_address_type'
+        Domainic::Type::EmailAddressType.new(**options)
+      end
+      alias _Email _EmailAddress
+
+      # Creates a nilable EmailAddressType instance.
+      #
+      # @example
+      #   _EmailAddress?.validate("user@example.com") # => true
+      #   _EmailAddress?.validate(nil)                # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::UnionType] the created type (EmailAddress or NilClass)
+      # @rbs (**__todo__ options) -> UnionType
+      def _EmailAddress?(**options)
+        _Nilable(_EmailAddress(**options))
+      end
+      alias _Email? _EmailAddress?
+
       # Creates an EnumType instance.
       #
       # EnumType restricts values to a specific set of literals.
@@ -240,7 +272,7 @@ module Domainic
       #
       # @param options [Hash] additional configuration options
       #
-      # @return [Domainic::Type::UnionType] the created type (Integer or NilClass)
+      # @return [Domainic::Type::UnionType] the created type (InstanceType or NilClass)
       # @rbs (**__todo__ options) -> UnionType
       def _Instance?(**options)
         _Nilable(_Instance(**options))
