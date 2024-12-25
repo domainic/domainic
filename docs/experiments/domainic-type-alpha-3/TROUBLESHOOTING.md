@@ -137,3 +137,7 @@ Remember: This is an experiment! If something isn't working and you can't figure
 3. If you found a workaround, share that too - it helps us learn!
 
 Every "stuck" moment is valuable feedback that helps us improve the library.
+
+|                               |                         |                                 |                            |
+|-------------------------------|-------------------------|---------------------------------|----------------------------|
+| [Experiment Home](README.md)  | [Examples](EXAMPLES.md) | [Known Issues](KNOWN_ISSUES.md) | [Changelog](CHANGELOG.md)  |

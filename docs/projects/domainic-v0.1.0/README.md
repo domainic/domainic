@@ -1,6 +1,14 @@
 # Domainic v0.1.0
 
 [![Project Status](https://img.shields.io/badge/In%20Progress-orange?style=for-the-badge&label=Status)](https://github.com/orgs/domainic/projects/13)
+[![Project Health](https://img.shields.io/badge/On%20Track-green?style=for-the-badge&label=Health)](https://github.com/orgs/domainic/projects/13/views/1?pane=info&statusUpdateId=72119)
+
+![Project Start Date](https://img.shields.io/badge/12%2F12%2F2024-blue?label=Start%20Date&style=for-the-badge)
+![Project Due Date](https://img.shields.io/badge/TBD-blue?label=Due%20Date&style=for-the-badge)
+
+[![Project Open Tasks](https://img.shields.io/github/issues-search/domainic/domainic?query=project%3Adomainic%2F13%20is%3Aopen&style=for-the-badge&label=open%20tasks&color=red)](https://github.com/domainic/domainic/issues?q=project%3Adomainic%2F13%20is%3Aopen)
+[![Project Closed Tasks](https://img.shields.io/github/issues-search/domainic/domainic?query=project%3Adomainic%2F13%20is%3Aclosed&style=for-the-badge&label=closed%20tasks&color=green)](https://github.com/domainic/domainic/issues?q=project%3Adomainic%2F13%20is%3Aclosed)
+[![Project Total Tasks](https://img.shields.io/github/issues-search/domainic/domainic?query=project%3Adomainic%2F13&style=for-the-badge&label=total%20tasks&color=blue)](https://github.com/domainic/domainic/issues?q=project%3Adomainic%2F13)
 
 ## Short Description
 

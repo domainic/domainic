@@ -1,8 +1,14 @@
 # domainic-boundary v0.1.0
 
+![Milestone Status](https://img.shields.io/badge/Planned-blue?style=for-the-badge&label=Status)
 [![Milestone Progress](https://img.shields.io/github/milestones/progress-percent/domainic/domainic/7?style=for-the-badge&label=Progress)](https://github.com/domainic/domainic/milestone/7)
 
+![Milestone Start Date](https://img.shields.io/badge/TBD-blue?style=for-the-badge&label=Start%20Date)
 ![Milestone Due Date](https://img.shields.io/badge/TBD-blue?style=for-the-badge&label=Due%20Date)
+
+[![Milestone Open Tasks](https://img.shields.io/github/issues-search/domainic/domainic?query=is%3Aopen%20milestone%3A%22domainic-boundary%20v0.1.0%22&style=for-the-badge&label=Open%20Tasks&color=red)](https://github.com/domainic/domainic/issues?q=is%3Aopen%20milestone%3A%22domainic-boundary%20v0.1.0%22)
+[![Milestone Closed Tasks](https://img.shields.io/github/issues-search/domainic/domainic?query=is%3Aclosed%20milestone%3A%22domainic-boundary%20v0.1.0%22&style=for-the-badge&label=Closed%20Tasks&color=green)](https://github.com/domainic/domainic/issues?q=is%3Aclosed%20milestone%3A%22domainic-boundary%20v0.1.0%22)
+[![Milestone Total Tasks](https://img.shields.io/github/issues-search/domainic/domainic?query=milestone%3A%22domainic-boundary%20v0.1.0%22&style=for-the-badge&label=Total%20Tasks&color=blue)](https://github.com/domainic/domainic/issues?q=milestone%3A%22domainic-boundary%20v0.1.0%22)
 
 Domainic::Boundary is a sophisticated Ruby gem that provides a robust implementation of the Gateway pattern, designed to
 create clear, controlled interfaces between different domains in complex software architectures. By establishing

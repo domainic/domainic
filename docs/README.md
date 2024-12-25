@@ -1,73 +1,70 @@
 # Domainic Documentation
 
-Welcome to the Domainic documentation. This repository contains comprehensive documentation for the Domainic project,
-including milestone plans, project updates, and development guidelines.
+Welcome to Domainic, a suite of Ruby gems for domain-driven design. This portal provides navigation and overview of all
+documentation across the Domainic ecosystem.
 
-## Directory Structure
+## Component Gems
 
-### Gem Documentation
+### Released
 
-#### [Domainic::Attributer](../domainic-attributer/README.md)
+* [**domainic-attributer**](../domainic-attributer/) - Type-safe, self-documenting class attributes
+  * **Current Version**: 0.1.0
+  * [Usage Guide](../domainic-attributer/docs/USAGE.md)
 
-* [Usage](../domainic-attributer/docs/USAGE.md)
+### Experimental
 
-### [Experiments](./experiments)
+* [**domainic-type**](../domainic-type/) - Flexible type validation system
+  * **Current Version**: 0.1.0-alpha.3.0.1
+  * [Experiment Details](./experiments/domainic-type-alpha-3/)
+  * [Testing & Feedback](./experiments/domainic-type-alpha-3/README.md)
 
-Documentation for experimental features and alpha releases. These experiments allow us to test new ideas and gather
-feedback from the community before finalizing implementations. Each experiment has its own directory containing:
+### In Development
 
-* Experiment overview and goals
-* Installation and usage guides
-* Known issues and troubleshooting
-* Feedback collection guidelines
+* **domainic-boundary** - Clean domain interfaces
+* **domainic-command** - First-class command objects
+* **domainic** - Core integration gem (coming in v0.1.0)
 
-Current experiments:
+## Project Resources
 
-* [Domainic::Type Alpha 3](./experiments/domainic-type-alpha-3/README.md) - Exploring flexible type validation with
-  composable constraints
+### Development Tracking
 
-### [Milestones](./milestones)
+* [Active Projects](./projects/) - Current development focus and updates
+* [Release Planning](./milestones/) - Upcoming releases and roadmap
+* [Experiments](./experiments/) - Alpha releases and testing programs
 
-Documentation for planned feature releases and development milestones across all Domainic gems. Each milestone document
-outlines specific goals, requirements, and implementation details for a particular release.
-
-### [Projects](./projects)
-
-Documentation for active project development, including:
-
-* Project overviews
-* Development updates
-* Implementation details
-* Progress tracking
-
-Each project directory contains a README with links to relevant documentation and an `updates` directory tracking
-significant changes and decisions.
-
-### Guidelines and Policies
+### Contributing
 
 * [Code of Conduct](CODE_OF_CONDUCT.md)
-* [Contributing Guidelines](CONTRIBUTING.md)
+* [Contributing Guide](CONTRIBUTING.md)
 * [Security Policy](SECURITY.md)
+
+## Documentation Overview
+
+Each component in the Domainic ecosystem maintains its documentation within its own directory, while project-wide
+documentation lives here in `/docs`:
+
+### Component Documentation
+
+* Each gem maintains its own README.md and docs/ directory
+* Installation and quickstart in gem's README.md
+* Detailed guides in gem's docs/ directory
+* API documentation via YARD
+
+### Project Documentation
+
+* `/docs/experiments/` - Documentation for experimental features
+* `/docs/milestones/` - Release planning and requirements
+* `/docs/projects/` - Development tracking and updates
+* Root `/docs/` - Project-wide policies and guides
 
 ## Documentation Updates
 
-This documentation is synchronized with the [Domainic Wiki](https://github.com/domainic/domainic/wiki) through automated
-GitHub Actions. Any changes to the `/docs` directory in the main repository will be automatically reflected in the wiki.
+The `/docs` directory is synchronized with the [Domainic Wiki](https://github.com/domainic/domainic/wiki).
+While gem-specific documentation lives with each gem, project-wide documentation here is mirrored to provide a consistent
+reference point.
 
-## Contributing to Documentation
+## Additional Resources
 
-We welcome contributions to our documentation! Please see our [Contributing Guidelines](CONTRIBUTING.md) for information
-on how to submit changes.
-
-Before making changes:
-
-1. Ensure you're working with the latest version of the documentation
-2. Follow the existing formatting and structure
-3. Test any links or references
-4. Submit changes through pull requests
-
-## License
-
-This documentation is [licensed](https://github.com/domainic/domainic/blob/main/LICENSE) under the same terms as the
-Domainic project. See the project repository for [licensed](https://github.com/domainic/domainic/blob/main/LICENSE)
-details.
+* [GitHub Discussions](https://github.com/domainic/domainic/discussions) - Community discussion and Q&A
+* [Issue Tracker](https://github.com/domainic/domainic/issues) - Bug reports and feature requests
+* [Project Board](https://github.com/domainic/domainic/projects) - Development progress tracking
