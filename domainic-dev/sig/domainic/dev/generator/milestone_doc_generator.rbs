@@ -10,6 +10,10 @@ module Domainic
       class MilestoneDocGenerator < BaseGenerator
         @due_date: String
 
+        @status: String
+
+        @start_date: String
+
         # @param arguments [Array<Object>] the generator arguments
         # @param options [Array<Object>] additional options
         # @return [void]
@@ -34,7 +38,11 @@ module Domainic
 
         private
 
-        attr_reader due_date: untyped
+        attr_reader due_date: String
+
+        attr_reader start_date: String
+
+        attr_reader status: String
 
         # The name of the project directory based on the project name.
         #
@@ -46,7 +54,10 @@ module Domainic
         # @return [String]
         def gem_name: () -> String
 
-        def parse_due_date!: () -> untyped
+        # The color to use for the status badge.
+        #
+        # @return [String]
+        def status_color: () -> String
 
         # Extract the version name from the milestone name.
         #

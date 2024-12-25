@@ -15,11 +15,17 @@ module Domainic
       # @since 0.1.0
       class MilestoneDocGenerator < BaseGenerator
         # @rbs @due_date: String
+        # @rbs @start_date: String
+        # @rbs @status: String
 
-        argument :name, type: :string # steep:ignore NoMethod
-        argument :id, type: :numeric # steep:ignore NoMethod
+        # steep:ignore:start
+        argument :name, type: :string
+        argument :id, type: :numeric
 
-        class_option :due, type: :string, desc: 'The due date for the milestone', default: 'TBD' # steep:ignore
+        class_option :status, type: :string, default: 'In Progress', desc: 'The status of the project'
+        class_option :start_date, type: :string, desc: 'The start date of the milestone'
+        class_option :due_date, type: :string, desc: 'The due date of the project', default: 'TBD'
+        # steep:ignore:end
 
         # rubocop:disable Layout/OrderedMethods
 
@@ -31,7 +37,10 @@ module Domainic
         # @rbs (Array[untyped], *untyped) -> void
         def initialize(arguments, *options)
           super
-          parse_due_date!
+          status, start_date, due_date = self.options.values_at(:status, :start_date, :due_date) # steep:ignore NoMethod
+          @due_date = URI.encode_uri_component(due_date)
+          @start_date = URI.encode_uri_component(start_date || Date.today.strftime('%m/%d/%Y'))
+          @status = URI.encode_uri_component(status)
         end
 
         # Ensure the milestone does not already exist.
@@ -75,7 +84,7 @@ module Domainic
         # rubocop:enable Layout/OrderedMethods
         private
 
-        attr_reader :due_date
+        attr_reader :due_date, :start_date, :status #: String
 
         # The name of the project directory based on the project name.
         #
@@ -93,13 +102,19 @@ module Domainic
           "Domainic::#{name.split('-')[1].capitalize}"
         end
 
-        def parse_due_date!
-          @due_date = if options[:due] == 'TBD' # steep:ignore NoMethod
-                        'TBD'
-                      else
-                        date = Date.parse(options[:due]) # steep:ignore NoMethod
-                        "#{date.month}%2F#{date.day}%2F#{date.year}"
-                      end
+        # The color to use for the status badge.
+        #
+        # @return [String]
+        # @rbs () -> String
+        def status_color
+          case options[:status] # steep:ignore NoMethod
+          when 'In Progress'
+            'orange'
+          when 'Planned'
+            'blue'
+          else
+            ''
+          end
         end
 
         # Extract the version name from the milestone name.
