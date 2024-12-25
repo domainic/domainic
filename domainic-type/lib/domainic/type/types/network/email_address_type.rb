@@ -3,6 +3,7 @@
 require 'domainic/type/behavior'
 require 'domainic/type/behavior/string_behavior/matching_behavior'
 require 'domainic/type/behavior/sizable_behavior'
+require 'domainic/type/behavior/uri_behavior'
 require 'uri'
 
 module Domainic
@@ -43,6 +44,7 @@ module Domainic
       include Behavior
       include Behavior::StringBehavior::MatchingBehavior
       include Behavior::SizableBehavior
+      include Behavior::URIBehavior
 
       # Core email constraints based on RFCs 5321 and 5322
       intrinsically_constrain :self, :type, String, description: :not_described
@@ -98,30 +100,6 @@ module Domainic
       alias matching_local having_local_matching
       alias with_local_matching having_local_matching
 
-      # Constrain email to allowed top-level domains
-      #
-      # Creates a constraint ensuring the email uses one of the specified top-level
-      # domains (TLDs). This allows restricting emails to specific TLDs like .com or .org.
-      #
-      # @example
-      #   type.having_top_level_domain("com", "org")
-      #   type.validate("user@example.com")  # => true
-      #   type.validate("user@example.net")  # => false
-      #
-      # @param top_level_domains [Array<String>] List of allowed TLDs
-      # @return [self] self for method chaining
-      # @rbs (*String top_level_domains) -> self
-      def having_top_level_domain(*top_level_domains)
-        pattern = /\.(#{top_level_domains.join('|')})\z/i
-        constrain :self, :match_pattern, pattern, concerning: :top_level_domain_inclusion
-      end
-      alias allowing_tld having_top_level_domain
-      alias allowing_top_level_domain having_top_level_domain
-      alias having_tld having_top_level_domain
-      alias tld having_top_level_domain
-      alias with_tld having_top_level_domain
-      alias with_top_level_domain having_top_level_domain
-
       # Constrain email to exclude specific hostnames
       #
       # Creates a constraint ensuring the domain part of the email does not match any
@@ -166,30 +144,6 @@ module Domainic
         constrain :self, :not, local_pattern, concerning: :local_part_exclusion
       end
       alias not_matching_local not_having_local_matching
-
-      # Constrain email to exclude specific top-level domains
-      #
-      # Creates a constraint ensuring the email does not use any of the specified
-      # top-level domains (TLDs). Useful for blocking certain TLDs.
-      #
-      # @example
-      #   type.not_having_top_level_domain("test")
-      #   type.validate("user@example.com")   # => true
-      #   type.validate("user@example.test")  # => false
-      #
-      # @param top_level_domains [Array<String>] List of forbidden TLDs
-      # @return [self] self for method chaining
-      # @rbs (*String top_level_domains) -> self
-      def not_having_top_level_domain(*top_level_domains)
-        pattern = /\.(#{top_level_domains.join('|')})\z/i
-        top_level_domains = @constraints.prepare :self, :match_pattern, pattern
-        constrain :self, :not, top_level_domains, concerning: :top_level_domain_exclusion
-      end
-      alias forbidding_tld not_having_top_level_domain
-      alias forbidding_top_level_domain not_having_top_level_domain
-      alias not_having_tld not_having_top_level_domain
-      alias not_tld not_having_top_level_domain
-      alias not_top_level_domain not_having_top_level_domain
     end
   end
 end
