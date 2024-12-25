@@ -84,6 +84,14 @@ RSpec.describe Domainic::Type::Definitions do
     end
   end
 
+  describe '._Instance' do
+    subject(:instance_type) { definitions._Instance }
+
+    it 'is expected to return an InstanceType' do
+      expect(instance_type).to be_a(Domainic::Type::InstanceType)
+    end
+  end
+
   describe '._Nilable' do
     subject(:nilable_type) { definitions._Nilable(String) }
 
