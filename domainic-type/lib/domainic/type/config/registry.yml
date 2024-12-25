@@ -111,6 +111,9 @@ types:
   union:
     constant: Domainic::Type::UnionType
     require_path: domainic/type/types/specification/union_type
+  uri:
+    constant: Domainic::Type::URIType
+    require_path: domainic/type/types/network/uri_type
   void:
     constant: Domainic::Type::VoidType
     require_path: domainic/type/types/specification/void_type
