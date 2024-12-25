@@ -8,6 +8,9 @@ constraints:
   any:
     constant: Domainic::Type::Constraint::AnyConstraint
     require_path: domainic/type/constraint/constraints/any_constraint
+  attribute_presence:
+    constant: Domainic::Type::Constraint::AttributePresenceConstraint
+    require_path: domainic/type/constraint/constraints/attribute_presence_constraint
   case:
     constant: Domainic::Type::Constraint::CaseConstraint
     require_path: domainic/type/constraint/constraints/case_constraint
