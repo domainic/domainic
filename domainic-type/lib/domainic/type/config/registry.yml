@@ -93,6 +93,9 @@ types:
   hash:
     constant: Domainic::Type::HashType
     require_path: domainic/type/types/core/hash_type
+  hostname:
+    constant: Domainic::Type::HostnameType
+    require_path: domainic/type/types/network/hostname_type
   instance_type:
     constant: Domainic::Type::InstanceType
     require_path: domainic/type/types/specialized/instance_type
