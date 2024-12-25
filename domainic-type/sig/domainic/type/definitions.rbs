@@ -364,6 +364,33 @@ module Domainic
 
       alias _Either _Union
 
+      # Creates a URIType instance.
+      #
+      # URIType restricts values to valid URIs.
+      #
+      # @example
+      #   type = _URI.having_scheme('https')
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::URIType] the created type
+      def _Uri: (**__todo__ options) -> URIType
+
+      alias _Url _Uri
+
+      # Creates a nilable URIType instance.
+      #
+      # @example
+      #   _Uri?.validate("https://example.com") # => true
+      #   _Uri?.validate(nil)                   # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::UnionType] the created type (URIType or NilClass)
+      def _Uri?: (**__todo__ options) -> UnionType
+
+      alias _Url? _Uri?
+
       # Creates a VoidType instance.
       #
       # Represents an operation that returns no value.

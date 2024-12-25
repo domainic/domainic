@@ -132,6 +132,14 @@ RSpec.describe Domainic::Type::Definitions do
     end
   end
 
+  describe '._Uri' do
+    subject(:uri_type) { definitions._Uri }
+
+    it 'is expected to return a UriType' do
+      expect(uri_type).to be_a(Domainic::Type::URIType)
+    end
+  end
+
   describe '._Void' do
     subject(:void_type) { definitions._Void }
 
