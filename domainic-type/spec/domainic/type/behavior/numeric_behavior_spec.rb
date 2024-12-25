@@ -12,7 +12,7 @@ RSpec.describe Domainic::Type::Behavior::NumericBehavior do
       include Domainic::Type::Behavior
       include Domainic::Type::Behavior::NumericBehavior
 
-      intrinsic :self, :type, Numeric, abort_on_failure: true, description: :not_described
+      intrinsically_constrain :self, :type, Numeric, abort_on_failure: true, description: :not_described
     end
   end
 

@@ -12,7 +12,7 @@ RSpec.describe Domainic::Type::Behavior::StringBehavior do
       include Domainic::Type::Behavior
       include Domainic::Type::Behavior::StringBehavior
 
-      intrinsic :self, :type, String, abort_on_failure: true, description: :not_described
+      intrinsically_constrain :self, :type, String, abort_on_failure: true, description: :not_described
     end
   end
 

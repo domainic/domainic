@@ -45,7 +45,7 @@ module Domainic
       include Behavior
       include Behavior::StringBehavior
 
-      intrinsic :self, :type, String, abort_on_failure: true, description: :not_described
+      intrinsically_constrain :self, :type, String, abort_on_failure: true, description: :not_described
     end
   end
 end

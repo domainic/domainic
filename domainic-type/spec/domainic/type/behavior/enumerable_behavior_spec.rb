@@ -11,7 +11,7 @@ RSpec.describe Domainic::Type::Behavior::EnumerableBehavior do
       include Domainic::Type::Behavior
       include Domainic::Type::Behavior::EnumerableBehavior
 
-      intrinsic :self, :type, Enumerable, abort_on_failure: true, description: :not_described
+      intrinsically_constrain :self, :type, Enumerable, abort_on_failure: true, description: :not_described
     end
   end
 
