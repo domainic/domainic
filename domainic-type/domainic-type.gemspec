@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-DOMAINIC_TYPE_GEM_VERSION = '0.1.0.alpha.3.0.1'
-DOMAINIC_TYPE_SEMVER = '0.1.0-alpha.3.0.1'
+DOMAINIC_TYPE_GEM_VERSION = '0.1.0.alpha.3.0.2'
+DOMAINIC_TYPE_SEMVER = '0.1.0-alpha.3.0.2'
 DOMAINIC_TYPE_REPO_URL = 'https://github.com/domainic/domainic'
 DOMAINIC_TYPE_HOME_URL = "#{DOMAINIC_TYPE_REPO_URL}/tree/domainic-type-v" \
                          "#{DOMAINIC_TYPE_SEMVER}/domainic-type".freeze
