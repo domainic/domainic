@@ -42,7 +42,7 @@ module Domainic
       include Behavior
       include Behavior::EnumerableBehavior
 
-      intrinsic :self, :type, Hash, abort_on_failure: true, description: :not_described
+      intrinsically_constrain :self, :type, Hash, abort_on_failure: true, description: :not_described
 
       # Validate that the hash contains specific keys
       #

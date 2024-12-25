@@ -87,6 +87,8 @@ module Domainic
         #
         # @see Constraint::Set#add
         #
+        # @deprecated Use {#intrinsically_constrain} instead
+        #
         # @return [void]
         def intrinsic: (Type::accessor accessor, String | Symbol constraint_type, ?untyped expectation, **untyped options) -> void
 
@@ -94,6 +96,13 @@ module Domainic
         #
         # @return [Constraint::Set] The constraint set
         def intrinsic_constraints: () -> Constraint::Set
+
+        # Add an intrinsic constraint to this type.
+        #
+        # @see Constraint::Set#add
+        #
+        # @return [void]
+        def intrinsically_constrain: (Type::accessor accessor, String | Symbol constraint_type, ?untyped expectation, **untyped options) -> void
 
         # Delegate unknown methods to a new instance.
         #

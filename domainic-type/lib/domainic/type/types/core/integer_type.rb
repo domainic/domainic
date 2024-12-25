@@ -32,7 +32,7 @@ module Domainic
       include Behavior
       include Behavior::NumericBehavior
 
-      intrinsic :self, :type, Integer, abort_on_failure: true, description: :not_described
+      intrinsically_constrain :self, :type, Integer, abort_on_failure: true, description: :not_described
     end
   end
 end

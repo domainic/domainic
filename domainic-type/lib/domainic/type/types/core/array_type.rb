@@ -42,7 +42,7 @@ module Domainic
       include Behavior
       include Behavior::EnumerableBehavior
 
-      intrinsic :self, :type, Array, abort_on_failure: true, description: :not_described
+      intrinsically_constrain :self, :type, Array, abort_on_failure: true, description: :not_described
     end
   end
 end

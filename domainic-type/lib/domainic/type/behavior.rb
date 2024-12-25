@@ -105,6 +105,8 @@ module Domainic
         #
         # @see Constraint::Set#add
         #
+        # @deprecated Use {#intrinsically_constrain} instead
+        #
         # @return [void]
         # @rbs (
         #   Type::accessor accessor,
@@ -113,7 +115,10 @@ module Domainic
         #   **untyped options
         #   ) -> void
         def intrinsic(...)
-          intrinsic_constraints.add(...)
+          warn 'Domainic::Type::Behavior.intrinsic is deprecated and will be remove in a future release. Use ' \
+               "Domainic::Type::Behavior.intrinsically_constrain instead.\n" \
+               "Called from: #{caller_locations(1..1)&.first}"
+          intrinsically_constrain(...)
         end
 
         # Get the set of intrinsic constraints for this type.
@@ -122,6 +127,21 @@ module Domainic
         # @rbs () -> Constraint::Set
         def intrinsic_constraints
           @intrinsic_constraints ||= Constraint::Set.new
+        end
+
+        # Add an intrinsic constraint to this type.
+        #
+        # @see Constraint::Set#add
+        #
+        # @return [void]
+        # @rbs (
+        #   Type::accessor accessor,
+        #   String | Symbol constraint_type,
+        #   ?untyped expectation,
+        #   **untyped options
+        #   ) -> void
+        def intrinsically_constrain(...)
+          intrinsic_constraints.add(...)
         end
 
         # Delegate unknown methods to a new instance.
