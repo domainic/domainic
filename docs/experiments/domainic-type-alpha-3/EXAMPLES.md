@@ -21,6 +21,7 @@ This document provides comprehensive examples of using Domainic::Type, from basi
   * [_Enum](#_enum)
   * [_Float](#_float)
   * [_Hash](#_hash)
+  * [_Instance](#_instance)
   * [_Integer](#_integer)
   * [_Nilable](#_nilable)
   * [_String](#_string)
@@ -379,6 +380,23 @@ _Hash.having_size(size) # Constrains the hash to have a specific size
 _Hash.having_size_between(minimum, maximum) # Constrains the hash to have a size between the specified min and max
 _Hash.of(key_type => value_type) # Constrains the hash to contain only values of the specified type
 _Hash.starting_with(value) # Constrains the hash to start with the specified value
+```
+
+### _Instance
+
+also known as `Record`, `_Instance?`, `Record?`
+
+The `_Instance` type validates instances of a specific class or module. This is useful for ensuring objects conform to a
+specific interface or protocol:
+
+```ruby
+_Instance.of(User).having_attributes(name: _String, age: _Integer) === User.new(name: 'Alice', age: 38) # => true
+_Instance.of(User) === NotAUser.new # => false
+_Instance.having_attributes(hype_man: _Literal('Flavor Flav')) === Struct.new(:hype_man).new('LL Cool J') # => false
+
+# Available Constraints
+_Instance.of(class_or_module) # Constrains the instance to be of the specified class or module
+_Instance.having_attributes(attribute_name: attribute_type) # Constrains the instance to have the specified attributes
 ```
 
 ### _Integer

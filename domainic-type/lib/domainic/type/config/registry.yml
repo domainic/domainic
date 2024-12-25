@@ -8,6 +8,9 @@ constraints:
   any:
     constant: Domainic::Type::Constraint::AnyConstraint
     require_path: domainic/type/constraint/constraints/any_constraint
+  attribute_presence:
+    constant: Domainic::Type::Constraint::AttributePresenceConstraint
+    require_path: domainic/type/constraint/constraints/attribute_presence_constraint
   case:
     constant: Domainic::Type::Constraint::CaseConstraint
     require_path: domainic/type/constraint/constraints/case_constraint
@@ -29,6 +32,9 @@ constraints:
   inclusion:
     constant: Domainic::Type::Constraint::InclusionConstraint
     require_path: domainic/type/constraint/constraints/inclusion_constraint
+  instance_of:
+    constant: Domainic::Type::Constraint::InstanceOfConstraint
+    require_path: domainic/type/constraint/constraints/instance_of_constraint
   match_pattern:
     constant: Domainic::Type::Constraint::MatchPatternConstraint
     require_path: domainic/type/constraint/constraints/match_pattern_constraint
@@ -84,6 +90,9 @@ types:
   hash:
     constant: Domainic::Type::HashType
     require_path: domainic/type/types/core/hash_type
+  instance_type:
+    constant: Domainic::Type::InstanceType
+    require_path: domainic/type/types/specialized/instance_type
   integer:
     constant: Domainic::Type::IntegerType
     require_path: domainic/type/types/core/integer_type

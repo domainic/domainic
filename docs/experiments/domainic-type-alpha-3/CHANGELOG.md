@@ -4,6 +4,10 @@
 
 ### [Unreleased]
 
+#### Added
+
+* [#146](https://github/com/domainic/domainic/pull/146) `Domainic::Type::InstanceType` for type checking instances.
+
 ### [0.1.0-alpha.3.0.1] - 2024-12-23
 
 #### Fixed

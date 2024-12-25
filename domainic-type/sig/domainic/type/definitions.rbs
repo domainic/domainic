@@ -184,6 +184,30 @@ module Domainic
 
       alias _Map? _Hash?
 
+      # Create an InstanceType instance.
+      #
+      # @example
+      #   _type = _Instance.of(User)
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::InstanceType]
+      def _Instance: (**__todo__ options) -> InstanceType
+
+      alias _Record _Instance
+
+      # Create an InstanceType instance.
+      #
+      # @example
+      #   _type = _Instance?(of: User)
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::UnionType] the created type (Integer or NilClass)
+      def _Instance?: (**__todo__ options) -> UnionType
+
+      alias _Record? _Instance?
+
       # Creates an IntegerType instance.
       #
       # @example
