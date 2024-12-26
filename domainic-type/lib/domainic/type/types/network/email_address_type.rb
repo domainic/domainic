@@ -47,7 +47,7 @@ module Domainic
       include Behavior::URIBehavior
 
       # Core email constraints based on RFCs 5321 and 5322
-      intrinsically_constrain :self, :type, String, description: :not_described
+      intrinsically_constrain :self, :type, String, abort_on_failure: true, description: :not_described
       intrinsically_constrain :self, :match_pattern, URI::MailTo::EMAIL_REGEXP, description: :not_described
       intrinsically_constrain :length, :range, { maximum: 254 }, description: :not_described, concerning: :size
       intrinsically_constrain :self, :character_set, :ascii, description: :not_described
