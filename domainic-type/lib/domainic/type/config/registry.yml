@@ -114,6 +114,9 @@ types:
   uri:
     constant: Domainic::Type::URIType
     require_path: domainic/type/types/network/uri_type
+  uuid:
+    constant: Domainic::Type::UUIDType
+    require_path: domainic/type/types/identifier/uuid_type
   void:
     constant: Domainic::Type::VoidType
     require_path: domainic/type/types/specification/void_type
