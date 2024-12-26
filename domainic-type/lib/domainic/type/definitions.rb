@@ -103,6 +103,36 @@ module Domainic
       end
       alias _Bool? _Boolean?
 
+      # Creates a CUIDType instance
+      #
+      # @example
+      #   type = _CUID.v2
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::CUIDType] the created type
+      # @rbs (**__todo__ options) -> CUIDType
+      def _CUID(**options)
+        require 'domainic/type/types/identifier/cuid_type'
+        Domainic::Type::CUIDType.new(**options)
+      end
+      alias _Cuid _CUID
+
+      # Creates a nilable CUIDType instance.
+      #
+      # @example
+      #   _CUID? === "la6m1dv00000gv25zp9ru12g" # => true
+      #   _CUID? === nil                        # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::UnionType] the created type (CUIDType or NilClass)
+      # @rbs (**__todo__ options) -> UnionType
+      def _CUID?(**options)
+        _Nilable(_CUID(**options))
+      end
+      alias _Cuid? _CUID?
+
       # Creates a DuckType instance.
       #
       # DuckType allows specifying behavior based on method availability.
@@ -280,6 +310,33 @@ module Domainic
         _Nilable(_Hostname(**options))
       end
 
+      # Creates a UnionType of IntegerType, UUIDType, and CUIDType
+      #
+      # @example
+      #   _ID === 1234567890                             # => true
+      #   _ID === '123e4567-e89b-42d3-a456-426614174000' # => true
+      #   _ID === 'la6m1dv00000gv25zp9ru12g'             # => true
+      #
+      # @return [Domainic::Type::UnionType] the created type
+      # @rbs () -> UnionType
+      def _ID
+        _Union(_Integer, _UUID, _CUID)
+      end
+
+      # Creates a nilable UnionType of IntegerType, UUIDType, and CUIDType
+      #
+      # @example
+      #   _ID === 1234567890                             # => true
+      #   _ID === '123e4567-e89b-42d3-a456-426614174000' # => true
+      #   _ID === 'la6m1dv00000gv25zp9ru12g'             # => true
+      #   _ID === nil                                    # => true
+      #
+      # @return [Domainic::Type::UnionType] the created type
+      # @rbs () -> UnionType
+      def _ID?
+        _Nilable(_ID)
+      end
+
       # Create an InstanceType instance.
       #
       # @example
@@ -417,6 +474,36 @@ module Domainic
         _Nilable(symbol)
       end
       alias _Interned? _Symbol?
+
+      # Creates a UUIDType instance
+      #
+      # @example
+      #   type = _UUID.v4_compact
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::UUIDType] the created type
+      # @rbs (**__todo__ options) -> UUIDType
+      def _UUID(**options)
+        require 'domainic/type/types/identifier/uuid_type'
+        Domainic::Type::UUIDType.new(**options)
+      end
+      alias _Uuid _UUID
+
+      # Creates a nilable UUIDType instance.
+      #
+      # @example
+      #   _UUID? === '123e4567-e89b-42d3-a456-426614174000' # => true
+      #   _UUID? === nil                                    # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::UnionType] the created type (UUIDType or NilClass)
+      # @rbs (**__todo__ options) -> UnionType
+      def _UUID?(**options)
+        _Nilable(_UUID(**options))
+      end
+      alias _Uuid? _UUID?
 
       # Creates a UnionType instance.
       #

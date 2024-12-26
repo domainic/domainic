@@ -86,6 +86,31 @@ module Domainic
 
       alias _Bool? _Boolean?
 
+      # Creates a CUIDType instance
+      #
+      # @example
+      #   type = _CUID.v2
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::CUIDType] the created type
+      def _CUID: (**__todo__ options) -> CUIDType
+
+      alias _Cuid _CUID
+
+      # Creates a nilable CUIDType instance.
+      #
+      # @example
+      #   _CUID? === "la6m1dv00000gv25zp9ru12g" # => true
+      #   _CUID? === nil                        # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::UnionType] the created type (CUIDType or NilClass)
+      def _CUID?: (**__todo__ options) -> UnionType
+
+      alias _Cuid? _CUID?
+
       # Creates a DuckType instance.
       #
       # DuckType allows specifying behavior based on method availability.
@@ -234,6 +259,27 @@ module Domainic
       # @return [Domainic::Type::UnionType] the created type (Hostname or NilClass)
       def _Hostname?: (**__todo__ options) -> UnionType
 
+      # Creates a UnionType of IntegerType, UUIDType, and CUIDType
+      #
+      # @example
+      #   _ID === 1234567890                             # => true
+      #   _ID === '123e4567-e89b-42d3-a456-426614174000' # => true
+      #   _ID === 'la6m1dv00000gv25zp9ru12g'             # => true
+      #
+      # @return [Domainic::Type::UnionType] the created type
+      def _ID: () -> UnionType
+
+      # Creates a nilable UnionType of IntegerType, UUIDType, and CUIDType
+      #
+      # @example
+      #   _ID === 1234567890                             # => true
+      #   _ID === '123e4567-e89b-42d3-a456-426614174000' # => true
+      #   _ID === 'la6m1dv00000gv25zp9ru12g'             # => true
+      #   _ID === nil                                    # => true
+      #
+      # @return [Domainic::Type::UnionType] the created type
+      def _ID?: () -> UnionType
+
       # Create an InstanceType instance.
       #
       # @example
@@ -348,6 +394,31 @@ module Domainic
       def _Symbol?: (**__todo__ options) -> UnionType
 
       alias _Interned? _Symbol?
+
+      # Creates a UUIDType instance
+      #
+      # @example
+      #   type = _UUID.v4_compact
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::UUIDType] the created type
+      def _UUID: (**__todo__ options) -> UUIDType
+
+      alias _Uuid _UUID
+
+      # Creates a nilable UUIDType instance.
+      #
+      # @example
+      #   _UUID? === '123e4567-e89b-42d3-a456-426614174000' # => true
+      #   _UUID? === nil                                    # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::UnionType] the created type (UUIDType or NilClass)
+      def _UUID?: (**__todo__ options) -> UnionType
+
+      alias _Uuid? _UUID?
 
       # Creates a UnionType instance.
       #

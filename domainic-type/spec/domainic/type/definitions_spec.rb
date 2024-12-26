@@ -60,6 +60,14 @@ RSpec.describe Domainic::Type::Definitions do
     end
   end
 
+  describe '._CUID' do
+    subject(:cuid_type) { definitions._CUID }
+
+    it 'is expected to return an CUIDType' do
+      expect(cuid_type).to be_a(Domainic::Type::CUIDType)
+    end
+  end
+
   describe '._Duck' do
     subject(:duck_type) { definitions._Duck }
 
@@ -100,6 +108,14 @@ RSpec.describe Domainic::Type::Definitions do
     end
   end
 
+  describe '._ID' do
+    subject(:id_type) { definitions._ID }
+
+    it 'is expected to return an UnionType' do
+      expect(id_type).to be_a(Domainic::Type::UnionType)
+    end
+  end
+
   describe '._Instance' do
     subject(:instance_type) { definitions._Instance }
 
@@ -121,6 +137,14 @@ RSpec.describe Domainic::Type::Definitions do
 
     it 'is expected to validate values of the specified type' do
       expect(nilable_type.validate('test')).to be true
+    end
+  end
+
+  describe '._UUID' do
+    subject(:uuid_type) { definitions._UUID }
+
+    it 'is expected to return an UUIDType' do
+      expect(uuid_type).to be_a(Domainic::Type::UUIDType)
     end
   end
 

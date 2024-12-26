@@ -78,6 +78,9 @@ types:
   anything:
     constant: Domainic::Type::AnythingType
     require_path: domainic/type/types/specification/anything_type
+  cuid:
+    constant: Domainic::Type::CUIDType
+    require_path: domainic/type/types/identifier/cuid_type
   duck:
     constant: Domainic::Type::DuckType
     require_path: domainic/type/types/specification/duck_type
@@ -114,6 +117,9 @@ types:
   uri:
     constant: Domainic::Type::URIType
     require_path: domainic/type/types/network/uri_type
+  uuid:
+    constant: Domainic::Type::UUIDType
+    require_path: domainic/type/types/identifier/uuid_type
   void:
     constant: Domainic::Type::VoidType
     require_path: domainic/type/types/specification/void_type
