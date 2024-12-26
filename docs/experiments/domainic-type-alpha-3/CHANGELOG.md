@@ -4,6 +4,11 @@
 
 ### [Unreleased]
 
+#### Added
+
+* [#155](https://github.com/domainic/domainic/pull/155) added `Domainic::Type::DateType`, `Domainic::Type::DateTimeType`,
+  and `Domainic::Type::TimeType`
+
 #### Fixed
 
 * [#153](https://github.com/domainic/domainic/pull/153) renamed `Domainic::Type::Behavior._Uri` to
