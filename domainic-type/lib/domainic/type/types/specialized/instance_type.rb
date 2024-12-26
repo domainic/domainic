@@ -66,7 +66,7 @@ module Domainic
       # @return [self] self for method chaining
       # @rbs (Class | Module | Behavior type) -> self
       def of(type)
-        constrain :self, :instance_of, type, description: 'of'
+        constrain :self, :instance_of, type, abort_on_failure: true, description: 'of'
       end
     end
   end

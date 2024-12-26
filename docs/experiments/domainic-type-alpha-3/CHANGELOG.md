@@ -8,6 +8,8 @@
 
 * [#153](https://github.com/domainic/domainic/pull/153) renamed `Domainic::Type::Behavior._Uri` to
   `Domainic::Type::Behavior._URI` to follow standard naming conventions.
+* [#156](https://github.com/domainic/domainic/pull/156) fixed Instance, Identifier and Network types now properly fail
+  fast when not given the appropriate type.
 
 ### [0.1.0-alpha.3.1.0] - 2024-12-25
 

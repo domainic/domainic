@@ -52,7 +52,7 @@ module Domainic
       URI_REGEXP = /\A#{URI::DEFAULT_PARSER.make_regexp}\z/ #: Regexp
 
       # Core URI constraints based on RFC standards
-      intrinsically_constrain :self, :type, String, description: :not_described
+      intrinsically_constrain :self, :type, String, abort_on_failure: true, description: :not_described
       intrinsically_constrain :self, :match_pattern, URI_REGEXP, description: :not_described
       intrinsically_constrain :self, :character_set, :ascii, description: :not_described
 

@@ -176,7 +176,7 @@ module Domainic
       end
 
       # Core UUID constraints based on RFC 4122
-      intrinsically_constrain :self, :type, String, description: :not_described
+      intrinsically_constrain :self, :type, String, abort_on_failure: true, description: :not_described
 
       # The base UUID type should accept either standard or compact format
       intrinsically_constrain :self, :match_pattern,

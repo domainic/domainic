@@ -60,7 +60,7 @@ module Domainic
       end
 
       # Core CUID constraints
-      intrinsically_constrain :self, :type, String, description: :not_described
+      intrinsically_constrain :self, :type, String, abort_on_failure: true, description: :not_described
 
       # Accept either v1 or v2 format by default
       intrinsically_constrain :self, :match_pattern, CUID::ALL_REGEXP,

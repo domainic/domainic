@@ -60,7 +60,7 @@ module Domainic
       \z/x #: Regexp
 
       # Core hostname constraints based on RFC standards
-      intrinsically_constrain :self, :type, String, description: :not_described
+      intrinsically_constrain :self, :type, String, abort_on_failure: true, description: :not_described
       intrinsically_constrain :self, :match_pattern, RFC_HOSTNAME_REGEXP, description: :not_described
       intrinsically_constrain :length, :range, { maximum: 253 }, description: :not_described, concerning: :size
       intrinsically_constrain :self, :character_set, :ascii, description: :not_described
