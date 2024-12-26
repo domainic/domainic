@@ -67,7 +67,7 @@ module Domainic
         #
         # @raise [ArgumentError] if minimum or maximum value can't be determined
         # @return [Array<Integer>] parsed [minimum, maximum] values
-        private def self.parse_having_between_arguments: (Integer? minimum, Integer? maximum, Hash[Symbol, Integer?] options) -> Array[Integer]
+        private def self.parse_having_between_arguments!: (Integer? minimum, Integer? maximum, Hash[Symbol, Integer?] options) -> Array[Integer]
 
         # Raise appropriate ArgumentError for having_size_between
         #

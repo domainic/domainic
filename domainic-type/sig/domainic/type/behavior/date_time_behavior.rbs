@@ -1,0 +1,115 @@
+module Domainic
+  module Type
+    module Behavior
+      # A module providing date/time validation constraint methods
+      #
+      # This module extends types with methods for constraining date/time values based on
+      # chronological relationships. It provides a fluent interface for building complex
+      # date/time validation constraints using natural language methods.
+      #
+      # @example Basic date comparisons
+      #   type = DateType.new
+      #     .being_after(Date.new(2024, 1, 1))
+      #     .being_before(Date.new(2024, 12, 31))
+      #
+      # @example Range-based validation
+      #   type = DateType.new
+      #     .being_between(Date.new(2024, 1, 1), Date.new(2024, 12, 31))
+      #
+      # @example Inclusive/exclusive bounds
+      #   type = DateType.new
+      #     .being_on_or_after(Date.new(2024, 1, 1))
+      #     .being_on_or_before(Date.new(2024, 12, 31))
+      #
+      # @author {https://aaronmallen.me Aaron Allen}
+      # @since 0.1.0
+      module DateTimeBehavior
+        TO_DATETIME_COERCER: Proc
+
+        # Parse arguments for being_between
+        #
+        # @note this in my opinion is better than polluting the namespace of the including class even with a private
+        #   method. This way, the method is only available within the module itself. See {#being_between}.
+        #
+        # @param after [Date, DateTime, String, Time, nil] minimum size value from positional args
+        # @param before [Date, DateTime, String, Time, nil] maximum size value from positional args
+        # @param options [Hash] keyword arguments containing after/before values
+        #
+        # @raise [ArgumentError] if minimum or maximum value can't be determined
+        # @return [Array<Date, DateTime, String, Time, nil>] parsed [after, before] values
+        private def self.parse_being_between_arguments!: ((Date | DateTime | String | Time)? after, (Date | DateTime | String | Time)? before, Hash[Symbol, (Date | DateTime | String | Time)?] options) -> Array[(Date | DateTime | String | Time)?]
+
+        # Raise appropriate ArgumentError for being_between
+        #
+        # @param original_caller [Array<String>] caller stack for error
+        # @param after [Date, DateTime, String, Time, nil] after value from positional args
+        # @param before [Date, DateTime, String, Time, nil] before value from positional args
+        # @param options [Hash] keyword arguments containing after/before values
+        #
+        # @raise [ArgumentError] with appropriate message
+        # @return [void]
+        private def self.raise_being_between_argument_error!: (Array[String] original_caller, (Date | DateTime | String | Time)? after, (Date | DateTime | String | Time)? before, Hash[Symbol, (Date | DateTime | String | Time)?] options) -> void
+
+        # Constrain the value to be chronologically after a given date/time
+        #
+        # @param other [Date, DateTime, String, Time] the date/time to compare against
+        # @return [self] self for method chaining
+        def being_after: (Date | DateTime | String | Time other) -> Behavior
+
+        alias after being_after
+
+        # Constrain the value to be chronologically before a given date/time
+        #
+        # @param other [Date, DateTime, String, Time] the date/time to compare against
+        # @return [self] self for method chaining
+        def being_before: (Date | DateTime | String | Time other) -> Behavior
+
+        alias before being_before
+
+        # Constrain the value to be chronologically between two date/times
+        #
+        # @param after [Date, DateTime, String, Time] the earliest allowed date/time
+        # @param before [Date, DateTime, String, Time] the latest allowed date/time
+        # @param options [Hash] alternative way to specify after/before via keywords
+        # @option options [Date, DateTime, String, Time] :after earliest allowed date/time
+        # @option options [Date, DateTime, String, Time] :before latest allowed date/time
+        # @return [self] self for method chaining
+        def being_between: (Date | DateTime | String | Time after, Date | DateTime | String | Time before) -> Behavior
+
+        alias between being_between
+
+        # Constrain the value to be exactly equal to a given date/time
+        #
+        # @param other [Date, DateTime, String, Time] the date/time to compare against
+        # @return [self] self for method chaining
+        def being_equal_to: (Date | DateTime | String | Time other) -> Behavior
+
+        alias at being_equal_to
+
+        # Constrain the value to be chronologically on or after a given date/time
+        #
+        # @param other [Date, DateTime, String, Time] the date/time to compare against
+        # @return [self] self for method chaining
+        def being_on_or_after: (Date | DateTime | String | Time other) -> Behavior
+
+        alias at_or_after being_on_or_after
+
+        alias being_at_or_after being_on_or_after
+
+        alias on_or_after being_on_or_after
+
+        # Constrain the value to be chronologically on or before a given date/time
+        #
+        # @param other [Date, DateTime, String, Time] the date/time to compare against
+        # @return [self] self for method chaining
+        def being_on_or_before: (Date | DateTime | String | Time other) -> Behavior
+
+        alias at_or_before being_on_or_before
+
+        alias being_at_or_before being_on_or_before
+
+        alias on_or_before being_on_or_before
+      end
+    end
+  end
+end
