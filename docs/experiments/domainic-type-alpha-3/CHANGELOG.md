@@ -4,6 +4,8 @@
 
 ### [Unreleased]
 
+### [0.1.0-alpha.3.2.0] - 2024-12-26
+
 #### Added
 
 * [#155](https://github.com/domainic/domainic/pull/155) added `Domainic::Type::DateType`, `Domainic::Type::DateTimeType`,
@@ -16,7 +18,7 @@
 * [#156](https://github.com/domainic/domainic/pull/156) fixed Instance, Identifier and Network types now properly fail
   fast when not given the appropriate type.
 
-### [0.1.0-alpha.3.1.0] - 2024-12-25
+### [0.1.0-alpha.3.1.0] - 2024-12-26
 
 #### Added
 
@@ -54,10 +56,13 @@
 > As this is an experimental release, features may change significantly based on feedback. Refer to
 > docs/experiments/domainic-type-v0.1.0-alpha.3/README.md for full details and current testing focus.
 
-[Unreleased]: https://github.com/domainic/domainic/compare/domainic-type-v0.1.0-alpha.3.1.0...HEAD
+[Unreleased]: https://github.com/domainic/domainic/compare/domainic-type-v0.1.0-alpha.3.2.0...HEAD
+[0.1.0-alpha.3.2.0]: https://github.com/domainic/domainic/compare/domainic-type-v0.1.0-alpha.3.1.0...domainic-type-v0.1.0-alpha.3.2.0
 [0.1.0-alpha.3.1.0]: https://github.com/domainic/domainic/compare/domainic-type-v0.1.0-alpha.3.0.2...domainic-type-v0.1.0-alpha.3.1.0
 [0.1.0-alpha.3.0.2]: https://github.com/domainic/domainic/compare/domainic-type-v0.1.0-alpha.3.0.1...domainic-type-v0.1.0-alpha.3.0.2
 [0.1.0-alpha.3.0.1]: https://github.com/domainic/domainic/compare/domainic-type-v0.1.0-alpha.3.0.0...domainic-type-v0.1.0-alpha.3.0.1
+
+[![Back: Known Issues](https://img.shields.io/badge/%3C%3C%20Known%20Issues-blue?style=for-the-badge)](KNOWN_ISSUES.md)
 
 |                               |                         |                                       |                                 |
 |-------------------------------|-------------------------|---------------------------------------|---------------------------------|

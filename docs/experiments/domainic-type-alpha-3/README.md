@@ -100,6 +100,8 @@ Currently supported types:
 * `_Array`
 * `_Boolean`
 * `_CUID`
+* `_Date`
+* `_DateTime`
 * `_Duck`
 * `_EmailAddress`
 * `_Enum`
@@ -112,6 +114,7 @@ Currently supported types:
 * `_Nilable`
 * `_String`
 * `_Symbol`
+* `_Time`
 * `_UUID`
 * `_Union`
 * `_Uri`
@@ -226,6 +229,8 @@ Not sure about something? Just open an issue! The only bad question is the unask
 
 Remember: This is an experiment! Things might break, error messages might be confusing, and features might be missing.
 That's exactly what we want to learn about!
+
+[![Next: Examples](https://img.shields.io/badge/Examples%20%3E%3E-blue?style=for-the-badge)](EXAMPLES.md)
 
 |                         |                                       |                                 |                            |
 |-------------------------|---------------------------------------|---------------------------------|----------------------------|

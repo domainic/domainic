@@ -18,6 +18,8 @@ This document provides comprehensive examples of using Domainic::Type, from basi
   * [_Array](#_array)
   * [_Boolean](#_boolean)
   * [_CUID](#_cuid)
+  * [_Date](#_date)
+  * [_DateTime](#_datetime)
   * [_Duck](#_duck)
   * [_EmailAddress](#_emailaddress)
   * [_Enum](#_enum)
@@ -29,6 +31,8 @@ This document provides comprehensive examples of using Domainic::Type, from basi
   * [_Integer](#_integer)
   * [_Nilable](#_nilable)
   * [_String](#_string)
+  * [_Symbol](#_symbol)
+  * [_Time](#_time)
   * [_Union](#_union)
   * [_UUID](#_uuid)
   * [_URI](#_uri)
@@ -243,9 +247,9 @@ also known as `_List`, `_Array?`, `_List?`
 > [!TIP]
 > Many constraints have aliases to allow you to express your intent in a way that best maps to your mental model.
 > Checkout the documentation for
-> [EnumerableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.1.0/domainic-type/lib/domainic/type/behavior/enumerable_behavior.rb)
+> [EnumerableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.2.0/domainic-type/lib/domainic/type/behavior/enumerable_behavior.rb)
 > and
-> [SizableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.1.0/domainic-type/lib/domainic/type/behavior/sizable_behavior.rb)
+> [SizableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.2.0/domainic-type/lib/domainic/type/behavior/sizable_behavior.rb)
 > for the full list of available methods and aliases!
 
 The `_Array` type provides comprehensive validation for array values with constraints for content, ordering, and size.
@@ -303,6 +307,56 @@ _CUID.being_version_one # Constrains the CUID to be version 1
 _CUID.being_version_two # Constrains the CUID to be version 2
 ```
 
+### _Date
+
+also known as `_Date?`
+
+> [!TIP]
+> Many constraints have aliases to allow you to express your intent in a way that best maps to your mental model.
+> Checkout the documentation for
+> [DateTimeBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.2.0/domainic-type/lib/domainic/type/behavior/date_time_behavior.rb)
+> for the full list of available methods and aliases!
+
+The `_Date` type validates date values with comprehensive constraints for range:
+
+```ruby
+_Date === Date.today # => true
+_Date === '2022-01-01' # => false
+
+# Available Constraints
+_Date.being_after(date) # Constrains the date to be after the specified date
+_Date.being_before(date) # Constrains the date to be before the specified date
+_Date.being_between(after, before) # Constrains the date to be between the specified start and end dates
+_Date.being_equal_to(date) # Constrains the date to be equal to the specified date
+_Date.being_on_or_after(date) # Constrains the date to be on or after the specified date
+_Date.being_on_or_before(date) # Constrains the date to be on or before the specified date
+```
+
+### _DateTime
+
+also known as `_DateTime?`
+
+> [!TIP]
+> Many constraints have aliases to allow you to express your intent in a way that best maps to your mental model.
+> Checkout the documentation for
+> [DateTimeBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.2.0/domainic-type/lib/domainic/type/behavior/date_time_behavior.rb)
+> for the full list of available methods and aliases!
+
+The `_DateTime` type validates datetime values with comprehensive constraints for range:
+
+```ruby
+_DateTime === DateTime.now # => true
+_DateTime === '2022-01-01' # => false
+
+# Available Constraints
+_DateTime.being_after(datetime) # Constrains the datetime to be after the specified datetime
+_DateTime.being_before(datetime) # Constrains the datetime to be before the specified datetime
+_DateTime.being_between(after, before) # Constrains the datetime to be between the specified start and end datetimes
+_DateTime.being_equal_to(datetime) # Constrains the datetime to be equal to the specified datetime
+_DateTime.being_on_or_after(datetime) # Constrains the datetime to be on or after the specified datetime
+_DateTime.being_on_or_before(datetime) # Constrains the datetime to be on or before the specified datetime
+```
+
 ### _Duck
 
 also known as `_Interface`, `_Protocol`, `_RespondingTo`
@@ -324,9 +378,9 @@ also known as `_Email`, `_EmailAddress?`, `_Email?`
 > [!TIP]
 > Many constraints have aliases to allow you to express your intent in a way that best maps to your mental model.
 > Checkout the documentation for
-> [StringBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.1.0/domainic-type/lib/domainic/type/behavior/string_behavior.rb)
+> [StringBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.2.0/domainic-type/lib/domainic/type/behavior/string_behavior.rb)
 > and
-> [SizableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.1.0/domainic-type/lib/domainic/type/behavior/sizeable_behavior.rb)
+> [SizableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.2.0/domainic-type/lib/domainic/type/behavior/sizeable_behavior.rb)
 > for the full list of available methods and aliases!
 
 The `_EmailAddress` type validates email addresses according to RFC 5321 and 5322 standards. It includes comprehensive
@@ -370,7 +424,7 @@ also known as `_Decimal`, `_Real`, `_Float?`, `_Decimal?`, `_Real?`
 > [!TIP]
 > Many constraints have aliases to allow you to express your intent in a way that best maps to your mental model.
 > Checkout the documentation for
-> [NumericBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.1.0/domainic-type/lib/domainic/type/behavior/numeric_behavior.rb)
+> [NumericBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.2.0/domainic-type/lib/domainic/type/behavior/numeric_behavior.rb)
 > for the full list of available methods and aliases!
 
 The `_Float` type validates floating-point numbers with comprehensive numeric constraints:
@@ -404,9 +458,9 @@ also known as `_Map`, `_Hash?`, `_Map?`
 > [!TIP]
 > Many constraints have aliases to allow you to express your intent in a way that best maps to your mental model.
 > Checkout the documentation for
-> [EnumerableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.1.0/domainic-type/lib/domainic/type/behavior/enumerable_behavior.rb),
-> [SizeableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.1.0/domainic-type/lib/domainic/type/behavior/sizeable_behavior.rb),
-> and [HashType](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.1.0/domainic-type/lib/domainic/type/types/core/hash_type.rb)
+> [EnumerableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.2.0/domainic-type/lib/domainic/type/behavior/enumerable_behavior.rb),
+> [SizeableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.2.0/domainic-type/lib/domainic/type/behavior/sizeable_behavior.rb),
+> and [HashType](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.2.0/domainic-type/lib/domainic/type/types/core/hash_type.rb)
 > for the full list of available methods and aliases!
 
 The `_Hash` type provides validation for hash structures with constraints for keys, values, and overall composition:
@@ -442,9 +496,9 @@ also known as `_Hostname?`
 > [!TIP]
 > Many constraints have aliases to allow you to express your intent in a way that best maps to your mental model.
 > Checkout the documentation for
-> [StringBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.1.0/domainic-type/lib/domainic/type/behavior/string_behavior.rb)
+> [StringBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.2.0/domainic-type/lib/domainic/type/behavior/string_behavior.rb)
 > and
-> [SizableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.1.0/domainic-type/lib/domainic/type/behavior/sizeable_behavior.rb)
+> [SizableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.2.0/domainic-type/lib/domainic/type/behavior/sizeable_behavior.rb)
 > for the full list of available methods and aliases!
 
 The `_Hostname` type validates hostnames according to RFC 1034 and 1123 standards. It supports all string constraints in
@@ -503,7 +557,7 @@ also known as `_Int`, `_Integer?`, `_Int?`
 > [!TIP]
 > Many constraints have aliases to allow you to express your intent in a way that best maps to your mental model.
 > Checkout the documentation for
-> [NumericBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.1.0/domainic-type/lib/domainic/type/behavior/numeric_behavior.rb)
+> [NumericBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.2.0/domainic-type/lib/domainic/type/behavior/numeric_behavior.rb)
 > for the full list of available methods and aliases!
 
 The `_Integer` type validates integer values with comprehensive numeric constraints:
@@ -555,9 +609,9 @@ also known as `_Text`, `_String?`, `_Text?`
 > [!TIP]
 > Many constraints have aliases to allow you to express your intent in a way that best maps to your mental model.
 > Checkout the documentation for
-> [StringBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.1.0/domainic-type/lib/domainic/type/behavior/string_behavior.rb)
+> [StringBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.2.0/domainic-type/lib/domainic/type/behavior/string_behavior.rb)
 > and
-> [SizeableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.1.0/domainic-type/lib/domainic/type/behavior/sizeable_behavior.rb)
+> [SizeableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.2.0/domainic-type/lib/domainic/type/behavior/sizeable_behavior.rb)
 > for the full list of available methods and aliases!
 
 The `_String` type validates string values with comprehensive text manipulation constraints:
@@ -594,9 +648,9 @@ also known as `_Interned`, `_Symbol?`, `_Interned?`
 > [!TIP]
 > Many constraints have aliases to allow you to express your intent in a way that best maps to your mental model.
 > Checkout the documentation for
-> [StringBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.1.0/domainic-type/lib/domainic/type/behavior/string_behavior.rb)
+> [StringBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.2.0/domainic-type/lib/domainic/type/behavior/string_behavior.rb)
 > and
-> [SizeableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.1.0/domainic-type/lib/domainic/type/behavior/sizeable_behavior.rb)
+> [SizeableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.2.0/domainic-type/lib/domainic/type/behavior/sizeable_behavior.rb)
 > for the full list of available methods and aliases!
 
 The `_Symbol` type validates symbols and supports all string-like constraints applied to the symbol's name:
@@ -614,6 +668,31 @@ _Symbol.having_maximum_size(20) # Constrains symbol name length
 _Symbol
   .matching(/^[a-z_][a-z0-9_]*$/)
   .having_maximum_size(63)
+```
+
+### _Time
+
+also known as `_Time?`
+
+> [!TIP]
+> Many constraints have aliases to allow you to express your intent in a way that best maps to your mental model.
+> Checkout the documentation for
+> [DateTimeBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.2.0/domainic-type/lib/domainic/type/behavior/date_time_behavior.rb)
+> for the full list of available methods and aliases!
+
+The `_Time` type validates time values with comprehensive constraints for range:
+
+```ruby
+_Time === Time.now # => true
+_Time === '13:27:42 -0600' # => false
+
+# Available Constraints
+_Time.being_after(time) # Constrains the time to be after the specified time
+_Time.being_before(time) # Constrains the time to be before the specified time
+_Time.being_between(after, before) # Constrains the time to be between the specified start and end times
+_Time.being_equal_to(time) # Constrains the time to be equal to the specified time
+_Time.being_on_or_after(time) # Constrains the time to be on or after the specified time
+_Time.being_on_or_before(time) # Constrains the time to be on or before the specified time
 ```
 
 ### _UUID
@@ -669,9 +748,9 @@ also known as `_URL`, `_Uri`, `_Url`, `URI?`, `_URL?`, `_Uri?`, `_Url?`
 > [!TIP]
 > Many constraints have aliases to allow you to express your intent in a way that best maps to your mental model.
 > Checkout the documentation for
-> [StringBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.1.0/domainic-type/lib/domainic/type/behavior/string_behavior.rb)
+> [StringBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.2.0/domainic-type/lib/domainic/type/behavior/string_behavior.rb)
 > and
-> [SizableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.1.0/domainic-type/lib/domainic/type/behavior/sizeable_behavior.rb)
+> [SizableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.2.0/domainic-type/lib/domainic/type/behavior/sizeable_behavior.rb)
 > for the full list of available methods and aliases!
 
 The `_URI` type validates URIs according to RFC 3986 standards. In addition to URI-specific validation, it supports all
@@ -715,6 +794,9 @@ class Interface
   end
 end
 ```
+
+[![Back: Readme](https://img.shields.io/badge/%3C%3C%20README-blue?style=for-the-badge)](README.md)
+[![Next: Troubleshooting](https://img.shields.io/badge/TroubleShooting%20%3E%3E-blue?style=for-the-badge)](TROUBLESHOOTING.md)
 
 |                               |                                       |                                 |                            |
 |-------------------------------|---------------------------------------|---------------------------------|----------------------------|
