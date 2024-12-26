@@ -62,7 +62,7 @@ RSpec.describe Domainic::Type::Constraint::AllConstraint do
 
       let(:constraint) { described_class.new(:self).expecting(inner_constraint) }
 
-      it 'includes the inner constraint short_description' do
+      it 'is expected to include the inner constraint short_description' do
         expect(short_description).to eq('be a string')
       end
     end

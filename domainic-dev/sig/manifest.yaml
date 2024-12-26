@@ -1,3 +1,4 @@
 dependencies:
+  - name: date
   - name: fileutils
   - name: pathname

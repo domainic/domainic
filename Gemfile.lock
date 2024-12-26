@@ -11,6 +11,7 @@ PATH
   remote: domainic-dev
   specs:
     domainic-dev (0.1.0)
+      rubocop (~> 1)
       thor (~> 1.3)
 
 GEM

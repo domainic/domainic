@@ -86,7 +86,7 @@ RSpec.describe Domainic::Type::Constraint::AnyConstraint do
 
     let(:constraint) { described_class.new(:self).expecting(inner_constraint) }
 
-    it 'returns the inner constraint short_description' do
+    it 'is expected to return the inner constraint short_description' do
       expect(short_description).to eq('be a string')
     end
   end

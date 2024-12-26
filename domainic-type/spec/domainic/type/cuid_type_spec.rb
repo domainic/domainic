@@ -139,9 +139,7 @@ RSpec.describe Domainic::Type::CUIDType do
       let(:version) { 3 }
       let(:cuid) { 'ch72gsb320000udocl363eofy' }
 
-      it 'raises ArgumentError' do
-        expect { being_version }.to raise_error(ArgumentError, /Invalid version/)
-      end
+      it { expect { being_version }.to raise_error(ArgumentError, /Invalid version/) }
     end
   end
 end
