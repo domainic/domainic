@@ -14,7 +14,7 @@ documentation across the Domainic ecosystem.
 ### Experimental
 
 * [**domainic-type**](../domainic-type/) - Flexible type validation system
-  * **Current Version**: 0.1.0-alpha.3.0.2
+  * **Current Version**: 0.1.0-alpha.3.1.0
   * [Experiment Details](./experiments/domainic-type-alpha-3/)
   * [Testing & Feedback](./experiments/domainic-type-alpha-3/README.md)
 

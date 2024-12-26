@@ -96,18 +96,26 @@ numbers.validate!(["1", 2, 3])  # Is the error helpful?
 
 Currently supported types:
 
-* `_String`
-* `_Integer`
-* `_Float`
-* `_Array`
-* `_Hash`
-* `_Symbol`
-* `_Boolean`
-* `_Union`
-* `_Enum`
-* `_Duck`
 * `_Anything`
+* `_Array`
+* `_Boolean`
+* `_CUID`
+* `_Duck`
+* `_EmailAddress`
+* `_Enum`
+* `_Float`
+* `_Hash`
+* `_Hostname`
+* `_ID`
+* `_Instance`
+* `_Integer`
 * `_Nilable`
+* `_String`
+* `_Symbol`
+* `_UUID`
+* `_Union`
+* `_Uri`
+* `_Void`
 
 Try them out! What types are missing? What would make existing types more useful?
 

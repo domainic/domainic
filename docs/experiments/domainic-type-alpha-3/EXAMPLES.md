@@ -17,17 +17,21 @@ This document provides comprehensive examples of using Domainic::Type, from basi
   * [_Anything](#_anything)
   * [_Array](#_array)
   * [_Boolean](#_boolean)
+  * [_CUID](#_cuid)
   * [_Duck](#_duck)
+  * [_EmailAddress](#_emailaddress)
   * [_Enum](#_enum)
   * [_Float](#_float)
   * [_Hash](#_hash)
+  * [_Hostname](#_hostname)
+  * [_ID](#_id)
   * [_Instance](#_instance)
   * [_Integer](#_integer)
   * [_Nilable](#_nilable)
   * [_String](#_string)
-  * [_Symbol](#_symbol)
   * [_Union](#_union)
-  * [_Void](#_void)
+  * [_UUID](#_uuid)
+  * [_URI](#_uri)
 
 ## Basic Usage
 
@@ -239,9 +243,9 @@ also known as `_List`, `_Array?`, `_List?`
 > [!TIP]
 > Many constraints have aliases to allow you to express your intent in a way that best maps to your mental model.
 > Checkout the documentation for
-> [EnumerableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.0.2/domainic-type/lib/domainic/type/behavior/enumerable_behavior.rb)
+> [EnumerableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.1.0/domainic-type/lib/domainic/type/behavior/enumerable_behavior.rb)
 > and
-> [SizableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.0.2/domainic-type/lib/domainic/type/behavior/sizable_behavior.rb)
+> [SizableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.1.0/domainic-type/lib/domainic/type/behavior/sizable_behavior.rb)
 > for the full list of available methods and aliases!
 
 The `_Array` type provides comprehensive validation for array values with constraints for content, ordering, and size.
@@ -283,6 +287,22 @@ _Boolean === 'true' # => false
 _Boolean? === nil # => true
 ```
 
+### _CUID
+
+also know as `_Cuid`, `_CUID?`, `_Cuid?`
+
+The `_CUID` type validates values against the CUID format, a collision-resistant alternative to UUIDs:
+
+```ruby
+_CUID === 'ckj9g7z9z0000b3z1z7z6z7z6' # => true
+_CUID === 'ckj9g7z9z0000b3z1z7z6z7z6z' # => false
+
+# Available Constraints
+_CUID.being_version(1_or_2) # Constrains the CUID to be version 1 or 2
+_CUID.being_version_one # Constrains the CUID to be version 1
+_CUID.being_version_two # Constrains the CUID to be version 2
+```
+
 ### _Duck
 
 also known as `_Interface`, `_Protocol`, `_RespondingTo`
@@ -295,6 +315,39 @@ object = Struct.new(:foo, :bar).new('foo', 'bar')
 _Duck.responding_to(:foo, :bar) === object # => true
 _Duck.responding_to(:foo) === object # => true
 _Duck.responding_to(:foo).not_responding_to(:bar) === object # => false
+```
+
+### _EmailAddress
+
+also known as `_Email`, `_EmailAddress?`, `_Email?`
+
+> [!TIP]
+> Many constraints have aliases to allow you to express your intent in a way that best maps to your mental model.
+> Checkout the documentation for
+> [StringBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.1.0/domainic-type/lib/domainic/type/behavior/string_behavior.rb)
+> and
+> [SizableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.1.0/domainic-type/lib/domainic/type/behavior/sizeable_behavior.rb)
+> for the full list of available methods and aliases!
+
+The `_EmailAddress` type validates email addresses according to RFC 5321 and 5322 standards. It includes comprehensive
+validation for all parts of an email address and supports all string constraints:
+
+```ruby
+_EmailAddress === 'user@example.com' # => true
+_EmailAddress === 'invalid@@email' # => false
+
+# Available Email-specific Constraints
+_EmailAddress.having_hostname('example.com') # Constrains to specific domain
+_EmailAddress.having_local_matching(/^[a-z]+$/) # Constrains local part format
+_EmailAddress.not_having_hostname('blocked.com') # Excludes specific domains
+_EmailAddress.not_having_local_matching(/^admin/) # Prevents specific local parts
+
+# Available String Constraints
+_EmailAddress.being_ascii # Enforces ASCII-only characters
+_EmailAddress.being_lowercase # Enforces lowercase format
+_EmailAddress.containing('specific.text') # Must contain substring
+_EmailAddress.having_maximum_size(255) # Max length constraint
+_EmailAddress.matching(/^[a-z]+@domain\.com$/) # Pattern matching
 ```
 
 ### _Enum
@@ -317,7 +370,7 @@ also known as `_Decimal`, `_Real`, `_Float?`, `_Decimal?`, `_Real?`
 > [!TIP]
 > Many constraints have aliases to allow you to express your intent in a way that best maps to your mental model.
 > Checkout the documentation for
-> [NumericBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.0.2/domainic-type/lib/domainic/type/behavior/numeric_behavior.rb)
+> [NumericBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.1.0/domainic-type/lib/domainic/type/behavior/numeric_behavior.rb)
 > for the full list of available methods and aliases!
 
 The `_Float` type validates floating-point numbers with comprehensive numeric constraints:
@@ -351,9 +404,9 @@ also known as `_Map`, `_Hash?`, `_Map?`
 > [!TIP]
 > Many constraints have aliases to allow you to express your intent in a way that best maps to your mental model.
 > Checkout the documentation for
-> [EnumerableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.0.2/domainic-type/lib/domainic/type/behavior/enumerable_behavior.rb),
-> [SizeableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.0.2/domainic-type/lib/domainic/type/behavior/sizeable_behavior.rb),
-> and [HashType](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.0.2/domainic-type/lib/domainic/type/types/core/hash_type.rb)
+> [EnumerableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.1.0/domainic-type/lib/domainic/type/behavior/enumerable_behavior.rb),
+> [SizeableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.1.0/domainic-type/lib/domainic/type/behavior/sizeable_behavior.rb),
+> and [HashType](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.1.0/domainic-type/lib/domainic/type/types/core/hash_type.rb)
 > for the full list of available methods and aliases!
 
 The `_Hash` type provides validation for hash structures with constraints for keys, values, and overall composition:
@@ -382,6 +435,50 @@ _Hash.of(key_type => value_type) # Constrains the hash to contain only values of
 _Hash.starting_with(value) # Constrains the hash to start with the specified value
 ```
 
+### _Hostname
+
+also known as `_Hostname?`
+
+> [!TIP]
+> Many constraints have aliases to allow you to express your intent in a way that best maps to your mental model.
+> Checkout the documentation for
+> [StringBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.1.0/domainic-type/lib/domainic/type/behavior/string_behavior.rb)
+> and
+> [SizableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.1.0/domainic-type/lib/domainic/type/behavior/sizeable_behavior.rb)
+> for the full list of available methods and aliases!
+
+The `_Hostname` type validates hostnames according to RFC 1034 and 1123 standards. It supports all string constraints in
+addition to hostname-specific validation:
+
+```ruby
+_Hostname === 'example.com' # => true
+_Hostname === 'invalid@hostname' # => false
+
+# Available Hostname-specific Constraints
+_Hostname.matching('example.com') # Constrains to exact hostname
+_Hostname.not_matching('blocked.com') # Excludes specific hostname
+
+# Available String Constraints
+_Hostname.being_ascii # Enforces ASCII-only characters
+_Hostname.being_lowercase # Enforces lowercase format
+_Hostname.having_size_between(1, 253) # Length constraints
+_Hostname.matching(/^[a-z0-9-]+\.[a-z]+$/) # Pattern matching
+_Hostname.not_matching(/^www\./) # Pattern exclusion
+```
+
+### _ID
+
+also known as `_ID?`
+
+The `_ID` type combines common identifier types into a single union, accepting integers, UUIDs, and CUIDs:
+
+```ruby
+_ID === 1234567890 # => true
+_ID === '123e4567-e89b-42d3-a456-426614174000' # => true
+_ID === 'clh3am1f30000udocbhqg4151' # => true
+_ID === 'not-an-id' # => false
+```
+
 ### _Instance
 
 also known as `_Record`, `_Instance?`, `_Record?`
@@ -406,7 +503,7 @@ also known as `_Int`, `_Integer?`, `_Int?`
 > [!TIP]
 > Many constraints have aliases to allow you to express your intent in a way that best maps to your mental model.
 > Checkout the documentation for
-> [NumericBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.0.2/domainic-type/lib/domainic/type/behavior/numeric_behavior.rb)
+> [NumericBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.1.0/domainic-type/lib/domainic/type/behavior/numeric_behavior.rb)
 > for the full list of available methods and aliases!
 
 The `_Integer` type validates integer values with comprehensive numeric constraints:
@@ -458,9 +555,9 @@ also known as `_Text`, `_String?`, `_Text?`
 > [!TIP]
 > Many constraints have aliases to allow you to express your intent in a way that best maps to your mental model.
 > Checkout the documentation for
-> [StringBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.0.2/domainic-type/lib/domainic/type/behavior/string_behavior.rb)
+> [StringBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.1.0/domainic-type/lib/domainic/type/behavior/string_behavior.rb)
 > and
-> [SizeableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.0.2/domainic-type/lib/domainic/type/behavior/sizeable_behavior.rb)
+> [SizeableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.1.0/domainic-type/lib/domainic/type/behavior/sizeable_behavior.rb)
 > for the full list of available methods and aliases!
 
 The `_String` type validates string values with comprehensive text manipulation constraints:
@@ -497,9 +594,9 @@ also known as `_Interned`, `_Symbol?`, `_Interned?`
 > [!TIP]
 > Many constraints have aliases to allow you to express your intent in a way that best maps to your mental model.
 > Checkout the documentation for
-> [StringBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.0.2/domainic-type/lib/domainic/type/behavior/string_behavior.rb)
+> [StringBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.1.0/domainic-type/lib/domainic/type/behavior/string_behavior.rb)
 > and
-> [SizeableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.0.2/domainic-type/lib/domainic/type/behavior/sizeable_behavior.rb)
+> [SizeableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.1.0/domainic-type/lib/domainic/type/behavior/sizeable_behavior.rb)
 > for the full list of available methods and aliases!
 
 The `_Symbol` type validates symbols and supports all string-like constraints applied to the symbol's name:
@@ -517,6 +614,26 @@ _Symbol.having_maximum_size(20) # Constrains symbol name length
 _Symbol
   .matching(/^[a-z_][a-z0-9_]*$/)
   .having_maximum_size(63)
+```
+
+### _UUID
+
+also known as `_Uuid`, `_UUID?`, `_Uuid?`
+
+The `_UUID` type validates UUIDs according to RFC 4122 standards, supporting all UUID versions and both standard and
+compact formats:
+
+```ruby
+_UUID === '123e4567-e89b-12d3-a456-426614174000' # => true
+_UUID === 'not-a-uuid' # => false
+
+# Available Constraints
+_UUID.being_compact # Constrains to compact format (no hyphens)
+_UUID.being_standard # Constrains to standard format (with hyphens)
+_UUID.being_version(4) # Constrains to specific UUID version
+_UUID.being_version_four # Constrains to version 4 (most common)
+_UUID.being_version_one # Constrains to version 1 (time-based)
+_UUID.being_version_seven # Constrains to version 7 (Unix Epoch time-based)
 ```
 
 ### _Union
@@ -543,6 +660,40 @@ _Union(
   _Hash.of(_Symbol => _Integer),
   _Nilable(_Boolean)
 ) === { foo: 42 } # => true
+```
+
+### _Uri
+
+also known as `_Url`, `_Uri?`, `_Url?`
+
+> [!TIP]
+> Many constraints have aliases to allow you to express your intent in a way that best maps to your mental model.
+> Checkout the documentation for
+> [StringBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.1.0/domainic-type/lib/domainic/type/behavior/string_behavior.rb)
+> and
+> [SizableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.1.0/domainic-type/lib/domainic/type/behavior/sizeable_behavior.rb)
+> for the full list of available methods and aliases!
+
+The `_URI` type validates URIs according to RFC 3986 standards. In addition to URI-specific validation, it supports all
+string constraints:
+
+```ruby
+_URI === 'https://example.com' # => true
+_URI === 'not-a-url' # => false
+
+# Available URI-specific Constraints
+_URI.having_hostname('example.com') # Constrains to specific hostname
+_URI.having_path('/api/v1') # Constrains path component
+_URI.having_scheme('https') # Constrains to specific scheme
+_URI.not_having_hostname('blocked.com') # Excludes specific hostname
+_URI.not_having_path('/admin') # Excludes specific paths
+_URI.not_having_scheme('ftp') # Excludes specific schemes
+
+# Available String Constraints
+_URI.being_ascii # Enforces ASCII-only characters
+_URI.having_maximum_size(2000) # Common max URL length
+_URI.matching(/^https:\/\/api\./) # Pattern matching
+_URI.not_matching(/\s/) # No whitespace allowed
 ```
 
 ### _Void

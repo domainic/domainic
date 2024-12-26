@@ -4,6 +4,21 @@
 
 ### [Unreleased]
 
+### [0.1.0-alpha.3.1.0] - 2024-12-25
+
+#### Added
+
+* [#148](https://github.com/domainic/domainic/pull/148) added `Domainic::Type::Behavior.intrinsically_constrain` to
+  replace `Domainic::Type::Behavior.intrinsic`.
+* [#149](https://github.com/domainic/domainic/pull/149) added `Domainic::Type::EmailAddressType`,
+  `Domainic::Type::HostnameType`, and `Domainic::Type::URIType`.
+* [#150](https://github.com/domainic/domainic/pull/150) add `Domainic::Type::CUIDType` and `Domainic::Type::UUIDType`.
+
+#### Deprecated
+
+* [#148](https://github.com/domainic/domainic/pull/148) deprecated `Domainic::Type::Behavior.intrinsic` use
+  `Domainic::Type::Behavior.intrinsically_constrain` instead.
+
 ### [0.1.0-alpha.3.0.2] - 2024-12-25
 
 #### Added
@@ -27,7 +42,8 @@
 > As this is an experimental release, features may change significantly based on feedback. Refer to
 > docs/experiments/domainic-type-v0.1.0-alpha.3/README.md for full details and current testing focus.
 
-[Unreleased]: https://github.com/domainic/domainic/compare/domainic-type-v0.1.0-alpha.3.0.2...HEAD
+[Unreleased]: https://github.com/domainic/domainic/compare/domainic-type-v0.1.0-alpha.3.1.0...HEAD
+[0.1.0-alpha.3.1.0]: https://github.com/domainic/domainic/compare/domainic-type-v0.1.0-alpha.3.0.2...domainic-type-v0.1.0-alpha.3.1.0
 [0.1.0-alpha.3.0.2]: https://github.com/domainic/domainic/compare/domainic-type-v0.1.0-alpha.3.0.1...domainic-type-v0.1.0-alpha.3.0.2
 [0.1.0-alpha.3.0.1]: https://github.com/domainic/domainic/compare/domainic-type-v0.1.0-alpha.3.0.0...domainic-type-v0.1.0-alpha.3.0.1
 
