@@ -117,6 +117,9 @@ types:
   symbol:
     constant: Domainic::Type::SymbolType
     require_path: domainic/type/types/core/symbol_type
+  time:
+    constant: Domainic::Type::TimeType
+    require_path: domainic/type/types/datetime/time_type
   union:
     constant: Domainic::Type::UnionType
     require_path: domainic/type/types/specification/union_type
