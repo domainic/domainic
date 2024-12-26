@@ -1,0 +1,110 @@
+module Domainic
+  module Type
+    # A type for validating CUIDs according to official specifications
+    #
+    # This type provides comprehensive CUID validation following the official
+    # CUID specifications. It supports both v1 and v2 formats, with proper
+    # format-specific validation.
+    #
+    # Key features:
+    # - CUID v1 validation (25 characters, c-prefix)
+    # - CUID v2 validation (variable length 14-24 chars)
+    # - Length validation
+    # - Character set validation
+    #
+    # @example Basic usage
+    #   type = CUIDType.new
+    #   type.validate("ch72gsb320000udocl363eofy")  # => true
+    #   type.validate("invalid")                     # => false
+    #
+    # @example With version constraints
+    #   type = CUIDType.new.being_version(2)
+    #   type.validate("clh3am1f30000udocbhqg4151")  # => true
+    #
+    # @author {https://aaronmallen.me Aaron Allen}
+    # @since 0.1.0
+    class CUIDType
+      extend Behavior::ClassMethods
+
+      include Behavior
+
+      # Contains CUID validation regular expressions and version-specific modules
+      #
+      # This module provides validation patterns for both CUID v1 and v2 formats,
+      # following the official specification.
+      #
+      # @since 0.1.0
+      module CUID
+        # Regular expression for CUID v1 format
+        #
+        # Validates CUIDs in v1 format: c-prefix + 24 lowercase alphanumeric chars
+        # Example: "ch72gsb320000udocl363eofy"
+        #
+        # @since 0.1.0
+        V1_REGEXP: Regexp
+
+        # Regular expression for CUID v2 format
+        #
+        # Validates CUIDs in v2 format: k-p prefix + 13-23 lowercase alphanumeric chars
+        # Example: "clh3am1f30000udocbhqg4151"
+        #
+        # @since 0.1.0
+        V2_REGEXP: Regexp
+
+        # Regular expression for any valid CUID (v1 or v2)
+        ALL_REGEXP: Regexp
+      end
+
+      # Constrain CUID to specific version
+      #
+      # Creates a constraint ensuring the CUID matches a specific version (1 or 2).
+      #
+      # @example
+      #   type.being_version(1)
+      #   type.validate("ch72gsb320000udocl363eofy")  # => true
+      #
+      # @param version [Integer] CUID version (1 or 2)
+      # @return [self] self for method chaining
+      # @raise [ArgumentError] if version is neither 1 nor 2
+      def being_version: (Integer version) -> self
+
+      alias version being_version
+
+      # Constrain CUID to Version 1
+      #
+      # Creates a constraint ensuring the CUID is a Version 1 CUID.
+      # Version 1 CUIDs are 25 characters long and start with 'c'.
+      #
+      # @example
+      #   type.being_version_one
+      #   type.validate("ch72gsb320000udocl363eofy")  # => true
+      #
+      # @return [self] self for method chaining
+      def being_version_one: () -> self
+
+      alias being_v1 being_version_one
+
+      alias v1 being_version_one
+
+      alias version_one being_version_one
+
+      # Constrain CUID to Version 2
+      #
+      # Creates a constraint ensuring the CUID is a Version 2 CUID.
+      # Version 2 CUIDs are 14-24 characters and start with k-p.
+      #
+      # @example
+      #   type.being_version_two
+      #   type.validate("clh3am1f30000udocbhqg4151")  # => true
+      #
+      # @return [self] self for method chaining
+      def being_version_two: () -> self
+
+      alias being_v2 being_version_two
+
+      alias v2 being_version_two
+
+      alias version_two being_version_two
+    end
+  end
+end
