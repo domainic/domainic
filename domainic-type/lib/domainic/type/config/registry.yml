@@ -81,6 +81,9 @@ types:
   duck:
     constant: Domainic::Type::DuckType
     require_path: domainic/type/types/specification/duck_type
+  email_address:
+    constant: Domainic::Type::EmailAddressType
+    require_path: domainic/type/types/network/email_address_type
   enum:
     constant: Domainic::Type::EnumType
     require_path: domainic/type/types/specification/enum_type
@@ -90,6 +93,9 @@ types:
   hash:
     constant: Domainic::Type::HashType
     require_path: domainic/type/types/core/hash_type
+  hostname:
+    constant: Domainic::Type::HostnameType
+    require_path: domainic/type/types/network/hostname_type
   instance_type:
     constant: Domainic::Type::InstanceType
     require_path: domainic/type/types/specialized/instance_type
@@ -105,6 +111,9 @@ types:
   union:
     constant: Domainic::Type::UnionType
     require_path: domainic/type/types/specification/union_type
+  uri:
+    constant: Domainic::Type::URIType
+    require_path: domainic/type/types/network/uri_type
   void:
     constant: Domainic::Type::VoidType
     require_path: domainic/type/types/specification/void_type

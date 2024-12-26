@@ -1,0 +1,76 @@
+module Domainic
+  module Type
+    # A type for validating hostnames according to RFC 1034 and RFC 1123 standards
+    #
+    # This type provides comprehensive hostname validation, ensuring that values conform to
+    # DNS standards for hostnames. It supports constraints on the domain structure, such as
+    # top-level domain validation and hostname pattern matching.
+    #
+    # Key features:
+    # - RFC-compliant hostname validation
+    # - Maximum length enforcement (253 characters)
+    # - ASCII character set requirement
+    # - Validation of allowed or disallowed hostnames and TLDs
+    #
+    # @example Basic usage
+    #   type = HostNameType.new
+    #   type.validate("example.com") # => true
+    #   type.validate("invalid_host") # => false
+    #
+    # @example With domain constraints
+    #   type = HostNameType.new
+    #     .having_top_level_domain("com", "org")
+    #
+    # @example With hostname inclusion/exclusion
+    #   type = HostNameType.new
+    #     .having_hostname("example.com")
+    #     .not_having_hostname("forbidden.com")
+    #
+    # @author {https://aaronmallen.me Aaron Allen}
+    # @since 0.1.0
+    class HostnameType
+      extend Behavior::ClassMethods
+
+      include Behavior
+
+      include Behavior::StringBehavior::MatchingBehavior
+
+      include Behavior::SizableBehavior
+
+      include Behavior::URIBehavior
+
+      RFC_HOSTNAME_REGEXP: Regexp
+
+      # Constrain hostname to allowed hostnames
+      #
+      # Creates a constraint ensuring the hostname matches one of the specified hostnames.
+      # This is useful for restricting to specific domains.
+      #
+      # @example
+      #   type.having_hostname("example.com", "company.com")
+      #   type.validate("example.com") # => true
+      #   type.validate("other.com")   # => false
+      #
+      # @param hostnames [Array<String>] List of allowed hostnames
+      # @return [self] self for method chaining
+      def matching: (*String hostnames) -> self
+
+      alias allowing matching
+
+      # Constrain hostname to exclude specific hostnames
+      #
+      # Ensures the hostname does not match any of the specified hostnames. Useful for blacklisting.
+      #
+      # @example
+      #   type.not_having_hostname("forbidden.com")
+      #   type.validate("allowed.com") # => true
+      #   type.validate("forbidden.com") # => false
+      #
+      # @param hostnames [Array<String>] List of forbidden hostnames
+      # @return [self] self for method chaining
+      def not_matching: (*String hostnames) -> self
+
+      alias forbidding not_matching
+    end
+  end
+end

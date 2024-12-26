@@ -122,6 +122,38 @@ module Domainic
       alias _Protocol _Duck
       alias _RespondingTo _Duck
 
+      # Creates an EmailAddressType instance.
+      #
+      # EmailAddressType restricts values to valid email addresses.
+      #
+      # @example
+      #   type = _EmailAddress.having_hostname('example.com')
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::EmailAddressType] the created type
+      # @rbs (**__todo__ options) -> EmailAddressType
+      def _EmailAddress(**options)
+        require 'domainic/type/types/network/email_address_type'
+        Domainic::Type::EmailAddressType.new(**options)
+      end
+      alias _Email _EmailAddress
+
+      # Creates a nilable EmailAddressType instance.
+      #
+      # @example
+      #   _EmailAddress?.validate("user@example.com") # => true
+      #   _EmailAddress?.validate(nil)                # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::UnionType] the created type (EmailAddress or NilClass)
+      # @rbs (**__todo__ options) -> UnionType
+      def _EmailAddress?(**options)
+        _Nilable(_EmailAddress(**options))
+      end
+      alias _Email? _EmailAddress?
+
       # Creates an EnumType instance.
       #
       # EnumType restricts values to a specific set of literals.
@@ -218,6 +250,36 @@ module Domainic
       end
       alias _Map? _Hash?
 
+      # Creates a HostnameType instance.
+      #
+      # HostnameType restricts values to valid hostnames.
+      #
+      # @example
+      #   type = _Hostname.matching('example.com')
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::HostnameType] the created type
+      # @rbs (**__todo__ options) -> HostnameType
+      def _Hostname(**options)
+        require 'domainic/type/types/network/hostname_type'
+        Domainic::Type::HostnameType.new(**options)
+      end
+
+      # Creates a nilable HostnameType instance.
+      #
+      # @example
+      #   _Hostname?.validate("example.com") # => true
+      #   _Hostname?.validate(nil)           # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::UnionType] the created type (Hostname or NilClass)
+      # @rbs (**__todo__ options) -> UnionType
+      def _Hostname?(**options)
+        _Nilable(_Hostname(**options))
+      end
+
       # Create an InstanceType instance.
       #
       # @example
@@ -240,7 +302,7 @@ module Domainic
       #
       # @param options [Hash] additional configuration options
       #
-      # @return [Domainic::Type::UnionType] the created type (Integer or NilClass)
+      # @return [Domainic::Type::UnionType] the created type (InstanceType or NilClass)
       # @rbs (**__todo__ options) -> UnionType
       def _Instance?(**options)
         _Nilable(_Instance(**options))
@@ -373,6 +435,38 @@ module Domainic
         Domainic::Type::UnionType.new(*types, **options)
       end
       alias _Either _Union
+
+      # Creates a URIType instance.
+      #
+      # URIType restricts values to valid URIs.
+      #
+      # @example
+      #   type = _URI.having_scheme('https')
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::URIType] the created type
+      # @rbs (**__todo__ options) -> URIType
+      def _Uri(**options)
+        require 'domainic/type/types/network/uri_type'
+        Domainic::Type::URIType.new(**options)
+      end
+      alias _Url _Uri
+
+      # Creates a nilable URIType instance.
+      #
+      # @example
+      #   _Uri?.validate("https://example.com") # => true
+      #   _Uri?.validate(nil)                   # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::UnionType] the created type (URIType or NilClass)
+      # @rbs (**__todo__ options) -> UnionType
+      def _Uri?(**options)
+        _Nilable(_Uri(**options))
+      end
+      alias _Url? _Uri?
 
       # Creates a VoidType instance.
       #

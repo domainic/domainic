@@ -68,6 +68,14 @@ RSpec.describe Domainic::Type::Definitions do
     end
   end
 
+  describe '._EmailAddress' do
+    subject(:email_address_type) { definitions._EmailAddress }
+
+    it 'is expected to return an EmailAddressType' do
+      expect(email_address_type).to be_a(Domainic::Type::EmailAddressType)
+    end
+  end
+
   describe '._Enum' do
     subject(:enum_type) { definitions._Enum(:foo, :bar) }
 
@@ -81,6 +89,14 @@ RSpec.describe Domainic::Type::Definitions do
 
     it 'is expected to return a HashType' do
       expect(hash_type).to be_a(Domainic::Type::HashType)
+    end
+  end
+
+  describe '._Hostname' do
+    subject(:hostname_type) { definitions._Hostname }
+
+    it 'is expected to return a HostnameType' do
+      expect(hostname_type).to be_a(Domainic::Type::HostnameType)
     end
   end
 
@@ -113,6 +129,14 @@ RSpec.describe Domainic::Type::Definitions do
 
     it 'is expected to return a UnionType' do
       expect(union_type).to be_a(Domainic::Type::UnionType)
+    end
+  end
+
+  describe '._Uri' do
+    subject(:uri_type) { definitions._Uri }
+
+    it 'is expected to return a UriType' do
+      expect(uri_type).to be_a(Domainic::Type::URIType)
     end
   end
 
