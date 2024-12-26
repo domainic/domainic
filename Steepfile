@@ -33,6 +33,7 @@
 target :domainic do
   check 'bin'
   check 'domainic-attributer/lib'
+  check 'domainic-command/lib'
   check 'domainic-dev/lib'
   check 'domainic-type/lib'
 end

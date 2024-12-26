@@ -3,8 +3,10 @@ PATH
   specs:
     domainic (0.1.0)
       domainic-attributer (~> 0.1)
+      domainic-command (>= 0.1)
       domainic-type (~> 0.1.0.alpha.3)
     domainic-attributer (0.2.0)
+    domainic-command (0.1.0)
     domainic-type (0.1.0.alpha.3.3.0)
 
 PATH
@@ -17,7 +19,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (8.0.1)
+    activesupport (7.2.2.1)
       base64
       benchmark (>= 0.3)
       bigdecimal
@@ -29,7 +31,6 @@ GEM
       minitest (>= 5.1)
       securerandom (>= 0.3)
       tzinfo (~> 2.0, >= 2.0.5)
-      uri (>= 0.13.1)
     ast (2.4.2)
     base64 (0.2.0)
     benchmark (0.4.0)
