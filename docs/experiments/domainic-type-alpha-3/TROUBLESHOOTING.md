@@ -138,6 +138,9 @@ Remember: This is an experiment! If something isn't working and you can't figure
 
 Every "stuck" moment is valuable feedback that helps us improve the library.
 
+[![Back: Examples](https://img.shields.io/badge/%3C%3C%20Examples-blue?style=for-the-badge)](EXAMPLES.md)
+[![Next: Known Issues](https://img.shields.io/badge/Known%20Issues%20%3E%3E-blue?style=for-the-badge)](KNOWN_ISSUES.md)
+
 |                               |                         |                                 |                            |
 |-------------------------------|-------------------------|---------------------------------|----------------------------|
 | [Experiment Home](README.md)  | [Examples](EXAMPLES.md) | [Known Issues](KNOWN_ISSUES.md) | [Changelog](CHANGELOG.md)  |

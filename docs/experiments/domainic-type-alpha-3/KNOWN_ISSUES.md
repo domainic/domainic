@@ -43,6 +43,9 @@ username.validate!('admin01')
   * released in [domainic-type v0.1.0-alpha.3.0.1](https://github.com/domainic/domainic/tree/domainic-type-v0.1.0-alpha.3.0.1/domainic-type)
 * **Resolution**: Error messages now only show constraints that failed validation
 
+[![Back: Troubleshooting](https://img.shields.io/badge/%3C%3C%20Troubleshooting-blue?style=for-the-badge)](TROUBLESHOOTING.md)
+[![Next: Changelog](https://img.shields.io/badge/Changelog%20%3E%3E-blue?style=for-the-badge)](CHANGELOG.md)
+
 |                               |                         |                                       |                            |
 |-------------------------------|-------------------------|---------------------------------------|----------------------------|
 | [Experiment Home](README.md)  | [Examples](EXAMPLES.md) | [Troubleshooting](TROUBLESHOOTING.md) | [Changelog](CHANGELOG.md)  |

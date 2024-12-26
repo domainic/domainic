@@ -18,6 +18,8 @@ This document provides comprehensive examples of using Domainic::Type, from basi
   * [_Array](#_array)
   * [_Boolean](#_boolean)
   * [_CUID](#_cuid)
+  * [_Date](#_date)
+  * [_DateTime](#_datetime)
   * [_Duck](#_duck)
   * [_EmailAddress](#_emailaddress)
   * [_Enum](#_enum)
@@ -29,6 +31,8 @@ This document provides comprehensive examples of using Domainic::Type, from basi
   * [_Integer](#_integer)
   * [_Nilable](#_nilable)
   * [_String](#_string)
+  * [_Symbol](#_symbol)
+  * [_Time](#_time)
   * [_Union](#_union)
   * [_UUID](#_uuid)
   * [_URI](#_uri)
@@ -301,6 +305,56 @@ _CUID === 'ckj9g7z9z0000b3z1z7z6z7z6z' # => false
 _CUID.being_version(1_or_2) # Constrains the CUID to be version 1 or 2
 _CUID.being_version_one # Constrains the CUID to be version 1
 _CUID.being_version_two # Constrains the CUID to be version 2
+```
+
+### _Date
+
+also known as `_Date?`
+
+> [!TIP]
+> Many constraints have aliases to allow you to express your intent in a way that best maps to your mental model.
+> Checkout the documentation for
+> [DateTimeBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.2.0/domainic-type/lib/domainic/type/behavior/date_time_behavior.rb)
+> for the full list of available methods and aliases!
+
+The `_Date` type validates date values with comprehensive constraints for range:
+
+```ruby
+_Date === Date.today # => true
+_Date === '2022-01-01' # => false
+
+# Available Constraints
+_Date.being_after(date) # Constrains the date to be after the specified date
+_Date.being_before(date) # Constrains the date to be before the specified date
+_Date.being_between(after, before) # Constrains the date to be between the specified start and end dates
+_Date.being_equal_to(date) # Constrains the date to be equal to the specified date
+_Date.being_on_or_after(date) # Constrains the date to be on or after the specified date
+_Date.being_on_or_before(date) # Constrains the date to be on or before the specified date
+```
+
+### _DateTime
+
+also known as `_DateTime?`
+
+> [!TIP]
+> Many constraints have aliases to allow you to express your intent in a way that best maps to your mental model.
+> Checkout the documentation for
+> [DateTimeBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.2.0/domainic-type/lib/domainic/type/behavior/date_time_behavior.rb)
+> for the full list of available methods and aliases!
+
+The `_DateTime` type validates datetime values with comprehensive constraints for range:
+
+```ruby
+_DateTime === DateTime.now # => true
+_DateTime === '2022-01-01' # => false
+
+# Available Constraints
+_DateTime.being_after(datetime) # Constrains the datetime to be after the specified datetime
+_DateTime.being_before(datetime) # Constrains the datetime to be before the specified datetime
+_DateTime.being_between(after, before) # Constrains the datetime to be between the specified start and end datetimes
+_DateTime.being_equal_to(datetime) # Constrains the datetime to be equal to the specified datetime
+_DateTime.being_on_or_after(datetime) # Constrains the datetime to be on or after the specified datetime
+_DateTime.being_on_or_before(datetime) # Constrains the datetime to be on or before the specified datetime
 ```
 
 ### _Duck
@@ -616,6 +670,31 @@ _Symbol
   .having_maximum_size(63)
 ```
 
+### _Time
+
+also known as `_Time?`
+
+> [!TIP]
+> Many constraints have aliases to allow you to express your intent in a way that best maps to your mental model.
+> Checkout the documentation for
+> [DateTimeBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.2.0/domainic-type/lib/domainic/type/behavior/date_time_behavior.rb)
+> for the full list of available methods and aliases!
+
+The `_Time` type validates time values with comprehensive constraints for range:
+
+```ruby
+_Time === Time.now # => true
+_Time === '13:27:42 -0600' # => false
+
+# Available Constraints
+_Time.being_after(time) # Constrains the time to be after the specified time
+_Time.being_before(time) # Constrains the time to be before the specified time
+_Time.being_between(after, before) # Constrains the time to be between the specified start and end times
+_Time.being_equal_to(time) # Constrains the time to be equal to the specified time
+_Time.being_on_or_after(time) # Constrains the time to be on or after the specified time
+_Time.being_on_or_before(time) # Constrains the time to be on or before the specified time
+```
+
 ### _UUID
 
 also known as `_Uuid`, `_UUID?`, `_Uuid?`
@@ -715,6 +794,9 @@ class Interface
   end
 end
 ```
+
+[![Back: Readme](https://img.shields.io/badge/%3C%3C%20README-blue?style=for-the-badge)](README.md)
+[![Next: Troubleshooting](https://img.shields.io/badge/TroubleShooting%20%3E%3E-blue?style=for-the-badge)](TROUBLESHOOTING.md)
 
 |                               |                                       |                                 |                            |
 |-------------------------------|---------------------------------------|---------------------------------|----------------------------|
