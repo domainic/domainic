@@ -4,6 +4,19 @@
 
 ### [Unreleased]
 
+#### Added
+
+* [#148](https://github.com/domainic/domainic/pull/148) added `Domainic::Type::Behavior.intrinsically_constrain` to
+  replace `Domainic::Type::Behavior.intrinsic`.
+* [#149](https://github.com/domainic/domainic/pull/149) added `Domainic::Type::EmailAddressType`,
+  `Domainic::Type::HostnameType`, and `Domainic::Type::URIType`.
+* [#150](https://github.com/domainic/domainic/pull/150) add `Domainic::Type::CUIDType` and `Domainic::Type::UUIDType`.
+
+#### Deprecated
+
+* [#148](https://github.com/domainic/domainic/pull/148) deprecated `Domainic::Type::Behavior.intrinsic` use
+  `Domainic::Type::Behavior.intrinsically_constrain` instead.
+
 ### [0.1.0-alpha.3.0.2] - 2024-12-25
 
 #### Added
