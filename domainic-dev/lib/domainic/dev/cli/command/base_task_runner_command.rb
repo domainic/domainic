@@ -28,7 +28,7 @@ module Domainic
           #   @return [String] the display text for the task
           # @!attribute commands
           #   @return [Array<String>] the shell commands to execute
-          # @!attribute executed?
+          # @!attribute executed
           #   @return [Boolean] whether the task has been executed
           # @!attribute name
           #   @return [String] the task name
@@ -37,7 +37,7 @@ module Domainic
           Task = Struct.new(
             :banner, #: String
             :commands, #: Array[String]
-            :executed?, #: bool
+            :executed, #: bool
             :name, #: String
             :result, #: TaskResult
             keyword_init: true
@@ -49,12 +49,12 @@ module Domainic
           #   @return [String] standard error output
           # @!attribute stdout
           #   @return [String] standard output
-          # @!attribute success?
+          # @!attribute success
           #   @return [Boolean] whether the task succeeded
           TaskResult = Struct.new(
             :stderr, #: String
             :stdout, #: String
-            :success?, #: bool
+            :success, #: bool
             keyword_init: true
           )
 
@@ -81,8 +81,8 @@ module Domainic
             # @return [void]
             # @rbs (String name, String banner, *String commands) -> void
             def task(name, banner, *commands)
-              result = TaskResult.new(stderr: '', stdout: '', success?: false)
-              task = Task.new(banner:, commands:, executed?: false, name:, result:)
+              result = TaskResult.new(stderr: '', stdout: '', success: false)
+              task = Task.new(banner:, commands:, executed: false, name:, result:)
               tasks << task
             end
 
@@ -121,7 +121,7 @@ module Domainic
           # @return [Boolean] true if all tasks are complete
           # @rbs () -> bool
           def complete?
-            tasks.all?(&:executed?)
+            tasks.all?(&:executed)
           end
 
           # Get all completed tasks.
@@ -129,7 +129,7 @@ module Domainic
           # @return [Array<Task>] completed tasks
           # @rbs () -> Array[Task]
           def completed_tasks
-            tasks.select(&:executed?)
+            tasks.select(&:executed)
           end
 
           # Generate a status report string for a task.
@@ -141,7 +141,7 @@ module Domainic
             banner_length = "==> #{task.banner}".length
             status_length = 9 # this is the max length of the available status strings
             indent_size = CONSOLE_LENGTH - banner_length - status_length
-            status_message = if task.result.success?
+            status_message = if task.result.success
                                "#{icon(:check, :green)} #{colorize('Success', :green)}"
                              else
                                "#{icon(:x, :red)} #{colorize('Failed', :red)}"
@@ -180,7 +180,7 @@ module Domainic
           def render_status_report
             return unless complete?
 
-            status_string = if tasks.all? { |task| task.result.success? }
+            status_string = if tasks.all? { |task| task.result.success }
                               "#{icon(:check, :green)} #{colorize("#{self.class.runner_name} Success", :green)}"
                             else
                               "#{icon(:x, :red)} #{colorize("#{self.class.runner_name} Failure", :red)}"
@@ -195,7 +195,7 @@ module Domainic
           def render_task_error_report
             return unless complete?
 
-            tasks.reject { |task| task.result.success? }.each do |task|
+            tasks.reject { |task| task.result.success }.each do |task|
               puts "\n#{embolden("#{colorize('==>', :red)} #{task.name}")}"
               puts "\n#{task.result.stdout + task.result.stderr}"
             end
@@ -219,9 +219,9 @@ module Domainic
               stdin.close
               task.result.stdout = stdout.read
               task.result.stderr = stderr.read
-              task.result[:success?] = wait_thread.value.success?
+              task.result[:success] = wait_thread.value.success?
             end
-            task[:executed?] = true
+            task[:executed] = true
           end
 
           # Get all tasks for this runner instance.

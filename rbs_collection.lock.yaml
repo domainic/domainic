@@ -109,6 +109,10 @@ gems:
     revision: ccbd2bbc6be5c195df1d90aa68d64916a9e7d0ab
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
+- name: uri
+  version: '0'
+  source:
+    type: stdlib
 - name: yaml
   version: '0'
   source:

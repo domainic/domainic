@@ -22,7 +22,7 @@ module Domainic
           #   @return [String] the display text for the task
           # @!attribute commands
           #   @return [Array<String>] the shell commands to execute
-          # @!attribute executed?
+          # @!attribute executed
           #   @return [Boolean] whether the task has been executed
           # @!attribute name
           #   @return [String] the task name
@@ -33,14 +33,14 @@ module Domainic
 
             attr_accessor commands(): Array[String]
 
-            attr_accessor executed?(): bool
+            attr_accessor executed(): bool
 
             attr_accessor name(): String
 
             attr_accessor result(): TaskResult
 
-            def self.new: (?banner: String, ?commands: Array[String], ?executed?: bool, ?name: String, ?result: TaskResult) -> instance
-                        | ({ ?banner: String, ?commands: Array[String], ?:executed? => bool, ?name: String, ?result: TaskResult }) -> instance
+            def self.new: (?banner: String, ?commands: Array[String], ?executed: bool, ?name: String, ?result: TaskResult) -> instance
+                        | ({ ?banner: String, ?commands: Array[String], ?executed: bool, ?name: String, ?result: TaskResult }) -> instance
           end
 
           # A struct representing the result of a task execution.
@@ -49,17 +49,17 @@ module Domainic
           #   @return [String] standard error output
           # @!attribute stdout
           #   @return [String] standard output
-          # @!attribute success?
+          # @!attribute success
           #   @return [Boolean] whether the task succeeded
           class TaskResult < Struct[untyped]
             attr_accessor stderr(): String
 
             attr_accessor stdout(): String
 
-            attr_accessor success?(): bool
+            attr_accessor success(): bool
 
-            def self.new: (?stderr: String, ?stdout: String, ?success?: bool) -> instance
-                        | ({ ?stderr: String, ?stdout: String, ?:success? => bool }) -> instance
+            def self.new: (?stderr: String, ?stdout: String, ?success: bool) -> instance
+                        | ({ ?stderr: String, ?stdout: String, ?success: bool }) -> instance
           end
 
           @tasks: Array[Task]

@@ -38,9 +38,9 @@ module Domainic
         def initialize(arguments, *options)
           super
           status, start_date, due_date = self.options.values_at(:status, :start_date, :due_date) # steep:ignore NoMethod
-          @due_date = URI.encode_uri_component(due_date)
-          @start_date = URI.encode_uri_component(start_date || Date.today.strftime('%m/%d/%Y'))
-          @status = URI.encode_uri_component(status)
+          @due_date = URI.encode_uri_component(due_date) # steep:ignore NoMethod
+          @start_date = URI.encode_uri_component(start_date || Date.today.strftime('%m/%d/%Y')) # steep:ignore NoMethod
+          @status = URI.encode_uri_component(status) # steep:ignore NoMethod
         end
 
         # Ensure the milestone does not already exist.

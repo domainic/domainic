@@ -1,2 +1,5 @@
 dependencies:
+  - name: forwardable
+  - name: date
   - name: yaml
+  - name: uri
