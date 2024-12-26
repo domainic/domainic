@@ -82,6 +82,13 @@ module Domainic
         # @raise [ArgumentError] if the values are invalid
         # @return [void]
         def validate_minimum_and_maximum!: (untyped expectation) -> void
+
+        private
+
+        # Check if the range constraint is inclusive.
+        #
+        # @return [Boolean] `true` if the range is inclusive, `false` otherwise
+        def inclusive?: () -> bool
       end
     end
   end

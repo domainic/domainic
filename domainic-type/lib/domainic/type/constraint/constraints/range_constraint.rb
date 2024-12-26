@@ -55,8 +55,8 @@ module Domainic
         # @rbs override
         def short_description
           min, max = @expected.values_at(:minimum, :maximum)
-          min_description = "greater than or equal to #{min}"
-          max_description = "less than or equal to #{max}"
+          min_description = "greater than#{inclusive? ? ' or equal to' : ''} #{min}"
+          max_description = "less than#{inclusive? ? ' or equal to' : ''} #{max}"
 
           return "#{min_description} and #{max_description}" unless min.nil? || max.nil?
           return min_description unless min.nil?
@@ -91,7 +91,7 @@ module Domainic
         # @rbs override
         def satisfies_constraint?
           min, max = @expected.values_at(:minimum, :maximum)
-          min_comparison, max_comparison = @options.fetch(:inclusive, true) ? %i[>= <=] : %i[> <]
+          min_comparison, max_comparison = inclusive? ? %i[>= <=] : %i[> <]
 
           @actual.send(min_comparison, (min || -Float::INFINITY)) &&
             @actual.send(max_comparison, (max || Float::INFINITY))
@@ -128,6 +128,16 @@ module Domainic
           return if min.nil? || max.nil? || min <= max
 
           raise ArgumentError, ':minimum must be less than or equal to :maximum'
+        end
+
+        private
+
+        # Check if the range constraint is inclusive.
+        #
+        # @return [Boolean] `true` if the range is inclusive, `false` otherwise
+        # @rbs () -> bool
+        def inclusive?
+          @options.fetch(:inclusive, true) #: bool
         end
       end
     end

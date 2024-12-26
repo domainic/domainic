@@ -84,24 +84,46 @@ RSpec.describe Domainic::Type::Constraint::RangeConstraint do
   describe '#short_description' do
     subject(:short_description) { constraint.short_description }
 
-    let(:constraint) { described_class.new(:self).expecting(expectation) }
+    let(:constraint) { described_class.new(:self).expecting(expectation).with_options(options) }
+    let(:options) { {} }
 
     context 'when given a minimum and a maximum' do
       let(:expectation) { { minimum: 1, maximum: 10 } }
 
       it { is_expected.to eq('greater than or equal to 1 and less than or equal to 10') }
+
+      context 'with inclusive false' do
+        let(:expectation) { { minimum: 1, maximum: 10 } }
+        let(:options) { { inclusive: false } }
+
+        it { is_expected.to eq('greater than 1 and less than 10') }
+      end
     end
 
     context 'when given only a minimum' do
       let(:expectation) { { minimum: 0 } }
 
       it { is_expected.to eq('greater than or equal to 0') }
+
+      context 'with inclusive false' do
+        let(:expectation) { { minimum: 0 } }
+        let(:options) { { inclusive: false } }
+
+        it { is_expected.to eq('greater than 0') }
+      end
     end
 
     context 'when given only a maximum' do
       let(:expectation) { { maximum: 100 } }
 
       it { is_expected.to eq('less than or equal to 100') }
+
+      context 'with inclusive false' do
+        let(:expectation) { { maximum: 100 } }
+        let(:options) { { inclusive: false } }
+
+        it { is_expected.to eq('less than 100') }
+      end
     end
   end
 
