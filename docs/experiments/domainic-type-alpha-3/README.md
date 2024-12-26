@@ -58,7 +58,7 @@ config = _Hash
 
 This experiment focuses on three main areas:
 
-### 1. Error Message Composition 🎯
+### 1. Error Message Composition
 
 We're particularly interested in how error messages compose when using multiple constraints. Try these scenarios:
 

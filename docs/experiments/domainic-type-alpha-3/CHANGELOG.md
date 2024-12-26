@@ -4,6 +4,11 @@
 
 ### [Unreleased]
 
+#### Fixed
+
+* [#153](https://github.com/domainic/domainic/pull/153) renamed `Domainic::Type::Behavior._Uri` to
+  `Domainic::Type::Behavior._URI` to follow standard naming conventions.
+
 ### [0.1.0-alpha.3.1.0] - 2024-12-25
 
 #### Added

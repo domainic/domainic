@@ -289,7 +289,7 @@ _Boolean? === nil # => true
 
 ### _CUID
 
-also know as `_Cuid`, `_CUID?`, `_Cuid?`
+also known as `_Cuid`, `_CUID?`, `_Cuid?`
 
 The `_CUID` type validates values against the CUID format, a collision-resistant alternative to UUIDs:
 
@@ -662,9 +662,9 @@ _Union(
 ) === { foo: 42 } # => true
 ```
 
-### _Uri
+### _URI
 
-also known as `_Url`, `_Uri?`, `_Url?`
+also known as `_URL`, `_Uri`, `_Url`, `URI?`, `_URL?`, `_Uri?`, `_Url?`
 
 > [!TIP]
 > Many constraints have aliases to allow you to express your intent in a way that best maps to your mental model.
