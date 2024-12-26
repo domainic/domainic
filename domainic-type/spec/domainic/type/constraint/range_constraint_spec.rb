@@ -24,9 +24,9 @@ RSpec.describe Domainic::Type::Constraint::RangeConstraint do
     end
 
     context 'when given a Hash with invalid values', rbs: :skip do
-      let(:expectation) { { minimum: 'not a number', maximum: 'not a number' } }
+      let(:expectation) { { minimum: Object.new, maximum: Object.new } }
 
-      it { expect { subject }.to raise_error(ArgumentError, /must be a Numeric/) }
+      it { expect { subject }.to raise_error(ArgumentError, /is not compatible with RangeConstraint/) }
     end
 
     context 'when given a Hash with a minimum greater than the maximum', rbs: :skip do
