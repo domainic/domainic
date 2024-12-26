@@ -1,0 +1,35 @@
+module Domainic
+  module Dev
+    module Cop
+      # steep:ignore:start
+      module RSpec
+        # This cop ensures that `it` blocks in RSpec examples begin with "is expected"
+        # in their descriptions. This allows for phrases like:
+        #
+        #   it "is expected to be true" do
+        #     expect(subject).to be true
+        #   end
+        #
+        #   it "is expected not to raise an error" do
+        #     expect { some_call }.not_to raise_error
+        #   end
+        #
+        # The cop flags non-conforming descriptions:
+        #
+        #   it "should be true" do
+        #     expect(subject).to be true
+        #   end
+        #
+        # In the future, configuration options could be added to refine the style
+        # or allowable phrases.
+        class IsExpectedCop < RuboCop::Cop::Base
+          MSG: ::String
+
+          RESTRICT_ON_SEND: untyped
+
+          def on_send: (untyped node) -> untyped
+        end
+      end
+    end
+  end
+end

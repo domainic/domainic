@@ -4,6 +4,7 @@ require:
   - rubocop-on-rbs
   - rubocop-ordered_methods
   - rubocop-yard
+  - ./domainic-dev/lib/domainic/dev/domainic_cops
 
 RBS:
   Enabled: true
