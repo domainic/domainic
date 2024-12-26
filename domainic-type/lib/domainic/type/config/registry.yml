@@ -84,6 +84,9 @@ types:
   date:
     constant: Domainic::Type::DateType
     require_path: domainic/type/types/datetime/date_type
+  date_time:
+    constant: Domainic::Type::DateTimeType
+    require_path: domainic/type/types/datetime/date_time_type
   duck:
     constant: Domainic::Type::DuckType
     require_path: domainic/type/types/specification/duck_type
