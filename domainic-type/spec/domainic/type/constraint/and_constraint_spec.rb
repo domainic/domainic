@@ -47,7 +47,7 @@ RSpec.describe Domainic::Type::Constraint::AndConstraint do
     context 'when adding a valid constraint' do
       let(:expectation) { non_empty_constraint }
 
-      it 'adds the constraint to the list' do
+      it 'is expected to add the constraint to the list' do
         expecting
         expect(constraint.short_description).to eq('be a string and be non-empty')
       end
@@ -95,7 +95,7 @@ RSpec.describe Domainic::Type::Constraint::AndConstraint do
 
     let(:constraint) { described_class.new(:self).expecting(string_constraint).expecting(non_empty_constraint) }
 
-    it 'joins constraint short_descriptions with and' do
+    it 'is expected to join constraint short_descriptions with and' do
       expect(short_description).to eq('be a string and be non-empty')
     end
   end
@@ -110,7 +110,7 @@ RSpec.describe Domainic::Type::Constraint::AndConstraint do
     context 'when no constraints are satisfied' do
       let(:actual_value) { [] }
 
-      it 'joins violation short_descriptions with and' do
+      it 'is expected to join violation short_descriptions with and' do
         expect(short_violation_description).to eq('was not a string nor was empty')
       end
     end

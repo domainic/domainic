@@ -47,7 +47,7 @@ RSpec.describe Domainic::Type::Constraint::OrConstraint do
     context 'when adding a valid constraint' do
       let(:expectation) { symbol_constraint }
 
-      it 'adds the constraint to the list' do
+      it 'is expected to add the constraint to the list' do
         expecting
         expect(constraint.short_description).to eq('be a string or be a symbol')
       end
@@ -89,7 +89,7 @@ RSpec.describe Domainic::Type::Constraint::OrConstraint do
 
     let(:constraint) { described_class.new(:self).expecting(string_constraint).expecting(symbol_constraint) }
 
-    it 'joins constraint short_descriptions with or' do
+    it 'is expected to join constraint short_descriptions with or' do
       expect(short_description).to eq('be a string or be a symbol')
     end
   end
@@ -104,7 +104,7 @@ RSpec.describe Domainic::Type::Constraint::OrConstraint do
     context 'when no constraints are satisfied' do
       let(:actual_value) { 123 }
 
-      it 'joins violation short_descriptions with and' do
+      it 'is expected to join violation short_descriptions with and' do
         expect(short_violation_description).to eq('was not a string and was not a symbol')
       end
     end

@@ -55,7 +55,7 @@ RSpec.describe Domainic::Type::Constraint::NorConstraint do
     context 'when adding valid constraints incrementally' do
       let(:expectation) { [string_constraint] }
 
-      it 'adds the constraints to the list' do
+      it 'is expected to add the constraints to the list' do
         expecting
         expect(constraint.short_description).to eq('be a string')
       end
@@ -63,7 +63,7 @@ RSpec.describe Domainic::Type::Constraint::NorConstraint do
       context 'when adding another valid constraint' do
         let(:expectation) { [negative_number_constraint] }
 
-        it 'appends the new constraint and updates the description' do
+        it 'is expected to append the new constraint and updates the description' do
           constraint.expecting([string_constraint])
           expecting
           expect(constraint.short_description).to eq('be a string nor be a negative number')
@@ -74,7 +74,7 @@ RSpec.describe Domainic::Type::Constraint::NorConstraint do
     context 'when adding multiple valid constraints at once' do
       let(:expectation) { [string_constraint, negative_number_constraint] }
 
-      it 'adds all constraints to the list and updates the description' do
+      it 'is expected to add all constraints to the list and updates the description' do
         expecting
         expect(constraint.short_description).to eq('be a string nor be a negative number')
       end
@@ -128,14 +128,14 @@ RSpec.describe Domainic::Type::Constraint::NorConstraint do
 
     let(:constraint) { described_class.new(:self).expecting([string_constraint, negative_number_constraint]) }
 
-    it 'joins constraint short_descriptions with nor' do
+    it 'is expected to join constraint short_descriptions with nor' do
       expect(short_description).to eq('be a string nor be a negative number')
     end
 
     context 'with a single constraint' do
       let(:constraint) { described_class.new(:self).expecting([string_constraint]) }
 
-      it 'returns the single constraint short_description' do
+      it 'is expected to return the single constraint short_description' do
         expect(short_description).to eq('be a string')
       end
     end
@@ -151,7 +151,7 @@ RSpec.describe Domainic::Type::Constraint::NorConstraint do
     context 'when the value is not a string nor a negative number' do
       let(:actual_value) { 123 }
 
-      it 'returns an empty string' do
+      it 'is expected to return an empty string' do
         expect(short_violation_description).to eq('')
       end
     end
@@ -159,7 +159,7 @@ RSpec.describe Domainic::Type::Constraint::NorConstraint do
     context 'when one constraint is satisfied' do
       let(:actual_value) { 'a string' }
 
-      it 'includes the violated constraint description' do
+      it 'is expected to include the violated constraint description' do
         expect(short_violation_description).to eq('was a string')
       end
     end
@@ -167,7 +167,7 @@ RSpec.describe Domainic::Type::Constraint::NorConstraint do
     context 'when another single constraint is satisfied' do
       let(:actual_value) { -10 }
 
-      it 'includes the violated constraint description' do
+      it 'is expected to include the violated constraint description' do
         expect(short_violation_description).to eq('was a negative number')
       end
     end
@@ -175,7 +175,7 @@ RSpec.describe Domainic::Type::Constraint::NorConstraint do
     context 'when multiple constraints are satisfied' do
       let(:actual_value) { 'a string' } # Only string_constraint is satisfied
 
-      it 'includes all violated constraint descriptions separated by commas' do
+      it 'is expected to include all violated constraint descriptions separated by commas' do
         expect(short_violation_description).to eq('was a string')
       end
     end
@@ -183,7 +183,7 @@ RSpec.describe Domainic::Type::Constraint::NorConstraint do
     context 'when all constraints are satisfied by the value' do
       let(:actual_value) { 'a string' } # Only string_constraint is satisfied
 
-      it 'includes all violated constraint descriptions without duplication' do
+      it 'is expected to include all violated constraint descriptions without duplication' do
         expect(short_violation_description).to eq('was a string')
       end
     end

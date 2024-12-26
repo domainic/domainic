@@ -86,7 +86,7 @@ RSpec.describe Domainic::Type::Constraint::NoneConstraint do
 
     let(:constraint) { described_class.new(:self).expecting(inner_constraint) }
 
-    it 'returns the negated inner constraint short_description' do
+    it 'is expected to return the negated inner constraint short_description' do
       expect(short_description).to eq('not be a string')
     end
   end

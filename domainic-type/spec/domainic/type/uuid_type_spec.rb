@@ -120,9 +120,7 @@ RSpec.describe Domainic::Type::UUIDType do
       let(:format) { :invalid }
       let(:uuid) { '123e4567-e89b-42d3-a456-426614174000' }
 
-      it 'raises ArgumentError' do
-        expect { being_version }.to raise_error(ArgumentError, /Invalid format/)
-      end
+      it { expect { being_version }.to raise_error(ArgumentError, /Invalid format/) }
     end
   end
 
