@@ -1,35 +1,55 @@
 module Domainic
   module Type
     module Constraint
-      # A constraint for validating that numeric values fall within a specified range.
+      # A constraint for validating that comparable values fall within a specified range.
       #
-      # This constraint allows for validating numeric values against minimum and maximum
-      # boundaries. It supports specifying either or both boundaries, allowing for
-      # open-ended ranges when appropriate.
+      # This constraint allows for validating any values that implement comparison operators
+      # (<, <=, >, >=) against minimum and maximum boundaries. It supports specifying either
+      # or both boundaries, allowing for open-ended ranges when appropriate. This makes it
+      # suitable for numeric ranges, date/time ranges, or any other comparable types.
       #
-      # @example Validating with both minimum and maximum
+      # @example Validating numeric ranges
       #   constraint = RangeConstraint.new(:self, { minimum: 1, maximum: 10 })
       #   constraint.satisfied?(5)  # => true
       #   constraint.satisfied?(15) # => false
       #
-      # @example Validating with only minimum
-      #   constraint = RangeConstraint.new(:self, { minimum: 0 })
-      #   constraint.satisfied?(10)  # => true
-      #   constraint.satisfied?(-1)  # => false
+      # @example Validating date ranges
+      #   constraint = RangeConstraint.new(:self, {
+      #     minimum: Date.new(2024, 1, 1),
+      #     maximum: Date.new(2024, 12, 31)
+      #   })
+      #   constraint.satisfied?(Date.new(2024, 6, 15))  # => true
+      #   constraint.satisfied?(Date.new(2023, 12, 31)) # => false
       #
-      # @example Validating with only maximum
-      #   constraint = RangeConstraint.new(:self, { maximum: 100 })
-      #   constraint.satisfied?(50)   # => true
-      #   constraint.satisfied?(150)  # => false
+      # @example Validating with only minimum
+      #   constraint = RangeConstraint.new(:self, { minimum: Time.now })
+      #   constraint.satisfied?(Time.now + 3600)  # => true
+      #   constraint.satisfied?(Time.now - 3600)  # => false
       #
       # @author {https://aaronmallen.me Aaron Allen}
       # @since 0.1.0
       class RangeConstraint
-        type expected = { ?minimum: Numeric, ?maximum: Numeric }
+        interface _Compatible
+          def <: (untyped other) -> bool
+
+          def <=: (untyped other) -> bool
+
+          def >: (untyped other) -> bool
+
+          def >=: (untyped other) -> bool
+
+          def inspect: () -> untyped
+
+          def nil?: () -> bool
+
+          def send: (Symbol method_name, *untyped arguments, **untyped keyword_arguments) -> untyped
+        end
+
+        type expected = { ?minimum: _Compatible, ?maximum: _Compatible }
 
         type options = { ?inclusive: bool }
 
-        include Behavior[expected, Numeric, options]
+        include Behavior[expected, _Compatible, options]
 
         # Get a human-readable description of the range constraint.
         #
@@ -75,6 +95,13 @@ module Domainic
         # @return [void]
         def validate_expectation!: ...
 
+        private
+
+        # Check if the range constraint is inclusive.
+        #
+        # @return [Boolean] `true` if the range is inclusive, `false` otherwise
+        def inclusive?: () -> bool
+
         # Validate the minimum and maximum values in a range specification.
         #
         # @param expectation [Hash] The range specification to validate
@@ -82,6 +109,14 @@ module Domainic
         # @raise [ArgumentError] if the values are invalid
         # @return [void]
         def validate_minimum_and_maximum!: (untyped expectation) -> void
+
+        # Validate the minimum and maximum value types are compatible with the constraint.
+        #
+        # @param expectation [Hash] The range specification to validate
+        #
+        # @raise [ArgumentError] if the values are invalid
+        # @return [void]
+        def validate_minimum_and_maximum_types!: (untyped expectation) -> void
       end
     end
   end

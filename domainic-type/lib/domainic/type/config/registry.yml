@@ -81,6 +81,12 @@ types:
   cuid:
     constant: Domainic::Type::CUIDType
     require_path: domainic/type/types/identifier/cuid_type
+  date:
+    constant: Domainic::Type::DateType
+    require_path: domainic/type/types/datetime/date_type
+  date_time:
+    constant: Domainic::Type::DateTimeType
+    require_path: domainic/type/types/datetime/date_time_type
   duck:
     constant: Domainic::Type::DuckType
     require_path: domainic/type/types/specification/duck_type
@@ -111,6 +117,9 @@ types:
   symbol:
     constant: Domainic::Type::SymbolType
     require_path: domainic/type/types/core/symbol_type
+  time:
+    constant: Domainic::Type::TimeType
+    require_path: domainic/type/types/datetime/time_type
   union:
     constant: Domainic::Type::UnionType
     require_path: domainic/type/types/specification/union_type

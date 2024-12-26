@@ -68,6 +68,22 @@ RSpec.describe Domainic::Type::Definitions do
     end
   end
 
+  describe '._Date' do
+    subject(:date_type) { definitions._Date }
+
+    it 'is expected to return a DateType' do
+      expect(date_type).to be_a(Domainic::Type::DateType)
+    end
+  end
+
+  describe '._DateTime' do
+    subject(:datetime_type) { definitions._DateTime }
+
+    it 'is expected to return a DateTimeType' do
+      expect(datetime_type).to be_a(Domainic::Type::DateTimeType)
+    end
+  end
+
   describe '._Duck' do
     subject(:duck_type) { definitions._Duck }
 
@@ -137,6 +153,14 @@ RSpec.describe Domainic::Type::Definitions do
 
     it 'is expected to validate values of the specified type' do
       expect(nilable_type.validate('test')).to be true
+    end
+  end
+
+  describe '._Time' do
+    subject(:time_type) { definitions._Time }
+
+    it 'is expected to return a TimeType' do
+      expect(time_type).to be_a(Domainic::Type::TimeType)
     end
   end
 

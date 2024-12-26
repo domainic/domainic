@@ -133,6 +133,68 @@ module Domainic
       end
       alias _Cuid? _CUID?
 
+      # Creates a DateType instance.
+      #
+      # DateType restricts values to valid `Date` objects.
+      #
+      # @example
+      #   type = _Date
+      #   type.validate(Date.new(2024, 1, 1)) # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::DateType] the created type
+      # @rbs (**__todo__ options) -> DateType
+      def _Date(**options)
+        require 'domainic/type/types/datetime/date_type'
+        Domainic::Type::DateType.new(**options)
+      end
+
+      # Creates a nilable DateType instance.
+      #
+      # @example
+      #   _Date? === Date.new(2024, 1, 1) # => true
+      #   _Date? === nil                  # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::UnionType] the created type (DateType or NilClass)
+      # @rbs (**__todo__ options) -> UnionType
+      def _Date?(**options)
+        _Nilable(_Date(**options))
+      end
+
+      # Creates a DateTimeType instance.
+      #
+      # DateTimeType restricts values to valid `DateTime` objects.
+      #
+      # @example
+      #   type = _DateTime
+      #   type.validate(DateTime.new(2024, 1, 1, 12, 0, 0)) # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::DateTimeType] the created type
+      # @rbs (**__todo__ options) -> DateTimeType
+      def _DateTime(**options)
+        require 'domainic/type/types/datetime/date_time_type'
+        Domainic::Type::DateTimeType.new(**options)
+      end
+
+      # Creates a nilable DateTimeType instance.
+      #
+      # @example
+      #   _DateTime? === DateTime.new(2024, 1, 1, 12, 0, 0) # => true
+      #   _DateTime? === nil                                # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::UnionType] the created type (DateTimeType or NilClass)
+      # @rbs (**__todo__ options) -> UnionType
+      def _DateTime?(**options)
+        _Nilable(_DateTime(**options))
+      end
+
       # Creates a DuckType instance.
       #
       # DuckType allows specifying behavior based on method availability.
@@ -474,6 +536,37 @@ module Domainic
         _Nilable(symbol)
       end
       alias _Interned? _Symbol?
+
+      # Creates a TimeType instance.
+      #
+      # TimeType restricts values to valid `Time` objects.
+      #
+      # @example
+      #   type = _Time
+      #   type.validate(Time.new(2024, 1, 1, 12, 0, 0)) # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::TimeType] the created type
+      # @rbs (**__todo__ options) -> TimeType
+      def _Time(**options)
+        require 'domainic/type/types/datetime/time_type'
+        Domainic::Type::TimeType.new(**options)
+      end
+
+      # Creates a nilable TimeType instance.
+      #
+      # @example
+      #   _Time? === Time.new(2024, 1, 1, 12, 0, 0) # => true
+      #   _Time? === nil                            # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::UnionType] the created type (TimeType or NilClass)
+      # @rbs (**__todo__ options) -> UnionType
+      def _Time?(**options)
+        _Nilable(_Time(**options))
+      end
 
       # Creates a URIType instance.
       #

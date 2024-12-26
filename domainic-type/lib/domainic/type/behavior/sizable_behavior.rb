@@ -75,7 +75,7 @@ module Domainic
           # @raise [ArgumentError] if minimum or maximum value can't be determined
           # @return [Array<Integer>] parsed [minimum, maximum] values
           # @rbs (Integer? minimum, Integer? maximum, Hash[Symbol, Integer?] options) -> Array[Integer]
-          def parse_having_between_arguments(minimum, maximum, options)
+          def parse_having_between_arguments!(minimum, maximum, options)
             min = minimum || options[:min] || options[:minimum]
             max = maximum || options[:max] || options[:maximum]
             raise_having_between_argument_error!(caller, min, max, options) if min.nil? || max.nil?
@@ -231,7 +231,7 @@ module Domainic
         def having_size_between(minimum = nil, maximum = nil, **options)
           # @type self: Object & Behavior
           min, max =
-            SizableBehavior.send(:parse_having_between_arguments, minimum, maximum, options.transform_keys(&:to_sym))
+            SizableBehavior.send(:parse_having_between_arguments!, minimum, maximum, options.transform_keys(&:to_sym))
           constrain :size, :range, { minimum: min, maximum: max },
                     concerning: :size, description: "having #{__callee__.to_s.split('_').[](1)}", inclusive: false
         end

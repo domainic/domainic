@@ -5,36 +5,56 @@ require 'domainic/type/constraint/behavior'
 module Domainic
   module Type
     module Constraint
-      # A constraint for validating that numeric values fall within a specified range.
+      # A constraint for validating that comparable values fall within a specified range.
       #
-      # This constraint allows for validating numeric values against minimum and maximum
-      # boundaries. It supports specifying either or both boundaries, allowing for
-      # open-ended ranges when appropriate.
+      # This constraint allows for validating any values that implement comparison operators
+      # (<, <=, >, >=) against minimum and maximum boundaries. It supports specifying either
+      # or both boundaries, allowing for open-ended ranges when appropriate. This makes it
+      # suitable for numeric ranges, date/time ranges, or any other comparable types.
       #
-      # @example Validating with both minimum and maximum
+      # @example Validating numeric ranges
       #   constraint = RangeConstraint.new(:self, { minimum: 1, maximum: 10 })
       #   constraint.satisfied?(5)  # => true
       #   constraint.satisfied?(15) # => false
       #
-      # @example Validating with only minimum
-      #   constraint = RangeConstraint.new(:self, { minimum: 0 })
-      #   constraint.satisfied?(10)  # => true
-      #   constraint.satisfied?(-1)  # => false
+      # @example Validating date ranges
+      #   constraint = RangeConstraint.new(:self, {
+      #     minimum: Date.new(2024, 1, 1),
+      #     maximum: Date.new(2024, 12, 31)
+      #   })
+      #   constraint.satisfied?(Date.new(2024, 6, 15))  # => true
+      #   constraint.satisfied?(Date.new(2023, 12, 31)) # => false
       #
-      # @example Validating with only maximum
-      #   constraint = RangeConstraint.new(:self, { maximum: 100 })
-      #   constraint.satisfied?(50)   # => true
-      #   constraint.satisfied?(150)  # => false
+      # @example Validating with only minimum
+      #   constraint = RangeConstraint.new(:self, { minimum: Time.now })
+      #   constraint.satisfied?(Time.now + 3600)  # => true
+      #   constraint.satisfied?(Time.now - 3600)  # => false
       #
       # @author {https://aaronmallen.me Aaron Allen}
       # @since 0.1.0
       class RangeConstraint
         # @rbs!
-        #   type expected = { ?minimum: Numeric, ?maximum: Numeric }
+        #   interface _Compatible
+        #     def <: (untyped other) -> bool
+        #
+        #     def <=: (untyped other) -> bool
+        #
+        #     def >: (untyped other) -> bool
+        #
+        #     def >=: (untyped other) -> bool
+        #
+        #     def inspect: () -> untyped
+        #
+        #     def nil?: () -> bool
+        #
+        #     def send: (Symbol method_name, *untyped arguments, **untyped keyword_arguments) -> untyped
+        #   end
+        #
+        #   type expected = { ?minimum: _Compatible, ?maximum: _Compatible}
         #
         #   type options = { ?inclusive: bool }
 
-        include Behavior #[expected, Numeric, options]
+        include Behavior #[expected, _Compatible, options]
 
         # Get a human-readable description of the range constraint.
         #
@@ -55,8 +75,8 @@ module Domainic
         # @rbs override
         def short_description
           min, max = @expected.values_at(:minimum, :maximum)
-          min_description = "greater than or equal to #{min}"
-          max_description = "less than or equal to #{max}"
+          min_description = "greater than#{inclusive? ? ' or equal to' : ''} #{min}"
+          max_description = "less than#{inclusive? ? ' or equal to' : ''} #{max}"
 
           return "#{min_description} and #{max_description}" unless min.nil? || max.nil?
           return min_description unless min.nil?
@@ -91,10 +111,10 @@ module Domainic
         # @rbs override
         def satisfies_constraint?
           min, max = @expected.values_at(:minimum, :maximum)
-          min_comparison, max_comparison = @options.fetch(:inclusive, true) ? %i[>= <=] : %i[> <]
+          min_comparison, max_comparison = inclusive? ? %i[>= <=] : %i[> <]
 
-          @actual.send(min_comparison, (min || -Float::INFINITY)) &&
-            @actual.send(max_comparison, (max || Float::INFINITY))
+          (min.nil? ? true : @actual.send(min_comparison, min)) &&
+            (max.nil? ? true : @actual.send(max_comparison, max))
         end
 
         # Validate that the expected value is a properly formatted range specification.
@@ -112,6 +132,16 @@ module Domainic
           validate_minimum_and_maximum!(expectation)
         end
 
+        private
+
+        # Check if the range constraint is inclusive.
+        #
+        # @return [Boolean] `true` if the range is inclusive, `false` otherwise
+        # @rbs () -> bool
+        def inclusive?
+          @options.fetch(:inclusive, true) #: bool
+        end
+
         # Validate the minimum and maximum values in a range specification.
         #
         # @param expectation [Hash] The range specification to validate
@@ -120,14 +150,27 @@ module Domainic
         # @return [void]
         # @rbs (untyped expectation) -> void
         def validate_minimum_and_maximum!(expectation)
-          expectation.each_pair do |property, value|
-            raise ArgumentError, ":#{property} must be a Numeric" unless value.nil? || value.is_a?(Numeric)
-          end
+          validate_minimum_and_maximum_types!(expectation)
 
           min, max = expectation.values_at(:minimum, :maximum)
           return if min.nil? || max.nil? || min <= max
 
           raise ArgumentError, ':minimum must be less than or equal to :maximum'
+        end
+
+        # Validate the minimum and maximum value types are compatible with the constraint.
+        #
+        # @param expectation [Hash] The range specification to validate
+        #
+        # @raise [ArgumentError] if the values are invalid
+        # @return [void]
+        # @rbs (untyped expectation) -> void
+        def validate_minimum_and_maximum_types!(expectation)
+          expectation.each_pair do |property, value|
+            unless value.nil? || (%i[< <= > >=].all? { |m| value.respond_to?(m) })
+              raise ArgumentError, ":#{property}: #{value} is not compatible with RangeConstraint"
+            end
+          end
         end
       end
     end
