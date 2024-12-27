@@ -123,6 +123,9 @@ types:
   range:
     constant: Domainic::Type::RangeType
     require_path: domainic/type/types/core/range_type
+  rational:
+    constant: Domainic::Type::RationalType
+    require_path: domainic/type/types/core/rational_type
   set:
     constant: Domainic::Type::SetType
     require_path: domainic/type/types/core_extended/set_type
