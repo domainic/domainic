@@ -16,10 +16,13 @@ This document provides comprehensive examples of using Domainic::Type, from basi
 * [Using Types](#using-types)
   * [_Anything](#_anything)
   * [_Array](#_array)
+  * [_BigDecimal](#_bigdecimal)
   * [_Boolean](#_boolean)
   * [_CUID](#_cuid)
+  * [_Complex](#_complex)
   * [_Date](#_date)
   * [_DateTime](#_datetime)
+  * [_DateTimeString](#_datetimestring)
   * [_Duck](#_duck)
   * [_EmailAddress](#_emailaddress)
   * [_Enum](#_enum)
@@ -30,9 +33,13 @@ This document provides comprehensive examples of using Domainic::Type, from basi
   * [_Instance](#_instance)
   * [_Integer](#_integer)
   * [_Nilable](#_nilable)
+  * [_Range](#_range)
+  * [_Rational](#_rational)
+  * [_Set](#_set)
   * [_String](#_string)
   * [_Symbol](#_symbol)
   * [_Time](#_time)
+  * [_Timestamp](#_timestamp)
   * [_Union](#_union)
   * [_UUID](#_uuid)
   * [_URI](#_uri)
@@ -279,6 +286,33 @@ _Array.of(type) # Constrains the array to contain only values of the specified t
 _Array.starting_with(value) # Constrains the array to start with the specified value
 ```
 
+### _BigDecimal
+
+also known as `_BigDecimal?`
+
+> [!TIP]
+> Many constraints have aliases to allow you to express your intent in a way that best maps to your mental model.
+> Checkout the documentation for
+> [NumericBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.2.0/domainic-type/lib/domainic/type/behavior/numeric_behavior.rb)
+> for the full list of available methods and aliases!
+
+The `_BigDecimal` type provides precise decimal arithmetic validation with comprehensive numeric constraints:
+
+```ruby
+_BigDecimal === BigDecimal('3.14') # => true
+_BigDecimal === 3.14 # => false
+
+# Available Constraints
+# Inherits all numeric constraints from NumericBehavior
+_BigDecimal.being_positive # Must be positive
+_BigDecimal.being_negative # Must be negative
+_BigDecimal.being_finite # Must be finite
+_BigDecimal.being_infinite # Must be infinite
+_BigDecimal.being_divisible_by(BigDecimal('0.5')) # Must be divisible by 0.5
+_BigDecimal.being_greater_than(BigDecimal('0')) # Must be > 0
+_BigDecimal.being_less_than(BigDecimal('1')) # Must be < 1
+```
+
 ### _Boolean
 
 also known as `_Bool`, `_Boolean?`, `_Bool?`
@@ -305,6 +339,25 @@ _CUID === 'ckj9g7z9z0000b3z1z7z6z7z6z' # => false
 _CUID.being_version(1_or_2) # Constrains the CUID to be version 1 or 2
 _CUID.being_version_one # Constrains the CUID to be version 1
 _CUID.being_version_two # Constrains the CUID to be version 2
+```
+
+### _Complex
+
+also known as `_Complex?`
+
+The `_Complex` type validates complex numbers with constraints applied to both real and imaginary parts:
+
+```ruby
+_Complex === Complex(1, 2) # => true
+_Complex === 1 # => false
+
+# Available Constraints
+# Most numeric constraints are applied to the real part
+_Complex.being_divisible_by(2) # Real part must be divisible by 2
+_Complex.being_positive # Real part must be positive
+_Complex.being_negative # Real part must be negative
+_Complex.being_even # Real part must be even
+_Complex.being_odd # Real part must be odd
 ```
 
 ### _Date
@@ -355,6 +408,23 @@ _DateTime.being_between(after, before) # Constrains the datetime to be between t
 _DateTime.being_equal_to(datetime) # Constrains the datetime to be equal to the specified datetime
 _DateTime.being_on_or_after(datetime) # Constrains the datetime to be on or after the specified datetime
 _DateTime.being_on_or_before(datetime) # Constrains the datetime to be on or before the specified datetime
+```
+
+### _DateTimeString
+
+also known as `_DateString`, `_DateTimeString?`, `_DateString?`
+
+The `_DateTimeString` type validates strings containing date and time information in various formats:
+
+```ruby
+_DateTimeString === '2024-01-01T12:00:00Z' # => true
+_DateTimeString === 'invalid date' # => false
+
+# Available Format Constraints
+_DateTimeString.having_american_format # MM/DD/YYYY
+_DateTimeString.having_european_format # DD.MM.YYYY
+_DateTimeString.having_iso8601_format # ISO 8601 format
+_DateTimeString.having_rfc2822_format # RFC 2822 format
 ```
 
 ### _Duck
@@ -602,6 +672,81 @@ _Nilable(
 ) === "ABC" # => true
 ```
 
+### _Range
+
+also known as `_Range?`
+
+> [!TIP]
+> Many constraints have aliases to allow you to express your intent in a way that best maps to your mental model.
+> Checkout the documentation for
+> [EnumerableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.2.0/domainic-type/lib/domainic/type/behavior/enumerable_behavior.rb)
+> for the full list of available methods and aliases!
+
+The `_Range` type validates Ruby Range objects:
+
+```ruby
+_Range === (1..10) # => true
+_Range === [1, 2, 3] # => false
+
+# Available Constraints
+# Inherits enumerable constraints
+_Range.being_empty # Must be empty
+_Range.being_populated # Must not be empty
+_Range.containing(5) # Must include specific value
+_Range.excluding(0) # Must not include specific value
+```
+
+### _Rational
+
+also known as `_Rational?`
+
+> [!TIP]
+> Many constraints have aliases to allow you to express your intent in a way that best maps to your mental model.
+> Checkout the documentation for
+> [NumericBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.2.0/domainic-type/lib/domainic/type/behavior/numeric_behavior.rb)
+> for the full list of available methods and aliases!
+
+The `_Rational` type validates rational numbers with comprehensive numeric constraints:
+
+```ruby
+_Rational === Rational(1, 2) # => true
+_Rational === 0.5 # => false
+
+# Available Constraints
+# Inherits all numeric constraints from NumericBehavior
+_Rational.being_positive # Must be positive
+_Rational.being_negative # Must be negative
+_Rational.being_divisible_by(Rational(1, 2)) # Must be divisible by 1/2
+_Rational.being_greater_than(Rational(0)) # Must be > 0
+_Rational.being_less_than(Rational(1)) # Must be < 1
+```
+
+### _Set
+
+also known as `_Set?`
+
+> [!TIP]
+> Many constraints have aliases to allow you to express your intent in a way that best maps to your mental model.
+> Checkout the documentation for
+> [EnumerableBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.2.0/domainic-type/lib/domainic/type/behavior/enumerable_behavior.rb)
+> for the full list of available methods and aliases!
+
+The `_Set` type validates Ruby Set objects:
+
+```ruby
+_Set === Set[1, 2, 3] # => true
+_Set === [1, 2, 3] # => false
+
+# Available Constraints
+# Inherits all enumerable constraints
+_Set.being_empty # Must be empty
+_Set.being_populated # Must not be empty
+_Set.containing(1, 2) # Must include specific values
+_Set.excluding(3, 4) # Must not include specific values
+_Set.having_size(3) # Must have specific size
+_Set.of(_String) # Elements must be strings
+```
+
 ### _String
 
 also known as `_Text`, `_String?`, `_Text?`
@@ -693,6 +838,29 @@ _Time.being_between(after, before) # Constrains the time to be between the speci
 _Time.being_equal_to(time) # Constrains the time to be equal to the specified time
 _Time.being_on_or_after(time) # Constrains the time to be on or after the specified time
 _Time.being_on_or_before(time) # Constrains the time to be on or before the specified time
+```
+
+### _Timestamp
+
+also known as `_Timestamp?`
+
+> [!TIP]
+> Many constraints have aliases to allow you to express your intent in a way that best maps to your mental model.
+> Checkout the documentation for
+> [DateTimeBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.2.0/domainic-type/lib/domainic/type/behavior/date_time_behavior.rb)
+> for the full list of available methods and aliases!
+
+The `_Timestamp` type validates Unix timestamps:
+
+```ruby
+_Timestamp === 1640995200 # => true
+_Timestamp === '2022-01-01' # => false
+
+# Available Constraints
+# Inherits all datetime constraints
+_Timestamp.being_after(1640995200) # Must be after timestamp
+_Timestamp.being_before(1672531200) # Must be before timestamp
+_Timestamp.being_between(1640995200, 1672531200) # Must be in range
 ```
 
 ### _UUID

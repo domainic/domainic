@@ -246,6 +246,65 @@ _Boolean === 'true' # => false
 
 Also available as `_Bool` and in nilable variants `_Boolean?`, `_Bool?`.
 
+#### _BigDecimal
+
+Validation for arbitrary-precision decimal numbers:
+
+```ruby
+_BigDecimal                       # Basic BigDecimal validation
+  .being_positive                # Must be positive
+  .being_negative               # Must be negative
+  .being_finite                # Must be finite
+  .being_infinite              # Must be infinite
+  .being_divisible_by(         # Must be divisible by 0.5
+    BigDecimal('0.5')
+  )
+  .being_greater_than(         # Must be > 0
+    BigDecimal('0')
+  )
+  .being_less_than(           # Must be < 1
+    BigDecimal('1')
+  )
+```
+
+Also available in nilable variant `_BigDecimal?`.
+
+#### _Complex
+
+Complex number validation:
+
+```ruby
+_Complex                         # Basic Complex validation
+  .being_divisible_by(2)       # Real part divisible by 2
+  .being_positive              # Real part must be positive
+  .being_negative              # Real part must be negative
+  .being_even                 # Real part must be even
+  .being_odd                  # Real part must be odd
+```
+
+Also available in nilable variant `_Complex?`.
+
+#### _Rational
+
+Rational number validation:
+
+```ruby
+_Rational                        # Basic Rational validation
+  .being_positive               # Must be positive
+  .being_negative              # Must be negative
+  .being_divisible_by(         # Must be divisible by 1/2
+    Rational(1, 2)
+  )
+  .being_greater_than(         # Must be > 0
+    Rational(0)
+  )
+  .being_less_than(           # Must be < 1
+    Rational(1)
+  )
+```
+
+Also available in nilable variant `_Rational?`.
+
 ### Collection Types
 
 #### _Array
@@ -285,6 +344,37 @@ _Hash                       # Basic hash validation
 
 Also available as `_Map` and in nilable variants `_Hash?`, `_Map?`.
 
+#### _Range
+
+Range validation with element constraints:
+
+```ruby
+_Range                          # Basic Range validation
+  .being_empty                 # Must be empty
+  .being_populated            # Must not be empty
+  .containing(5)              # Must include specific value
+  .excluding(0)              # Must not include specific value
+```
+
+Also available in nilable variant `_Range?`.
+
+#### _Set
+
+Set validation with element and collection constraints:
+
+```ruby
+_Set                            # Basic Set validation
+  .of(_String)                 # Element type constraint
+  .being_empty                # Must be empty
+  .being_populated           # Must not be empty
+  .being_distinct           # No duplicate elements
+  .containing(1, 2)         # Must contain elements
+  .excluding(3, 4)         # Must not contain elements
+  .having_size(3)         # Exact size
+```
+
+Also available in nilable variant `_Set?`.
+
 ### Date and Time Types
 
 #### _Date
@@ -318,6 +408,20 @@ _DateTime                   # Basic datetime validation
 
 Available in nilable variant `_DateTime?`.
 
+#### _DateTimeString
+
+String-based datetime validation with format constraints:
+
+```ruby
+_DateTimeString                 # Basic datetime string validation
+  .having_american_format      # MM/DD/YYYY format
+  .having_european_format     # DD.MM.YYYY format
+  .having_iso8601_format     # ISO 8601 format
+  .having_rfc2822_format    # RFC 2822 format
+```
+
+Also available as `_DateString` and in nilable variants `_DateTimeString?`, `_DateString?`.
+
 #### _Time
 
 Time validation with chronological constraints:
@@ -332,6 +436,22 @@ _Time                      # Basic time validation
 ```
 
 Available in nilable variant `_Time?`.
+
+#### _Timestamp
+
+Unix timestamp validation:
+
+```ruby
+_Timestamp                      # Basic timestamp validation
+  .being_after(1640995200)     # Must be after timestamp
+  .being_before(1672531200)    # Must be before timestamp
+  .being_between(              # Must be in range
+    1640995200,
+    1672531200
+  )
+```
+
+Available in nilable variant `_Timestamp?`.
 
 ### Network Types
 

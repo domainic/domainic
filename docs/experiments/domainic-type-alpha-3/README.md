@@ -98,10 +98,13 @@ Currently supported types:
 
 * `_Anything`
 * `_Array`
+* `_BigDecimal`
 * `_Boolean`
+* `_Complex`
 * `_CUID`
 * `_Date`
 * `_DateTime`
+* `_DateTimeString`
 * `_Duck`
 * `_EmailAddress`
 * `_Enum`
@@ -112,9 +115,13 @@ Currently supported types:
 * `_Instance`
 * `_Integer`
 * `_Nilable`
+* `_Range`
+* `_Rational`
+* `_Set`
 * `_String`
 * `_Symbol`
 * `_Time`
+* `_Timestamp`
 * `_UUID`
 * `_Union`
 * `_Uri`
