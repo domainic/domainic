@@ -9,6 +9,9 @@
 * [#158](https://github.com/domainic/domainic/pull/158) added `README.md` and `docs/USAGE.md`
 * [#159](https://github.com/domainic/domainic/pull/159) added `Domainic::Type::DateTimeStringType`
 * [#160](https://github.com/domainic/domainic/pull/160) added `Domainic::Type::TimestampType`
+* [#161](https://github.com/domainic/domainic/pull/161) added `Domainic::Type::BigDecimalType`,
+  `Domainic::Type::ComplexType`, `Domainic::Type::RangeType`, `Domainic::Type::RationalType`, and
+  `Domainic::Type::SetType`
 
 #### Changed
 
