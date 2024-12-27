@@ -28,13 +28,86 @@ module Domainic
       # @author {https://aaronmallen.me Aaron Allen}
       # @since 0.1.0
       module DateTimeBehavior
+        # The supported date/time patterns for parsing date/time strings
+        #
+        # @note This list is ordered from most specific to least specific to ensure that the most specific patterns are
+        #  tried first. This is important because some patterns are more lenient than others and may match a wider range
+        #  of input strings.
+        #
+        # @return [Array<String>] the supported date/time patterns
+        DATETIME_PATTERNS = [
+          # ISO 8601 variants (most specific first)
+          '%Y-%m-%dT%H:%M:%S.%N%:z',    # 2024-01-01T12:00:00.000+00:00
+          '%Y-%m-%dT%H:%M:%S%:z',       # 2024-01-01T12:00:00+00:00
+          '%Y-%m-%dT%H:%M:%S.%N',       # 2024-01-01T12:00:00.000
+          '%Y-%m-%dT%H:%M:%S',          # 2024-01-01T12:00:00
+          '%Y%m%dT%H%M%S%z',            # 20240101T120000+0000 (basic format)
+
+          # RFC formats
+          '%a, %d %b %Y %H:%M:%S %z',   # Thu, 31 Jan 2024 13:30:00 +0000
+          '%d %b %Y %H:%M:%S %z',       # 31 Jan 2024 13:30:00 +0000
+
+          # Common datetime formats with timezone
+          '%Y-%m-%d %H:%M:%S %z',       # 2024-01-01 12:00:00 +0000
+          '%d/%m/%Y %H:%M:%S %z',       # 31/01/2024 12:00:00 +0000
+
+          # Full date + time formats (24h)
+          '%Y-%m-%d %H:%M:%S',          # 2024-01-01 12:00:00
+          '%Y-%m-%d %H:%M',             # 2024-01-01 12:00
+          '%d/%m/%Y %H:%M:%S',          # 31/01/2024 12:00:00
+          '%d/%m/%Y %H:%M',             # 31/01/2024 12:00
+          '%d-%m-%Y %H:%M:%S',          # 31-01-2024 12:00:00
+          '%d-%m-%Y %H:%M',             # 31-01-2024 12:00
+          '%Y/%m/%d %H:%M:%S',          # 2024/01/31 12:00:00
+          '%Y/%m/%d %H:%M',             # 2024/01/31 12:00
+
+          # Full date + time formats (12h)
+          '%Y-%m-%d %I:%M:%S %p',       # 2024-01-01 01:30:00 PM
+          '%Y-%m-%d %I:%M %p',          # 2024-01-01 01:30 PM
+          '%d/%m/%Y %I:%M:%S %p',       # 31/01/2024 01:30:00 PM
+          '%d/%m/%Y %I:%M %p',          # 31/01/2024 01:30 PM
+
+          # Full month name formats
+          '%B %d, %Y %H:%M:%S',         # January 31, 2024 12:00:00
+          '%B %d, %Y %H:%M',            # January 31, 2024 12:00
+          '%d %B %Y %H:%M:%S',          # 31 January 2024 12:00:00
+          '%d %B %Y %H:%M',             # 31 January 2024 12:00
+
+          # Abbreviated month name formats
+          '%b %d, %Y %H:%M:%S',         # Jan 31, 2024 12:00:00
+          '%b %d, %Y %H:%M',            # Jan 31, 2024 12:00
+          '%d %b %Y %H:%M:%S',          # 31 Jan 2024 12:00:00
+          '%d %b %Y %H:%M',             # 31 Jan 2024 12:00
+
+          # Date-only formats (in order of specificity)
+          '%Y-%m-%d',                   # 2024-01-31
+          '%Y%m%d',                     # 20240131
+          '%B %d, %Y',                  # January 31, 2024
+          '%d %B %Y',                   # 31 January 2024
+          '%b %d, %Y',                  # Jan 31, 2024
+          '%d %b %Y',                   # 31 Jan 2024
+          '%d/%m/%Y',                   # 31/01/2024
+          '%d-%m-%Y',                   # 31-01-2024
+          '%Y/%m/%d',                   # 2024/01/31
+          '%m/%d/%Y'                    # 01/31/2024 (US format - last to avoid ambiguity)
+        ].freeze #: Array[String]
+
+        # Coerce a value to a Date, DateTime, or Time object
+        #
+        # @return [Proc] a lambda that coerces a value to a Date, DateTime, or Time object
         TO_DATETIME_COERCER = lambda { |value|
           if [Date, DateTime, Time].any? { |type| value.is_a?(type) }
             value
-          else
-            DateTime.parse(value.to_s)
+          elsif value.is_a?(String)
+            DATETIME_PATTERNS.each do |pattern|
+              return DateTime.strptime(value, pattern)
+            rescue ArgumentError
+              next
+            end
+
+            DateTime.parse(value) # Fallback to Ruby's built-in parser and allow it to raise.
           end
-        } #: Proc
+        } #: ^(Date | DateTime | String | Time value) -> (Date | DateTime | Time)
 
         class << self
           private
@@ -98,7 +171,7 @@ module Domainic
         # @rbs (Date | DateTime | String | Time other) -> Behavior
         def being_after(other)
           # @type self: Object & Behavior
-          constrain :self, :range, { minimum: other },
+          constrain :self, :range, { minimum: TO_DATETIME_COERCER.call(other) },
                     coerce_with: TO_DATETIME_COERCER, description: 'being', inclusive: false
         end
         alias after being_after
@@ -110,7 +183,7 @@ module Domainic
         # @rbs (Date | DateTime | String | Time other) -> Behavior
         def being_before(other)
           # @type self: Object & Behavior
-          constrain :self, :range, { maximum: other },
+          constrain :self, :range, { maximum: TO_DATETIME_COERCER.call(other) },
                     coerce_with: TO_DATETIME_COERCER, description: 'being', inclusive: false
         end
         alias before being_before
@@ -128,7 +201,8 @@ module Domainic
           # @type self: Object & Behavior
           after, before =
             DateTimeBehavior.send(:parse_being_between_arguments!, after, before, options.transform_keys(&:to_sym))
-          constrain :self, :range, { minimum: after, maximum: before },
+          constrain :self, :range,
+                    { minimum: TO_DATETIME_COERCER.call(after), maximum: TO_DATETIME_COERCER.call(before) },
                     coerce_with: TO_DATETIME_COERCER, description: 'being', inclusive: false
         end
         alias between being_between
@@ -140,7 +214,7 @@ module Domainic
         # @rbs (Date | DateTime | String | Time other) -> Behavior
         def being_equal_to(other)
           # @type self: Object & Behavior
-          constrain :self, :equality, other,
+          constrain :self, :equality, TO_DATETIME_COERCER.call(other),
                     coerce_with: TO_DATETIME_COERCER, description: 'being'
         end
         alias at being_equal_to
@@ -152,7 +226,7 @@ module Domainic
         # @rbs (Date | DateTime | String | Time other) -> Behavior
         def being_on_or_after(other)
           # @type self: Object & Behavior
-          constrain :self, :range, { minimum: other },
+          constrain :self, :range, { minimum: TO_DATETIME_COERCER.call(other) },
                     coerce_with: TO_DATETIME_COERCER, description: 'being'
         end
         alias at_or_after being_on_or_after
@@ -166,7 +240,7 @@ module Domainic
         # @rbs (Date | DateTime | String | Time other) -> Behavior
         def being_on_or_before(other)
           # @type self: Object & Behavior
-          constrain :self, :range, { maximum: other },
+          constrain :self, :range, { maximum: TO_DATETIME_COERCER.call(other) },
                     coerce_with: TO_DATETIME_COERCER, description: 'being'
         end
         alias at_or_before being_on_or_before

@@ -32,6 +32,23 @@ RSpec.describe Domainic::Type::Behavior::DateTimeBehavior do
 
       it { is_expected.to be false }
     end
+
+    described_class::DATETIME_PATTERNS.each do |pattern|
+      context "when given a string matching #{pattern}" do
+        subject(:validation) { type.being_after(reference_date).validate(value) }
+
+        let(:reference_date) { DateTime.now.strftime(pattern) }
+        let(:value) { (DateTime.now + 1).strftime(pattern) }
+
+        it { is_expected.to be true }
+      end
+    end
+
+    context 'when given an invalid date string' do
+      subject(:validation) { type.being_after(Date.new(2024, 1, 1)).validate('not a date') }
+
+      it { is_expected.to be false }
+    end
   end
 
   describe '#being_before' do
@@ -49,6 +66,23 @@ RSpec.describe Domainic::Type::Behavior::DateTimeBehavior do
 
     context 'when validating a date after the specified value' do
       subject(:validation) { type.being_before(Date.new(2024, 1, 1)).validate(Date.new(2024, 1, 2)) }
+
+      it { is_expected.to be false }
+    end
+
+    described_class::DATETIME_PATTERNS.each do |pattern|
+      context "when given a string matching #{pattern}" do
+        subject(:validation) { type.being_before(reference_date).validate(value) }
+
+        let(:reference_date) { DateTime.now.strftime(pattern) }
+        let(:value) { (DateTime.now - 1).strftime(pattern) }
+
+        it { is_expected.to be true }
+      end
+    end
+
+    context 'when given an invalid date string' do
+      subject(:validation) { type.being_before(Date.new(2024, 1, 1)).validate('not a date') }
 
       it { is_expected.to be false }
     end
@@ -78,6 +112,24 @@ RSpec.describe Domainic::Type::Behavior::DateTimeBehavior do
 
       it { is_expected.to be false }
     end
+
+    described_class::DATETIME_PATTERNS.each do |pattern|
+      context "when given a string matching #{pattern}" do
+        subject(:validation) { type.being_between(reference_before_date, reference_after_date).validate(value) }
+
+        let(:reference_before_date) { DateTime.now.strftime(pattern) }
+        let(:reference_after_date) { (DateTime.now + 2).strftime(pattern) }
+        let(:value) { (DateTime.now + 1).strftime(pattern) }
+
+        it { is_expected.to be true }
+      end
+    end
+
+    context 'when given an invalid date string' do
+      subject(:validation) { type.being_between(Date.new(2024, 1, 1), Date.new(2024, 1, 3)).validate('not a date') }
+
+      it { is_expected.to be false }
+    end
   end
 
   describe '#being_equal_to' do
@@ -89,6 +141,23 @@ RSpec.describe Domainic::Type::Behavior::DateTimeBehavior do
 
     context 'when validating a date not equal to the specified value' do
       subject(:validation) { type.being_equal_to(Date.new(2024, 1, 1)).validate(Date.new(2023, 12, 31)) }
+
+      it { is_expected.to be false }
+    end
+
+    described_class::DATETIME_PATTERNS.each do |pattern|
+      context "when given a string matching #{pattern}" do
+        subject(:validation) { type.being_equal_to(reference_date_string).validate(reference_date_string) }
+
+        let(:reference_date) { DateTime.now }
+        let(:reference_date_string) { reference_date.strftime(pattern) }
+
+        it { is_expected.to be true }
+      end
+    end
+
+    context 'when given an invalid date string' do
+      subject(:validation) { type.being_equal_to(Date.new(2024, 1, 1)).validate('not a date') }
 
       it { is_expected.to be false }
     end
@@ -112,6 +181,24 @@ RSpec.describe Domainic::Type::Behavior::DateTimeBehavior do
 
       it { is_expected.to be false }
     end
+
+    described_class::DATETIME_PATTERNS.each do |pattern|
+      context "when given a string matching #{pattern}" do
+        subject(:validation) { type.being_on_or_after(reference_date_string).validate(value) }
+
+        let(:reference_date) { DateTime.now }
+        let(:reference_date_string) { reference_date.strftime(pattern) }
+        let(:value) { [reference_date_string, (reference_date + 1).strftime(pattern)].sample }
+
+        it { is_expected.to be true }
+      end
+    end
+
+    context 'when given an invalid date string' do
+      subject(:validation) { type.being_on_or_after(Date.new(2024, 1, 1)).validate('not a date') }
+
+      it { is_expected.to be false }
+    end
   end
 
   describe '#being_on_or_before' do
@@ -129,6 +216,24 @@ RSpec.describe Domainic::Type::Behavior::DateTimeBehavior do
 
     context 'when validating a date after the specified value' do
       subject(:validation) { type.being_on_or_before(Date.new(2024, 1, 1)).validate(Date.new(2024, 1, 2)) }
+
+      it { is_expected.to be false }
+    end
+
+    described_class::DATETIME_PATTERNS.each do |pattern|
+      context "when given a string matching #{pattern}" do
+        subject(:validation) { type.being_on_or_before(reference_date_string).validate(value) }
+
+        let(:reference_date) { DateTime.now }
+        let(:reference_date_string) { reference_date.strftime(pattern) }
+        let(:value) { [reference_date_string, (reference_date - 1).strftime(pattern)].sample }
+
+        it { is_expected.to be true }
+      end
+    end
+
+    context 'when given an invalid date string' do
+      subject(:validation) { type.being_on_or_before(Date.new(2024, 1, 1)).validate('not a date') }
 
       it { is_expected.to be false }
     end
