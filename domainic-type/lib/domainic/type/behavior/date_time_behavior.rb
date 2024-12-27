@@ -96,18 +96,21 @@ module Domainic
         #
         # @return [Proc] a lambda that coerces a value to a Date, DateTime, or Time object
         TO_DATETIME_COERCER = lambda { |value|
-          if [Date, DateTime, Time].any? { |type| value.is_a?(type) }
+          case value
+          when Date, DateTime, Time
             value
-          elsif value.is_a?(String)
+          when Integer
+            Time.at(value).to_datetime
+          when String
             DATETIME_PATTERNS.each do |pattern|
               return DateTime.strptime(value, pattern)
             rescue ArgumentError
               next
             end
-
+          else
             DateTime.parse(value) # Fallback to Ruby's built-in parser and allow it to raise.
           end
-        } #: ^(Date | DateTime | String | Time value) -> (Date | DateTime | Time)
+        } #: ^(Date | DateTime | Integer | String | Time value) -> (Date | DateTime | Time)
 
         class << self
           private
@@ -117,39 +120,39 @@ module Domainic
           # @note this in my opinion is better than polluting the namespace of the including class even with a private
           #   method. This way, the method is only available within the module itself. See {#being_between}.
           #
-          # @param after [Date, DateTime, String, Time, nil] minimum size value from positional args
-          # @param before [Date, DateTime, String, Time, nil] maximum size value from positional args
+          # @param after [Date, DateTime, Integer, String, Time, nil] minimum size value from positional args
+          # @param before [Date, DateTime, Integer, String, Time, nil] maximum size value from positional args
           # @param options [Hash] keyword arguments containing after/before values
           #
           # @raise [ArgumentError] if minimum or maximum value can't be determined
-          # @return [Array<Date, DateTime, String, Time, nil>] parsed [after, before] values
+          # @return [Array<Date, DateTime, Integer, String, Time, nil>] parsed [after, before] values
           # @rbs (
-          #   (Date | DateTime | String | Time)? after,
-          #   (Date | DateTime | String | Time)? before,
-          #   Hash[Symbol, (Date | DateTime | String | Time)?] options
-          #   ) -> Array[(Date | DateTime | String | Time)?]
+          #   (Date | DateTime | Integer | String | Time)? after,
+          #   (Date | DateTime | Integer | String | Time)? before,
+          #   Hash[Symbol, (Date | DateTime | Integer | String | Time)?] options
+          #   ) -> Array[(Date | DateTime | Integer | String | Time)?]
           def parse_being_between_arguments!(after, before, options)
             after ||= options[:after]
             before ||= options[:before]
             raise_being_between_argument_error!(caller, after, before, options) if after.nil? || before.nil?
 
-            [after, before] #: Array[(Date | DateTime | String | Time)?]
+            [after, before] #: Array[(Date | DateTime | Integer | String | Time)?]
           end
 
           # Raise appropriate ArgumentError for being_between
           #
           # @param original_caller [Array<String>] caller stack for error
-          # @param after [Date, DateTime, String, Time, nil] after value from positional args
-          # @param before [Date, DateTime, String, Time, nil] before value from positional args
+          # @param after [Date, DateTime, Integer, String, Time, nil] after value from positional args
+          # @param before [Date, DateTime, Integer, String, Time, nil] before value from positional args
           # @param options [Hash] keyword arguments containing after/before values
           #
           # @raise [ArgumentError] with appropriate message
           # @return [void]
           # @rbs (
           #   Array[String] original_caller,
-          #   (Date | DateTime | String | Time)? after,
-          #   (Date | DateTime | String | Time)? before,
-          #   Hash[Symbol, (Date | DateTime | String | Time)?] options
+          #   (Date | DateTime | Integer | String | Time)? after,
+          #   (Date | DateTime | Integer | String | Time)? before,
+          #   Hash[Symbol, (Date | DateTime | Integer | String | Time)?] options
           #   ) -> void
           def raise_being_between_argument_error!(original_caller, after, before, options)
             message = if options.empty?
@@ -166,9 +169,9 @@ module Domainic
 
         # Constrain the value to be chronologically after a given date/time
         #
-        # @param other [Date, DateTime, String, Time] the date/time to compare against
+        # @param other [Date, DateTime, Integer, String, Time] the date/time to compare against
         # @return [self] self for method chaining
-        # @rbs (Date | DateTime | String | Time other) -> Behavior
+        # @rbs (Date | DateTime | Integer | String | Time other) -> Behavior
         def being_after(other)
           # @type self: Object & Behavior
           constrain :self, :range, { minimum: TO_DATETIME_COERCER.call(other) },
@@ -178,9 +181,9 @@ module Domainic
 
         # Constrain the value to be chronologically before a given date/time
         #
-        # @param other [Date, DateTime, String, Time] the date/time to compare against
+        # @param other [Date, DateTime, Integer, String, Time] the date/time to compare against
         # @return [self] self for method chaining
-        # @rbs (Date | DateTime | String | Time other) -> Behavior
+        # @rbs (Date | DateTime | Integer | String | Time other) -> Behavior
         def being_before(other)
           # @type self: Object & Behavior
           constrain :self, :range, { maximum: TO_DATETIME_COERCER.call(other) },
@@ -190,13 +193,16 @@ module Domainic
 
         # Constrain the value to be chronologically between two date/times
         #
-        # @param after [Date, DateTime, String, Time] the earliest allowed date/time
-        # @param before [Date, DateTime, String, Time] the latest allowed date/time
+        # @param after [Date, DateTime, Integer, String, Time] the earliest allowed date/time
+        # @param before [Date, DateTime, Integer, String, Time] the latest allowed date/time
         # @param options [Hash] alternative way to specify after/before via keywords
-        # @option options [Date, DateTime, String, Time] :after earliest allowed date/time
-        # @option options [Date, DateTime, String, Time] :before latest allowed date/time
+        # @option options [Date, DateTime, Integer, String, Time] :after earliest allowed date/time
+        # @option options [Date, DateTime, Integer, String, Time] :before latest allowed date/time
         # @return [self] self for method chaining
-        # @rbs (Date | DateTime | String | Time after, Date | DateTime | String | Time before) -> Behavior
+        # @rbs (
+        #   Date | DateTime | Integer | String | Time after,
+        #   Date | DateTime | Integer | String | Time before
+        #   ) -> Behavior
         def being_between(after = nil, before = nil, **options)
           # @type self: Object & Behavior
           after, before =
@@ -209,9 +215,9 @@ module Domainic
 
         # Constrain the value to be exactly equal to a given date/time
         #
-        # @param other [Date, DateTime, String, Time] the date/time to compare against
+        # @param other [Date, DateTime, Integer, String, Time] the date/time to compare against
         # @return [self] self for method chaining
-        # @rbs (Date | DateTime | String | Time other) -> Behavior
+        # @rbs (Date | DateTime | Integer | String | Time other) -> Behavior
         def being_equal_to(other)
           # @type self: Object & Behavior
           constrain :self, :equality, TO_DATETIME_COERCER.call(other),
@@ -221,9 +227,9 @@ module Domainic
 
         # Constrain the value to be chronologically on or after a given date/time
         #
-        # @param other [Date, DateTime, String, Time] the date/time to compare against
+        # @param other [Date, DateTime, Integer, String, Time] the date/time to compare against
         # @return [self] self for method chaining
-        # @rbs (Date | DateTime | String | Time other) -> Behavior
+        # @rbs (Date | DateTime | Integer | String | Time other) -> Behavior
         def being_on_or_after(other)
           # @type self: Object & Behavior
           constrain :self, :range, { minimum: TO_DATETIME_COERCER.call(other) },
@@ -235,9 +241,9 @@ module Domainic
 
         # Constrain the value to be chronologically on or before a given date/time
         #
-        # @param other [Date, DateTime, String, Time] the date/time to compare against
+        # @param other [Date, DateTime, Integer, String, Time] the date/time to compare against
         # @return [self] self for method chaining
-        # @rbs (Date | DateTime | String | Time other) -> Behavior
+        # @rbs (Date | DateTime | Integer | String | Time other) -> Behavior
         def being_on_or_before(other)
           # @type self: Object & Behavior
           constrain :self, :range, { maximum: TO_DATETIME_COERCER.call(other) },
