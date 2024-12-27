@@ -87,6 +87,9 @@ types:
   date_time:
     constant: Domainic::Type::DateTimeType
     require_path: domainic/type/types/datetime/date_time_type
+  date_time_string:
+    constant: Domainic::Type::DateTimeStringType
+    require_path: domainic/type/types/datetime/date_time_string_type
   duck:
     constant: Domainic::Type::DuckType
     require_path: domainic/type/types/specification/duck_type
@@ -120,6 +123,9 @@ types:
   time:
     constant: Domainic::Type::TimeType
     require_path: domainic/type/types/datetime/time_type
+  timestamp:
+    constant: Domainic::Type::TimestampType
+    require_path: domainic/type/types/datetime/timestamp_type
   union:
     constant: Domainic::Type::UnionType
     require_path: domainic/type/types/specification/union_type

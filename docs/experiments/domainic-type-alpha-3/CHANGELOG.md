@@ -8,11 +8,14 @@
 
 * [#158](https://github.com/domainic/domainic/pull/158) added `README.md` and `docs/USAGE.md`
 * [#159](https://github.com/domainic/domainic/pull/159) added `Domainic::Type::DateTimeStringType`
+* [#160](https://github.com/domainic/domainic/pull/160) added `Domainic::Type::TimestampType`
 
 #### Changed
 
 * [#159](https://github.com/domainic/domainic/pull/159) `Domainic::Type::Behavior::DateTimeBehavior` can now handle
   Strings with various date and time formats.
+* [#160](https://github.com/domainic/domainic/pull/160) `Domainic::Type::Behavior::DateTimeBehavior` now handles
+  timestamps as integers.
 
 ### [0.1.0-alpha.3.2.0] - 2024-12-26
 

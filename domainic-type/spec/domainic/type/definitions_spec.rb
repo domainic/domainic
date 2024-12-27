@@ -172,6 +172,14 @@ RSpec.describe Domainic::Type::Definitions do
     end
   end
 
+  describe '._Timestamp' do
+    subject(:timestamp_type) { definitions._Timestamp }
+
+    it 'is expected to return a TimestampType' do
+      expect(timestamp_type).to be_a(Domainic::Type::TimestampType)
+    end
+  end
+
   describe '._UUID' do
     subject(:uuid_type) { definitions._UUID }
 

@@ -44,6 +44,15 @@ RSpec.describe Domainic::Type::Behavior::DateTimeBehavior do
       end
     end
 
+    context 'when given a valid timestamp integer' do
+      subject(:validation) { type.being_after(reference_date.to_time.to_i).validate(value) }
+
+      let(:reference_date) { DateTime.now }
+      let(:value) { (reference_date + 1).to_time.to_i }
+
+      it { is_expected.to be true }
+    end
+
     context 'when given an invalid date string' do
       subject(:validation) { type.being_after(Date.new(2024, 1, 1)).validate('not a date') }
 
@@ -79,6 +88,15 @@ RSpec.describe Domainic::Type::Behavior::DateTimeBehavior do
 
         it { is_expected.to be true }
       end
+    end
+
+    context 'when given a valid timestamp integer' do
+      subject(:validation) { type.being_before(reference_date.to_time.to_i).validate(value) }
+
+      let(:reference_date) { DateTime.now }
+      let(:value) { (reference_date - 1).to_time.to_i }
+
+      it { is_expected.to be true }
     end
 
     context 'when given an invalid date string' do
@@ -125,6 +143,18 @@ RSpec.describe Domainic::Type::Behavior::DateTimeBehavior do
       end
     end
 
+    context 'when given a valid timestamp integer' do
+      subject(:validation) do
+        type.being_between(reference_before_date.to_time.to_i, reference_after_date.to_time.to_i).validate(value)
+      end
+
+      let(:reference_before_date) { DateTime.now }
+      let(:reference_after_date) { (DateTime.now + 2) }
+      let(:value) { (DateTime.now + 1).to_time.to_i }
+
+      it { is_expected.to be true }
+    end
+
     context 'when given an invalid date string' do
       subject(:validation) { type.being_between(Date.new(2024, 1, 1), Date.new(2024, 1, 3)).validate('not a date') }
 
@@ -154,6 +184,15 @@ RSpec.describe Domainic::Type::Behavior::DateTimeBehavior do
 
         it { is_expected.to be true }
       end
+    end
+
+    context 'when given a valid timestamp integer' do
+      subject(:validation) { type.being_equal_to(reference_date.to_time.to_i).validate(value) }
+
+      let(:reference_date) { DateTime.now }
+      let(:value) { reference_date.to_time.to_i }
+
+      it { is_expected.to be true }
     end
 
     context 'when given an invalid date string' do
@@ -194,6 +233,15 @@ RSpec.describe Domainic::Type::Behavior::DateTimeBehavior do
       end
     end
 
+    context 'when given a valid timestamp integer' do
+      subject(:validation) { type.being_on_or_after(reference_date.to_time.to_i).validate(value) }
+
+      let(:reference_date) { DateTime.now }
+      let(:value) { [reference_date.to_time.to_i, (reference_date + 1).to_time.to_i].sample }
+
+      it { is_expected.to be true }
+    end
+
     context 'when given an invalid date string' do
       subject(:validation) { type.being_on_or_after(Date.new(2024, 1, 1)).validate('not a date') }
 
@@ -230,6 +278,15 @@ RSpec.describe Domainic::Type::Behavior::DateTimeBehavior do
 
         it { is_expected.to be true }
       end
+    end
+
+    context 'when given a valid timestamp integer' do
+      subject(:validation) { type.being_on_or_before(reference_date.to_time.to_i).validate(value) }
+
+      let(:reference_date) { DateTime.now }
+      let(:value) { [reference_date.to_time.to_i, (reference_date - 1).to_time.to_i].sample }
+
+      it { is_expected.to be true }
     end
 
     context 'when given an invalid date string' do
