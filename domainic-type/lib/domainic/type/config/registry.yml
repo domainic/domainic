@@ -78,6 +78,9 @@ types:
   anything:
     constant: Domainic::Type::AnythingType
     require_path: domainic/type/types/specification/anything_type
+  big_decimal:
+    constant: Domainic::Type::BigDecimalType
+    require_path: domainic/type/types/core_extended/big_decimal_type
   cuid:
     constant: Domainic::Type::CUIDType
     require_path: domainic/type/types/identifier/cuid_type
