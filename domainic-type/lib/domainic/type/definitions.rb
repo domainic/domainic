@@ -601,6 +601,37 @@ module Domainic
         _Nilable(_Time(**options))
       end
 
+      # Creates a TimestampType instance.
+      #
+      # TimestampType restricts values to valid timestamps.
+      #
+      # @example
+      #   type = _Timestamp
+      #   type.validate(1640995200) # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::TimestampType] the created type
+      # @rbs (**__todo__ options) -> TimestampType
+      def _Timestamp(**options)
+        require 'domainic/type/types/datetime/timestamp_type'
+        Domainic::Type::TimestampType.new(**options)
+      end
+
+      # Creates a nilable TimestampType instance.
+      #
+      # @example
+      #   _Timestamp? === 1640995200 # => true
+      #   _Timestamp? === nil        # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::UnionType] the created type (TimestampType or NilClass)
+      # @rbs (**__todo__ options) -> UnionType
+      def _Timestamp?(**options)
+        _Nilable(_Timestamp(**options))
+      end
+
       # Creates a URIType instance.
       #
       # URIType restricts values to valid URIs.

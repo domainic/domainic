@@ -495,6 +495,30 @@ module Domainic
       # @return [Domainic::Type::UnionType] the created type (TimeType or NilClass)
       def _Time?: (**__todo__ options) -> UnionType
 
+      # Creates a TimestampType instance.
+      #
+      # TimestampType restricts values to valid timestamps.
+      #
+      # @example
+      #   type = _Timestamp
+      #   type.validate(1640995200) # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::TimestampType] the created type
+      def _Timestamp: (**__todo__ options) -> TimestampType
+
+      # Creates a nilable TimestampType instance.
+      #
+      # @example
+      #   _Timestamp? === 1640995200 # => true
+      #   _Timestamp? === nil        # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::UnionType] the created type (TimestampType or NilClass)
+      def _Timestamp?: (**__todo__ options) -> UnionType
+
       # Creates a URIType instance.
       #
       # URIType restricts values to valid URIs.
