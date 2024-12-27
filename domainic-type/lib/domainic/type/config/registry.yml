@@ -114,6 +114,9 @@ types:
   integer:
     constant: Domainic::Type::IntegerType
     require_path: domainic/type/types/core/integer_type
+  range:
+    constant: Domainic::Type::RangeType
+    require_path: domainic/type/types/core/range_type
   string:
     constant: Domainic::Type::StringType
     require_path: domainic/type/types/core/string_type
