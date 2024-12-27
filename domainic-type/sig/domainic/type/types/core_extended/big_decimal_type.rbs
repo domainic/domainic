@@ -1,0 +1,27 @@
+module Domainic
+  module Type
+    # A type for validating and constraining `BigDecimal` objects.
+    #
+    # This type extends `NumericBehavior` to provide a fluent interface for numeric-specific validations such as being
+    # positive, being within a range, or satisfying divisibility rules.
+    #
+    # @example Validating a `BigDecimal` value
+    #   type = Domainic::Type::BigDecimalType.new
+    #   type.validate!(BigDecimal('3.14')) # => true
+    #
+    # @example Enforcing constraints
+    #   type = Domainic::Type::BigDecimalType.new
+    #   type.being_positive.validate!(BigDecimal('42')) # => true
+    #   type.being_positive.validate!(BigDecimal('-42')) # raises TypeError
+    #
+    # @author {https://aaronmallen.me Aaron Allen}
+    # @since 0.1.0
+    class BigDecimalType
+      extend Behavior::ClassMethods
+
+      include Behavior
+
+      include Behavior::NumericBehavior
+    end
+  end
+end

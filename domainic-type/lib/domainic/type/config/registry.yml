@@ -78,6 +78,12 @@ types:
   anything:
     constant: Domainic::Type::AnythingType
     require_path: domainic/type/types/specification/anything_type
+  big_decimal:
+    constant: Domainic::Type::BigDecimalType
+    require_path: domainic/type/types/core_extended/big_decimal_type
+  complex:
+    constant: Domainic::Type::ComplexType
+    require_path: domainic/type/types/core/complex_type
   cuid:
     constant: Domainic::Type::CUIDType
     require_path: domainic/type/types/identifier/cuid_type
@@ -114,6 +120,15 @@ types:
   integer:
     constant: Domainic::Type::IntegerType
     require_path: domainic/type/types/core/integer_type
+  range:
+    constant: Domainic::Type::RangeType
+    require_path: domainic/type/types/core/range_type
+  rational:
+    constant: Domainic::Type::RationalType
+    require_path: domainic/type/types/core/rational_type
+  set:
+    constant: Domainic::Type::SetType
+    require_path: domainic/type/types/core_extended/set_type
   string:
     constant: Domainic::Type::StringType
     require_path: domainic/type/types/core/string_type

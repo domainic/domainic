@@ -1,0 +1,96 @@
+module Domainic
+  module Type
+    # A type for validating and constraining `Complex` numbers.
+    #
+    # This type extends `NumericBehavior` to provide a fluent interface for numeric-specific validations such as
+    # polarity and divisibility checks.
+    #
+    # @example Validating a `Complex` value
+    #   type = Domainic::Type::ComplexType.new
+    #   type.validate!(Complex(3, 4)) # => true
+    #
+    # @example Enforcing constraints
+    #   type = Domainic::Type::ComplexType.new
+    #   type.being_positive.validate!(Complex(42, 0)) # => raises TypeError
+    #
+    # @author {https://aaronmallen.me Aaron Allen}
+    # @since 0.1.0
+    class ComplexType
+      extend Behavior::ClassMethods
+
+      include Behavior
+
+      include Behavior::NumericBehavior
+
+      # Constrain the Complex real to be divisible by a given divisor.
+      #
+      # @param arguments [Array<Numeric>] a list of arguments, typically one divisor
+      # @param options [Hash] additional options such as tolerance for floating-point checks
+      # @option options [Numeric] :divisor the divisor to check for divisibility
+      # @option options [Numeric] :tolerance the tolerance for floating-point checks
+      #
+      # @return [self] the current instance for chaining
+      def being_divisible_by: (*Numeric arguments, ?divisor: Numeric, ?tolerance: Numeric) -> Behavior
+
+      alias being_multiple_of being_divisible_by
+
+      alias divisible_by being_divisible_by
+
+      alias multiple_of being_divisible_by
+
+      # Constrain the Complex real to be even.
+      #
+      # @return [self] the current instance for chaining
+      def being_even: () -> Behavior
+
+      alias even being_even
+
+      alias not_being_odd being_even
+
+      # Constrain the Complex real to be negative.
+      #
+      # @return [self] the current instance for chaining
+      def being_negative: () -> Behavior
+
+      alias negative being_negative
+
+      alias not_being_positive being_negative
+
+      # Constrain the Complex real value to be odd.
+      #
+      # @return [self] the current instance for chaining
+      def being_odd: () -> Behavior
+
+      alias odd being_odd
+
+      alias not_being_even being_odd
+
+      # Constrain the Complex real to be positive.
+      #
+      # @return [self] the current instance for chaining
+      def being_positive: () -> Behavior
+
+      alias positive being_positive
+
+      alias not_being_negative being_positive
+
+      # Constrain the Complex real to not be divisible by a specific divisor.
+      #
+      # @note the divisor MUST be provided as an argument or in the options Hash.
+      #
+      # @param arguments [Array<Numeric>] a list of arguments, typically one divisor
+      # @param options [Hash] additional options such as tolerance for floating-point checks
+      # @option options [Numeric] :divisor the divisor to check for divisibility
+      # @option options [Numeric] :tolerance the tolerance for floating-point checks
+      #
+      # @return [self] the current instance for chaining
+      def not_being_divisible_by: (*Numeric arguments, ?divisor: Numeric, ?tolerance: Numeric) -> Behavior
+
+      alias not_being_multiple_of not_being_divisible_by
+
+      alias not_divisible_by not_being_divisible_by
+
+      alias not_multiple_of not_being_divisible_by
+    end
+  end
+end

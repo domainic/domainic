@@ -64,6 +64,29 @@ module Domainic
 
       alias _List? _Array?
 
+      # Creates a BigDecimalType instance.
+      #
+      # @example
+      #   type = _BigDecimal
+      #   type.validate(BigDecimal('123.45')) # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::BigDecimalType] the created type
+      def _BigDecimal: (**__todo__ options) -> BigDecimalType
+
+      # Creates a nilable BigDecimalType instance.
+      #
+      # @example
+      #   type = _BigDecimal?
+      #   type.validate(BigDecimal('123.45')) # => true
+      #   type.validate(nil)                  # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::UnionType] the created type (BigDecimal or NilClass)
+      def _BigDecimal?: (**__todo__ options) -> UnionType
+
       # Creates a Boolean type.
       #
       # Represents a union of TrueClass and FalseClass.
@@ -110,6 +133,28 @@ module Domainic
       def _CUID?: (**__todo__ options) -> UnionType
 
       alias _Cuid? _CUID?
+
+      # Creates a ComplexType instance.
+      #
+      # @example
+      #   type = _Complex
+      #   type.validate(Complex(1, 2)) # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::ComplexType] the created type
+      def _Complex: (**__todo__ options) -> ComplexType
+
+      # Creates a nilable ComplexType instance.
+      #
+      # @example
+      #   type = _Complex?
+      #   type.validate(Complex(1, 2)) # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::UnionType] the created type (Complex or NilClass)
+      def _Complex?: (**__todo__ options) -> UnionType
 
       # Creates a DateType instance.
       #
@@ -422,6 +467,74 @@ module Domainic
       def _Nilable: (*Class | Module | Behavior[untyped, untyped, untyped] types, **__todo__ options) -> UnionType
 
       alias _Nullable _Nilable
+
+      # Creates a RangeType instance.
+      #
+      # @example
+      #   type = _Range
+      #   type.validate(1..10) # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::RangeType] the created type
+      def _Range: (**__todo__ options) -> RangeType
+
+      # Creates a nilable RangeType instance.
+      #
+      # @example
+      #   type = _Range?
+      #   type.validate(1..10) # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::UnionType] the created type (Range or NilClass)
+      def _Range?: (**__todo__ options) -> UnionType
+
+      # Creates a RationalType instance.
+      #
+      # @example
+      #   type = _Rational
+      #   type.validate(Rational(1, 2)) # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::RationalType] the created type
+      def _Rational: (**__todo__ options) -> RationalType
+
+      # Creates a nilable RationalType instance.
+      #
+      # @example
+      #   type = _Rational?
+      #   type.validate(Rational(1, 2)) # => true
+      #   type.validate(nil)            # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::UnionType] the created type (Rational or NilClass)
+      def _Rational?: (**__todo__ options) -> UnionType
+
+      # Creates a SetType instance.
+      #
+      # @example
+      #   type = _Set
+      #   type.validate(Set[1, 2, 3]) # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::SetType] the created type
+      def _Set: (**__todo__ options) -> SetType
+
+      # Creates a nilable SetType instance.
+      #
+      # @example
+      #   type = _Set?
+      #   type.validate(Set[1, 2, 3]) # => true
+      #   type.validate(nil)          # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::UnionType] the created type (Set or NilClass)
+      def _Set?: (**__todo__ options) -> UnionType
 
       # Creates a StringType instance.
       #

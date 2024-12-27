@@ -77,6 +77,36 @@ module Domainic
       end
       alias _List? _Array?
 
+      # Creates a BigDecimalType instance.
+      #
+      # @example
+      #   type = _BigDecimal
+      #   type.validate(BigDecimal('123.45')) # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::BigDecimalType] the created type
+      # @rbs (**__todo__ options) -> BigDecimalType
+      def _BigDecimal(**options)
+        require 'domainic/type/types/core_extended/big_decimal_type'
+        Domainic::Type::BigDecimalType.new(**options)
+      end
+
+      # Creates a nilable BigDecimalType instance.
+      #
+      # @example
+      #   type = _BigDecimal?
+      #   type.validate(BigDecimal('123.45')) # => true
+      #   type.validate(nil)                  # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::UnionType] the created type (BigDecimal or NilClass)
+      # @rbs (**__todo__ options) -> UnionType
+      def _BigDecimal?(**options)
+        _Nilable(_BigDecimal(**options))
+      end
+
       # Creates a Boolean type.
       #
       # Represents a union of TrueClass and FalseClass.
@@ -132,6 +162,35 @@ module Domainic
         _Nilable(_CUID(**options))
       end
       alias _Cuid? _CUID?
+
+      # Creates a ComplexType instance.
+      #
+      # @example
+      #   type = _Complex
+      #   type.validate(Complex(1, 2)) # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::ComplexType] the created type
+      # @rbs (**__todo__ options) -> ComplexType
+      def _Complex(**options)
+        require 'domainic/type/types/core/complex_type'
+        Domainic::Type::ComplexType.new(**options)
+      end
+
+      # Creates a nilable ComplexType instance.
+      #
+      # @example
+      #   type = _Complex?
+      #   type.validate(Complex(1, 2)) # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::UnionType] the created type (Complex or NilClass)
+      # @rbs (**__todo__ options) -> UnionType
+      def _Complex?(**options)
+        _Nilable(_Complex(**options))
+      end
 
       # Creates a DateType instance.
       #
@@ -509,6 +568,95 @@ module Domainic
         _Union(NilClass, *types, **options)
       end
       alias _Nullable _Nilable
+
+      # Creates a RangeType instance.
+      #
+      # @example
+      #   type = _Range
+      #   type.validate(1..10) # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::RangeType] the created type
+      # @rbs (**__todo__ options) -> RangeType
+      def _Range(**options)
+        require 'domainic/type/types/core/range_type'
+        Domainic::Type::RangeType.new(**options)
+      end
+
+      # Creates a nilable RangeType instance.
+      #
+      # @example
+      #   type = _Range?
+      #   type.validate(1..10) # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::UnionType] the created type (Range or NilClass)
+      # @rbs (**__todo__ options) -> UnionType
+      def _Range?(**options)
+        _Nilable(_Range(**options))
+      end
+
+      # Creates a RationalType instance.
+      #
+      # @example
+      #   type = _Rational
+      #   type.validate(Rational(1, 2)) # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::RationalType] the created type
+      # @rbs (**__todo__ options) -> RationalType
+      def _Rational(**options)
+        require 'domainic/type/types/core/rational_type'
+        Domainic::Type::RationalType.new(**options)
+      end
+
+      # Creates a nilable RationalType instance.
+      #
+      # @example
+      #   type = _Rational?
+      #   type.validate(Rational(1, 2)) # => true
+      #   type.validate(nil)            # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::UnionType] the created type (Rational or NilClass)
+      # @rbs (**__todo__ options) -> UnionType
+      def _Rational?(**options)
+        _Nilable(_Rational(**options))
+      end
+
+      # Creates a SetType instance.
+      #
+      # @example
+      #   type = _Set
+      #   type.validate(Set[1, 2, 3]) # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::SetType] the created type
+      # @rbs (**__todo__ options) -> SetType
+      def _Set(**options)
+        require 'domainic/type/types/core_extended/set_type'
+        Domainic::Type::SetType.new(**options)
+      end
+
+      # Creates a nilable SetType instance.
+      #
+      # @example
+      #   type = _Set?
+      #   type.validate(Set[1, 2, 3]) # => true
+      #   type.validate(nil)          # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::UnionType] the created type (Set or NilClass)
+      # @rbs (**__todo__ options) -> UnionType
+      def _Set?(**options)
+        _Nilable(_Set(**options))
+      end
 
       # Creates a StringType instance.
       #
