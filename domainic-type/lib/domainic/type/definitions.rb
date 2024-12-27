@@ -195,6 +195,39 @@ module Domainic
         _Nilable(_DateTime(**options))
       end
 
+      # Creates a DateTimeStringType instance.
+      #
+      # DateTimeStringType restricts values to valid date-time strings.
+      #
+      # @example
+      #   type = _DateTimeString
+      #   type.validate('2024-01-01T12:00:00Z') # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::DateTimeStringType] the created type
+      # @rbs (**__todo__ options) -> DateTimeStringType
+      def _DateTimeString(**options)
+        require 'domainic/type/types/datetime/date_time_string_type'
+        Domainic::Type::DateTimeStringType.new(**options)
+      end
+      alias _DateString _DateTimeString
+
+      # Creates a nilable DateTimeStringType instance.
+      #
+      # @example
+      #   _DateTimeString? === '2024-01-01T12:00:00Z' # => true
+      #   _DateTimeString? === nil                    # => true
+      #
+      # @param options [Hash] additional configuration options
+      #
+      # @return [Domainic::Type::UnionType] the created type (DateTimeStringType or NilClass)
+      # @rbs (**__todo__ options) -> UnionType
+      def _DateTimeString?(**options)
+        _Nilable(_DateTimeString(**options))
+      end
+      alias _DateString? _DateTimeString?
+
       # Creates a DuckType instance.
       #
       # DuckType allows specifying behavior based on method availability.

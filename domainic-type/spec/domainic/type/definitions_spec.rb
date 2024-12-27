@@ -84,6 +84,14 @@ RSpec.describe Domainic::Type::Definitions do
     end
   end
 
+  describe '._DateTimeString' do
+    subject(:datetime_string_type) { definitions._DateTimeString }
+
+    it 'is expected to return a DateTimeStringType' do
+      expect(datetime_string_type).to be_a(Domainic::Type::DateTimeStringType)
+    end
+  end
+
   describe '._Duck' do
     subject(:duck_type) { definitions._Duck }
 
