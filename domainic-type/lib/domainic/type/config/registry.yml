@@ -81,6 +81,9 @@ types:
   big_decimal:
     constant: Domainic::Type::BigDecimalType
     require_path: domainic/type/types/core_extended/big_decimal_type
+  complex:
+    constant: Domainic::Type::ComplexType
+    require_path: domainic/type/types/core/complex_type
   cuid:
     constant: Domainic::Type::CUIDType
     require_path: domainic/type/types/identifier/cuid_type
