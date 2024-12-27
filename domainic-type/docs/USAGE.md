@@ -410,14 +410,23 @@ Available in nilable variant `_DateTime?`.
 
 #### _DateTimeString
 
-String-based datetime validation with format constraints:
+String-based datetime validation with format constraints and full datetime behavior support:
 
 ```ruby
 _DateTimeString                 # Basic datetime string validation
+  # Format constraints
   .having_american_format      # MM/DD/YYYY format
   .having_european_format     # DD.MM.YYYY format
   .having_iso8601_format     # ISO 8601 format
   .having_rfc2822_format    # RFC 2822 format
+
+  # Inherits all datetime constraints
+  .being_after('2024-01-01')     # Must be after date
+  .being_before('2024-12-31')    # Must be before date
+  .being_between(               # Must be in range
+    '2024-01-01',
+    '2024-12-31'
+  )
 ```
 
 Also available as `_DateString` and in nilable variants `_DateTimeString?`, `_DateString?`.

@@ -43,6 +43,7 @@ This document provides comprehensive examples of using Domainic::Type, from basi
   * [_Union](#_union)
   * [_UUID](#_uuid)
   * [_URI](#_uri)
+  * [_Void](#_void)
 
 ## Basic Usage
 
@@ -414,7 +415,14 @@ _DateTime.being_on_or_before(datetime) # Constrains the datetime to be on or bef
 
 also known as `_DateString`, `_DateTimeString?`, `_DateString?`
 
-The `_DateTimeString` type validates strings containing date and time information in various formats:
+> [!TIP]
+> Many constraints have aliases to allow you to express your intent in a way that best maps to your mental model.
+> Checkout the documentation for
+> [DateTimeBehavior](https://github.com/domainic/domainic/blob/domainic-type-v0.1.0-alpha.3.3.0/domainic-type/lib/domainic/type/behavior/date_time_behavior.rb)
+> for the full list of available methods and aliases!
+
+The `_DateTimeString` type validates strings containing date and time information in various formats. It inherits all
+datetime constraints from DateTimeBehavior in addition to format-specific validation:
 
 ```ruby
 _DateTimeString === '2024-01-01T12:00:00Z' # => true
@@ -425,6 +433,11 @@ _DateTimeString.having_american_format # MM/DD/YYYY
 _DateTimeString.having_european_format # DD.MM.YYYY
 _DateTimeString.having_iso8601_format # ISO 8601 format
 _DateTimeString.having_rfc2822_format # RFC 2822 format
+
+# Also supports all datetime constraints
+_DateTimeString.being_after('2024-01-01') # After specific date
+_DateTimeString.being_before('2024-12-31') # Before specific date
+_DateTimeString.being_between('2024-01-01', '2024-12-31') # In date range
 ```
 
 ### _Duck
