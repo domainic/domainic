@@ -44,6 +44,14 @@ RSpec.describe Domainic::Type::Definitions do
     end
   end
 
+  describe '._BigDecimal' do
+    subject(:big_decimal_type) { definitions._BigDecimal }
+
+    it 'is expected to return a BigDecimalType' do
+      expect(big_decimal_type).to be_a(Domainic::Type::BigDecimalType)
+    end
+  end
+
   describe '._Boolean' do
     subject(:boolean_type) { definitions._Boolean }
 
@@ -65,6 +73,14 @@ RSpec.describe Domainic::Type::Definitions do
 
     it 'is expected to return an CUIDType' do
       expect(cuid_type).to be_a(Domainic::Type::CUIDType)
+    end
+  end
+
+  describe '._Complex' do
+    subject(:complex_type) { definitions._Complex }
+
+    it 'is expected to return a ComplexType' do
+      expect(complex_type).to be_a(Domainic::Type::ComplexType)
     end
   end
 
@@ -161,6 +177,30 @@ RSpec.describe Domainic::Type::Definitions do
 
     it 'is expected to validate values of the specified type' do
       expect(nilable_type.validate('test')).to be true
+    end
+  end
+
+  describe '._Range' do
+    subject(:range_type) { definitions._Range }
+
+    it 'is expected to return a RangeType' do
+      expect(range_type).to be_a(Domainic::Type::RangeType)
+    end
+  end
+
+  describe '._Rational' do
+    subject(:rational_type) { definitions._Rational }
+
+    it 'is expected to return a RationalType' do
+      expect(rational_type).to be_a(Domainic::Type::RationalType)
+    end
+  end
+
+  describe '._Set' do
+    subject(:set_type) { definitions._Set }
+
+    it 'is expected to return a SetType' do
+      expect(set_type).to be_a(Domainic::Type::SetType)
     end
   end
 
