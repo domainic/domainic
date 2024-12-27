@@ -7,6 +7,12 @@
 #### Added
 
 * [#158](https://github.com/domainic/domainic/pull/158) added `README.md` and `docs/USAGE.md`
+* [#159](https://github.com/domainic/domainic/pull/159) added `Domainic::Type::DateTimeStringType`
+
+#### Changed
+
+* [#159](https://github.com/domainic/domainic/pull/159) `Domainic::Type::Behavior::DateTimeBehavior` can now handle
+  Strings with various date and time formats.
 
 ### [0.1.0-alpha.3.2.0] - 2024-12-26
 
