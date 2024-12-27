@@ -42,7 +42,7 @@ If you have suggestions on how this process could be improved, please submit a p
 
 ## Supported Versions
 
-### [domainic-attributer](../domainic-attributer/README.md)
+### [domainic-attributer](https://github.com/domainic/domainic/blob/main/domainic-attributer/README.md)
 
 |  Version  | Support |
 |:---------:|:-------:|
@@ -61,7 +61,7 @@ If you have suggestions on how this process could be improved, please submit a p
 |:-------:|:-------:|
 | `0.1.0` |   🚧    |
 
-### [domainic-type](./experiments/domainic-type-v0.1.0-alpha.3/README.md)
+### [domainic-type](https://github.com/domainic/domainic/blob/main/domainic-type/README.md)
 
 |        Version        | Support |
 |:---------------------:|:-------:|
