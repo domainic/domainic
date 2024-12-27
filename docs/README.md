@@ -7,15 +7,15 @@ documentation across the Domainic ecosystem.
 
 ### Released
 
-* [**domainic-attributer**](../domainic-attributer/) - Type-safe, self-documenting class attributes
+* [**domainic-attributer**](../domainic-attributer/README.md) - Type-safe, self-documenting class attributes
   * **Current Version**: 0.1.0
   * [Usage Guide](../domainic-attributer/docs/USAGE.md)
 
 ### Experimental
 
-* [**domainic-type**](../domainic-type/) - Flexible type validation system
+* [**domainic-type**](../domainic-type/README.md) - Flexible type validation system
   * **Current Version**: 0.1.0-alpha.3.2.0
-  * [Experiment Details](./experiments/domainic-type-alpha-3/)
+  * [Experiment Details](../domainic-type/README.md)
   * [Testing & Feedback](./experiments/domainic-type-alpha-3/README.md)
 
 ### In Development
@@ -28,15 +28,15 @@ documentation across the Domainic ecosystem.
 
 ### Development Tracking
 
-* [Active Projects](./projects/) - Current development focus and updates
-* [Release Planning](./milestones/) - Upcoming releases and roadmap
-* [Experiments](./experiments/) - Alpha releases and testing programs
+* [Active Projects](./projects/README.md) - Current development focus and updates
+* [Release Planning](./milestones/README.md) - Upcoming releases and roadmap
+* [Experiments](./experiments/README.md) - Alpha releases and testing programs
 
 ### Contributing
 
-* [Code of Conduct](CODE_OF_CONDUCT.md)
-* [Contributing Guide](CONTRIBUTING.md)
-* [Security Policy](SECURITY.md)
+* [Code of Conduct](./CODE_OF_CONDUCT.md)
+* [Contributing Guide](./CONTRIBUTING.md)
+* [Security Policy](./SECURITY.md)
 
 ## Documentation Overview
 

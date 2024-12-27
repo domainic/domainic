@@ -23,20 +23,6 @@ handle the heavy lifting while you focus on your domain logic.
 Think of it as giving your attributes a brain - they know what they want, how they should behave, and
 they're not afraid to speak up when something's not right!
 
-## Installation
-
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'domainic-attributer'
-```
-
-Or install it yourself as:
-
-```bash
-gem install domainic-attributer
-```
-
 ## Quick Start
 
 ```ruby
@@ -59,21 +45,36 @@ dev.power_level = 9001
 dev.power_level = 'over 9000'  # Raises ArgumentError: invalid value for Integer
 ```
 
+## Installation
+
+Add this line to your application's Gemfile:
+
+```ruby
+gem 'domainic-attributer'
+```
+
+Or install it yourself as:
+
+```bash
+gem install domainic-attributer
+```
+
 ## Documentation
 
 For detailed usage instructions and examples, see [USAGE.md](./docs/USAGE.md).
 
 ## Contributing
 
-We welcome contributions! Please see our [Contributing Guidelines](./../docs/CONTRIBUTING.md) for:
+We welcome contributions! Please see our
+[Contributing Guidelines](https://github.com/domainic/domainic/wiki/CONTRIBUTING) for:
 
 * Development setup and workflow
 * Code style and documentation standards
 * Testing requirements
 * Pull request process
 
-Before contributing, please review our [Code of Conduct](./../docs/CODE_OF_CONDUCT.md).
+Before contributing, please review our [Code of Conduct](https://github.com/domainic/domainic/wiki/CODE_OF_CONDUCT).
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](LICENSE).
+The gem is available as open source under the terms of the [MIT License](./LICENSE).

@@ -9,8 +9,8 @@
 
 > [!IMPORTANT]  
 > We're running an experiment with Domainic::Type! Help us explore flexible type validation in Ruby by trying our
-> [alpha release](./docs/experiments/domainic-type-alpha-3/README.md). Your feedback is invaluable for shaping
-> the future of domain-driven design in Ruby.
+> [alpha release](https://github.com/domainic/domainic/wiki/experiments-domainic-type-alpha-3). Your feedback is
+> invaluable for shaping the future of domain-driven design in Ruby.
 
 A suite of Ruby libraries crafted to arm engineers with the magic of domain-driven design.
 
@@ -58,8 +58,8 @@ gem 'domainic' # Will include all components
 
 ## Available Components
 
-* [domainic-attributer](./domainic-attributer/README.md) - A library for defining type-safe self-documenting class
-  attributes
+* [domainic-attributer](https://github.com/domainic/domainic/blob/main/domainic-attributer/README.md) - A library for
+  defining type-safe self-documenting class attributes
 
 ## Development
 
@@ -72,7 +72,8 @@ gem 'domainic' # Will include all components
 ### Development CLI
 
 Domainic uses a development CLI to manage the monorepo and ensure consistent development practices. View available
-commands with `bin/dev help`. See [domainic-dev](./domainic-dev/README.md) for more information.
+commands with `bin/dev help`. See [domainic-dev](https://github.com/domainic/domainic/blob/main/domainic-dev/README.md)
+for more information.
 
 Key commands:
 
@@ -93,15 +94,16 @@ Domainic is organized as a monorepo containing multiple gems:
 
 ## Contributing
 
-We welcome contributions! Please see our [Contributing Guidelines](./docs/CONTRIBUTING.md) for:
+We welcome contributions! Please see our
+[Contributing Guidelines](https://github.com/domainic/domainic/wiki/CONTRIBUTING) for:
 
 * Development setup and workflow
 * Code style and documentation standards
 * Testing requirements
 * Pull request process
 
-Before contributing, please review our [Code of Conduct](./docs/CODE_OF_CONDUCT.md).
+Before contributing, please review our [Code of Conduct](https://github.com/domainic/domainic/wiki/CODE_OF_CONDUCT).
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](LICENSE).
+The gem is available as open source under the terms of the [MIT License](./LICENSE).

@@ -4,6 +4,10 @@
 
 ### [Unreleased]
 
+#### Added
+
+* [#158](https://github.com/domainic/domainic/pull/158) added `README.md` and `docs/USAGE.md`
+
 ### [0.1.0-alpha.3.2.0] - 2024-12-26
 
 #### Added
