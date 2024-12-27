@@ -24,7 +24,19 @@ module Domainic
       # @author {https://aaronmallen.me Aaron Allen}
       # @since 0.1.0
       module DateTimeBehavior
-        TO_DATETIME_COERCER: Proc
+        # The supported date/time patterns for parsing date/time strings
+        #
+        # @note This list is ordered from most specific to least specific to ensure that the most specific patterns are
+        #  tried first. This is important because some patterns are more lenient than others and may match a wider range
+        #  of input strings.
+        #
+        # @return [Array<String>] the supported date/time patterns
+        DATETIME_PATTERNS: Array[String]
+
+        # Coerce a value to a Date, DateTime, or Time object
+        #
+        # @return [Proc] a lambda that coerces a value to a Date, DateTime, or Time object
+        TO_DATETIME_COERCER: ^(Date | DateTime | String | Time value) -> (Date | DateTime | Time)
 
         # Parse arguments for being_between
         #
