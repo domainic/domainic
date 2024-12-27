@@ -117,6 +117,9 @@ types:
   range:
     constant: Domainic::Type::RangeType
     require_path: domainic/type/types/core/range_type
+  set:
+    constant: Domainic::Type::SetType
+    require_path: domainic/type/types/core_extended/set_type
   string:
     constant: Domainic::Type::StringType
     require_path: domainic/type/types/core/string_type
