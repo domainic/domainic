@@ -1,0 +1,14 @@
+module Domainic
+  module Command
+    module Context
+      # @since 0.1.0
+      class OutputContext
+        extend Behavior::ClassMethods
+
+        include Behavior
+
+        def self.returns: (String | Symbol name, ?(String | Attribute::type_validator)? type_validator_or_description, ?(String | Attribute::type_validator)? description_or_type_validator, ?default: untyped?, ?default_generator: untyped?, ?default_value: untyped?, ?desc: String?, ?description: String?, ?required: bool?, ?type: type_validator?) -> void
+      end
+    end
+  end
+end

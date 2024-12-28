@@ -1,0 +1,28 @@
+module Domainic
+  module Command
+    module Result
+      # @since 0.1.0
+      class Success
+        @data: Struct
+
+        attr_reader data: Struct
+
+        def initialize: (Context::OutputContext context) -> void
+
+        def failure?: () -> bool
+
+        alias failed? failure?
+
+        def successful?: () -> bool
+
+        alias success? successful?
+
+        private
+
+        def method_missing: (Symbol method_name, *untyped arguments, **untyped keyword_arguments) ?{ (?) -> untyped } -> untyped
+
+        def respond_to_missing?: (Symbol method_name, ?bool include_private) -> bool
+      end
+    end
+  end
+end

@@ -1,0 +1,16 @@
+module Domainic
+  module Command
+    # @since 0.1.0
+    class ExecutionError < Error
+      @command: Command
+
+      @result: Result::Failure
+
+      attr_reader command: Command
+
+      attr_reader result: Result::Failure
+
+      def initialize: (untyped command, untyped result) -> untyped
+    end
+  end
+end

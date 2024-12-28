@@ -1,5 +1,10 @@
 module Domainic
   # @since 0.1.0
   module Command
+    extend ClassMethods
+
+    include InstanceMethods
+
+    def self.included: (Class | Module base) -> void
   end
 end

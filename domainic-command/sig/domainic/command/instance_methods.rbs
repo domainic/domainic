@@ -1,0 +1,18 @@
+module Domainic
+  module Command
+    # @since 0.1.0
+    module InstanceMethods
+      def call: (**untyped context) -> (Result::Success | Result::Failure)
+
+      def call!: (**untyped context) -> (Result::Success | Result::Failure)
+
+      def execute: () -> void
+
+      private
+
+      attr_reader context: Context::RunTimeContext
+
+      def fail!: (?untyped? errors) -> void
+    end
+  end
+end

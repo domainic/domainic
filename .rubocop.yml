@@ -8,3 +8,6 @@ require:
 
 RBS:
   Enabled: true
+
+RBS/Lint/AmbiguousOperatorPrecedence:
+  Enabled: false # disabling pending the resolution of https://github.com/soutaro/rbs-inline/issues/174

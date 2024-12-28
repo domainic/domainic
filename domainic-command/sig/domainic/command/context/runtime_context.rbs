@@ -1,0 +1,28 @@
+module Domainic
+  module Command
+    module Context
+      # @since 0.1.0
+      class RuntimeContext
+        def initialize: (**untyped options) -> void
+
+        def []: (String | Symbol attribute_name) -> untyped
+
+        def []=: (String | Symbol attribute_name, untyped value) -> untyped
+
+        def to_hash: () -> Hash[Symbol, untyped]
+
+        alias to_h to_hash
+
+        private
+
+        def method_missing: (Symbol method_name, *untyped arguments, **untyped keyword_arguments) ?{ (?) -> untyped } -> untyped
+
+        def read_from_attribute: (String | Symbol attribute_name) -> untyped
+
+        def respond_to_missing?: (Symbol method_name, ?bool include_private) -> bool
+
+        def write_to_attribute: (String | Symbol attribute_name, untyped value) -> untyped
+      end
+    end
+  end
+end

@@ -1,0 +1,32 @@
+module Domainic
+  module Command
+    # @since 0.1.0
+    module ClassMethods
+      @input_context_class: Context::InputContext
+
+      @runtime_context_class: Context::RunTimeContext
+
+      @output_context_class: Context::OutputContext
+
+      def accepts_arguments_matching: (Context::InputContext input_context_class) -> void
+
+      def argument: (String | Symbol name, ?(String | Context::Attribute::type_validator)? type_validator_or_description, ?(String | Context::Attribute::type_validator)? description_or_type_validator, ?default: untyped?, ?default_generator: untyped?, ?default_value: untyped?, ?desc: String?, ?description: String?, ?required: bool?, ?type: type_validator?) -> void
+
+      def call: (**untyped context) -> untyped
+
+      def call!: (**untyped context) -> untyped
+
+      def returns: (String | Symbol name, ?(String | Context::Attribute::type_validator)? type_validator_or_description, ?(String | Context::Attribute::type_validator)? description_or_type_validator, ?default: untyped?, ?default_generator: untyped?, ?default_value: untyped?, ?desc: String?, ?description: String?, ?required: bool?, ?type: type_validator?) -> void
+
+      def returns_data_matching: (Context::OutputContext output_context_class) -> void
+
+      private
+
+      def input_context_class: () -> Context::InputContext
+
+      def output_context_class: () -> Context::OutputContext
+
+      def runtime_context_class: () -> Context::RunTimeContext
+    end
+  end
+end

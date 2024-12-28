@@ -1,0 +1,53 @@
+module Domainic
+  module Command
+    module Context
+      # @since 0.1.0
+      class Attribute
+        interface _TypeValidator
+          def validate!: (untyped value) -> bool
+        end
+
+        type options = { default: untyped, required: bool }
+
+        type type_validator = Class | Module | Proc | _TypeValidator & Object
+
+        Undefined: Object
+
+        # The default options for an attribute
+        #
+        # @return [Hash{Symbol => Object}]
+        DEFAULT_OPTIONS: options
+
+        @type_validator: type_validator?
+
+        @description: String?
+
+        @name: Symbol
+
+        @options: options
+
+        attr_reader description: String?
+
+        attr_reader name: Symbol
+
+        def initialize: (String | Symbol name, *(String | type_validator)? type_validator_and_description, ?default: untyped?, ?default_generator: untyped?, ?default_value: untyped?, ?desc: String?, ?description: String?, ?required: bool?, ?type: type_validator?) -> void
+
+        def default: () -> untyped
+
+        def default?: () -> bool
+
+        def required?: () -> bool
+
+        def validate!: (untyped value) -> bool
+
+        private
+
+        def initialize_description_and_type: (Array[String? | type_validator?] arguments, ?desc: String?, ?description: String?, ?type: type_validator?, **untyped options) -> void
+
+        def initialize_options: (Hash[Symbol, untyped] options) -> void
+
+        def validate_type!: (untyped value) -> bool
+      end
+    end
+  end
+end

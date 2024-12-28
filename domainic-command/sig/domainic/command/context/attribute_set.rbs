@@ -1,0 +1,27 @@
+module Domainic
+  module Command
+    module Context
+      # @since 0.1.0
+      class AttributeSet
+        @lookup: Hash[Symbol, Attribute]
+
+        def initialize: (?Array[Attribute] attributes) -> void
+
+        def []: (String | Symbol attribute_name) -> Attribute?
+
+        def add: (Attribute attribute) -> void
+
+        def all: () -> Array[Attribute]
+
+        def each: () { (Attribute) -> untyped } -> self
+
+        def each_with_object: [U] (U object) { (Attribute, U object) -> untyped } -> U
+                            | [U] (U object) -> Enumerator[[ Attribute, U ], U]
+
+        private
+
+        def initialize_copy: (AttributeSet source) -> self
+      end
+    end
+  end
+end

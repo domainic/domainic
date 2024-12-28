@@ -1,0 +1,22 @@
+module Domainic
+  module Command
+    module Result
+      # @since 0.1.0
+      class Failure
+        @errors: __todo__
+
+        attr_reader errors: untyped
+
+        def initialize: (__todo__ errors) -> void
+
+        def failure?: () -> bool
+
+        alias failed? failure?
+
+        def successful?: () -> bool
+
+        alias success? successful?
+      end
+    end
+  end
+end
