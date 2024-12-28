@@ -186,6 +186,22 @@ module Domainic
         end
       end
 
+      # Add a custom constraint to this type.
+      #
+      # @param proc [Proc] the constraint to add
+      # @param accessor [Type::Accessor] the accessor to constrain
+      # @param options [Hash{Symbol => Object}] additional constraint options
+      #
+      # @return [self] for chaining constraints
+      # @rbs (
+      #   Proc proc,
+      #   ?accessor: Type::accessor,
+      #   **untyped options
+      #   ) -> Behavior
+      def satisfies(proc, accessor: :self, **options)
+        constrain accessor, :predicate, proc, **options
+      end
+
       # Convert the type to a String representation.
       #
       # @return [String] The type as a String

@@ -125,6 +125,15 @@ module Domainic
       # @return [void]
       def initialize: (**untyped) -> void
 
+      # Add a custom constraint to this type.
+      #
+      # @param proc [Proc] the constraint to add
+      # @param accessor [Type::Accessor] the accessor to constrain
+      # @param options [Hash{Symbol => Object}] additional constraint options
+      #
+      # @return [self] for chaining constraints
+      def satisfies: (Proc proc, ?accessor: Type::accessor, **untyped options) -> Behavior
+
       # Convert the type to a String representation.
       #
       # @return [String] The type as a String

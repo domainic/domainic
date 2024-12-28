@@ -150,6 +150,59 @@ RSpec.describe Domainic::Type::Behavior do
     end
   end
 
+  describe '#satisfies' do
+    subject(:satisfies) { type.satisfies(predicate, **options) }
+
+    let(:type) { TestType.new }
+    let(:options) { {} }
+
+    before do
+      allow(Domainic::Type::Constraint::Resolver).to receive(:resolve!)
+        .with(:predicate)
+        .and_return(TestConstraint)
+    end
+
+    context 'with a basic predicate' do
+      let(:predicate) { lambda(&:positive?) }
+
+      it 'is expected to add a predicate constraint' do
+        expect(satisfies).to be_a(TestType)
+      end
+
+      it 'is expected to constrain with the :predicate type' do
+        allow(type).to receive(:constrain).and_call_original
+        satisfies
+
+        expect(type).to have_received(:constrain).with(:self, :predicate, predicate)
+      end
+    end
+
+    context 'with custom accessor' do
+      let(:predicate) { lambda(&:positive?) }
+      let(:options) { { accessor: :length } }
+
+      it 'is expected to constrain the specified accessor' do
+        allow(type).to receive(:constrain).and_call_original
+        satisfies
+
+        expect(type).to have_received(:constrain).with(:length, :predicate, predicate)
+      end
+    end
+
+    context 'with additional options' do
+      let(:predicate) { lambda(&:positive?) }
+      let(:options) { { violation_description: 'not positive' } }
+
+      it 'is expected to pass options to constrain' do
+        allow(type).to receive(:constrain).and_call_original
+        satisfies
+
+        expect(type).to have_received(:constrain)
+          .with(:self, :predicate, predicate, violation_description: 'not positive')
+      end
+    end
+  end
+
   describe '#to_s' do
     subject(:to_string) { type.to_s }
 

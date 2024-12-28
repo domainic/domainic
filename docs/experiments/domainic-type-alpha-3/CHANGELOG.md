@@ -4,6 +4,11 @@
 
 ### [Unreleased]
 
+#### Added
+
+* [#165](https://github.com/domainic/domainic/pull/165) added `Domainic::Type::Constraint::PredicateConstraint` and
+  `Domainic::Type::Behavior#satisfies` to allow for custom constraints.
+
 #### Fixed
 
 * [#164](https://github.com/domainic/domainic/pull/164) fixed `Domainic::Type::Constraint::NorConstraint` now prefixes
