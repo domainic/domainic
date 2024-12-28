@@ -39,7 +39,7 @@ module Domainic
         # @rbs override
         def short_description
           descriptions = @expected.map(&:short_description)
-          return descriptions.first if descriptions.size == 1
+          return "not #{descriptions.first}" if descriptions.size == 1
 
           *first, last = descriptions
           "#{first.join(', ')} nor #{last}"
