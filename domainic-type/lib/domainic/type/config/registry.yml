@@ -62,6 +62,9 @@ constraints:
   polarity:
     constant: Domainic::Type::Constraint::PolarityConstraint
     require_path: domainic/type/constraint/constraints/polarity_constraint
+  predicate:
+    constant: Domainic::Type::Constraint::PredicateConstraint
+    require_path: domainic/type/constraint/constraints/predicate_constraint
   range:
     constant: Domainic::Type::Constraint::RangeConstraint
     require_path: domainic/type/constraint/constraints/range_constraint
