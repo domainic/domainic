@@ -4,6 +4,11 @@
 
 ### [Unreleased]
 
+#### Fixed
+
+* [#164](https://github.com/domainic/domainic/pull/164) fixed `Domainic::Type::Constraint::NorConstraint` now prefixes
+  "not" to it's short description when only one constraint is given.
+
 ### [0.1.0-alpha.3.3.0] - 2024-12-27
 
 #### Added

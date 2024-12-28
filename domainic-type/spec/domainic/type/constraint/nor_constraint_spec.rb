@@ -57,7 +57,7 @@ RSpec.describe Domainic::Type::Constraint::NorConstraint do
 
       it 'is expected to add the constraints to the list' do
         expecting
-        expect(constraint.short_description).to eq('be a string')
+        expect(constraint.short_description).to eq('not be a string')
       end
 
       context 'when adding another valid constraint' do
@@ -136,7 +136,7 @@ RSpec.describe Domainic::Type::Constraint::NorConstraint do
       let(:constraint) { described_class.new(:self).expecting([string_constraint]) }
 
       it 'is expected to return the single constraint short_description' do
-        expect(short_description).to eq('be a string')
+        expect(short_description).to eq('not be a string')
       end
     end
   end
