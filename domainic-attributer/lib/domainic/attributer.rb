@@ -8,29 +8,51 @@ require 'domainic/attributer/instance_methods'
 require 'domainic/attributer/undefined'
 
 module Domainic
-  # Core functionality for defining and managing Ruby class attributes
+  # `Domainic::Attributer` is a powerful toolkit that brings clarity and safety to your Ruby class attributes.
+  # Ever wished your class attributes could:
   #
-  # This module provides a flexible attribute system for Ruby classes that supports
-  # positional arguments and keyword options with features like type validation,
-  # coercion, and visibility control.
+  # * Validate themselves to ensure they only accept correct values?
+  # * Transform input data automatically into the right format?
+  # * Have clear, enforced visibility rules?
+  # * Handle their own default values intelligently?
+  # * Tell you when they change?
+  # * Distinguish between required arguments and optional settings?
   #
-  # Can be included directly with default method names or customized via {Domainic.Attributer}
+  # That's exactly what `Domainic::Attributer` does! It provides a declarative way to define and manage attributes
+  # in your Ruby classes, ensuring data integrity and clear interfaces. It's particularly valuable for:
   #
-  # @example Basic usage with default method names
-  #   class Person
+  # * Domain models and value objects
+  # * Service objects and command patterns
+  # * Configuration objects
+  # * Any class where attribute behavior matters
+  #
+  # Think of it as giving your attributes a brain - they know what they want, how they should behave, and
+  # they're not afraid to speak up when something's not right!
+  #
+  # @see file:docs/USAGE.md Usage Guide
+  # @abstract Can be included directly with default method names or customized via {.Attributer}
+  #
+  # @example Basic usage
+  #   class SuperDev
   #     include Domainic::Attributer
   #
-  #     argument :name
-  #     option :age
+  #     argument :code_name, String
+  #
+  #     option :power_level, Integer, default: 9000
+  #     option :favorite_gem do
+  #       validate_with ->(val) { val.to_s.end_with?('ruby') }
+  #       coerce_with ->(val) { val.to_s.downcase }
+  #       non_nilable
+  #     end
   #   end
   #
-  # @example Custom method names
-  #   class Person
-  #     include Domainic.Attributer(argument: :param, option: :opt)
+  #   dev = SuperDev.new('RubyNinja', favorite_gem: 'RAILS_RUBY')
+  #   # => #<SuperDev:0x00000001083aeb58 @code_name="RubyNinja", @favorite_gem="rails_ruby", @power_level=9000>
   #
-  #     param :name
-  #     opt :age
-  #   end
+  #   dev.favorite_gem # => "rails_ruby"
+  #   dev.power_level = 9001 # => 9001
+  #   dev.power_level = 'over 9000'
+  #   # `SuperDev#power_level`: has invalid value: "over 9000" (ArgumentError)
   #
   # @author {https://aaronmallen.me Aaron Allen}
   # @since 0.1.0
@@ -38,8 +60,8 @@ module Domainic
     class << self
       # Create a customized Attributer module
       #
-      # @example
-      #   include Domainic.Attributer(argument: :param, option: :opt)
+      # @!visibility private
+      # @api private
       #
       # @param argument [Symbol, String] custom name for the argument method
       # @param option [Symbol, String] custom name for the option method
@@ -60,6 +82,9 @@ module Domainic
       end
 
       # Handle direct module inclusion
+      #
+      # @!visibility private
+      # @api private
       #
       # @param base [Class, Module] the including class/module
       #
@@ -103,18 +128,46 @@ module Domainic
     end
   end
 
-  # Create a customized Attributer module
+  # Provides a convenient way to include {Attributer} with customized method names
   #
-  # Provides a convenient way to include Attributer with customized method names
-  #
-  # @example
+  # @example Customizing method names
   #   class Person
   #     include Domainic.Attributer(argument: :param, option: :opt)
+  #
+  #     param :name, String
+  #     opt :age, Integer
   #   end
   #
-  # @param options [Hash{Symbol => String, Symbol}] method name customization options
+  #   Person.respond_to?(:argument) # => false
+  #   Person.respond_to?(:param)  # => true
+  #   Person.respond_to?(:option) # => false
+  #   Person.respond_to?(:opt)  # => true
   #
-  # @return [Module] configured Attributer module
+  #   person = Person.new('Alice', age: 30)
+  #   # => #<Person:0x000000010865d188 @age=30, @name="Alice">
+  #
+  # @example Turning off a method
+  #
+  #   class Person
+  #     include Domainic.Attributer(argument: nil)
+  #
+  #     option :name, String
+  #     option :age, Integer
+  #   end
+  #
+  #   Person.respond_to?(:argument)  # => false
+  #   Person.respond_to?(:option) # => true
+  #
+  #   person = Person.new(name: 'Alice', age: 30)
+  #   # => #<Person:0x000000010865d188 @age=30, @name="Alice">
+  #
+  # @param options [Hash{Symbol => String, Symbol, nil}] method name customization options
+  # @option options [String, Symbol, nil] :argument custom name for the {Attributer::ClassMethods#argument argument}
+  #   method. Set to `nil` to disable the method entirely
+  # @option options [String, Symbol, nil] :option custom name for the {Attributer::ClassMethods#option option}
+  #   method. Set to `nil` to disable the method entirely
+  #
+  # @return [Module] the configured {Attributer} module
   # @rbs (?argument: (String | Symbol)?, ?option: (String | Symbol)?) -> Module
   def self.Attributer(**options) # rubocop:disable Naming/MethodName
     Domainic::Attributer.call(**options)
