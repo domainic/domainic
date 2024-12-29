@@ -21,7 +21,7 @@ on domain modeling, clean architecture, and type safety.
 * [x] [domainic-attributer v0.1.0](https://github.com/domainic/domainic/milestone/4)
 * [ ] [domainic-attributer v0.2.0](https://github.com/domainic/domainic/milestone/3)
 * [ ] [domainic-boundary v0.1.0](https://github.com/domainic/domainic/milestone/7)
-* [ ] [domainic-command v0.1.0](https://github.com/domainic/domainic/milestone/6)
+* [x] [domainic-command v0.1.0](https://github.com/domainic/domainic/milestone/6)
 * [ ] [domainic-type v0.1.0](https://github.com/domainic/domainic/milestone/5)
 
 ## Key Components

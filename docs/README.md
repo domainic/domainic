@@ -10,6 +10,9 @@ documentation across the Domainic ecosystem.
 * [**domainic-attributer**](../domainic-attributer/README.md) - Type-safe, self-documenting class attributes
   * **Current Version**: 0.1.0
   * [Usage Guide](../domainic-attributer/docs/USAGE.md)
+* [**domainic-command**](../domainic-command/README.md) - Command pattern implementation
+  * **Current Version**: 0.1.0
+  * [Usage Guide](../domainic-command/docs/USAGE.md)
 
 ### Experimental
 
@@ -21,7 +24,6 @@ documentation across the Domainic ecosystem.
 ### In Development
 
 * **domainic-boundary** - Clean domain interfaces
-* **domainic-command** - First-class command objects
 * **domainic** - Core integration gem (coming in v0.1.0)
 
 ## Project Resources

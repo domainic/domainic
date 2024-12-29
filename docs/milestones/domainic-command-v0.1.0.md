@@ -1,10 +1,10 @@
 # domainic-command v0.1.0
 
-![Milestone Status](https://img.shields.io/badge/Planned-blue?style=for-the-badge&label=Status)
+![Milestone Status](https://img.shields.io/badge/Complete-green?style=for-the-badge&label=Status)
 [![Milestone Progress](https://img.shields.io/github/milestones/progress-percent/domainic/domainic/6?style=for-the-badge&label=Progress)](https://github.com/domainic/domainic/milestone/6)
 
-![Milestone Start Date](https://img.shields.io/badge/TBD-blue?style=for-the-badge&label=Start%20Date)
-![Milestone Due Date](https://img.shields.io/badge/TBD-blue?style=for-the-badge&label=Due%20Date)
+![Milestone Start Date](https://img.shields.io/badge/12%2F28%2F2024-blue?style=for-the-badge&label=Start%20Date)
+![Milestone Due Date](https://img.shields.io/badge/12%2F29%2F2024-blue?style=for-the-badge&label=Due%20Date)
 
 [![Milestone Open Tasks](https://img.shields.io/github/issues-search/domainic/domainic?query=is%3Aopen%20milestone%3A%22domainic-command%20v0.1.0%22&style=for-the-badge&label=Open%20Tasks&color=red)](https://github.com/domainic/domainic/issues?q=is%3Aopen%20milestone%3A%22domainic-command%20v0.1.0%22)
 [![Milestone Closed Tasks](https://img.shields.io/github/issues-search/domainic/domainic?query=is%3Aclosed%20milestone%3A%22domainic-command%20v0.1.0%22&style=for-the-badge&label=Closed%20Tasks&color=green)](https://github.com/domainic/domainic/issues?q=is%3Aclosed%20milestone%3A%22domainic-command%20v0.1.0%22)
