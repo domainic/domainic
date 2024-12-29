@@ -14,10 +14,8 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = '>= 3.1'
 
-  spec.files = IO.popen(%w[git ls-files -z], chdir: __dir__, err: IO::NULL) do |ls|
-    ls.readlines("\x0", chomp: true).reject do |f|
-      (f == File.basename(__FILE__)) || f.start_with?(*%w[bin/ test/ spec/ features/ .git appveyor Gemfile])
-    end
+  spec.files = Dir.chdir(__dir__) do
+    Dir['{exe,lib,sig}/**/*', '.yardopts', 'LICENSE', 'README.md'].reject { |f| File.directory?(f) }
   end
 
   spec.bindir        = 'exe'

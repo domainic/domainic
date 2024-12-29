@@ -53,6 +53,14 @@ module Domainic
           template('gemspec.erb', "#{name}/#{name}.gemspec") # steep:ignore NoMethod
         end
 
+        # Create the gem's gitignore file.
+        #
+        # @return [void]
+        # @rbs () -> void
+        def create_gitignore
+          template('.gitignore', "#{name}/.gitignore") # steep:ignore NoMethod
+        end
+
         # Create the gem's LICENSE file.
         #
         # @return [void]
@@ -112,6 +120,14 @@ module Domainic
         # @rbs () -> void
         def create_spec_helper
           template('spec/spec_helper.rb.erb', "#{name}/spec/spec_helper.rb") # steep:ignore NoMethod
+        end
+
+        # Create the gem's .yardopts file.
+        #
+        # @return [void]
+        # @rbs () -> void
+        def create_yardopts
+          template('.yardopts', "#{name}/.yardopts") # steep:ignore NoMethod
         end
 
         # Generate RBS signatures for the new gem.

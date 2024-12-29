@@ -1,0 +1,11 @@
+--title Domainic::Dev
+--readme README.md
+--no-private
+--protected
+--markup markdown
+--markup-provider redcarpet
+--embed-mixins
+--tag rbs
+--hide-tag rbs
+--files LICENSE
+'lib/**/*.rb'
