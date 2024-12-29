@@ -1,0 +1,69 @@
+module Domainic
+  module Command
+    module Context
+      # A collection class for managing a set of command context attributes. This class provides a simple interface
+      # for storing, accessing, and iterating over {Attribute} instances.
+      #
+      # @example
+      #   set = AttributeSet.new
+      #   set.add(Attribute.new(:name))
+      #   set[:name] # => #<Attribute name=:name>
+      #
+      # @author {https://aaronmallen.me Aaron Allen}
+      # @since 0.1.0
+      class AttributeSet
+        @lookup: Hash[Symbol, Attribute]
+
+        # Creates a new AttributeSet instance
+        #
+        # @return [AttributeSet]
+        def initialize: () -> void
+
+        # Retrieves an attribute by name
+        #
+        # @param attribute_name [String, Symbol] The name of the attribute to retrieve
+        #
+        # @return [Attribute, nil] The attribute with the given name, or nil if not found
+        def []: (String | Symbol attribute_name) -> Attribute?
+
+        # Adds an attribute to the set
+        #
+        # @param attribute [Attribute] The attribute to add
+        #
+        # @raise [ArgumentError] If the provided attribute is not an {Attribute} instance
+        # @return [void]
+        def add: (Attribute attribute) -> void
+
+        # Returns all attributes in the set
+        #
+        # @return [Array<Attribute>] An array of all attributes
+        def all: () -> Array[Attribute]
+
+        # Iterates over each attribute in the set
+        #
+        # @yield [Attribute] Each attribute in the set
+        #
+        # @return [void]
+        def each: () { (Attribute) -> untyped } -> void
+
+        # Iterates over each attribute in the set with an object
+        #
+        # @overload each_with_object(object)
+        #   @param object [Object] The object to pass to the block
+        #   @yield [Attribute, Object] Each attribute and the object
+        #
+        #   @return [Object] The final state of the object
+        def each_with_object: [U] (U object) { (Attribute, U) -> untyped } -> U
+
+        private
+
+        # Ensure that Attributes are duplicated when the AttributeSet is duplicated
+        #
+        # @param source [AttributeSet] The source AttributeSet to copy
+        #
+        # @return [AttributeSet]
+        def initialize_copy: (untyped source) -> untyped
+      end
+    end
+  end
+end

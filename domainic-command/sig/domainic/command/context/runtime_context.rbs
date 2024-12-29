@@ -1,0 +1,90 @@
+module Domainic
+  module Command
+    module Context
+      # A flexible context class for managing command state during execution. This class provides a dynamic
+      # storage mechanism for command data, allowing both hash-style and method-style access to values.
+      #
+      # The RuntimeContext serves as a mutable workspace during command execution, bridging the gap between
+      # input parameters and output values. It automatically handles type coercion of keys to symbols and
+      # provides safe value duplication when converting to a hash.
+      #
+      # @example Hash-style access
+      #   context = RuntimeContext.new(count: 1)
+      #   context[:count] #=> 1
+      #   context[:count] = 2
+      #   context[:count] #=> 2
+      #
+      # @example Method-style access
+      #   context = RuntimeContext.new(name: "test")
+      #   context.name #=> "test"
+      #   context.name = "new test"
+      #   context.name #=> "new test"
+      #
+      # @author {https://aaronmallen.me Aaron Allen}
+      # @since 0.1.0
+      class RuntimeContext
+        @data: Hash[Symbol, untyped]
+
+        # Creates a new RuntimeContext with the given options
+        #
+        # @param options [Hash] Initial values for the context
+        #
+        # @return [RuntimeContext]
+        def initialize: (**untyped options) -> void
+
+        # Retrieves a value by its attribute name
+        #
+        # @param attribute_name [String, Symbol] The name of the attribute to retrieve
+        #
+        # @return [Object, nil] The value associated with the attribute name
+        def []: (String | Symbol attribute_name) -> untyped
+
+        # Sets a value for the given attribute name
+        #
+        # @param attribute_name [String, Symbol] The name of the attribute to set
+        # @param value [Object] The value to store
+        #
+        # @return [Object] The stored value
+        def []=: (String | Symbol attribute_name, untyped value) -> untyped
+
+        # Converts the context to a hash, duplicating values where appropriate
+        #
+        # @note Class and Module values are not duplicated to prevent potential issues
+        #
+        # @return [Hash{Symbol => Object}] A hash containing all stored values
+        def to_hash: () -> Hash[Symbol, untyped]
+
+        alias to_h to_hash
+
+        private
+
+        # Handles dynamic method calls for reading and writing attributes
+        #
+        # @return [Object, nil]
+        def method_missing: ...
+
+        # Reads a value from the internal storage
+        #
+        # @param attribute_name [String, Symbol] The name of the attribute to read
+        #
+        # @return [Object, nil] The stored value
+        def read_from_attribute: (String | Symbol attribute_name) -> untyped
+
+        # Determines if a method name can be handled dynamically
+        #
+        # @param method_name [Symbol] The name of the method to check
+        # @param _include_private [Boolean] Whether to include private methods
+        #
+        # @return [Boolean] Whether the method can be handled
+        def respond_to_missing?: (String | Symbol method_name, ?bool _include_private) -> bool
+
+        # Writes a value to the internal storage
+        #
+        # @param attribute_name [String, Symbol] The name of the attribute to write
+        # @param value [Object] The value to store
+        # @return [Object] The stored value
+        def write_to_attribute: (String | Symbol attribute_name, untyped value) -> untyped
+      end
+    end
+  end
+end
