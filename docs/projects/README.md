@@ -18,6 +18,8 @@ are linked to [Github project boards](https://github.com/domainic/domainic/proje
     * [domainic-attributer v0.2.0 Development Started](./domainic-v0.1.0/updates/2024-12-12-02.md)
   * **December 23, 2024**
     * [Experiment Launch: Domainic::Type Alpha 3](./domainic-v0.1.0/updates/2024-12-23-01.md)
+  * **December 29, 2024**
+    * [Announcing Domainic::Command v0.1.0!](./domainic-v0.1.0/updates/2024-12-29-01.md)
 
 ## Related Documentation
 

@@ -25,8 +25,10 @@ release will include:
 * [domainic-attributer](https://github.com/domainic/domainic/tree/main/domainic-attributer) - Type-safe,
   self-documenting class attributes
 * domainic-boundary - Clean interfaces between domain boundaries
-* domainic-command - First-class command objects for business operations
-* domainic-type - Sophisticated type constraints and validation
+* [domainic-command](https://github.com/domainic/domainic/tree/main/domainic-command) - First-class command objects for
+  business operations
+* [domainic-type](https://github.com/domainic/domainic/tree/main/domainic-type) - Sophisticated type constraints and
+  validation
 
 ## Current Status
 
@@ -44,7 +46,9 @@ Install components individually:
 
 ```ruby
 # Gemfile
-gem 'domainic-attributer' # Only component currently available
+gem 'domainic-attributer'
+gem 'domainic-command'
+gem 'domainic-type' # Currently in pre-release alpha
 ```
 
 ### Future v0.1.0 Usage
@@ -60,6 +64,10 @@ gem 'domainic' # Will include all components
 
 * [domainic-attributer](https://github.com/domainic/domainic/blob/main/domainic-attributer/README.md) - A library for
   defining type-safe self-documenting class attributes
+* [domainic-command](https://github.com/domainic/domainic/tree/main/domainic-command) - An implementation of the command
+  pattern for Ruby
+* [domainic-type](https://github.com/domainic/domainic/tree/main/domainic-type) - Stupidly granular type validations for
+  Ruby (_currently in pre-release alpha_)
 
 ## Development
 
