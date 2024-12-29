@@ -1,0 +1,186 @@
+module Domainic
+  module Command
+    class Result
+      # A flexible container for managing and formatting command errors. The ErrorSet provides a consistent
+      # interface for working with errors from various sources including simple strings, arrays, hashes,
+      # standard errors, and objects implementing a compatible `to_h` interface (like ActiveModel::Errors).
+      #
+      # @example Basic usage
+      #   errors = ErrorSet.new("Something went wrong")
+      #   errors[:generic] #=> ["Something went wrong"]
+      #   errors.full_messages #=> ["generic Something went wrong"]
+      #
+      # @example Hash-style errors
+      #   errors = ErrorSet.new(
+      #     name: "can't be blank",
+      #     email: ["invalid format", "already taken"]
+      #   )
+      #   errors[:name] #=> ["can't be blank"]
+      #   errors[:email] #=> ["invalid format", "already taken"]
+      #
+      # @example ActiveModel compatibility
+      #   user = User.new
+      #   user.valid? #=> false
+      #   errors = ErrorSet.new(user.errors)
+      #   errors[:email] #=> ["can't be blank"]
+      #
+      # @author {https://aaronmallen.me Aaron Allen}
+      # @since 0.1.0
+      class ErrorSet
+        @lookup: Hash[Symbol, Array[String]]
+
+        # Creates a new ErrorSet instance
+        #
+        # @param errors [String, Array, Hash, StandardError, #to_h, nil] The errors to parse
+        #
+        # @raise [ArgumentError] If the errors cannot be parsed
+        # @return [ErrorSet] the new ErrorSet instance
+        def initialize: (?untyped? errors) -> void
+
+        # Retrieves error messages for a specific key
+        #
+        # @param key [String, Symbol] The error key to lookup
+        # @return [Array<String>, nil] The error messages for the key
+        def []: (String | Symbol key) -> Array[String]?
+
+        # Adds a new error message for a specific key
+        #
+        # @param key [String, Symbol] The error key
+        # @param message [String, Array<String>] The error message(s)
+        #
+        # @return [void]
+        def add: (String | Symbol key, Array[String] | String message) -> void
+
+        # Clear all errors from the set
+        #
+        # @return [void]
+        def clear: () -> void
+
+        # Check if the error set is empty
+        #
+        # @return [Boolean] `true` if the error set is empty, `false` otherwise
+        def empty?: () -> bool
+
+        # Returns all error messages with their keys
+        #
+        # @return [Array<String>] All error messages prefixed with their keys
+        def full_messages: () -> Array[String]
+
+        alias to_a full_messages
+
+        alias to_array full_messages
+
+        alias to_ary full_messages
+
+        # Returns a hash of all error messages
+        #
+        # @return [Hash{Symbol => Array<String>}] All error messages grouped by key
+        def messages: () -> Hash[Symbol, Array[String]]
+
+        alias to_h messages
+
+        alias to_hash messages
+
+        # A utility class for parsing various error formats into a consistent structure
+        #
+        # @!visibility private
+        # @api private
+        #
+        # @author {https://aaronmallen.me Aaron Allen}
+        # @since 0.1.0
+        class Parser
+          # Mapping of classes to their parsing strategy methods
+          #
+          # @return [Hash{Class, Module => Symbol}]
+          TYPE_STRATEGIES: Hash[Class | Module, Symbol]
+
+          # Mapping of method names to their parsing strategy methods
+          #
+          # @return [Hash{Symbol => Symbol}]
+          RESPOND_TO_STRATEGIES: Hash[Symbol, Symbol]
+
+          # Create a new Parser instance
+          #
+          # @param errors [Object] the errors to parse
+          #
+          # @return [Parser] the new Parser instance
+          def initialize: (untyped errors) -> void
+
+          # Parses the errors into a consistent format
+          #
+          # @raise [ArgumentError] If the errors cannot be parsed
+          # @return [Hash{Symbol => Array<String>}]
+          def parse!: () -> Hash[Symbol, Array[String]]
+
+          private
+
+          # Parses an array of errors into the generic error category
+          #
+          # @param errors [Array<String, StandardError>] Array of errors to parse
+          #
+          # @raise [ArgumentError] If any array element is not a String or StandardError
+          # @return [void]
+          def parse_array: (Array[String | StandardError] errors) -> void
+
+          # Determines the appropriate parsing strategy and executes it
+          #
+          # @raise [ArgumentError] If no valid parsing strategy is found
+          # @return [void]
+          def parse_errors!: () -> void
+
+          # Parses a string or array of strings into the generic error category
+          #
+          # @param errors [String, Array<String>] The error(s) to parse
+          #
+          # @return [void]
+          def parse_generic_error: (Array[String] | String errors) -> void
+
+          # Parses a hash of errors into categorized messages
+          #
+          # @param errors [Hash{String, Symbol => Array<String>, String}] Hash of errors
+          #
+          # @raise [ArgumentError] If any value cannot be parsed
+          # @return [void]
+          def parse_hash: (Hash[String | Symbol, Array[StandardError] | Array[String] | StandardError | String] errors) -> void
+
+          # Parses a single value from a hash array
+          #
+          # @param value [String, StandardError] The value to parse
+          #
+          # @raise [ArgumentError] If the value is neither a String nor StandardError
+          # @return [String] The parsed error message
+          def parse_hash_array_value: (String | StandardError value) -> String
+
+          # Parses a value from a hash of errors
+          #
+          # @param value [String, StandardError, Array<String, StandardError>] The value to parse
+          #
+          # @raise [ArgumentError] If the value cannot be parsed
+          # @return [Array<String>] The parsed error message(s)
+          def parse_hash_value: (String | StandardError | Array[String | StandardError] value) -> Array[String]
+
+          # Parses a StandardError into the generic error category
+          #
+          # @param errors [StandardError] The error to parse
+          #
+          # @return [void]
+          def parse_standard_error: (StandardError errors) -> void
+
+          # Parses an object that responds to to_h
+          #
+          # @param errors [#to_h] The object to parse
+          #
+          # @raise [ArgumentError] If the hash cannot be parsed
+          # @return [void]
+          def parse_to_h: (untyped errors) -> void
+
+          # Raises an invalid errors exception
+          #
+          # @raise [ArgumentError] Always raises with an invalid errors message
+          # @return [void]
+          def raise_invalid_errors!: () -> void
+        end
+      end
+    end
+  end
+end
