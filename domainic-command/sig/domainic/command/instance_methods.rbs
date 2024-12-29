@@ -1,0 +1,56 @@
+module Domainic
+  module Command
+    # Instance methods that are included in any class that includes {Command}. These methods provide
+    # the core execution logic and error handling for commands.
+    #
+    # @author {https://aaronmallen.me Aaron Allen}
+    # @since 0.1.0
+    module InstanceMethods
+      # Executes the command with the given context, handling any errors
+      #
+      # @param context [Hash] The input context for the command
+      #
+      # @return [Result] The result of the command execution
+      def call: (**untyped context) -> Result
+
+      # Executes the command with the given context, raising any errors
+      #
+      # @param input [Hash] The input context for the command
+      #
+      # @raise [ExecutionError] If the command execution fails
+      # @return [Result] The result of the command execution
+      def call!: (**untyped context) -> Result
+
+      # Executes the command's business logic
+      #
+      # @abstract Subclass and override {#execute} to implement command behavior
+      #
+      # @raise [NotImplementedError] If the subclass does not implement {#execute}
+      # @return [void]
+      def execute: () -> void
+
+      private
+
+      # The runtime context for the command execution
+      #
+      # @return [Context::RuntimeContext] The runtime context
+      attr_reader context: Context::RuntimeContext
+
+      # Execute the command with the given input context
+      #
+      # @param input [Hash] The input context for the command
+      #
+      # @return [Result] The result of the command execution
+      def __execute_command!: (Hash[String | Symbol, untyped] input) -> Result
+
+      # Validates an input or output context
+      #
+      # @param context_type [Symbol] The type of context to validate
+      # @param context [Hash] The context data to validate
+      #
+      # @raise [ExecutionError] If the context is invalid
+      # @return [Context::InputContext, Context::OutputContext] The validated context
+      def __validate_context!: (:input | :output context_type, Hash[String | Symbol, untyped] context) -> (Context::InputContext | Context::OutputContext)
+    end
+  end
+end
