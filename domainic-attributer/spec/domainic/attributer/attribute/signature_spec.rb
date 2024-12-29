@@ -5,6 +5,10 @@ require 'spec_helper'
 RSpec.describe Domainic::Attributer::Attribute::Signature do
   let(:attribute) { instance_double(Domainic::Attributer::Attribute, base: Class.new, name: :test) }
 
+  before do
+    allow(attribute).to receive(:is_a?).with(Domainic::Attributer::Attribute).and_return(true)
+  end
+
   describe '.new' do
     subject(:signature) { described_class.new(attribute, **options) }
 

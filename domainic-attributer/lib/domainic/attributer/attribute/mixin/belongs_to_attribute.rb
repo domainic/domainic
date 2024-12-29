@@ -60,7 +60,6 @@ module Domainic
         # @rbs (Attribute attribute) -> void
         def validate_attribute!(attribute)
           return if attribute.is_a?(Attribute)
-          return if defined?(RSpec::Mocks::TestDouble) && attribute.is_a?(RSpec::Mocks::TestDouble)
 
           raise TypeError,
                 "invalid attribute: #{attribute.inspect}. Must be an Domainic::Attributer::Attribute instance"

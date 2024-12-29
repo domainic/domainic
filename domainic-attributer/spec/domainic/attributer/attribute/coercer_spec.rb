@@ -12,6 +12,10 @@ RSpec.describe Domainic::Attributer::Attribute::Coercer do
     end
   end
 
+  before do
+    allow(attribute).to receive(:is_a?).with(Domainic::Attributer::Attribute).and_return(true)
+  end
+
   describe '.new' do
     subject(:coercer) { described_class.new(attribute, handlers) }
 

@@ -6,6 +6,10 @@ RSpec.describe Domainic::Attributer::Attribute::Callback do
   let(:attribute) { instance_double(Domainic::Attributer::Attribute, base: Class.new, name: :test) }
   let(:handlers) { [] }
 
+  before do
+    allow(attribute).to receive(:is_a?).with(Domainic::Attributer::Attribute).and_return(true)
+  end
+
   describe '.new' do
     subject(:callback) { described_class.new(attribute, handlers) }
 

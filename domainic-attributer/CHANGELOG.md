@@ -16,6 +16,8 @@ The format is based on [Keep a Changelog], and this project adheres to [Break Ve
 
 * [#18](https://github.com/domainic/domainic/pull/18) `Domainic::Attributer::Attribute::Coercer#call` will no longer
   attempt to coerce nil values when the attribute is not nilable. While small this is technically a breaking change.
+* [#169](https://github.com/domainic/domainic/pull/169) removed implicit dependency on RSpec from
+  `Domainic::Attributer::Attribute::BelongsToAttribute`
 
 ### Fixed
 

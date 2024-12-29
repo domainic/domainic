@@ -6,6 +6,10 @@ RSpec.describe Domainic::Attributer::Attribute::Validator do
   let(:attribute) { instance_double(Domainic::Attributer::Attribute, base: test_class, name: :test) }
   let(:test_class) { Class.new }
 
+  before do
+    allow(attribute).to receive(:is_a?).with(Domainic::Attributer::Attribute).and_return(true)
+  end
+
   describe '.new' do
     subject(:validator) { described_class.new(attribute, handlers) }
 
