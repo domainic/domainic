@@ -15,10 +15,13 @@ Ever wished your class attributes could:
 * Tell you when they change?
 * Distinguish between required arguments and optional settings?
 
-That's exactly what Domainic::Attributer does! It's particularly useful when building domain models, value
-objects, or any Ruby classes where data integrity and clear interfaces matter. Instead of writing
-repetitive validation code, manual type checking, and custom attribute methods, let Domainic::Attributer
-handle the heavy lifting while you focus on your domain logic.
+That's exactly what Domainic::Attributer does! It provides a declarative way to define and manage attributes
+in your Ruby classes, ensuring data integrity and clear interfaces. It's particularly valuable for:
+
+* Domain models and value objects
+* Service objects and command patterns
+* Configuration objects
+* Any class where attribute behavior matters
 
 Think of it as giving your attributes a brain - they know what they want, how they should behave, and
 they're not afraid to speak up when something's not right!

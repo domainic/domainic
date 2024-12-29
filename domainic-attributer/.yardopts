@@ -1,12 +1,11 @@
---title Domainic
+--title Domainic::Attributer
 --readme README.md
 --no-private
 --protected
 --markup markdown
 --markup-provider redcarpet
 --embed-mixins
---plugin sitemap
 --tag rbs
 --hide-tag rbs
--
-'**/*.rb' - '**/*.md'
+--files CHANGELOG.md,LICENSE,docs/USAGE.md
+'lib/**/*.rb'

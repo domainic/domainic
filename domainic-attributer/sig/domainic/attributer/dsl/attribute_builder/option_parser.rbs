@@ -9,6 +9,9 @@ module Domainic
         # options (like visibility, nullability, validation) and consolidates them
         # into a consistent internal representation
         #
+        # @!visibility private
+        # @api private
+        #
         # @author {https://aaronmallen.me Aaron Allen}
         # @since 0.1.0
         class OptionParser

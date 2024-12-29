@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '>= 3.1'
 
   spec.files = Dir.chdir(__dir__) do
-    Dir['{docs,lib,sig}/**/*', 'LICENSE', 'README.md', 'CHANGELOG.md'].reject { |f| File.directory?(f) }
+    Dir['{docs,lib,sig}/**/*', '.yardopts', 'LICENSE', 'README.md', 'CHANGELOG.md'].reject { |f| File.directory?(f) }
   end
   spec.require_paths = ['lib']
 
