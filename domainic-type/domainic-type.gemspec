@@ -24,7 +24,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '>= 3.1'
 
   spec.files = Dir.chdir(__dir__) do
-    Dir['{docs,lib,sig}/**/*', 'LICENSE', 'README.md', 'CHANGELOG.md'].reject { |f| File.directory?(f) }
+    Dir['{docs,lib,sig}/**/*', '.yardopts', 'LICENSE', 'README.md', 'CHANGELOG.md'].reject { |f| File.directory?(f) }
   end
   spec.require_paths = ['lib']
 
@@ -32,6 +32,7 @@ Gem::Specification.new do |spec|
     'bug_tracker_uri' => "#{DOMAINIC_TYPE_REPO_URL}/issues",
     'changelog_uri' => "#{DOMAINIC_TYPE_REPO_URL}/releases/tag/domainic-type-v" \
                        "#{DOMAINIC_TYPE_SEMVER}",
+    'documentation_uri' => "https://rubydoc.info/gems/domainic-type/#{DOMAINIC_TYPE_GEM_VERSION}",
     'homepage_uri' => DOMAINIC_TYPE_HOME_URL,
     'rubygems_mfa_required' => 'true',
     'source_code_uri' => "#{DOMAINIC_TYPE_REPO_URL}/tree/domainic-type-v" \

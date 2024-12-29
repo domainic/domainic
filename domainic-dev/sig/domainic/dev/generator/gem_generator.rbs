@@ -36,6 +36,11 @@ module Domainic
         # @return [void]
         def create_gemspec: () -> void
 
+        # Create the gem's gitignore file.
+        #
+        # @return [void]
+        def create_gitignore: () -> void
+
         # Create the gem's LICENSE file.
         #
         # @return [void]
@@ -70,6 +75,11 @@ module Domainic
         #
         # @return [void]
         def create_spec_helper: () -> void
+
+        # Create the gem's .yardopts file.
+        #
+        # @return [void]
+        def create_yardopts: () -> void
 
         # Generate RBS signatures for the new gem.
         #
