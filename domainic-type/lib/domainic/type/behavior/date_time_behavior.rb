@@ -103,10 +103,14 @@ module Domainic
             Time.at(value).to_datetime
           when String
             DATETIME_PATTERNS.each do |pattern|
-              return DateTime.strptime(value, pattern)
+              result = DateTime.strptime(value, pattern)
+              # Validate the parsing preserved the original values by reformatting
+              # the result with the same pattern and comparing
+              return result if value == result.strftime(pattern)
             rescue ArgumentError
               next
             end
+            DateTime.parse(value) # Fallback to Ruby's built-in parser and allow it to raise.
           else
             DateTime.parse(value) # Fallback to Ruby's built-in parser and allow it to raise.
           end
