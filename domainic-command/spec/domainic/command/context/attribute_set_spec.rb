@@ -37,7 +37,7 @@ RSpec.describe Domainic::Command::Context::AttributeSet do
   end
 
   describe '#add' do
-    subject(:add_attribute) { -> { attribute_set.add(item) } }
+    subject(:add_attribute) { attribute_set.add(item) }
 
     context 'when given a valid attribute' do
       let(:item) { attribute }
@@ -45,7 +45,7 @@ RSpec.describe Domainic::Command::Context::AttributeSet do
       it { expect { add_attribute }.not_to raise_error }
 
       it 'is expected to add the attribute to the set' do
-        add_attribute.call
+        add_attribute
         expect(attribute_set[:test]).to eq(attribute)
       end
     end
@@ -54,7 +54,7 @@ RSpec.describe Domainic::Command::Context::AttributeSet do
       let(:item) { 'not an attribute' }
 
       it 'is expected to raise an ArgumentError' do
-        expect(add_attribute).to raise_error(
+        expect { add_attribute }.to raise_error(
           ArgumentError,
           'Attribute must be an instance of Domainic::Command::Context::Attribute'
         )
