@@ -65,8 +65,8 @@ If you have suggestions on how this process could be improved, please submit a p
 
 |        Version        | Support |
 |:---------------------:|:-------:|
-|  `0.1.0-alpha.3.3.0`  |   🧪    |
-| `> 0.1.0-alpha.3.3.0` |    ❌   |
+|  `0.1.0-alpha.3.4.0`  |   🧪    |
+| `> 0.1.0-alpha.3.4.0` |    ❌   |
 
 ### Key
 
