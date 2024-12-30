@@ -14,10 +14,6 @@ in the Domainic project.
 
 * [v0.1.0](./domainic-boundary-v0.1.0.md)
 
-### Domainic::Command
-
-* [v0.1.0](./domainic-command-v0.1.0.md)
-
 ### Domainic::Type
 
 * [v0.1.0](./domainic-type-v0.1.0.md)
@@ -27,6 +23,10 @@ in the Domainic project.
 ### Domainic::Attributer
 
 * [v0.1.0](./domainic-attributer-v0.1.0.md)
+
+### Domainic::Command
+
+* [v0.1.0](./domainic-command-v0.1.0.md)
 
 ## Creating Milestone Documentation
 
