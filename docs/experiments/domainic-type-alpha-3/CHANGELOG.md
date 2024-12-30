@@ -13,6 +13,7 @@
 
 * [#164](https://github.com/domainic/domainic/pull/164) fixed `Domainic::Type::Constraint::NorConstraint` now prefixes
   "not" to it's short description when only one constraint is given.
+* [#179](https://github.com/domainic/domainic/pull/179) fixed date parsing ambiguity in DateTimeBehavior
 
 ### [0.1.0-alpha.3.3.0] - 2024-12-27
 

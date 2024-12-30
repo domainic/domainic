@@ -133,10 +133,10 @@ RSpec.describe Domainic::Type::Behavior::DateTimeBehavior do
 
     described_class::DATETIME_PATTERNS.each do |pattern|
       context "when given a string matching #{pattern}" do
-        subject(:validation) { type.being_between(reference_before_date, reference_after_date).validate(value) }
+        subject(:validation) { type.being_between(reference_after_date, reference_before_date).validate(value) }
 
-        let(:reference_before_date) { DateTime.now.strftime(pattern) }
-        let(:reference_after_date) { (DateTime.now + 2).strftime(pattern) }
+        let(:reference_after_date) { DateTime.now.strftime(pattern) }
+        let(:reference_before_date) { (DateTime.now + 2).strftime(pattern) }
         let(:value) { (DateTime.now + 1).strftime(pattern) }
 
         it { is_expected.to be true }
