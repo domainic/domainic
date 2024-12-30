@@ -8,6 +8,7 @@ This document provides comprehensive examples of using Domainic::Type, from basi
   * [Initialize a type with constraints](#initialize-a-type-with-constraints)
   * [Class with built-in type validations](#class-with-built-in-type-validations)
   * [A simple case statement](#a-simple-case-statement)
+  * [Custom Constraint Examples](#custom-constraint-examples)
 * [Advanced Usage](#advanced-usage)
   * [Using domainic-type with other gems](#using-domainic-type-with-other-gems)
   * [Creating Custom Types](#creating-custom-types)
@@ -123,6 +124,114 @@ class SuperSaiyan
   end
 end
 ```
+
+### Custom Constraint Examples
+
+All types in Domainic::Type support adding custom constraints through the `satisfies` method. This is useful when you
+need validation logic that goes beyond what the built-in constraints provide:
+
+The `satisfies` method enables validation rules that can't be easily expressed using built-in constraints.
+Here are examples of using custom constraints to solve real-world validation challenges:
+
+```ruby
+module Types
+  extend Domainic::Type::Definitions
+
+  # Physical quantities that must respect natural laws
+  Kelvin = _Float.satisfies(
+    ->(value) { value >= 0.0 },
+    description: 'being a valid Kelvin temperature',
+    violation_description: 'temperature below absolute zero'
+  )
+
+  Probability = _Float.satisfies(
+    ->(value) { value >= 0.0 && value <= 1.0 },
+    description: 'being a valid probability',
+    violation_description: 'value outside probability range [0,1]'
+  )
+
+  # Complex validation involving multiple fields
+  TimeRange = _Hash
+    .of(_Symbol => _Time)
+    .containing_keys(:starts_at, :ends_at)
+    .satisfies(
+      ->(range) {
+        duration = range[:ends_at] - range[:starts_at]
+        duration.positive? && duration <= 86_400 # 24 hours in seconds
+      },
+      description: 'having valid duration',
+      violation_description: 'duration not between 0 and 24 hours'
+    )
+
+  # Relational integrity between collections
+  DatabaseSchema = _Hash
+    .of(_Symbol => _Array)
+    .containing_keys(:tables, :foreign_keys)
+    .satisfies(
+      ->(schema) {
+        schema[:foreign_keys].all? do |fk|
+          schema[:tables].include?(fk[:references])
+        end
+      },
+      description: 'having valid foreign key references',
+      violation_description: 'contains references to non-existent tables'
+    )
+
+  # Domain-specific business rules
+  MoneyTransfer = _Hash
+    .of(_Symbol => _Union(_Integer, _String))
+    .containing_keys(:amount, :currency, :beneficiary)
+    .satisfies(
+      ->(transfer) {
+        transfer[:amount] <= daily_limit_for(transfer[:currency])
+      },
+      description: 'being within daily transfer limits',
+      violation_description: 'amount exceeds daily transfer limit'
+    )
+    .satisfies(
+      ->(transfer) {
+        !blacklisted?(transfer[:beneficiary])
+      },
+      description: 'having valid beneficiary',
+      violation_description: 'beneficiary is blacklisted'
+    )
+
+  # Resource availability rules
+  MeetingRoom = _Hash
+    .of(_Symbol => _Union(_String, _Array))
+    .containing_keys(:room_id, :bookings)
+    .satisfies(
+      ->(room) {
+        bookings = room[:bookings].sort_by { |b| b[:starts_at] }
+        bookings.each_cons(2).all? { |a, b| a[:ends_at] < b[:starts_at] }
+      },
+      description: 'having non-overlapping bookings',
+      violation_description: 'contains overlapping bookings'
+    )
+
+  # Network-related validation
+  LoadBalancer = _Hash
+    .of(_Symbol => _Union(_Array, _Integer))
+    .containing_keys(:backends, :health_threshold)
+    .satisfies(
+      ->(config) {
+        healthy_count = config[:backends].count { |b| b[:healthy] }
+        healthy_count >= config[:health_threshold]
+      },
+      description: 'having sufficient healthy backends',
+      violation_description: 'insufficient healthy backends'
+    )
+end
+```
+
+The `satisfies` method is particularly useful for:
+
+* Physical constraints that must respect natural laws
+* Complex relationships between multiple fields
+* Maintaining referential integrity between collections
+* Enforcing business rules that depend on external state
+* Time-based constraints and scheduling rules
+* Resource allocation and availability checks
 
 ## Advanced Usage
 

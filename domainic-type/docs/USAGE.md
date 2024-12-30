@@ -9,6 +9,7 @@ introduction and installation instructions.
 * [Core Concepts](#core-concepts)
   * [Basic Type Validation](#basic-type-validation)
   * [Type Constraints](#type-constraints)
+  * [Custom Constraints](#custom-constraints)
   * [Error Messages](#error-messages)
 * [Built-in Types](#built-in-types)
   * [Simple Types](#simple-types)
@@ -130,6 +131,51 @@ numbers = _Array
   .having_minimum_size(1)   # At least one element
   .containing(42)           # Must include 42
 ```
+
+### Custom Constraints
+
+All types in Domainic::Type support adding custom constraints through the `satisfies` method. This is useful when you
+need validation logic that goes beyond what the built-in constraints provide:
+
+```ruby
+# Basic value range validation that can't be expressed with built-in constraints
+kelvin = _Float.satisfies(
+  ->(value) { value >= 0.0 },
+  description: 'being a valid Kelvin temperature',
+  violation_description: 'temperature below absolute zero'
+)
+
+kelvin.validate!(0.0)    # => true
+kelvin.validate!(-1.0)
+# => TypeError: Expected Float(being a valid Kelvin temperature), got Float(temperature below absolute zero)
+
+# Validating relationships between values in complex objects
+booking = _Hash
+  .of(_Symbol => _DateTime)
+  .containing_keys(:check_in, :check_out)
+  .satisfies(
+    ->(dates) { dates[:check_out] > dates[:check_in] },
+    description: 'having valid stay duration',
+    violation_description: 'check-out not after check-in'
+  )
+
+# Access different parts of objects with accessors
+balanced_ledger = _Array
+  .of(_Hash)
+  .satisfies(
+    ->(entries) { entries.sum { |e| e[:amount] }.zero? },
+    accessor: :entries,
+    description: 'having balanced transactions',
+    violation_description: 'transactions do not sum to zero'
+  )
+```
+
+The `satisfies` method accepts:
+
+* A predicate function that returns true/false for validating values
+* Optional description that explains what makes a value valid
+* Optional violation_description that explains why validation failed
+* Optional accessor to validate specific parts of complex objects
 
 ### Error Messages
 
