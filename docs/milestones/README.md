@@ -14,19 +14,13 @@ in the Domainic project.
 
 * [v0.1.0](./domainic-boundary-v0.1.0.md)
 
+### Domainic::Command
+
+* [v0.2.0](./domainic-command-v0.2.0.md)
+
 ### Domainic::Type
 
 * [v0.1.0](./domainic-type-v0.1.0.md)
-
-## Completed Milestones
-
-### Domainic::Attributer
-
-* [v0.1.0](./domainic-attributer-v0.1.0.md)
-
-### Domainic::Command
-
-* [v0.1.0](./domainic-command-v0.1.0.md)
 
 ## Creating Milestone Documentation
 
