@@ -26,7 +26,7 @@ Gem::Specification.new do |spec|
     'bug_tracker_uri' => "#{<%= constant_name %>_REPO_URL}/issues",
     'changelog_uri' => "#{<%= constant_name %>_REPO_URL}/releases/tag/<%= name %>-v" \
                        "#{<%= constant_name %>_SEMVER}",
-    'documentation_uri' => "https://rubydoc.info/gems/<%= name %>/<%= constant_name %>_GEM_VERSION",
+    'documentation_uri' => "https://rubydoc.info/gems/<%= name %>/#{<%= constant_name %>_GEM_VERSION}",
     'homepage_uri' => <%= constant_name %>_HOME_URL,
     'rubygems_mfa_required' => 'true',
     'source_code_uri' => "#{<%= constant_name %>_REPO_URL}/tree/<%= name %>-v" \
