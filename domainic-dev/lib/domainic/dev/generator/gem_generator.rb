@@ -127,7 +127,7 @@ module Domainic
         # @return [void]
         # @rbs () -> void
         def create_yardopts
-          template('.yardopts', "#{name}/.yardopts") # steep:ignore NoMethod
+          template('.yardopts.erb', "#{name}/.yardopts") # steep:ignore NoMethod
         end
 
         # Generate RBS signatures for the new gem.
