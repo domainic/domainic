@@ -1,7 +1,8 @@
-Brief summary of changes (50 chars or less)
+Brief summary of changes (72 chars or less)
 
 Detailed explanation of the changes, if necessary. Wrap lines at 72
-characters. The body can include multiple paragraphs for complex changes.
+characters. The body can include multiple paragraphs for complex
+changes.
 
 Use bullet points for specific additions/changes when helpful:
 * First change or addition
