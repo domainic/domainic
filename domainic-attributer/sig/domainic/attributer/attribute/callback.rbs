@@ -5,7 +5,7 @@ module Domainic
       #
       # This class handles the execution of callbacks that are triggered when an
       # attribute's value changes. Each callback must be a Proc that accepts two
-      # arguments: the old value and the new value
+      # arguments: the old value, and the new value
       #
       # @api private
       # @!visibility private

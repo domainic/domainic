@@ -125,7 +125,7 @@ The following errors are raised by Domainic::Attributer when internal processing
 * `CoercionExecutionError` - Raised when a coercion handler raises an error
 * `CallbackExecutionError` - Raised when a change callback raises an error
 
-These errors can be rescued for debugging or error handling:
+These errors can be caught and handled for debugging or error recovery:
 
 ```ruby
 class TimeMachine
@@ -152,6 +152,8 @@ rescue Domainic::Attributer::CallbackExecutionError => e
   puts "Time travel failed: #{e.message}"
 end
 ```
+
+[![Return to Top](https://img.shields.io/badge/%E2%96%B2%20Return%20to%20Top-blue?style=for-the-badge)](#table-of-contents)
 
 ## Features
 
@@ -560,6 +562,8 @@ class StrictConfig
 end
 ```
 
+[![Return to Top](https://img.shields.io/badge/%E2%96%B2%20Return%20to%20Top-blue?style=for-the-badge)](#table-of-contents)
+
 ## Best Practices
 
 ### Validation vs Coercion
@@ -621,6 +625,8 @@ class BattleMech
   end
 end
 ```
+
+[![Return to Top](https://img.shields.io/badge/%E2%96%B2%20Return%20to%20Top-blue?style=for-the-badge)](#table-of-contents)
 
 ## Advanced Topics
 
@@ -713,3 +719,5 @@ end
 
 This completes our comprehensive guide to Domainic::Attributer. Remember that the key to effective use is finding the
 right balance of validation, coercion, and error handling for your specific needs.
+
+[![Return to Top](https://img.shields.io/badge/%E2%96%B2%20Return%20to%20Top-blue?style=for-the-badge)](#table-of-contents)
