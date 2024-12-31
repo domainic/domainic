@@ -24,6 +24,18 @@ on domain modeling, clean architecture, and type safety.
 * [x] [domainic-command v0.1.0](https://github.com/domainic/domainic/milestone/6)
 * [ ] [domainic-type v0.1.0](https://github.com/domainic/domainic/milestone/5)
 
+## Project Updates
+
+* **December 12, 2024**
+  * [domainic-attributer v0.1.0 Released](./updates/2024-12-12-01.md)
+  * [domainic-attributer v0.2.0 Development Started](./updates/2024-12-12-02.md)
+* **December 23, 2024**
+  * [Experiment Launch: Domainic::Type Alpha 3](./updates/2024-12-23-01.md)
+* **December 29, 2024**
+  * [Announcing Domainic::Command v0.1.0!](./updates/2024-12-29-01.md)
+* **December 30, 2024**
+  * [Domainic::Type Experiment Name Change](./updates/2024-12-30-01.md)
+
 ## Key Components
 
 ### Domainic::Attributer

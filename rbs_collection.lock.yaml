@@ -6,7 +6,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: ccbd2bbc6be5c195df1d90aa68d64916a9e7d0ab
+    revision: '09beb2100db10cbf4773ed0e71ddf79280a2f275'
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: date
@@ -50,7 +50,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: ccbd2bbc6be5c195df1d90aa68d64916a9e7d0ab
+    revision: '09beb2100db10cbf4773ed0e71ddf79280a2f275'
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: parser
@@ -58,7 +58,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: ccbd2bbc6be5c195df1d90aa68d64916a9e7d0ab
+    revision: '09beb2100db10cbf4773ed0e71ddf79280a2f275'
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: pathname
@@ -78,7 +78,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: ccbd2bbc6be5c195df1d90aa68d64916a9e7d0ab
+    revision: '09beb2100db10cbf4773ed0e71ddf79280a2f275'
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: regexp_parser
@@ -86,7 +86,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: ccbd2bbc6be5c195df1d90aa68d64916a9e7d0ab
+    revision: '09beb2100db10cbf4773ed0e71ddf79280a2f275'
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: rubocop
@@ -94,7 +94,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: ccbd2bbc6be5c195df1d90aa68d64916a9e7d0ab
+    revision: '09beb2100db10cbf4773ed0e71ddf79280a2f275'
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: rubocop-ast
@@ -102,7 +102,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: ccbd2bbc6be5c195df1d90aa68d64916a9e7d0ab
+    revision: '09beb2100db10cbf4773ed0e71ddf79280a2f275'
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: thor
@@ -110,7 +110,7 @@ gems:
   source:
     type: git
     name: ruby/gem_rbs_collection
-    revision: ccbd2bbc6be5c195df1d90aa68d64916a9e7d0ab
+    revision: '09beb2100db10cbf4773ed0e71ddf79280a2f275'
     remote: https://github.com/ruby/gem_rbs_collection.git
     repo_dir: gems
 - name: uri

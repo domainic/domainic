@@ -21,7 +21,7 @@ Each experimental release is:
 
 ## Current Experiments
 
-### Domainic::Type Alpha 3
+### Domainic::Type v0.1.0 Alpha
 
 **Status:** Active  
 **Started:** December 2024  
@@ -31,7 +31,7 @@ A flexible type validation system for Ruby, offering composable, readable type c
 This experiment explores how we can bring powerful yet developer-friendly type validation to Ruby while maintaining the
 language's expressiveness and elegance.
 
-[Learn more about Domainic::Type Alpha 3](./domainic-type-alpha-3/README.md)
+[Learn more about Domainic::Type v0.1.0 Alpha](./domainic-type-v0.1.0-alpha/README.md)
 
 ## Documentation Structure
 

@@ -1,6 +1,6 @@
-# Domainic::Type Alpha 3
+# Domainic::Type v0.1.0 Alpha
 
-Welcome to the Domainic::Type Alpha 3 experiment! This is a Ruby gem exploring flexible, composable type
+Welcome to the Domainic::Type v0.1.0 Alpha experiment! This is a Ruby gem exploring flexible, composable type
 validation with clear error messages.
 
 ![Experiment Status](https://img.shields.io/badge/ACTIVE-orange?label=Status&style=for-the-badge)
