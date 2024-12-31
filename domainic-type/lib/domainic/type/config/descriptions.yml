@@ -1,0 +1,433 @@
+descriptions:
+  behaviors:
+    date_time: &date_time
+      equality:
+        default: at %{expected}
+        violation:
+          default: at %{actual}
+      range:
+        max_exclusive: after %{expected:maximum}
+        max_inclusive: on or after %{expected:maximum}
+        min_exclusive: before %{expected:minimum}
+        min_inclusive: on or before %{expected:minimum}
+        min_max_equal: at %{expected:minimum}
+        min_max_exclusive: between %{expected:minimum} and %{expected:maximum}
+        min_max_inclusive: on or after %{expected:minimum} and on or before %{expected:maximum}
+        violation:
+          default: at %{actual}
+    enumerable: &enumerable
+      emptiness:
+        default: being empty
+        negated: not being empty
+        violation:
+          default: not being empty
+          negated: being empty
+      entry_inclusion:
+        default: containing entries %{expected~and_join}
+        negated: excluding entries %{expected~and_join}
+        violation:
+          default: excluding entries %{violation:expected~and_join}
+          negated: containing entries %{violation:expected~and_join}
+      entry_type:
+        default: having entries of %{expected}
+        violation:
+          default: having entries of %{violation:actual~and_join}
+      first_entry_equality:
+        default: having first entry %{expected}
+        negated: not having first entry %{expected}
+        violation:
+          default: having first entry %{actual}
+      last_entry_equality:
+        default: having last entry %{expected}
+        negated: not having last entry %{expected}
+        violation:
+          default: having last entry %{actual}
+      ordering:
+        default: being sorted
+        negated: being unsorted
+        violation:
+          default: being unsorted
+          negated: being sorted
+      uniqueness:
+        default: being distinct
+        negated: being duplicative
+        violation:
+          default: being duplicative
+          negated: being distinct
+    numeric: &numeric
+      divisibility:
+        default: being divisible by %{expected}
+        negated: not being divisible by %{expected}
+        violation:
+          default: not being divisible by %{expected}
+          negated: being divisible by %{expected}
+      equality:
+        default: equal to %{expected}
+        negated: not equal to %{expected}
+        violation:
+          default: equal to %{actual}
+      finiteness:
+        default: being finite
+        negated: being infinite
+        violation:
+          default: being infinite
+          negated: being finite
+      inequality:
+        default: not equal to %{expected}
+        negated: equal to %{expected}
+        violation:
+          default: equal to %{actual}
+      parity:
+        default: being %{expected}
+        violation:
+          default: not being %{expected}
+      polarity:
+        default: being %{expected}
+        violation:
+          default: not being %{expected}
+      range:
+        max_exclusive: less than %{expected:maximum}
+        max_inclusive: less than or equal to %{expected:maximum}
+        min_exclusive: greater than %{expected:minimum}
+        min_inclusive: greater than or equal to %{expected:minimum}
+        min_max_equal: equal to %{expected:minimum}
+        min_max_exclusive: between %{expected:minimum} and %{expected:maximum}
+        min_max_inclusive: greater than or equal to %{expected:minimum} and less than or equal to %{expected:maximum}
+        violation:
+          default: equal to %{actual}
+          max_exclusive: greater than or equal to %{expected:maximum}
+          max_inclusive: greater than %{expected:maximum}
+          min_exclusive: less than or equal to %{expected:minimum}
+          min_inclusive: less than %{expected:minimum}
+          min_max_equal: not equal to %{expected:minimum}
+    sizable: &sizable
+      size:
+        max_exclusive: having %{accessor} less than %{expected:maximum}
+        max_inclusive: having %{accessor} less than or equal to %{expected:maximum}
+        min_exclusive: having %{accessor} greater than %{expected:minimum}
+        min_inclusive: having %{accessor} greater than or equal to %{expected:minimum}
+        min_max_equal: having %{accessor} %{expected:minimum}
+        min_max_exclusive: having %{accessor} between %{expected:minimum} and %{expected:maximum}
+        min_max_inclusive: having %{accessor} greater than or equal to %{expected:minimum} and less than or equal to %{expected:maximum}
+        violation:
+          default: having %{accessor} %{actual}
+    string: &string
+      case:
+        default: being %{expected}case
+        violation:
+          default: not being %{expected}case
+      character_set:
+        default: having %{expected} characters
+        violation:
+          default: not having %{expected} characters
+      emptiness:
+        default: being empty
+        negated: not being empty
+        violation:
+          default: not being empty
+          negated: being empty
+      ordering:
+        default: having ordered characters
+        negated: having unordered characters
+        violation:
+          default: having unordered characters
+          negated: having ordered characters
+    string_matching: &string_matching
+      equality:
+        default: equal to %{expected}
+        negated: not equal to %{expected}
+        violation:
+          default: equal to %{actual}
+      exclusion:
+        default: excluding %{expected~and_join}
+        negated: containing %{expected~and_join}
+        violation:
+          default: containing %{violation:expected~and_join}
+          negated: excluding %{violation:expected~and_join}
+      inclusion:
+        default: containing %{expected~and_join}
+        negated: excluding %{expected~and_join}
+        violation:
+          default: excluding %{violation:expected~and_join}
+          negated: containing %{violation:expected~and_join}
+      inequality:
+        default: not equal to %{expected}
+        negated: equal to %{expected}
+        violation:
+          default: equal to %{actual}
+      pattern_exclusion:
+        default: not matching %{expected~or_join}
+        negated: matching %{expected~and_join}
+        violation:
+          default: matching %{violation:expected~and_join}
+          negated: not matching %{violation:expected~or_join}
+      pattern_inclusion:
+        default: matching %{expected~and_join}
+        negated: not matching %{expected~or_join}
+        violation:
+          default: not matching %{violation:expected~or_join}
+          negated: matching %{violation:expected~and_join}
+    undescribed: &undescribed
+      default: ''
+      violation:
+        default: ''
+    undescribed_type: &undescribed_type
+      type:
+        <<: *undescribed
+    uri: &uri
+      top_level_domain_exclusion:
+        default: not having top-level domain %{expected~or_join}
+        violation:
+          default: having top-level domain %{actual}
+      top_level_domain_inclusion:
+        default: having top-level domain %{expected~or_join}
+        violation:
+          default: having top-level domain %{actual}
+  support:
+    and_join: and
+    or_join: or
+  types:
+    anything:
+      exclusion:
+        default: except %{expected~or_join}
+        violation:
+          default: ''
+    array:
+      <<: *enumerable
+      <<: *sizable
+      <<: *undescribed_type
+    big_decimal:
+      <<: *numeric
+      <<: *undescribed_type
+    complex:
+      <<: *numeric
+      <<: *undescribed_type
+    cuid:
+      <<: *undescribed_type
+      format:
+        <<: *undescribed
+      size:
+        <<: *undescribed
+      version:
+        v1: being CUID version 1
+        v2: being CUID version 2
+        violation:
+          v1: not being CUID version 1
+          v2: not being CUID version 2
+    date:
+      <<: *date_time
+      <<: *undescribed_type
+    date_time:
+      <<: *date_time
+      <<: *undescribed_type
+    date_time_string:
+      <<: *date_time
+      <<: *undescribed_type
+      format:
+        default: ''
+        american: having American format
+        european: having European format
+        iso8601: having ISO 8601 format
+        rfc2822: having RFC 2822 format
+        violation:
+          default: ''
+          american: not having American format
+          european: not having European format
+          iso8601: not having ISO 8601 format
+          rfc2822: not having RFC 2822 format
+    duck:
+      method_exclusion:
+        default: not responding to %{expected~or_join}
+        violation:
+          default: responding to %{violation:expected~and_join}
+      method_inclusion:
+        default: responding to %{expected~and_join}
+        violation:
+          default: not responding to %{violation:expected~or_join}
+    email_address:
+      <<: *string
+      <<: *string_matching
+      <<: *undescribed_type
+      <<: *uri
+      hostname_exclusion:
+        default: not having hostname %{expected~or_join}
+        negated: having hostname %{expected~or_join}
+        violation:
+          default: having hostname %{actual}
+      hostname_inclusion:
+        default: having hostname %{expected~or_join}
+        negated: not having hostname %{expected~or_join}
+        violation:
+          default: having hostname %{actual}
+      local_part_exclusion:
+        default: not having local part matching %{expected}
+        negated: having local part matching %{expected}
+        violation:
+          default: having local part %{actual}
+      local_part_inclusion:
+        default: having local part matching %{expected}
+        negated: not having local part matching %{expected}
+        violation:
+          default: having local part %{actual}
+      match_pattern:
+        <<: *undescribed
+    enum:
+      equality:
+        default: being equal to %{expected~or_join}
+        violation:
+          default: being equal to %{actual}
+    float:
+      <<: *numeric
+      <<: *undescribed_type
+    hash:
+      <<: *enumerable
+      <<: *sizable
+      <<: *undescribed_type
+      key_exclusion:
+        default: excluding keys %{expected~and_join}
+        negated: containing keys %{expected~and_join}
+        violation:
+          default: containing keys %{violation:expected~and_join}
+          negated: excluding keys %{violation:expected~and_join}
+      key_inclusion:
+        default: containing keys %{expected~and_join}
+        negated: excluding keys %{expected~and_join}
+        violation:
+          default: excluding keys %{violation:expected~and_join}
+          negated: containing keys %{violation:expected~and_join}
+      key_type:
+        default: having keys of %{expected}
+        violation:
+          default: having keys of %{violation:actual~and_join}
+      value_exclusion:
+        default: excluding values %{expected~and_join}
+        negated: containing values %{expected~and_join}
+        violation:
+          default: containing values %{violation:expected~and_join}
+          negated: excluding values %{violation:expected~and_join}
+      value_inclusion:
+        default: containing values %{expected~and_join}
+        negated: excluding values %{expected~and_join}
+        violation:
+          default: excluding values %{violation:expected~and_join}
+          negated: containing values %{violation:expected~and_join}
+      value_type:
+        default: having values of %{expected}
+        violation:
+          default: having values of %{violation:actual~and_join}
+    hostname:
+      <<: *sizable
+      <<: *string_matching
+      <<: *undescribed_type
+      <<: *uri
+      allowed:
+        default: matching %{expected~or_join}
+        violation:
+          default: equal to %{actual}
+      disallowed:
+        default: not matching %{expected~or_join}
+        violation:
+          default: equal to %{actual}
+    instance:
+      attribute_presence:
+        default: having attributes %{expected~and_join}
+        negated: not having attributes %{expected~or_join}
+        violation:
+          default: not having attributes %{violation:expected~or_join}
+          negated: having attributes %{violation:expected~and_join}
+      instance_of:
+        default: of %{expected}
+        violation:
+          default: of %{actual}
+    integer:
+      <<: *numeric
+      <<: *undescribed_type
+    range:
+      <<: *enumerable
+      <<: *sizable
+      <<: *undescribed_type
+    rational:
+      <<: *numeric
+      <<: *undescribed_type
+    set:
+      <<: *enumerable
+      <<: *sizable
+      <<: *undescribed_type
+    string:
+      <<: *string
+      <<: *string_matching
+      <<: *undescribed_type
+    symbol:
+      <<: *string
+      <<: *string_matching
+      <<: *undescribed_type
+    time:
+      <<: *date_time
+      <<: *undescribed_type
+    timestamp:
+      <<: *date_time
+      <<: *undescribed_type
+    union:
+      inclusion:
+        default: being %{expected~or_join}
+        violation:
+          default: being %{actual}
+    uri:
+      <<: *sizable
+      <<: *string_matching
+      <<: *undescribed_type
+      <<: *uri
+      allowed_hostnames:
+        default: having hostnames %{expected:allowed}
+        violation:
+          default: having hostname %{actual}
+      allowed_paths:
+        default: having paths %{expected~or_join}
+        violation:
+          default: having path %{actual}
+      allowed_schemes:
+        default: having schemes %{expected~or_join}
+        violation:
+          default: having scheme %{actual}
+      disallowed_hostnames:
+        default: not having hostnames %{expected:disallowed}
+        violation:
+          default: having hostname %{actual}
+      disallowed_paths:
+        default: not having paths %{expected~or_join}
+        violation:
+          default: having path %{actual}
+      disallowed_schemes:
+        default: not having schemes %{expected~or_join}
+        violation:
+          default: having scheme %{actual}
+    uuid:
+      <<: *undescribed_type
+      format:
+        <<: *undescribed
+      style:
+        default: ''
+        compact: having compact style
+        standard: having standard style
+        violation:
+          default: ''
+          compact: not having compact style
+          standard: not having standard style
+      version:
+        default: ''
+        v1: being UUID version 1
+        v2: being UUID version 2
+        v3: being UUID version 3
+        v4: being UUID version 4
+        v5: being UUID version 5
+        v6: being UUID version 6
+        v7: being UUID version 7
+        violation:
+          default: ''
+          v1: not being UUID version 1
+          v2: not being UUID version 2
+          v3: not being UUID version 3
+          v4: not being UUID version 4
+          v5: not being UUID version 5
+          v6: not being UUID version 6
+          v7: not being UUID version 7
