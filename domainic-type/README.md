@@ -7,7 +7,7 @@
 
 > [!IMPORTANT]  
 > We're running an experiment with Domainic::Type! Help us explore flexible type validation in Ruby by trying our
-> [alpha release](https://github.com/domainic/domainic/wiki/experiments-domainic-type-alpha-3). Your feedback is
+> [alpha release](https://github.com/domainic/domainic/wiki/experiments-domainic-type-v0.1.0-alpha). Your feedback is
 > invaluable for shaping the future of domain-driven design in Ruby.
 
 A flexible type validation system for Ruby that brings the power of composable constraints and crystal-clear error

@@ -1,7 +1,7 @@
 # Known Issues
 
-This document tracks known issues in the domainic-type alpha 3 experiment. Issues will be added as they're discovered
-through testing and feedback.
+This document tracks known issues in the Domainic::Type v0.1.0 Alpha experiment. Issues will be added as they're
+discovered through testing and feedback.
 
 ## Current Issues
 
