@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog], and this project adheres to [Break Ve
 
 ## [Unreleased]
 
+## [v0.2.0] - 2025-01-01
+
 ### Added
 
 * [#22](https://github.com/domainic/domainic/pull/22) Specialized error classes (`ValidationExecutionError`,
@@ -38,5 +40,6 @@ The format is based on [Keep a Changelog], and this project adheres to [Break Ve
 
 <!-- versions -->
 
-[Unreleased]: https://github.com/domainic/domainic/compare/domainic-attributer-v0.1.0...HEAD
+[Unreleased]: https://github.com/domainic/domainic/compare/domainic-attributer-v0.2.0...HEAD
+[v0.2.0]: https://github.com/domainic/domainic/compare/domainic-attributer-v0.1.0...domainic-attributer-v0.2.0
 [v0.1.0]: https://github.com/domainic/domainic/compare/53f3e992ab0e3f0092fd842c4cf89c22e41afa8a...domainic-attributer-v0.1.0
