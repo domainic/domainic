@@ -4,6 +4,8 @@
 
 ### [Unreleased]
 
+### [v0.1.0-alpha.3.4.1] - 2024-12-31
+
 #### Deprecated
 
 * [#186](https://github.com/domainic/domainic/pull/186) deprecated description methods in
@@ -91,9 +93,10 @@
 
 > [!NOTE]
 > As this is an experimental release, features may change significantly based on feedback. Refer to
-> docs/experiments/domainic-type-v0.1.0-alpha.3/README.md for full details and current testing focus.
+> [Domainic::Type v0.1.0 Alpha](README.md) for full details and current testing focus.
 
-[Unreleased]: https://github.com/domainic/domainic/compare/domainic-type-v0.1.0-alpha.3.4.0...HEAD
+[Unreleased]: https://github.com/domainic/domainic/compare/domainic-type-v0.1.0-alpha.3.4.1...HEAD
+[v0.1.0-alpha.3.4.1]: https://github.com/domainic/domainic/compare/domainic-type-v0.1.0-alpha.3.4.0...domainic-type-v0.1.0-alpha.3.4.1
 [v0.1.0-alpha.3.4.0]: https://github.com/domainic/domainic/compare/domainic-type-v0.1.0-alpha.3.3.0...domainic-type-v0.1.0-alpha.3.4.0
 [v0.1.0-alpha.3.3.0]: https://github.com/domainic/domainic/compare/domainic-type-v0.1.0-alpha.3.2.0...domainic-type-v0.1.0-alpha.3.3.0
 [v0.1.0-alpha.3.2.0]: https://github.com/domainic/domainic/compare/domainic-type-v0.1.0-alpha.3.1.0...domainic-type-v0.1.0-alpha.3.2.0

@@ -7,7 +7,7 @@ PATH
       domainic-type (~> 0.1.0.alpha.3)
     domainic-attributer (0.2.0)
     domainic-command (0.1.0)
-    domainic-type (0.1.0.alpha.3.4.0)
+    domainic-type (0.1.0.alpha.3.4.1)
 
 PATH
   remote: domainic-dev
