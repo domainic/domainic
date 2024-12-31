@@ -28,6 +28,8 @@ module Domainic
 
         # Get a human-readable description of the pattern requirement.
         #
+        # @deprecated this method will be removed in version 0.1.0
+        #
         # @example
         #   constraint = MatchPatternConstraint.new(:self, /\d+/)
         #   constraint.short_description # => "matches /\\d+/"
@@ -39,6 +41,8 @@ module Domainic
         end
 
         # Get a human-readable description of why pattern validation failed.
+        #
+        # @deprecated this method will be removed in version 0.1.0
         #
         # @example
         #   constraint = MatchPatternConstraint.new(:self, /\d+/)

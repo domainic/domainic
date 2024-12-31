@@ -50,6 +50,8 @@ module Domainic
 
         # Get a description of what the constraint expects
         #
+        # @deprecated this method will be removed in version 0.1.0
+        #
         # @return [String] the constraint description
         # @rbs override
         def short_description
@@ -57,6 +59,8 @@ module Domainic
         end
 
         # Get a description of why the constraint was violated
+        #
+        # @deprecated this method will be removed in version 0.1.0
         #
         # @return [String] the violation description
         # @rbs override

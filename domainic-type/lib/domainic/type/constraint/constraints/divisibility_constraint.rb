@@ -44,6 +44,8 @@ module Domainic
 
         # Get a human-readable description of the divisibility requirement.
         #
+        # @deprecated this method will be removed in version 0.1.0
+        #
         # @example
         #   constraint = DivisibilityConstraint.new(:self, 5)
         #   constraint.short_description # => "divisible by 5"
@@ -55,6 +57,8 @@ module Domainic
         end
 
         # Get a human-readable description of why divisibility validation failed.
+        #
+        # @deprecated this method will be removed in version 0.1.0
         #
         # @example With non-numeric value
         #   constraint = DivisibilityConstraint.new(:self, 5)

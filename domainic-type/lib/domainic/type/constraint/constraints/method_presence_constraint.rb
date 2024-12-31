@@ -22,6 +22,8 @@ module Domainic
 
         # Get a short description of what this constraint expects
         #
+        # @deprecated this method will be removed in version 0.1.0
+        #
         # @return [String] description of the expected method
         # @rbs override
         def short_description
@@ -29,6 +31,8 @@ module Domainic
         end
 
         # Get a short description of why the constraint was violated
+        #
+        # @deprecated this method will be removed in version 0.1.0
         #
         # @return [String] description of the missing method
         # @rbs override

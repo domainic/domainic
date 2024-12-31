@@ -34,6 +34,9 @@ module Domainic
       class Set
         extend Forwardable
 
+        # @rbs skip
+        extend Gem::Deprecate
+
         # @rbs @lookup: Hash[Type::accessor, Hash[Symbol, Behavior]]
 
         # Initialize a new empty constraint set.
@@ -121,6 +124,8 @@ module Domainic
 
         # The aggregate description of all constraints in the set.
         #
+        # @deprecated this method will be removed in version 0.1.0
+        #
         # @return [String] The description of all constraints
         # @rbs () -> String
         def description
@@ -128,6 +133,7 @@ module Domainic
             @lookup[accessor].values.filter_map(&:full_description)
           end.join(', ').strip
         end
+        deprecate :description, :none, 2025, 3 # steep:ignore
 
         # @!method each
         #   Iterate over each constraint in the set.
@@ -221,6 +227,8 @@ module Domainic
 
         # The aggregate violation description of all constraints in the set.
         #
+        # @deprecated this method will be removed in version 0.1.0
+        #
         # @return [String] The description of all constraints
         # @rbs () -> String
         def violation_description
@@ -228,6 +236,7 @@ module Domainic
             @lookup[accessor].values.reject(&:successful?).filter_map(&:full_violation_description)
           end.join(', ').strip
         end
+        deprecate :violation_description, :none, 2025, 3 # steep:ignore
 
         private
 

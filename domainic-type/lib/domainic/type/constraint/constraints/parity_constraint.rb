@@ -27,6 +27,8 @@ module Domainic
 
         # Get a human-readable description of the parity requirement.
         #
+        # @deprecated this method will be removed in version 0.1.0
+        #
         # @example
         #   constraint = ParityConstraint.new(:self).expecting(:even)
         #   constraint.short_description  # => "even"
@@ -38,6 +40,8 @@ module Domainic
         end
 
         # Get a human-readable description of why parity validation failed.
+        #
+        # @deprecated this method will be removed in version 0.1.0
         #
         # @example
         #   constraint = ParityConstraint.new(:self).expecting(:positive)

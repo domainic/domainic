@@ -37,6 +37,8 @@ module Domainic
 
         # Get a human-readable description of the polarity requirement.
         #
+        # @deprecated this method will be removed in version 0.1.0
+        #
         # @example
         #   constraint = PolarityConstraint.new(:self).expecting(:positive)
         #   constraint.short_description  # => "positive"
@@ -48,6 +50,8 @@ module Domainic
         end
 
         # Get a human-readable description of why polarity validation failed.
+        #
+        # @deprecated this method will be removed in version 0.1.0
         #
         # @example
         #   constraint = PolarityConstraint.new(:self).expecting(:positive)

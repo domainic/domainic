@@ -34,6 +34,8 @@ module Domainic
 
         # Get a human-readable description of the equality requirement.
         #
+        # @deprecated this method will be removed in version 0.1.0
+        #
         # @example
         #   constraint = EqualityConstraint.new(:self, 42)
         #   constraint.description # => "equal to 42"
@@ -45,6 +47,8 @@ module Domainic
         end
 
         # Get a human-readable description of why equality validation failed.
+        #
+        # @deprecated this method will be removed in version 0.1.0
         #
         # @example
         #   constraint = EqualityConstraint.new(:self, 42)

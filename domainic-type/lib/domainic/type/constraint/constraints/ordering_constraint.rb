@@ -34,6 +34,8 @@ module Domainic
 
         # Get a human-readable description of the ordering requirement.
         #
+        # @deprecated this method will be removed in version 0.1.0
+        #
         # @example
         #   constraint = OrderingConstraint.new(:self)
         #   constraint.description # => "ordered"
@@ -45,6 +47,8 @@ module Domainic
         end
 
         # Get a human-readable description of why ordering validation failed.
+        #
+        # @deprecated this method will be removed in version 0.1.0
         #
         # @example
         #   constraint = OrderingConstraint.new(:self)

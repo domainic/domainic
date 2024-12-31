@@ -4,7 +4,13 @@
 
 ### [Unreleased]
 
-#### [v0.1.0-alpha.3.4.0] - 2024-12-30
+#### Deprecated
+
+* [#186](https://github.com/domainic/domainic/pull/186) deprecated description methods in
+  `Domainic::Type::Constraint::Behavior` and `Domainic::Type::Constraint::Set` as we will be moving description logic
+  out of constraints in the alpha 4 release. Use `RUBYOPT="-W0"` to suppress warnings.
+
+### [v0.1.0-alpha.3.4.0] - 2024-12-30
 
 #### Added
 

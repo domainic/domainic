@@ -53,6 +53,9 @@ module Domainic
         # @rbs!
         #   type options = { ?abort_on_failure: bool, ?coerce_with: Array[Proc] | Proc }
 
+        # @rbs skip
+        extend Gem::Deprecate
+
         # @rbs @accessor: Type::accessor
         # @rbs @actual: Actual
         # @rbs @expected: Expected
@@ -120,19 +123,25 @@ module Domainic
 
         # The full description of the constraint.
         #
+        # @deprecated this method will be removed in version 0.1.0
+        #
         # @return [String, nil] The full description of the constraint.
         # @rbs () -> String?
         def full_description
           full_description_for(short_description)
         end
+        deprecate :full_description, :none, 2025, 3 # steep:ignore
 
         # The full description of the violations that caused the constraint to be unsatisfied.
+        #
+        # @deprecated this method will be removed in version 0.1.0
         #
         # @return [String, nil] The full description of the constraint when it fails.
         # @rbs () -> String?
         def full_violation_description
           full_description_for(short_violation_description)
         end
+        deprecate :full_violation_description, :none, 2025, 3 # steep:ignore
 
         # Whether the constraint is satisfied.
         #
@@ -161,22 +170,28 @@ module Domainic
         # Implementing classes should override this to provide meaningful descriptions of their
         # constraint behavior.
         #
+        # @deprecated this method will be removed in version 0.1.0
+        #
         # @return [String] The description of the constraint.
         # @rbs () -> String
         def short_description
           @expected.to_s
         end
+        deprecate :short_description, :none, 2025, 3 # steep:ignore
 
         # The short description of the violations that caused the constraint to be unsatisfied.
         #
         # This is used to help compose a error message when the constraint is not satisfied.
         # Implementing classes can override this to provide more specific failure messages.
         #
+        # @deprecated this method will be removed in version 0.1.0
+        #
         # @return [String] The description of the constraint when it fails.
         # @rbs () -> String
         def short_violation_description
           @actual.to_s
         end
+        deprecate :short_violation_description, :none, 2025, 3 # steep:ignore
 
         # Whether the constraint is a success.
         #
@@ -309,6 +324,8 @@ module Domainic
         private
 
         # Generate the full description for the corresponding short description.
+        #
+        # @deprecated this method will be removed in version 0.1.0
         #
         # @param description [String] The short description to expand.
         #

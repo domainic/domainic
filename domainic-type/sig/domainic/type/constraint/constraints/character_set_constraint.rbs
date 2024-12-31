@@ -40,6 +40,8 @@ module Domainic
 
         # Get a human-readable description of the character set requirement.
         #
+        # @deprecated this method will be removed in version 0.1.0
+        #
         # @example
         #   constraint = CharacterSetConstraint.new(:self, :numeric)
         #   constraint.short_description # => "only numeric characters"
@@ -48,6 +50,8 @@ module Domainic
         def short_description: ...
 
         # Get a human-readable description of why character validation failed.
+        #
+        # @deprecated this method will be removed in version 0.1.0
         #
         # @example
         #   constraint = CharacterSetConstraint.new(:self, :numeric)

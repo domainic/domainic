@@ -43,6 +43,8 @@ module Domainic
 
         # Get a human-readable description of the case requirement.
         #
+        # @deprecated this method will be removed in version 0.1.0
+        #
         # @example
         #   constraint = CaseConstraint.new(:self, :upper)
         #   constraint.short_description # => "upper case"
@@ -54,6 +56,8 @@ module Domainic
         end
 
         # Get a human-readable description of why case validation failed.
+        #
+        # @deprecated this method will be removed in version 0.1.0
         #
         # @example
         #   constraint = CaseConstraint.new(:self, :upper)

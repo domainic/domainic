@@ -31,6 +31,8 @@ module Domainic
 
         # Get a description of what the constraint expects.
         #
+        # @deprecated this method will be removed in version 0.1.0
+        #
         # @return [String] the negated constraint description
         # @rbs override
         def short_description
@@ -41,6 +43,8 @@ module Domainic
         #
         # This is used to help compose a error message when the constraint is not satisfied.
         # Implementing classes can override this to provide more specific failure messages.
+        #
+        # @deprecated this method will be removed in version 0.1.0
         #
         # @return [String] The description of the constraint when it fails.
         # @rbs override

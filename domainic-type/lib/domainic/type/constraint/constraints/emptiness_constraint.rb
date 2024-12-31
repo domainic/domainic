@@ -28,6 +28,8 @@ module Domainic
 
         # Get a human-readable description of the emptiness requirement.
         #
+        # @deprecated this method will be removed in version 0.1.0
+        #
         # @example
         #   constraint = EmptinessConstraint.new(:self)
         #   constraint.description # => "empty"
@@ -39,6 +41,8 @@ module Domainic
         end
 
         # Get a human-readable description of why emptiness validation failed.
+        #
+        # @deprecated this method will be removed in version 0.1.0
         #
         # @example
         #   constraint = EmptinessConstraint.new(:self)
