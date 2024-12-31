@@ -28,6 +28,8 @@ module Domainic
 
         # Get a human-readable description of the instance requirement.
         #
+        # @deprecated this method will be removed in version 0.1.0
+        #
         # @example
         #   constraint = InstanceOfConstraint.new(:self, String)
         #   constraint.description # => "instance of String"
@@ -39,6 +41,8 @@ module Domainic
         end
 
         # Get a human-readable description of why instance validation failed.
+        #
+        # @deprecated this method will be removed in version 0.1.0
         #
         # @example
         #   constraint = InstanceOfConstraint.new(:self, String)

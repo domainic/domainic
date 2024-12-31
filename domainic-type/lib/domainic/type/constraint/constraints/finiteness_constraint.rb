@@ -31,6 +31,8 @@ module Domainic
 
         # Get a human-readable description of the finiteness requirement.
         #
+        # @deprecated this method will be removed in version 0.1.0
+        #
         # @return [String] Description of the finiteness requirement
         # @rbs override
         def short_description
@@ -38,6 +40,8 @@ module Domainic
         end
 
         # Get a human-readable description of why finiteness validation failed.
+        #
+        # @deprecated this method will be removed in version 0.1.0
         #
         # @return [String] Description of the validation failure
         # @rbs override

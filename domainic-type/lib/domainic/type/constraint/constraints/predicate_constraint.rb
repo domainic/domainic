@@ -33,6 +33,8 @@ module Domainic
 
         # Get a description of what the constraint expects.
         #
+        # @deprecated this method will be removed in version 0.1.0
+        #
         # @note This constraint type does not provide a description as predicates are arbitrary.
         #
         # @return [String] an empty string
@@ -40,6 +42,8 @@ module Domainic
         def short_description = ''
 
         # Get a description of why the predicate validation failed.
+        #
+        # @deprecated this method will be removed in version 0.1.0
         #
         # @return [String] the custom violation description if provided
         # @rbs override

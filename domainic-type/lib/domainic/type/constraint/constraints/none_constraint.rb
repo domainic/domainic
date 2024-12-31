@@ -32,6 +32,8 @@ module Domainic
 
         # Get a description of what the constraint expects.
         #
+        # @deprecated this method will be removed in version 0.1.0
+        #
         # @return [String] a description negating the expected constraint description
         # @rbs override
         def short_description
@@ -42,6 +44,8 @@ module Domainic
         #
         # This method provides detailed feedback when any constraints are satisfied,
         # listing all the ways in which the value failed validation.
+        #
+        # @deprecated this method will be removed in version 0.1.0
         #
         # @return [String] The combined violation descriptions from all violating elements
         # @rbs override

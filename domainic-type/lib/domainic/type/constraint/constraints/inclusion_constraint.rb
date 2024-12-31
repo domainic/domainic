@@ -33,6 +33,8 @@ module Domainic
 
         # Get a human-readable description of the inclusion requirement.
         #
+        # @deprecated this method will be removed in version 0.1.0
+        #
         # @example
         #   constraint = InclusionConstraint.new(:self, 42)
         #   constraint.short_description # => "including 42"
@@ -44,6 +46,8 @@ module Domainic
         end
 
         # Get a human-readable description of why inclusion validation failed.
+        #
+        # @deprecated this method will be removed in version 0.1.0
         #
         # @example
         #   constraint = InclusionConstraint.new(:self, 42)

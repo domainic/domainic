@@ -58,6 +58,8 @@ module Domainic
 
         # Get a human-readable description of the range constraint.
         #
+        # @deprecated this method will be removed in version 0.1.0
+        #
         # @example With both bounds
         #   constraint = RangeConstraint.new(:self, { minimum: 1, maximum: 10 })
         #   constraint.description
@@ -85,6 +87,8 @@ module Domainic
         end
 
         # The description of the violations that caused the constraint to be unsatisfied.
+        #
+        # @deprecated this method will be removed in version 0.1.0
         #
         # This is used to help compose a error message when the constraint is not satisfied.
         # Implementing classes can override this to provide more specific failure messages.

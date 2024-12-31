@@ -79,6 +79,8 @@ module Domainic
 
         # The aggregate description of all constraints in the set.
         #
+        # @deprecated this method will be removed in version 0.1.0
+        #
         # @return [String] The description of all constraints
         def description: () -> String
 
@@ -132,6 +134,8 @@ module Domainic
         def prepare: (Type::accessor accessor, String | Symbol constraint_type, ?untyped expectation, **untyped options) -> Behavior
 
         # The aggregate violation description of all constraints in the set.
+        #
+        # @deprecated this method will be removed in version 0.1.0
         #
         # @return [String] The description of all constraints
         def violation_description: () -> String

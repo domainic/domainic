@@ -18,10 +18,14 @@ module Domainic
 
         # Get a short description of what this constraint expects
         #
+        # @deprecated this method will be removed in version 0.1.0
+        #
         # @return [String] description of the expected method
         def short_description: ...
 
         # Get a short description of why the constraint was violated
+        #
+        # @deprecated this method will be removed in version 0.1.0
         #
         # @return [String] description of the missing method
         def short_violation_description: ...

@@ -29,12 +29,16 @@ module Domainic
 
         # Get a description of what the constraint expects.
         #
+        # @deprecated this method will be removed in version 0.1.0
+        #
         # @return [String] a description combining all constraint descriptions with 'or'
         def short_description: ...
 
         def expecting: (Behavior[untyped, untyped, untyped]) -> self
 
         # The description of the violations that caused the constraint to be unsatisfied.
+        #
+        # @deprecated this method will be removed in version 0.1.0
         #
         # This method provides detailed feedback when no constraints are satisfied,
         # listing all the ways in which the value failed validation. Uses 'and' in the
