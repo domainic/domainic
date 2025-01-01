@@ -254,7 +254,7 @@ module Domainic
           # @type self: Object & Behavior
           constrain :first, :equality, literal, concerning: :first_entry_value, description: 'with first entry'
         end
-        alias begining_with starting_with
+        alias beginning_with starting_with
         alias leading_with starting_with
       end
     end

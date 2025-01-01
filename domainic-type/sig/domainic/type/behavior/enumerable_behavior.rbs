@@ -229,7 +229,7 @@ module Domainic
         # @return [self] self for method chaining
         def starting_with: (untyped literal) -> Behavior
 
-        alias begining_with starting_with
+        alias beginning_with starting_with
 
         alias leading_with starting_with
       end
