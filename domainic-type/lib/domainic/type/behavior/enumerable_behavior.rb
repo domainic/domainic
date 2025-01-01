@@ -128,10 +128,10 @@ module Domainic
           # @type self: Object & Behavior
           constrain :entries, :ordering, description: 'being'
         end
-        alias being_aranged being_sorted
+        alias being_arranged being_sorted
         alias being_ordered being_sorted
         alias being_sequential being_sorted
-        alias aranged being_sorted
+        alias arranged being_sorted
         alias ordered being_sorted
         alias sorted being_sorted
         alias sequential being_sorted
@@ -254,7 +254,7 @@ module Domainic
           # @type self: Object & Behavior
           constrain :first, :equality, literal, concerning: :first_entry_value, description: 'with first entry'
         end
-        alias begining_with starting_with
+        alias beginning_with starting_with
         alias leading_with starting_with
       end
     end
