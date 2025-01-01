@@ -8,7 +8,7 @@ documentation across the Domainic ecosystem.
 ### Released
 
 * [**domainic-attributer**](../domainic-attributer/README.md) - Type-safe, self-documenting class attributes
-  * **Current Version**: 0.1.0
+  * **Current Version**: 0.2.0
   * [Usage Guide](../domainic-attributer/docs/USAGE.md)
 * [**domainic-command**](../domainic-command/README.md) - Command pattern implementation
   * **Current Version**: 0.1.0
