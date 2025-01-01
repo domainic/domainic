@@ -119,13 +119,13 @@ module Domainic
         # @return [self] self for method chaining
         def being_sorted: () -> Behavior
 
-        alias being_aranged being_sorted
+        alias being_arranged being_sorted
 
         alias being_ordered being_sorted
 
         alias being_sequential being_sorted
 
-        alias aranged being_sorted
+        alias arranged being_sorted
 
         alias ordered being_sorted
 
