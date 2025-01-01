@@ -96,6 +96,11 @@ module Domainic
           @options.fetch(:abort_on_failure, false)
         end
 
+        # @rbs () -> Hash[Symbol, untyped]
+        def description_context
+          {} #: TODO: implement this context
+        end
+
         # Set the expected value to compare against.
         #
         # @param expectation [Object] The expected value to compare against.
@@ -201,6 +206,11 @@ module Domainic
           @result == true
         end
         alias success? successful?
+
+        # @rbs () -> Hash[Symbol, untyped]
+        def violation_context
+          {} #: TODO: implement this context
+        end
 
         # Merge additional options into the constraint.
         #
