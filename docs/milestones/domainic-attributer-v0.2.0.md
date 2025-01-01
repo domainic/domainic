@@ -1,6 +1,6 @@
 # domainic-attributer v0.2.0
 
-![Milestone Status](https://img.shields.io/badge/In%20Progress-orange?style=for-the-badge&label=Status)
+![Milestone Status](https://img.shields.io/badge/Complete-green?style=for-the-badge&label=Status)
 [![Milestone Progress](https://img.shields.io/github/milestones/progress-percent/domainic/domainic/3?style=for-the-badge&label=Progress)](https://github.com/domainic/domainic/milestone/3)
 
 ![Milestone Start Date](https://img.shields.io/badge/12%2F13%2F2024-blue?style=for-the-badge&label=Start%20Date)
