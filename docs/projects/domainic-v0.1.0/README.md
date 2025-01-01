@@ -35,6 +35,8 @@ on domain modeling, clean architecture, and type safety.
   * [Announcing Domainic::Command v0.1.0!](./updates/2024-12-29-01.md)
 * **December 30, 2024**
   * [Domainic::Type Experiment Name Change](./updates/2024-12-30-01.md)
+* **January 1, 2025**
+  * [domainic-attributer v0.2.0 Released](./updates/2025-01-01-01.md)
 
 ## Key Components
 
