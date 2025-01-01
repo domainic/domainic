@@ -1,0 +1,20 @@
+module Domainic
+  module Type
+    # @since 0.1.0
+    class Description
+      @type: Behavior
+
+      def initialize: (Behavior type) -> void
+
+      def describe: () -> String
+
+      def violation: () -> String
+
+      private
+
+      def constraints: () -> Constraint::Set
+
+      def message_for: (Hash[Symbol, untyped] context, ?violation: bool) -> String
+    end
+  end
+end

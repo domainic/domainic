@@ -80,6 +80,8 @@ module Domainic
         # @return [Boolean] Whether to abort on failure.
         def abort_on_failure?: () -> bool
 
+        def description_context: () -> Hash[Symbol, untyped]
+
         # Set the expected value to compare against.
         #
         # @param expectation [Object] The expected value to compare against.
@@ -149,6 +151,8 @@ module Domainic
         def successful?: () -> bool
 
         alias success? successful?
+
+        def violation_context: () -> Hash[Symbol, untyped]
 
         # Merge additional options into the constraint.
         #
