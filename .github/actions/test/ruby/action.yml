@@ -6,4 +6,8 @@ runs:
   steps:
     - name: Run rspec
       shell: bash
-      run: bin/dev test && bash <(curl -Ls https://coverage.codacy.com/get.sh)
+      run: bin/dev test
+    - name: Report Coverage
+      if: env.CODACY_PROJECT_TOKEN != ''
+      shell: bash
+      run: bash <(curl -Ls https://coverage.codacy.com/get.sh)
