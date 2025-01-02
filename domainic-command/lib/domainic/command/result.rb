@@ -130,23 +130,18 @@ module Domainic
       # @example Chaining commands with and_then
       #   result = CreateUser.call(name: "John")
       #              .and_then { |r| SendWelcomeEmail.call(user_id: r.user[:id]) }
+      #              .and_then { |r| NotifyAdmin.call(user_id: r.user[:id]) }
       #
       # @yield [result] Provides the current successful result to the block.
       # @yieldparam [Result] result The current successful result object.
-      # @yieldreturn [Result] A new Result object from the executed command.
+      # @yieldreturn [Object] Any object resulting from the block.
       #
-      # @return [Result] The new result object if successful, or the current result if failed.
+      # @return [Object] The new result or output object, or the current result if failed.
       # @rbs () { (self) -> self } -> self
       def and_then
         return self if failure?
 
-        new_result = yield(self)
-
-        unless new_result.is_a?(self.class)
-          raise TypeError, "Block must return a #{self.class}, got #{new_result.class}"
-        end
-
-        new_result
+        yield(self)
       end
 
       # Indicates whether the command failed
