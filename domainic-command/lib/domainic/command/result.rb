@@ -121,6 +121,29 @@ module Domainic
       end
       private_class_method :new
 
+      # Chains the execution of another command based on the current result's success.
+      #
+      # This method allows you to conditionally execute further logic or commands
+      # if the current result is successful. If the current result is a failure,
+      # it is returned immediately without invoking the provided block.
+      #
+      # @example Chaining commands with and_then
+      #   result = CreateUser.call(name: "John")
+      #              .and_then { |r| SendWelcomeEmail.call(user_id: r.user[:id]) }
+      #              .and_then { |r| NotifyAdmin.call(user_id: r.user[:id]) }
+      #
+      # @yield [result] Provides the current successful result to the block.
+      # @yieldparam [Result] result The current successful result object.
+      # @yieldreturn [Object] Any object resulting from the block.
+      #
+      # @return [Object] The new result or output object, or the current result if failed.
+      # @rbs () { (self) -> self } -> self
+      def and_then
+        return self if failure?
+
+        yield(self)
+      end
+
       # Indicates whether the command failed
       #
       # @return [Boolean] true if the command failed; false otherwise
