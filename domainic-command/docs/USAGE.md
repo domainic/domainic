@@ -214,7 +214,7 @@ class CreateUser
   # Use type definitions for precise validation
   argument :email, _EmailAddress, required: true
   argument :password, _String.having_min_length(8), required: true
-  argument :age, _Integer.having_min(18), "Must be an adult"
+  argument :age, _Integer.being_greater_than_or_equal_to(18), "Must be an adult"
 
   # Complex type constraints
   argument :roles, _Array.of(_Symbol).having_max_size(3),
