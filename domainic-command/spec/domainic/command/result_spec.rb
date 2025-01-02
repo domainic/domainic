@@ -37,7 +37,7 @@ RSpec.describe Domainic::Command::Result do
     end
   end
 
-  describe '#and_then' do
+  describe '#and_then', rbs: :skip do
     subject(:result) { initial_result.and_then(&block) }
 
     let(:initial_result) { described_class.success(value: 42) }
@@ -68,8 +68,9 @@ RSpec.describe Domainic::Command::Result do
     context 'when the block does not return a Result' do
       let(:block) { ->(_r) { 'not a result' } }
 
-      it 'is expected to return the original result' do
-        expect(result).to eq(initial_result)
+      it 'is expected to raise a TypeError' do
+        expect { result }
+          .to raise_error(TypeError, /Block must return a Domainic::Command::Result/)
       end
     end
 

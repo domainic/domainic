@@ -136,17 +136,17 @@ module Domainic
       # @yieldreturn [Result] A new Result object from the executed command.
       #
       # @return [Result] The new result object if successful, or the current result if failed.
-      # @rbs def and_then: () { (self) -> Result } -> Result
+      # @rbs () { (self) -> self } -> self
       def and_then
         return self if failure?
 
         new_result = yield(self)
 
-        if new_result.is_a?(Result)
-          new_result
-        else
-          self
+        unless new_result.is_a?(self.class)
+          raise TypeError, "Block must return a #{self.class}, got #{new_result.class}"
         end
+
+        new_result
       end
 
       # Indicates whether the command failed
