@@ -201,7 +201,8 @@ result.status_code # => 0 for success, other codes for failures
 
 ### Chaining Commands with `and_then`
 
-You can chain multiple commands using the `and_then` method. This allows for sequential execution where each command depends on the success of the previous one:
+You can chain multiple commands using the `and_then` method.
+This allows for sequential execution where each command depends on the success of the previous one:
 
 ```ruby
 CreateUser.call(name: "John")
@@ -209,7 +210,10 @@ CreateUser.call(name: "John")
   .and_then { |r| NotifyAdmin.call(user_id: r.user.id) }
 ```
 
-In this example, `SendWelcomeEmail` will only be executed if `CreateUser` is successful, and `NotifyAdmin` will only run if `SendWelcomeEmail` is also successful. The results from each command can be passed to the next command in the chain.
+In this example, `SendWelcomeEmail` will only be executed if `CreateUser` is successful,
+and `NotifyAdmin` will only run if `SendWelcomeEmail` is also successful.
+
+The results from each command can be passed to the next command in the chain.
 
 ## Advanced Features
 
