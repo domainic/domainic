@@ -1,0 +1,14 @@
+module Domainic
+  module Type
+    class Description
+      # @since 0.1.0
+      module Interpolator
+        def self.interpolate: (String template, **untyped variables) -> String
+
+        private def self.parse_variable_path: (Array[String] path, untyped variables) -> String?
+
+        private def self.resolve_placeholder!: (String path, untyped variables) -> String
+      end
+    end
+  end
+end
