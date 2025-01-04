@@ -37,6 +37,35 @@ RSpec.describe Domainic::Command::Result do
     end
   end
 
+  describe '#and_then' do
+    subject(:result) { initial_result.and_then(&block) }
+
+    let(:initial_result) { described_class.success(value: 42) }
+    let(:block) { ->(r) { r.value * 2 } }
+
+    context 'when the initial result is successful' do
+      it 'is expected to execute the block and return the block result' do
+        expect(result).to eq(84)
+      end
+    end
+
+    context 'when the initial result is a failure' do
+      let(:initial_result) { described_class.failure({ base: 'error' }) }
+
+      it 'is expected to return the original failure result' do
+        expect(result).to eq(initial_result)
+      end
+    end
+
+    context 'when the block raises an exception' do
+      let(:block) { ->(_r) { raise 'unexpected error' } }
+
+      it 'is expected to propagate the exception' do
+        expect { result }.to raise_error('unexpected error')
+      end
+    end
+  end
+
   describe '.failure', rbs: :skip do
     subject(:result) { described_class.failure(errors, context, **options) }
 
