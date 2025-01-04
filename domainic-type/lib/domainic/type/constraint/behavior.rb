@@ -72,14 +72,16 @@ module Domainic
         #   to elements, such as "all", "any", or "none" for collection constraints, or a specific type name
         #   for type constraints. Used to form natural language descriptions like "having elements of String"
         #   or "containing any of [1, 2, 3]"
+        # @param concerning [String, Symbol, nil]
         #
         # @raise [ArgumentError] if the accessor is not included in {VALID_ACCESSORS}
         # @return [Behavior] A new instance of the constraint.
         # @rbs (Type::accessor accessor, ?(String | Symbol)? quantifier_description) -> void
-        def initialize(accessor, quantifier_description = nil)
+        def initialize(accessor, quantifier_description = nil, concerning: nil)
           validate_accessor!(accessor)
 
           @accessor = accessor.to_sym
+          @concerning = concerning
           @options = {}
           @quantifier_description = quantifier_description
         end
@@ -98,7 +100,7 @@ module Domainic
 
         # @rbs () -> Hash[Symbol, untyped]
         def description_context
-          {} #: TODO: implement this context
+          { concerning: @concerning, expected: @expected }.merge(@options)
         end
 
         # Set the expected value to compare against.
@@ -209,7 +211,7 @@ module Domainic
 
         # @rbs () -> Hash[Symbol, untyped]
         def violation_context
-          {} #: TODO: implement this context
+          description_context.merge(actual: @actual, **@options)
         end
 
         # Merge additional options into the constraint.

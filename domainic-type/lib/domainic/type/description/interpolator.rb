@@ -41,7 +41,7 @@ module Domainic
             value = parse_variable_path(path.split(':'), variables)
             raise KeyError, "Missing interpolation value for %{#{path}}" if value.nil?
 
-            value
+            value.to_s
           end
         end
       end
