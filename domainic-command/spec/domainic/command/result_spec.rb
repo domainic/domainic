@@ -37,7 +37,7 @@ RSpec.describe Domainic::Command::Result do
     end
   end
 
-  describe '#and_then', rbs: :skip do
+  describe '#and_then' do
     subject(:result) { initial_result.and_then(&block) }
 
     let(:initial_result) { described_class.success(value: 42) }
