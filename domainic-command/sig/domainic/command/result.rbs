@@ -100,24 +100,6 @@ module Domainic
       # @return [void]
       def initialize: (Integer status, ?context: Hash[String | Symbol, untyped], ?errors: untyped) -> void
 
-      # Chains the execution of another command based on the current result's success.
-      #
-      # This method allows you to conditionally execute further logic or commands
-      # if the current result is successful. If the current result is a failure,
-      # it is returned immediately without invoking the provided block.
-      #
-      # @example Chaining commands with and_then
-      #   result = CreateUser.call(name: "John")
-      #              .and_then { |r| SendWelcomeEmail.call(user_id: r.user[:id]) }
-      #              .and_then { |r| NotifyAdmin.call(user_id: r.user[:id]) }
-      #
-      # @yield [result] Provides the current successful result to the block.
-      # @yieldparam [Result] result The current successful result object.
-      # @yieldreturn [Object] Any object resulting from the block.
-      #
-      # @return [Object] The new result or output object, or the current result if failed.
-      def and_then: () { (self) -> self } -> self
-
       # Indicates whether the command failed
       #
       # @return [Boolean] true if the command failed; false otherwise
@@ -131,6 +113,26 @@ module Domainic
       def successful?: () -> bool
 
       alias success? successful?
+
+      # Chains the execution of another command based on the current result's success.
+      #
+      # This method allows you to conditionally execute further logic or commands
+      # if the current result is successful. If the current result is a failure,
+      # it is returned immediately without invoking the provided block.
+      #
+      # @example Chaining commands with then
+      #   result = CreateUser.call(name: "John")
+      #              .then { |r| SendWelcomeEmail.call(user_id: r.user[:id]) }
+      #              .then { |r| NotifyAdmin.call(user_id: r.user[:id]) }
+      #
+      # @yield [result] Provides the current successful result to the block.
+      # @yieldparam [Result] result The current successful result object.
+      # @yieldreturn [Object] Any object resulting from the block.
+      #
+      # @return [Object] The new result or output object, or the current result if failed.
+      def then: () { (self) -> untyped } -> untyped
+
+      alias and_then then
 
       private
 
