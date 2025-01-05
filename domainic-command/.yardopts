@@ -1,3 +1,4 @@
+lib/**/*.rb
 --title Domainic::Command
 --readme README.md
 --no-private
@@ -7,5 +8,4 @@
 --embed-mixins
 --tag rbs
 --hide-tag rbs
---files CHANGELOG.md,LICENSE
-'lib/**/*.rb'
+--files CHANGELOG.md,LICENSE,docs/USAGE.md

@@ -1,3 +1,4 @@
+**/*.rb
 --title Domainic
 --readme README.md
 --no-private
@@ -9,4 +10,4 @@
 --tag rbs
 --hide-tag rbs
 -
-'**/*.rb' - '**/*.md'
+**/*.md
