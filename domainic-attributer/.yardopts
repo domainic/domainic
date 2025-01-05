@@ -1,3 +1,4 @@
+lib/**/*.rb
 --title Domainic::Attributer
 --readme README.md
 --no-private
@@ -8,4 +9,3 @@
 --tag rbs
 --hide-tag rbs
 --files CHANGELOG.md,LICENSE,docs/USAGE.md
-'lib/**/*.rb'
