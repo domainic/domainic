@@ -120,7 +120,7 @@ GEM
       zlib
     rubocop-ordered_methods (0.13)
       rubocop (>= 1.0)
-    rubocop-performance (1.23.0)
+    rubocop-performance (1.23.1)
       rubocop (>= 1.48.1, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
     rubocop-rspec (3.3.0)
