@@ -83,7 +83,8 @@ module Domainic
           # @type var type: Symbol
           # @type var namespace: Symbol
 
-          @lookup[accessor][namespace] ||= build_constraint(type, accessor, options[:description])
+          @lookup[accessor][namespace] ||=
+            build_constraint(type, accessor, options[:description], concerning: namespace)
           @lookup[accessor][namespace].expecting(expectation)
                                       .with_options(options.except(:concerning, :description)) # steep:ignore
         end
@@ -245,6 +246,7 @@ module Domainic
         # @param constraint_type [String, Symbol] The type of constraint to create
         # @param accessor [String, Symbol] The accessor method for the constraint
         # @param quantifier_description [String, Symbol] The quantifier description of the constraint
+        # @param [String, Symbol, nil] concerning
         #
         # @return [Behavior] The new constraint instance
         # @rbs (
@@ -252,9 +254,9 @@ module Domainic
         #   Type::accessor accessor,
         #   (String | Symbol)?,
         #   ) -> Behavior
-        def build_constraint(constraint_type, accessor, quantifier_description)
+        def build_constraint(constraint_type, accessor, quantifier_description, concerning: nil)
           Resolver.resolve!(constraint_type.to_sym)
-                  .new(accessor.to_sym, quantifier_description)
+                  .new(accessor.to_sym, quantifier_description, concerning: concerning)
         end
 
         # Ensure that the lookup hash is deep copied when duplicating.

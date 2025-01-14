@@ -28,6 +28,10 @@ module Domainic
       class AllConstraint
         include Behavior #[Behavior[untyped, untyped, untyped], Enumerable, {}]
 
+        def description_context
+          super.merge(expected: @expected.description_context[:expected])
+        end
+
         # Get a description of what the constraint expects.
         #
         # @deprecated this method will be removed in version 0.1.0

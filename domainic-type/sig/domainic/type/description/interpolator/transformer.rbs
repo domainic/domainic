@@ -1,0 +1,24 @@
+module Domainic
+  module Type
+    class Description
+      module Interpolator
+        # @since 0.1.0
+        module Transformer
+          self.@registry: Hash[Symbol, Proc]
+
+          AND_JOIN: Proc
+
+          LIST_JOIN: Proc
+
+          OR_JOIN: Proc
+
+          def self.[]: (String | Symbol key) -> Proc
+
+          def self.register: (String | Symbol key, Proc transformer) -> void
+
+          private def self.registry: () -> Hash[Symbol, Proc]
+        end
+      end
+    end
+  end
+end

@@ -1,0 +1,16 @@
+module Domainic
+  module Type
+    class Description
+      # @since 0.1.0
+      module Store
+        CONFIG_FILE: String
+
+        self.@lookup: Hash[Symbol, untyped]
+
+        def self.template: (String key_string) -> String
+
+        private def self.lookup: () -> Hash[Symbol, untyped]
+      end
+    end
+  end
+end

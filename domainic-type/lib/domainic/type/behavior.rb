@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'domainic/type/description'
 require 'domainic/type/constraint/set'
 
 module Domainic
@@ -207,10 +208,12 @@ module Domainic
       # @return [String] The type as a String
       # @rbs () -> String
       def to_s
-        if @constraints.description.empty?
+        description = Description.new(self).describe
+        puts "description: #{description}"
+        if description.empty?
           self.class.to_s
         else
-          "#{self.class}(#{@constraints.description})"
+          "#{self.class}(#{description})"
         end
       end
       alias inspect to_s
